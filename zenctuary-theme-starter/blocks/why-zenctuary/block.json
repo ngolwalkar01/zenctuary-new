@@ -2,81 +2,67 @@
   "$schema": "https://schemas.wp.org/trunk/block.json",
   "apiVersion": 3,
   "name": "zenctuary/why-zenctuary",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "title": "Why Zenctuary",
   "category": "design",
   "icon": "star-filled",
-  "description": "Displays a fully-configurable 'Why Zenctuary?' features grid with auto-numbered items, icon uploads, titles, and descriptions.",
+  "description": "Fully-configurable 'Why Zenctuary?' features grid — auto-numbered, icon-driven, two-column layout matching Figma design.",
   "attributes": {
-    "heading": {
-      "type": "string",
-      "default": "WHY ZENCTUARY?"
-    },
-    "subheading": {
-      "type": "string",
-      "default": ""
-    },
+
+    "heading": { "type": "string",  "default": "WHY ZENCTUARY?" },
+    "subheading": { "type": "string", "default": "" },
+
     "items": {
       "type": "array",
       "default": [
-        {
-          "iconUrl": "",
-          "iconId": 0,
-          "iconAlt": "",
-          "title": "ALL-IN-ONE DAILY RETREAT",
-          "description": "Classes, Fire & Ice, café, and community — everything in one place, no extra trips."
-        },
-        {
-          "iconUrl": "",
-          "iconId": 0,
-          "iconAlt": "",
-          "title": "SAFE COMMUNITY",
-          "description": "Empathetic, open, international — come as you are."
-        },
-        {
-          "iconUrl": "",
-          "iconId": 0,
-          "iconAlt": "",
-          "title": "SPACE & ATMOSPHERE",
-          "description": "Minimal noise, maximum calm. Phone-free, so you can fully switch off."
-        },
-        {
-          "iconUrl": "",
-          "iconId": 0,
-          "iconAlt": "",
-          "title": "EXPERT GUIDANCE",
-          "description": "Certified teachers and wellness professionals at every step of your journey."
-        }
+        { "iconUrl": "", "iconId": 0, "iconAlt": "", "title": "ALL-IN-ONE DAILY RETREAT",  "description": "Classes, Fire & Ice, café, and community — everything in one place, no extra trips." },
+        { "iconUrl": "", "iconId": 0, "iconAlt": "", "title": "SAFE COMMUNITY",             "description": "Empathetic, open, international — come as you are." },
+        { "iconUrl": "", "iconId": 0, "iconAlt": "", "title": "SPACE & ATMOSPHERE",         "description": "Minimal noise, maximum calm. Phone-free, so you can fully switch off." },
+        { "iconUrl": "", "iconId": 0, "iconAlt": "", "title": "EXPERT GUIDANCE",            "description": "Certified teachers and wellness professionals at every step of your journey." }
       ]
     },
-    "backgroundColor": {
-      "type": "string",
-      "default": "#3F3E3E"
-    },
-    "headingColor": {
-      "type": "string",
-      "default": "#D8B355"
-    },
-    "textColor": {
-      "type": "string",
-      "default": "#F6F2EA"
-    },
-    "accentColor": {
-      "type": "string",
-      "default": "#D8B355"
-    },
-    "paddingTop": {
-      "type": "number",
-      "default": 80
-    },
-    "paddingBottom": {
-      "type": "number",
-      "default": 80
-    },
-    "columns": {
-      "type": "number",
-      "default": 2
-    }
+
+    "columns": { "type": "number", "default": 2 },
+
+    "backgroundColor":   { "type": "string", "default": "#3F3E3E" },
+    "headingColor":      { "type": "string", "default": "#D8B355" },
+    "numberColor":       { "type": "string", "default": "#F6F2EA" },
+    "iconColor":         { "type": "string", "default": "#D8B355" },
+    "titleColor":        { "type": "string", "default": "#F6F2EA" },
+    "descriptionColor":  { "type": "string", "default": "#F6F2EA" },
+
+    "paddingTop":    { "type": "number", "default": 80 },
+    "paddingBottom": { "type": "number", "default": 80 },
+    "paddingLeft":   { "type": "number", "default": 120 },
+    "paddingRight":  { "type": "number", "default": 120 },
+
+    "maxWidth":          { "type": "number", "default": 1200 },
+    "headingMarginBottom":{ "type": "number", "default": 48 },
+    "rowGap":            { "type": "number", "default": 56 },
+    "columnGap":         { "type": "number", "default": 80 },
+
+    "gapNumIcon":        { "type": "number", "default": 16 },
+    "gapIconContent":    { "type": "number", "default": 20 },
+    "gapTitleDesc":      { "type": "number", "default": 12 },
+
+    "headingFontSize":      { "type": "number",  "default": 28 },
+    "headingFontWeight":    { "type": "string",  "default": "700" },
+    "headingLetterSpacing": { "type": "number",  "default": 0.02 },
+    "headingTextTransform": { "type": "string",  "default": "uppercase" },
+
+    "numberFontSize":    { "type": "number", "default": 13 },
+    "numberFontWeight":  { "type": "string", "default": "400" },
+    "numberMinWidth":    { "type": "number", "default": 24 },
+
+    "titleFontSize":      { "type": "number", "default": 22 },
+    "titleFontWeight":    { "type": "string", "default": "700" },
+    "titleTextTransform": { "type": "string", "default": "uppercase" },
+    "titleLineHeight":    { "type": "number", "default": 1.2 },
+
+    "descFontSize":   { "type": "number", "default": 16 },
+    "descLineHeight": { "type": "number", "default": 1.6 },
+
+    "iconSize": { "type": "number", "default": 48 }
   },
   "supports": {
     "html": false,
@@ -84,7 +70,7 @@
   },
   "textdomain": "zenctuary",
   "editorScript": "file:./index.js",
-  "style": "file:./style-index.css",
-  "editorStyle": "file:./index.css",
-  "render": "file:./render.php"
+  "style":        "file:./style-index.css",
+  "editorStyle":  "file:./index.css",
+  "render":       "file:./render.php"
 }
