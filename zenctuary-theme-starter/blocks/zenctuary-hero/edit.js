@@ -1,6 +1,6 @@
 import { __ } from '@wordpress/i18n';
 import { useBlockProps, InspectorControls, MediaUpload, MediaUploadCheck } from '@wordpress/block-editor';
-import { PanelBody, SelectControl, RangeControl, TextControl, ToggleControl, Button, ColorPicker, Popover, ColorIndicator, Divider, TextareaControl } from '@wordpress/components';
+import { PanelBody, SelectControl, RangeControl, TextControl, ToggleControl, Button, ColorPicker, Popover, TextareaControl } from '@wordpress/components';
 import { useState, useRef } from '@wordpress/element';
 
 // Shared SVGs
@@ -10,6 +10,8 @@ const ICONS = {
     whatsapp: <svg viewBox="0 0 24 24" width="24" height="24" fill="currentColor"><path d="M12.01 2C6.48 2 2 6.48 2 12c0 1.84.5 3.56 1.35 5.06L2 22l5.09-1.33c1.47.82 3.16 1.3 4.92 1.3 5.53 0 10-4.48 10-10l-.01-.03C22 6.45 17.52 2 12.01 2zM12 20.03c-1.57 0-3.08-.4-4.4-1.16l-.32-.18-3.27.86.87-3.19-.2-.31C3.96 14.65 3.5 13.36 3.5 12c0-4.69 3.82-8.5 8.5-8.5 4.69 0 8.5 3.82 8.5 8.5-.01 4.69-3.82 8.5-8.5 8.53z"/></svg>,
     trigger: <svg viewBox="0 0 24 24" width="32" height="32" fill="currentColor"><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm-5 14H4v-4h11v4zm5 0h-4v-4h4v4zm0-5H4V9h16v4z"/></svg>
 };
+
+const Divider = () => <hr style={{ margin: '24px 0', border: 'none', borderTop: '1px solid #ddd' }} />;
 
 // Compact Color Picker
 function ColorRow( { label, value, onChange } ) {
@@ -33,8 +35,8 @@ function ColorRow( { label, value, onChange } ) {
                         cursor: 'pointer',
                     }}
                 >
-                    <ColorIndicator colorValue={ value } />
-                    <span style={{ fontSize: '11px', color: '#aaa', fontFamily: 'monospace' }}>{ value }</span>
+                    <div style={{ display: 'inline-block', width: '20px', height: '20px', borderRadius: '50%', backgroundColor: value || 'transparent', border: '1px solid #ccc' }} />
+                    <span style={{ fontSize: '11px', color: '#aaa', fontFamily: 'monospace' }}>{ value || 'none' }</span>
                 </button>
                 { open && (
                     <Popover placement="left-start" onClose={ () => setOpen( false ) } anchor={ ref.current }>
@@ -60,21 +62,21 @@ const ANIMATION_OPTIONS = [
 
 export default function Edit( { attributes, setAttributes } ) {
     const {
-        bgImageUrl, bgImageId, bgOverlayColor, bgOverlayOpacity,
-        centerMode,
-        logoUrl, logoId, logoAlt, logoMaxWidth,
-        taglineText, taglineFontSize, taglineFontWeight, taglineColor,
-        titleText, titleFontSize, titleFontWeight, titleTextTransform, titleColor,
-        iconUrl, iconId, iconAlt, iconSize,
-        gapCenterElements,
-        logoAnim, logoAnimDur, logoAnimDel,
-        taglineAnim, taglineAnimDur, taglineAnimDel,
-        titleAnim, titleAnimDur, titleAnimDel,
-        iconAnim, iconAnimDur, iconAnimDel,
-        showTagsRow, tagsItems, tagsColor, tagsBottomOffset, tagsGap, tagsFontSize, tagsFontWeight, tagsTextTransform, tagsLetterSpacing,
-        showContactBundle, contactRightOffset, contactBottomOffset, contactTriggerBg, contactTriggerColor, contactTriggerSize,
-        contactActionBg, contactActionBorder, contactActionColor, contactActionGap, contactActions
-    } = attributes;
+        bgImageUrl = '', bgImageId = 0, bgOverlayColor = '#000000', bgOverlayOpacity = 0.4,
+        centerMode = 'logo-tagline',
+        logoUrl = '', logoId = 0, logoAlt = '', logoMaxWidth = 600,
+        taglineText = 'Your journey begins here.', taglineFontSize = 20, taglineFontWeight = '400', taglineColor = '#F6F2EA',
+        titleText = 'SCHEDULE', titleFontSize = 64, titleFontWeight = '400', titleTextTransform = 'uppercase', titleColor = '#F6F2EA',
+        iconUrl = '', iconId = 0, iconAlt = '', iconSize = 80,
+        gapCenterElements = 32,
+        logoAnim = 'fade', logoAnimDur = 1.2, logoAnimDel = 0.2,
+        taglineAnim = 'slide-up', taglineAnimDur = 1.0, taglineAnimDel = 0.4,
+        titleAnim = 'zoom-in', titleAnimDur = 1.2, titleAnimDel = 0.2,
+        iconAnim = 'fade', iconAnimDur = 1.0, iconAnimDel = 0.1,
+        showTagsRow = true, tagsItems = [], tagsColor = '#D8B355', tagsBottomOffset = 60, tagsGap = 24, tagsFontSize = 18, tagsFontWeight = '500', tagsTextTransform = 'uppercase', tagsLetterSpacing = 0.05,
+        showContactBundle = true, contactRightOffset = 40, contactBottomOffset = 40, contactTriggerBg = '#D8B355', contactTriggerColor = '#3F3E3E', contactTriggerSize = 64,
+        contactActionBg = '#3F3E3E', contactActionBorder = '#D8B355', contactActionColor = '#D8B355', contactActionGap = 12, contactActions = []
+    } = attributes || {};
 
     const blockProps = useBlockProps( {
         style: {
@@ -90,7 +92,8 @@ export default function Edit( { attributes, setAttributes } ) {
     } );
 
     const setObjAttrParams = (arr, index, key, val, attrName) => {
-        const newArr = [...arr];
+        const newArr = [...(arr || [])];
+        if (!newArr[index]) newArr[index] = {};
         newArr[index] = { ...newArr[index], [key]: val };
         setAttributes({ [attrName]: newArr });
     };
@@ -236,21 +239,21 @@ export default function Edit( { attributes, setAttributes } ) {
                     { showTagsRow && (
                         <>
                             <div style={{ background: '#1e1e1e', padding: '12px', borderRadius: '4px', marginBottom: '16px' }}>
-                                { tagsItems.map((item, index) => (
+                                { (tagsItems || []).map((item, index) => (
                                     <div key={index} style={{ display: 'flex', gap: '8px', marginBottom: '8px' }}>
-                                        <TextControl value={item} onChange={v => {
-                                            const newTags = [...tagsItems];
+                                        <TextControl value={item || ''} onChange={v => {
+                                            const newTags = [...(tagsItems || [])];
                                             newTags[index] = v;
                                             setAttributes({ tagsItems: newTags });
                                         }} style={{ flex: 1, marginBottom: 0 }} />
                                         <Button isDestructive variant="secondary" onClick={() => {
-                                            const newTags = [...tagsItems];
+                                            const newTags = [...(tagsItems || [])];
                                             newTags.splice(index, 1);
                                             setAttributes({ tagsItems: newTags });
                                         }}>✖</Button>
                                     </div>
                                 ))}
-                                <Button variant="secondary" onClick={() => setAttributes({ tagsItems: [...tagsItems, 'NEW TAG'] })} style={{ width: '100%', justifyContent: 'center' }}>+ Add Tag</Button>
+                                <Button variant="secondary" onClick={() => setAttributes({ tagsItems: [...(tagsItems || []), 'NEW TAG'] })} style={{ width: '100%', justifyContent: 'center' }}>+ Add Tag</Button>
                             </div>
 
                             <RangeControl label="Bottom Offset" value={ tagsBottomOffset } min={0} max={160} step={4} onChange={ v => setAttributes({ tagsBottomOffset: v }) } />
@@ -288,19 +291,19 @@ export default function Edit( { attributes, setAttributes } ) {
                             <Divider />
                             <h3 style={{ fontSize:'12px',textTransform:'uppercase',color:'#888',margin:'0 0 8px' }}>Actions list</h3>
                             <div style={{ background: '#1e1e1e', padding: '12px', borderRadius: '4px' }}>
-                                { contactActions.map((act, idx) => (
+                                { (contactActions || []).map((act, idx) => (
                                     <div key={idx} style={{ padding: '8px', background: '#2e2e2e', marginBottom: '8px', borderRadius: '4px' }}>
-                                        <SelectControl label="Type" value={act.type} options={[{label:'Email',value:'email'},{label:'Phone',value:'phone'},{label:'Whatsapp',value:'whatsapp'}]} onChange={v => setObjAttrParams(contactActions, idx, 'type', v, 'contactActions')} />
-                                        <TextControl label="Label Text" value={act.label} onChange={v => setObjAttrParams(contactActions, idx, 'label', v, 'contactActions')} />
-                                        <TextControl label="Value (email/phone num)" value={act.value} onChange={v => setObjAttrParams(contactActions, idx, 'value', v, 'contactActions')} />
+                                        <SelectControl label="Type" value={act.type || 'email'} options={[{label:'Email',value:'email'},{label:'Phone',value:'phone'},{label:'Whatsapp',value:'whatsapp'}]} onChange={v => setObjAttrParams(contactActions, idx, 'type', v, 'contactActions')} />
+                                        <TextControl label="Label Text" value={act.label || ''} onChange={v => setObjAttrParams(contactActions, idx, 'label', v, 'contactActions')} />
+                                        <TextControl label="Value (email/phone num)" value={act.value || ''} onChange={v => setObjAttrParams(contactActions, idx, 'value', v, 'contactActions')} />
                                         <Button isDestructive variant="link" onClick={() => {
-                                            const newActs = [...contactActions];
+                                            const newActs = [...(contactActions || [])];
                                             newActs.splice(idx, 1);
                                             setAttributes({ contactActions: newActs });
                                         }}>Remove Action</Button>
                                     </div>
                                 ))}
-                                <Button variant="secondary" onClick={() => setAttributes({ contactActions: [...contactActions, { type: 'email', label: 'New Action', value: '' }] })} style={{ width: '100%', justifyContent: 'center' }}>+ Add Action</Button>
+                                <Button variant="secondary" onClick={() => setAttributes({ contactActions: [...(contactActions || []), { type: 'email', label: 'New Action', value: '' }] })} style={{ width: '100%', justifyContent: 'center' }}>+ Add Action</Button>
                             </div>
                         </>
                     )}
@@ -358,13 +361,13 @@ export default function Edit( { attributes, setAttributes } ) {
             </div>
 
             {/* 3. Bottom Tags */}
-            { showTagsRow && tagsItems.length > 0 && (
+            { showTagsRow && (tagsItems || []).length > 0 && (
                 <div style={{ position: 'absolute', bottom: `${tagsBottomOffset}px`, left: 0, width: '100%', display: 'flex', justifyContent: 'center', zIndex: 10, padding: '0 20px' }}>
                     <ul style={{ listStyle: 'none', margin: 0, padding: 0, display: 'flex', flexWrap: 'wrap', justifyContent: 'center', gap: `${tagsGap}px` }}>
-                        { tagsItems.map((tag, i) => (
+                        { (tagsItems || []).map((tag, i) => (
                             <li key={i} style={{ display: 'flex', alignItems: 'center', fontSize: `${tagsFontSize}px`, fontWeight: tagsFontWeight, textTransform: tagsTextTransform, letterSpacing: `${tagsLetterSpacing}em`, color: tagsColor }}>
                                 { tag }
-                                { i < tagsItems.length - 1 && (
+                                { i < (tagsItems || []).length - 1 && (
                                     <span style={{ marginLeft: `${tagsGap}px`, opacity: 0.6 }}>•</span>
                                 )}
                             </li>
@@ -378,9 +381,9 @@ export default function Edit( { attributes, setAttributes } ) {
                 <div style={{ position: 'absolute', bottom: `${contactBottomOffset}px`, right: `${contactRightOffset}px`, zIndex: 20, display: 'flex', flexDirection: 'column', alignItems: 'flex-end', gap: '16px' }}>
                     
                     {/* Visual action preview (always visible in editor so they can style it) */}
-                    { contactActions.length > 0 && (
+                    { (contactActions || []).length > 0 && (
                         <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', gap: `${contactActionGap}px` }}>
-                            { contactActions.map((act, i) => (
+                            { (contactActions || []).map((act, i) => (
                                 <div key={i} style={{
                                     display: 'flex', alignItems: 'center', gap: '12px',
                                     background: contactActionBg, border: `1px solid ${contactActionBorder}`, color: contactActionColor,
