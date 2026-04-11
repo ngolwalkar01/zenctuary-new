@@ -1,0 +1,110 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "zenctuary/hero",
+  "title": "Zenctuary Hero",
+  "category": "design",
+  "icon": "cover-image",
+  "description": "Full-viewport highly configurable hero block with modes and scalable floating actions.",
+  "keywords": ["hero", "zenctuary", "header"],
+  "textdomain": "zenctuary",
+  "attributes": {
+
+    "bgImageUrl": { "type": "string", "default": "" },
+    "bgImageId": { "type": "number", "default": 0 },
+    "bgOverlayColor": { "type": "string", "default": "#000000" },
+    "bgOverlayOpacity": { "type": "number", "default": 0.4 },
+
+    "centerMode": { "type": "string", "default": "logo-tagline" },
+
+    "logoUrl": { "type": "string", "default": "" },
+    "logoId": { "type": "number", "default": 0 },
+    "logoAlt": { "type": "string", "default": "" },
+    "logoMaxWidth": { "type": "number", "default": 600 },
+    
+    "taglineText": { "type": "string", "default": "Your journey begins here." },
+    "taglineFontSize": { "type": "number", "default": 20 },
+    "taglineFontWeight": { "type": "string", "default": "400" },
+    "taglineColor": { "type": "string", "default": "#F6F2EA" },
+
+    "titleText": { "type": "string", "default": "SCHEDULE" },
+    "titleFontSize": { "type": "number", "default": 64 },
+    "titleFontWeight": { "type": "string", "default": "400" },
+    "titleTextTransform": { "type": "string", "default": "uppercase" },
+    "titleColor": { "type": "string", "default": "#F6F2EA" },
+
+    "iconUrl": { "type": "string", "default": "" },
+    "iconId": { "type": "number", "default": 0 },
+    "iconAlt": { "type": "string", "default": "" },
+    "iconSize": { "type": "number", "default": 80 },
+
+    "gapCenterElements": { "type": "number", "default": 32 },
+
+    "logoAnim": { "type": "string", "default": "fade" },
+    "logoAnimDur": { "type": "number", "default": 1.2 },
+    "logoAnimDel": { "type": "number", "default": 0.2 },
+
+    "taglineAnim": { "type": "string", "default": "slide-up" },
+    "taglineAnimDur": { "type": "number", "default": 1.0 },
+    "taglineAnimDel": { "type": "number", "default": 0.4 },
+
+    "titleAnim": { "type": "string", "default": "zoom-in" },
+    "titleAnimDur": { "type": "number", "default": 1.2 },
+    "titleAnimDel": { "type": "number", "default": 0.2 },
+
+    "iconAnim": { "type": "string", "default": "fade" },
+    "iconAnimDur": { "type": "number", "default": 1.0 },
+    "iconAnimDel": { "type": "number", "default": 0.1 },
+
+    "showTagsRow": { "type": "boolean", "default": true },
+    "tagsBottomOffset": { "type": "number", "default": 60 },
+    "tagsGap": { "type": "number", "default": 24 },
+    "tagsColor": { "type": "string", "default": "#D8B355" },
+    "tagsFontSize": { "type": "number", "default": 18 },
+    "tagsFontWeight": { "type": "string", "default": "500" },
+    "tagsTextTransform": { "type": "string", "default": "uppercase" },
+    "tagsLetterSpacing": { "type": "number", "default": 0.05 },
+    "tagsItems": {
+      "type": "array",
+      "items": { "type": "string" },
+      "default": ["CLASSES", "SPA", "CAFE", "COMMUNITY"]
+    },
+
+    "showContactBundle": { "type": "boolean", "default": true },
+    "contactRightOffset": { "type": "number", "default": 40 },
+    "contactBottomOffset": { "type": "number", "default": 40 },
+    "contactTriggerBg": { "type": "string", "default": "#D8B355" },
+    "contactTriggerColor": { "type": "string", "default": "#3F3E3E" },
+    "contactTriggerSize": { "type": "number", "default": 64 },
+    "contactActionBg": { "type": "string", "default": "#3F3E3E" },
+    "contactActionBorder": { "type": "string", "default": "#D8B355" },
+    "contactActionColor": { "type": "string", "default": "#D8B355" },
+    "contactActionGap": { "type": "number", "default": 12 },
+    "contactActions": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "type": { "type": "string" },
+          "label": { "type": "string" },
+          "value": { "type": "string" }
+        }
+      },
+      "default": [
+        { "type": "whatsapp", "label": "Write in Whatsapp", "value": "+491658954345" },
+        { "type": "email", "label": "Write E-Mail", "value": "info@example.com" },
+        { "type": "phone", "label": "Call +49 1658954345", "value": "+491658954345" }
+      ]
+    }
+
+  },
+  "supports": {
+    "align": ["full"],
+    "html": false,
+    "className": false
+  },
+  "style": "file:./style.css",
+  "editorStyle": "file:./style.css",
+  "editorScript": "file:./index.js",
+  "viewScript": "file:./view.js"
+}

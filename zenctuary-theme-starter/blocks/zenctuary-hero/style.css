@@ -1,0 +1,308 @@
+/**
+ * Style layout for Zenctuary Hero
+ */
+
+.zenctuary-hero {
+    position: relative;
+    width: 100%;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+
+/* ── 1. Background Layers ── */
+.zenctuary-hero__bg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+}
+
+.zenctuary-hero__bg img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+.zenctuary-hero__overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: var(--zh-bg-overlay-c, #000);
+    opacity: var(--zh-bg-overlay-op, 0.4);
+}
+
+/* ── 2. Inner Center Container ── */
+.zenctuary-hero__inner {
+    position: relative;
+    z-index: 10;
+    width: 100%;
+    max-width: 1400px;
+    padding: 0 40px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.zenctuary-hero__center {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    gap: var(--zh-gap-center, 32px);
+}
+
+.zenctuary-hero__logo-wrapper img {
+    height: auto;
+    width: 100%;
+    display: block;
+}
+
+.zenctuary-hero__tagline-wrapper {
+    font-size: var(--zh-tagline-fs, 20px);
+    font-weight: var(--zh-tagline-fw, 400);
+    color: var(--zh-tagline-c, #F6F2EA);
+    margin: 0;
+}
+
+.zenctuary-hero__title {
+    font-size: var(--zh-title-fs, 64px);
+    font-weight: var(--zh-title-fw, 400);
+    text-transform: var(--zh-title-tt, uppercase);
+    color: var(--zh-title-c, #F6F2EA);
+    margin: 0;
+    line-height: 1.1;
+}
+
+.zenctuary-hero__icon-wrapper img {
+    display: block;
+    object-fit: contain;
+}
+
+/* ── 3. Bottom Tags Row ── */
+.zenctuary-hero__tags-wrapper {
+    position: absolute;
+    bottom: var(--zh-tags-bottom, 60px);
+    left: 0;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    z-index: 10;
+    padding: 0 20px;
+}
+
+.zenctuary-hero__tags-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: var(--zh-tags-gap, 24px);
+}
+
+.zenctuary-hero__tags-list li {
+    font-size: var(--zh-tags-fs, 18px);
+    font-weight: var(--zh-tags-fw, 500);
+    text-transform: var(--zh-tags-tt, uppercase);
+    letter-spacing: var(--zh-tags-ls, 0.05em);
+    color: var(--zh-tags-c, #D8B355);
+    display: flex;
+    align-items: center;
+}
+
+/* Generate dots between items */
+.zenctuary-hero__tags-list li:not(:last-child)::after {
+    content: "•";
+    margin-left: var(--zh-tags-gap, 24px);
+    color: inherit;
+    opacity: 0.6;
+}
+
+/* ── 4. Floating Contact Bundle ── */
+.zenctuary-hero__contact-wrapper {
+    position: absolute;
+    bottom: var(--zh-contact-bottom, 40px);
+    right: var(--zh-contact-right, 40px);
+    z-index: 20;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 16px;
+}
+
+.zenctuary-hero__contact-actions {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: var(--zh-contact-act-gap, 12px);
+    
+    /* Animation state for popup */
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(20px);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    pointer-events: none;
+}
+
+/* When active, show the links */
+.zenctuary-hero__contact-wrapper.is-open .zenctuary-hero__contact-actions {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+    pointer-events: auto;
+}
+
+.zenctuary-hero__contact-btn {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    background: var(--zh-contact-act-bg, #3F3E3E);
+    border: 1px solid var(--zh-contact-act-bd, #D8B355);
+    color: var(--zh-contact-act-c, #D8B355);
+    border-radius: 999px;
+    padding: 10px 14px 10px 20px;
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 15px;
+    transition: all 0.2s ease;
+}
+
+.zenctuary-hero__contact-btn:hover {
+    background: var(--zh-contact-act-bd, #D8B355);
+    color: var(--zh-contact-act-bg, #3F3E3E);
+}
+
+.zh-cbtn-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.zenctuary-hero__contact-trigger {
+    width: var(--zh-contact-trig-sz, 64px);
+    height: var(--zh-contact-trig-sz, 64px);
+    border-radius: 50%;
+    background: var(--zh-contact-trig-bg, #D8B355);
+    color: var(--zh-contact-trig-c, #3F3E3E);
+    border: none;
+    outline: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    transition: transform 0.2s ease, background 0.2s ease;
+}
+
+.zenctuary-hero__contact-trigger:hover {
+    transform: scale(1.05);
+}
+
+/* Toggle trigger icons based on state */
+.zenctuary-hero__contact-wrapper.is-open .zh-cclose-icon {
+    display: block !important;
+}
+.zenctuary-hero__contact-wrapper.is-open svg:first-child {
+    display: none !important;
+}
+
+/* ── 5. Entrance Animations (Intersection Observer) ── */
+[data-animate] {
+    transition-property: opacity, transform;
+    transition-timing-function: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+[data-animate="fade"] {
+    opacity: 0;
+}
+[data-animate="fade"].is-visible {
+    opacity: 1;
+}
+
+[data-animate="slide-up"] {
+    opacity: 0;
+    transform: translateY(40px);
+}
+[data-animate="slide-up"].is-visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+[data-animate="slide-down"] {
+    opacity: 0;
+    transform: translateY(-40px);
+}
+[data-animate="slide-down"].is-visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+[data-animate="slide-left"] {
+    opacity: 0;
+    transform: translateX(40px);
+}
+[data-animate="slide-left"].is-visible {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+[data-animate="slide-right"] {
+    opacity: 0;
+    transform: translateX(-40px);
+}
+[data-animate="slide-right"].is-visible {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+[data-animate="zoom-in"] {
+    opacity: 0;
+    transform: scale(0.9);
+}
+[data-animate="zoom-in"].is-visible {
+    opacity: 1;
+    transform: scale(1);
+}
+
+/* ── 6. Responsive Fallbacks ── */
+@media (max-width: 1024px) {
+    .zenctuary-hero__title {
+        font-size: clamp(36px, 8vw, var(--zh-title-fs, 64px));
+    }
+    .zenctuary-hero__logo-wrapper img {
+        max-width: 80% !important;
+        margin: 0 auto;
+    }
+}
+
+@media (max-width: 768px) {
+    .zenctuary-hero__contact-wrapper {
+        bottom: 20px;
+        right: 20px;
+    }
+    
+    .zenctuary-hero__tags-wrapper {
+        bottom: 40px;
+    }
+    
+    .zenctuary-hero__tags-list {
+        column-gap: 16px;
+        row-gap: 8px;
+    }
+    .zenctuary-hero__tags-list li:not(:last-child)::after {
+        content: ""; /* Wrap nicely on mobile without orphans */
+        margin: 0;
+        display: none;
+    }
+}

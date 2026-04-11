@@ -1,0 +1,17 @@
+/**
+ * Editor-only styles for Zenctuary Hero
+ */
+
+.wp-block-zenctuary-hero {
+    margin: 0;
+}
+
+/* Add slight padding/borders for editor helpers */
+.zh-editor-placeholder {
+    padding: 20px;
+    background: rgba(0,0,0,0.5);
+    border: 2px dashed #666;
+    border-radius: 8px;
+    text-align: center;
+    color: #fff;
+}
