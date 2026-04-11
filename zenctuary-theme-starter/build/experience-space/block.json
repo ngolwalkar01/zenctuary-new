@@ -1,0 +1,54 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "zenctuary/experience-space",
+  "version": "1.0.0",
+  "title": "Experience Space",
+  "category": "design",
+  "icon": "groups",
+  "description": "Displays bookable experience products grouped by a primary taxonomy (e.g. Space Type) with an inner accordion by a second taxonomy (e.g. Activity Type). Fully configurable.",
+  "attributes": {
+    "filterTaxonomy": {
+      "type": "string",
+      "default": "experience_category"
+    },
+    "filterTermSlug": {
+      "type": "string",
+      "default": ""
+    },
+    "primaryTaxonomy": {
+      "type": "string",
+      "default": "space_type"
+    },
+    "accordionTaxonomy": {
+      "type": "string",
+      "default": "activity_type"
+    },
+    "showZencoins": {
+      "type": "boolean",
+      "default": true
+    },
+    "showDifficulty": {
+      "type": "boolean",
+      "default": true
+    },
+    "showBookButton": {
+      "type": "boolean",
+      "default": true
+    },
+    "bookButtonLabel": {
+      "type": "string",
+      "default": "Book now →"
+    }
+  },
+  "supports": {
+    "html": false,
+    "align": [
+      "full",
+      "wide"
+    ]
+  },
+  "textdomain": "zenctuary",
+  "editorScript": "file:./index.js",
+  "render": "file:./render.php"
+}

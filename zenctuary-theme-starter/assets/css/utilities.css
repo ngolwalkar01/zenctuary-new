@@ -1,0 +1,189 @@
+/* ==========================================
+   TEXT UTILITIES
+   ========================================== */
+
+.zen-text-gold {
+  color: var(--zen-color-gold);
+}
+
+.zen-text-beige {
+  color: var(--zen-color-text);
+}
+
+.zen-text-muted {
+  color: var(--zen-color-border);
+}
+
+.zen-text-center {
+  text-align: center;
+}
+
+.zen-text-left {
+  text-align: left;
+}
+
+.zen-text-right {
+  text-align: right;
+}
+
+/* ==========================================
+   BACKGROUND UTILITIES
+   ========================================== */
+
+.zen-bg-grey {
+  background: var(--zen-color-bg);
+}
+
+.zen-bg-grey-alt {
+  background: var(--zen-color-bg-alt);
+}
+
+.zen-bg-gold {
+  background: var(--zen-color-gold);
+  color: var(--zen-color-bg);
+}
+
+.zen-bg-beige {
+  background: var(--zen-color-text);
+  color: var(--zen-color-bg);
+}
+
+/* ==========================================
+   DISPLAY / VISIBILITY
+   ========================================== */
+
+.zen-hidden {
+  display: none !important;
+}
+
+.zen-hide-mobile {
+  display: block;
+}
+
+.zen-show-mobile {
+  display: none;
+}
+
+/* ==========================================
+   FLEX / ALIGNMENT HELPERS
+   ========================================== */
+
+.zen-flex {
+  display: flex;
+}
+
+.zen-flex-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.zen-flex-between {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.zen-flex-column {
+  display: flex;
+  flex-direction: column;
+}
+
+/* ==========================================
+   GAP HELPERS
+   ========================================== */
+
+.zen-gap-8 {
+  gap: var(--zen-space-8);
+}
+
+.zen-gap-16 {
+  gap: var(--zen-space-16);
+}
+
+.zen-gap-24 {
+  gap: var(--zen-space-24);
+}
+
+.zen-gap-32 {
+  gap: var(--zen-space-32);
+}
+
+.zen-gap-48 {
+  gap: var(--zen-space-48);
+}
+
+/* ==========================================
+   SPACING HELPERS
+   ========================================== */
+
+.zen-mb-8 {
+  margin-bottom: var(--zen-space-8);
+}
+
+.zen-mb-16 {
+  margin-bottom: var(--zen-space-16);
+}
+
+.zen-mb-24 {
+  margin-bottom: var(--zen-space-24);
+}
+
+.zen-mb-32 {
+  margin-bottom: var(--zen-space-32);
+}
+
+.zen-mb-48 {
+  margin-bottom: var(--zen-space-48);
+}
+
+.zen-mb-64 {
+  margin-bottom: var(--zen-space-64);
+}
+
+.zen-mt-24 {
+  margin-top: var(--zen-space-24);
+}
+
+.zen-mt-32 {
+  margin-top: var(--zen-space-32);
+}
+
+.zen-pt-120 {
+  padding-top: var(--zen-space-120);
+}
+
+.zen-pb-120 {
+  padding-bottom: var(--zen-space-120);
+}
+
+/* ==========================================
+   WIDTH / MEDIA
+   ========================================== */
+
+.zen-w-full {
+  width: 100%;
+}
+
+.zen-img-rounded {
+  border-radius: var(--zen-radius-card);
+  overflow: hidden;
+}
+
+/* ==========================================
+   RESPONSIVE
+   ========================================== */
+
+@media (max-width: 767px) {
+  .zen-hide-mobile {
+    display: none !important;
+  }
+
+  .zen-show-mobile {
+    display: block !important;
+  }
+
+  .zen-img-rounded {
+    border-radius: var(--zen-radius-card-mobile);
+  }
+}

@@ -1,0 +1,259 @@
+/* ==========================================
+   BASE / TOKENS / GLOBAL RESETS
+   ========================================== */
+
+:root {
+  /* Colors */
+  --zen-color-bg: #3F3E3E;
+  --zen-color-bg-alt: #444444;
+  --zen-color-text: #F6F2EA;
+  --zen-color-gold: #D8B355;
+  --zen-color-gold-light: #F9C94E;
+  --zen-color-border: #9A9A9A;
+  --zen-color-muted: #545454;
+  --zen-color-error: #FF4A4A;
+
+  /* Fonts */
+  --zen-font-heading: "Montserrat", sans-serif;
+  --zen-font-body: "DM Sans", sans-serif;
+
+  /* Radius */
+  --zen-radius-card: 24px;
+  --zen-radius-card-mobile: 8px;
+  --zen-radius-btn: 32px;
+  --zen-radius-input: 8px;
+  --zen-radius-popup-mobile: 20px;
+  --zen-radius-popup-desktop: 24px;
+
+  /* Layout */
+  --zen-container: 1200px;
+  --zen-page-pad-x: 120px;
+  --zen-page-pad-x-mobile: 32px;
+
+  /* Spacing scale */
+  --zen-space-8: 8px;
+  --zen-space-16: 16px;
+  --zen-space-24: 24px;
+  --zen-space-32: 32px;
+  --zen-space-48: 48px;
+  --zen-space-64: 64px;
+  --zen-space-120: 120px;
+  --zen-space-180: 180px;
+
+  /* Sizes */
+  --zen-btn-height-lg: 54px;
+  --zen-btn-height-sm: 44px;
+  --zen-input-height: 52px;
+  --zen-header-height: 120px;
+  --zen-faq-height: 1211px;
+  --zen-space-50: 50px;
+  --zen-space-100: 100px;
+  --zen-image-block-width: 715px;
+
+  /* Borders */
+  --zen-border-width: 2px;
+
+  /* Typography */
+  --zen-fs-h1: 56px;
+  --zen-fs-h2: 36px;
+  --zen-fs-h3: 28px;
+  --zen-fs-h4: 24px;
+  --zen-fs-body-lg: 18px;
+  --zen-fs-body: 16px;
+  --zen-fs-body-sm: 14px;
+
+  --zen-lh-heading: 1.2;
+  --zen-lh-body: 1.4;
+}
+
+/* ==========================================
+   RESET / NORMALIZE
+   ========================================== */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  background: var(--zen-color-bg);
+  color: var(--zen-color-text);
+  font-family: var(--zen-font-body);
+  font-size: var(--zen-fs-body);
+  line-height: var(--zen-lh-body);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body.admin-bar .zen-site-header {
+  top: 32px;
+}
+
+img,
+picture,
+video,
+canvas,
+svg {
+  display: block;
+  max-width: 100%;
+}
+
+img {
+  height: auto;
+}
+
+figure {
+  margin: 0;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button,
+input,
+textarea,
+select {
+  font: inherit;
+}
+
+ul,
+ol {
+  margin: 0;
+  padding: 0;
+}
+
+p {
+  margin-top: 0;
+  margin-bottom: 0;
+  font-size: var(--zen-fs-body);
+  line-height: var(--zen-lh-body);
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+.site-main,
+.zen-page {
+  overflow-x: clip;
+}
+
+/* ==========================================
+   GLOBAL TYPOGRAPHY
+   ========================================== */
+
+.zen-h1,
+h1 {
+  font-family: var(--zen-font-heading);
+  font-size: var(--zen-fs-h1);
+  line-height: var(--zen-lh-heading);
+  font-weight: 600;
+  letter-spacing: 0;
+  color: var(--zen-color-gold);
+}
+
+.zen-h2,
+h2 {
+  font-family: var(--zen-font-heading);
+  font-size: var(--zen-fs-h2);
+  line-height: var(--zen-lh-heading);
+  font-weight: 600;
+  letter-spacing: 0;
+  color: var(--zen-color-gold);
+}
+
+.zen-h3,
+h3 {
+  font-family: var(--zen-font-body);
+  font-size: var(--zen-fs-h3);
+  line-height: var(--zen-lh-heading);
+  font-weight: 700;
+  letter-spacing: 0;
+}
+
+.zen-h4,
+h4 {
+  font-family: var(--zen-font-heading);
+  font-size: var(--zen-fs-h4);
+  line-height: var(--zen-lh-heading);
+  font-weight: 600;
+  letter-spacing: 0;
+}
+
+.zen-body-lg {
+  font-size: var(--zen-fs-body-lg);
+  line-height: var(--zen-lh-body);
+}
+
+.zen-body {
+  font-size: var(--zen-fs-body);
+  line-height: var(--zen-lh-body);
+}
+
+.zen-body-sm {
+  font-size: var(--zen-fs-body-sm);
+  line-height: var(--zen-lh-body);
+}
+
+/* WordPress content defaults */
+.wp-block-heading {
+  margin-bottom: var(--zen-space-24);
+}
+
+.wp-block-paragraph {
+  margin-bottom: var(--zen-space-24);
+}
+
+/* ==========================================
+   RESPONSIVE TYPOGRAPHY
+   ========================================== */
+
+@media (max-width: 767px) {
+  body {
+    font-size: var(--zen-fs-body);
+  }
+
+  .zen-h1,
+  h1 {
+    font-size: 36px;
+  }
+
+  .zen-h2,
+  h2 {
+    font-size: 36px;
+  }
+
+  .zen-h3,
+  h3 {
+    font-size: 28px;
+  }
+
+  .zen-h4,
+  h4 {
+    font-size: 24px;
+  }
+
+  .zen-body-lg,
+  .zen-body,
+  p {
+    font-size: 16px;
+  }
+
+  .zen-body-sm {
+    font-size: 14px;
+  }
+}

@@ -1,0 +1,1253 @@
+/* ==========================================
+   LAYOUT COMPONENTS
+   ========================================== */
+
+.zen-container {
+  width: 100%;
+  max-width: var(--zen-container);
+  margin-inline: auto;
+}
+
+.zen-page-padding {
+  padding-left: var(--zen-page-pad-x);
+  padding-right: var(--zen-page-pad-x);
+}
+
+.zen-section {
+  padding-top: var(--zen-space-180);
+  padding-bottom: var(--zen-space-180);
+  padding-left: var(--zen-space-120);
+  padding-right: var(--zen-space-120);
+}
+
+.zen-section--compact {
+  padding-top: var(--zen-space-120);
+  padding-bottom: var(--zen-space-120);
+}
+
+.zen-section-title {
+  margin-bottom: var(--zen-space-24);
+}
+
+.zen-section-intro {
+  max-width: 720px;
+}
+
+.zen-grid-2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--zen-space-32);
+  align-items: center;
+}
+
+.zen-grid-3 {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--zen-space-32);
+}
+
+.zen-grid-4 {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--zen-space-32);
+}
+
+/* ==========================================
+   HEADER / FOOTER
+   ========================================== */
+
+.zen-site-header .zen-container{
+	margin-block-start:32px;
+}
+
+.zen-site-header {
+  min-height: var(--zen-header-height);
+  position: relative;
+  z-index: 20;
+}
+
+.zen-header-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  background: transparent !important;
+}
+
+/* Hide WooCommerce auto-injected Header Icons */
+.wc-block-mini-cart,
+.site-header-cart,
+.wp-block-woocommerce-mini-cart,
+.wp-block-woocommerce-customer-account {
+  display: none !important;
+}
+
+
+.zen-site-footer {
+  padding-top: var(--zen-space-64);
+  padding-bottom: var(--zen-space-32);
+}
+
+/* ==========================================
+   WPML NATIVE DROPDOWN OVERRIDES
+   ========================================== */
+.wpml-ls-legacy-dropdown a,
+.wpml-ls-legacy-dropdown a:hover,
+.wpml-ls-legacy-dropdown a:focus {
+  background-color: transparent !important;
+  border: none !important;
+  padding: 0 !important;
+}
+
+.wpml-ls-legacy-dropdown .wpml-ls-sub-menu {
+  border: none !important;
+  background-color: var(--zen-color-bg) !important;
+  border-radius: var(--zen-radius-card-mobile, 8px) !important;
+  padding: 8px !important;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5) !important;
+}
+
+.wpml-ls-legacy-dropdown {
+  width: auto !important;
+}
+
+/* Hide WPML arrow and native text if present */
+.wpml-ls-legacy-dropdown .wpml-ls-item-toggle:after {
+  display: none !important;
+}
+
+.wpml-ls-legacy-dropdown .wpml-ls-native,
+.wpml-ls-legacy-dropdown .wpml-ls-display {
+  display: none !important;
+}
+
+/* ==========================================
+   BUTTONS
+   ========================================== */
+
+.zen-btn,
+.wp-element-button,
+.wp-block-button__link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--zen-space-8);
+  min-height: var(--zen-btn-height-lg);
+  padding: 16px 32px;
+  border-radius: var(--zen-radius-btn);
+  border: var(--zen-border-width) solid transparent;
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 1.4;
+  white-space: nowrap;
+  transition: all 0.25s ease;
+  cursor: pointer;
+}
+
+.zen-btn--primary {
+  background: var(--zen-color-gold);
+  color: var(--zen-color-bg);
+  border-color: var(--zen-color-gold);
+}
+
+.zen-btn--primary:hover {
+  background: transparent;
+  color: var(--zen-color-gold);
+}
+
+.zen-btn--outline-gold {
+  background: transparent;
+  color: var(--zen-color-gold);
+  border-color: var(--zen-color-gold);
+}
+
+.zen-btn--outline-gold:hover {
+  background: var(--zen-color-gold);
+  color: var(--zen-color-bg);
+}
+
+.zen-btn--outline-neutral {
+  background: transparent;
+  color: var(--zen-color-text);
+  /*border-color: var(--zen-color-border);*/
+}
+
+.zen-btn--outline-neutral:hover {
+  /*border-color: var(--zen-color-gold);*/
+  color: var(--zen-color-gold);
+}
+
+.zen-btn--small {
+  min-height: var(--zen-btn-height-sm);
+  padding: 8px 10px 8px 0px;
+}
+
+.wp-block-navigation__responsive-container .wp-block-navigation__responsive-container-content {
+    gap: 23px;
+}
+
+.wpml-ls-legacy-dropdown a{
+	line-height:0 !important;
+}
+
+/* ==========================================
+   FORM ELEMENTS
+   ========================================== */
+
+input[type="text"],
+input[type="email"],
+input[type="number"],
+input[type="password"],
+input[type="tel"],
+textarea {
+  min-height: 52px;
+  padding: 16px;
+  border-radius: 8px;
+  border: 2px solid var(--wp--preset--color--secondary-grey-light, #9A9A9A);
+  background-color: var(--wp--preset--color--primary-grey, #3F3E3E);
+  color: var(--wp--preset--color--primary-beige, #F6F2EA);
+  font-family: var(--wp--preset--font-family--dm-sans, sans-serif);
+  font-size: 14px;
+  line-height: 1.4;
+  width: 100%;
+  transition: all 0.2s ease;
+  box-sizing: border-box;
+}
+
+input[type="text"]:focus,
+input[type="email"]:focus,
+input[type="number"]:focus,
+input[type="password"]:focus,
+input[type="tel"]:focus,
+textarea:focus {
+  outline: none;
+  border-color: var(--wp--preset--color--primary-beige);
+  background-color: var(--wp--preset--color--primary-beige);
+  color: var(--wp--preset--color--primary-grey);
+}
+
+input[type="checkbox"] {
+  appearance: none;
+  -webkit-appearance: none;
+  width: 32px;
+  height: 32px;
+  min-width: 32px;
+  border-radius: 8px;
+  border: 2px solid var(--wp--preset--color--secondary-grey-light);
+  background-color: transparent;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0;
+  vertical-align: middle;
+}
+
+input[type="checkbox"]:checked {
+  background-color: var(--wp--preset--color--primary-gold);
+  border-color: var(--wp--preset--color--primary-gold);
+}
+
+input[type="checkbox"]:checked::after {
+  content: "✓";
+  color: var(--wp--preset--color--primary-grey);
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.zen-input--error {
+  border-color: var(--wp--preset--color--error, #FF4A4A) !important;
+}
+
+/* ==========================================
+   CARDS
+   ========================================== */
+
+.zen-card {
+  background: var(--zen-color-bg);
+  border: var(--zen-border-width) solid var(--zen-color-border);
+  border-radius: var(--zen-radius-card);
+  padding: 32px;
+  overflow: hidden;
+}
+
+.zen-card--alt {
+  background: var(--zen-color-bg-alt);
+}
+
+.zen-card--gold {
+  background: var(--zen-color-gold);
+  color: var(--zen-color-bg);
+  border-color: var(--zen-color-gold);
+}
+
+.zen-card--beige {
+  background: var(--zen-color-text);
+  color: var(--zen-color-bg);
+}
+
+.zen-card__stack {
+  display: flex;
+  flex-direction: column;
+  gap: var(--zen-space-24);
+}
+
+/* ==========================================
+   HERO
+   ========================================== */
+
+.zen-hero {
+  position: relative;
+  min-height: 85vh;
+  display: flex;
+  align-items: center;
+}
+
+.zen-hero__media {
+  position: absolute;
+  inset: 0;
+}
+
+.zen-hero__media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.zen-hero__overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(20, 20, 20, 0.35);
+}
+
+.zen-hero__content {
+  position: relative;
+  z-index: 2;
+}
+
+/* ==========================================
+   SPLIT SECTION
+   ========================================== */
+
+.zen-split-media img {
+  width: 100%;
+  border-radius: var(--zen-radius-card);
+  display: block;
+}
+
+/* ==========================================
+   FORMS
+   ========================================== */
+
+.zen-input,
+input[type="text"],
+input[type="email"],
+input[type="tel"],
+input[type="password"],
+textarea,
+select {
+  width: 100%;
+  min-height: var(--zen-input-height);
+  padding: 16px;
+  border-radius: var(--zen-radius-input);
+  border: var(--zen-border-width) solid var(--zen-color-border);
+  background: var(--zen-color-bg);
+  color: var(--zen-color-text);
+  font-size: 14px;
+  line-height: 1.4;
+}
+
+textarea {
+  min-height: 140px;
+  resize: vertical;
+}
+
+.zen-input:focus,
+input:focus,
+textarea:focus,
+select:focus {
+  outline: none;
+  border-color: var(--zen-color-gold);
+}
+
+.zen-field-error,
+input.is-error,
+textarea.is-error,
+select.is-error {
+  border-color: var(--zen-color-error);
+}
+
+.zen-checkbox,
+input[type="checkbox"] {
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  border: var(--zen-border-width) solid var(--zen-color-border);
+}
+
+/* ==========================================
+   NEWSLETTER
+   ========================================== */
+
+.zen-newsletter-input-wrapper {
+  position: relative;
+  display: flex;
+  margin-bottom: 24px;
+}
+
+.zen-input-newsletter {
+  background: transparent !important;
+  border: 1px solid var(--zen-color-muted) !important;
+  padding-right: 50px !important;
+}
+
+.zen-newsletter-submit {
+  position: absolute;
+  right: 16px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: transparent;
+  border: none;
+  color: var(--zen-color-text);
+  font-size: 20px;
+  cursor: pointer;
+}
+
+.zen-newsletter-privacy {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 14px;
+}
+
+.zen-checkbox-small {
+  width: 24px !important;
+  height: 24px !important;
+  border-radius: 4px !important;
+}
+
+/* ==========================================
+   FAQ OVERLAP LAYOUT & NATIVE ACCORDION
+   ========================================== */
+
+.zen-overlap-right {
+  min-width: 200%;
+  max-width: none !important;
+  margin-right: -35%;
+  position: relative;
+  z-index: 10;
+}
+
+@media (max-width: 1024px) {
+  .zen-overlap-right {
+    width: 100%;
+    margin-right: 0;
+  }
+}
+
+.zen-faq-section {
+  min-height: var(--zen-faq-height);
+}
+
+.zen-faq-section .wp-block-media-text.is-vertically-aligned-center>.wp-block-media-text__content,
+.zen-faq-section .wp-block-media-text.is-vertically-aligned-center>.wp-block-media-text__media,
+.zen-faq-section .wp-block-media-text__content,
+.zen-faq-section .wp-block-media-text__media {
+  align-self: self-start;
+}
+
+/* Perfect shrinking for category tabs in FAQs */
+.zen-faq-section .wp-block-button__link {
+  font-size: 13px !important;
+  padding: 6px 20px !important;
+  min-height: auto !important;
+  border-radius: 24px !important;
+  /* Forces the pill shape! */
+  font-weight: 600 !important;
+}
+
+/* Fix active Primary Tab square-block disturbance */
+.zen-faq-section .wp-block-button.zen-btn--primary {
+  background: transparent !important;
+  border: none !important;
+}
+
+.zen-faq-section .wp-block-button.zen-btn--primary .wp-block-button__link {
+  background: var(--wp--preset--color--primary-gold) !important;
+  border-color: var(--wp--preset--color--primary-gold) !important;
+  color: var(--wp--preset--color--primary-grey) !important;
+}
+
+/* Inactive FAQ category tabs precise styling */
+.zen-faq-section .zen-btn--outline-neutral .wp-block-button__link {
+  background: var(--wp--preset--color--primary-grey) !important;
+  border-color: var(--wp--preset--color--secondary-grey-light) !important;
+  color: var(--wp--preset--color--primary-beige) !important;
+}
+
+/* Force pill gap to exactly 5px, overriding WP's native flex gap */
+:root :where(.zen-faq-section .is-layout-flex),
+.zen-faq-section .wp-block-buttons {
+  gap: 5px !important;
+}
+
+.zen-faq-accordion {
+  border: 1px solid var(--wp--preset--color--secondary-grey-light) !important;
+  border-radius: 23px !important;
+  background: var(--wp--preset--color--primary-grey) !important;
+  margin-bottom: var(--zen-space-16) !important;
+  color: var(--wp--preset--color--primary-beige) !important;
+  overflow: hidden !important;
+}
+
+.zen-faq-accordion summary {
+  list-style: none !important;
+  /* Hide native triangle */
+  padding: 13px 32px !important;
+  font-family: var(--wp--preset--font-family--dm-sans) !important;
+  font-size: 16px !important;
+  font-weight: 700 !important;
+  cursor: pointer !important;
+  display: flex !important;
+  justify-content: space-between !important;
+  align-items: center !important;
+}
+
+.zen-faq-accordion summary::-webkit-details-marker {
+  display: none !important;
+}
+
+/* Custom Plus Icon using pseudo-element fixed width to prevent toggling jitter */
+.zen-faq-accordion summary::after {
+  content: "+";
+  font-size: 32px;
+  font-weight: 300;
+  line-height: 1;
+  color: var(--wp--preset--color--primary-beige);
+  margin-left: 16px;
+  display: inline-block !important;
+  width: 24px !important;
+  text-align: center !important;
+}
+
+.zen-faq-accordion[open] summary::after {
+  content: "−";
+  /* Native minus sign */
+}
+
+/* Internal Answer formatting */
+.zen-faq-accordion>*:not(summary) {
+  padding: 0 32px 24px 32px !important;
+  margin: 0 !important;
+  font-size: 16px !important;
+  font-family: var(--wp--preset--font-family--dm-sans) !important;
+  color: var(--wp--preset--color--primary-beige) !important;
+}
+
+
+/* ==========================================
+   POPUP SHELL
+   ========================================== */
+
+.zen-popup {
+  border-radius: var(--zen-radius-popup-desktop);
+  overflow: hidden;
+}
+
+.zen-popup-backdrop {
+  background: rgba(0, 0, 0, 0.55);
+}
+
+/* ==========================================
+   ZENCOINS PRICING & VISUALS
+   ========================================== */
+
+.zen-hero-bottom {
+  position: absolute;
+  bottom: -290px;
+  left: 0;
+  right: 0;
+  width: 100%;
+  text-align: center;
+}
+
+.zen-coins-section {
+  gap: 64px 150px;
+}
+
+.zen-coins-section h2 {
+  font-weight: 700;
+}
+
+.zen-coins-section .zen-zencoin-title-group {
+  gap: 0;
+}
+
+.zen-coins-section .zen-pricing-box {
+  border-radius: 24px;
+background-color:var(--wp--preset--color--primary-grey,#3f3e3e);
+}
+
+.zen-coins-section .zen-price-top {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+}
+
+.zen-coins-section .zen-price-top p {
+  margin: 0;
+  color: var(--wp--preset--color--primary-gold);
+  font-weight: 700;
+  text-transform: uppercase;
+  line-height: 1;
+}
+
+.zen-coins-section .wp-block-separator {
+  margin: 26px 0;
+  border: 0;
+  border-top: 1px solid rgba(255, 255, 255, 0.35);
+  opacity: 1;
+}
+
+.zen-coins-section .zen-price-row {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    column-gap: 32px;
+    row-gap: 20px;
+    align-content: space-around;
+}
+
+.zen-coins-section .zen-price-title {
+  flex: 1 1 auto;
+  margin: 0;
+  color: var(--wp--preset--color--primary-beige);
+  font-weight: 700;
+  text-transform: uppercase;
+  line-height: 1.2;
+	font-size:18px;
+}
+
+.zen-coins-section .zen-price-row-right {
+  flex: 0 0 auto;
+  display: inline-flex;
+  align-items: center;
+  gap: 14px;
+  white-space: nowrap;
+}
+
+.zen-coins-section .zen-price-label {
+  margin: 0;
+  color: var(--wp--preset--color--primary-gold);
+  font-weight: 700;
+  text-transform: uppercase;
+  line-height: 1;
+}
+
+.zen-coins-section .zen-price-desc {
+  flex: 0 0 100%;
+  margin: 0;
+  color: var(--wp--preset--color--secondary-grey-light);
+  font-size: 16px;
+  line-height: 1.45;
+}
+
+.zen-coins-section .zen-coins-group {
+  display: inline-flex;
+  align-items: center;
+}
+
+.zen-coins-section .zen-coins-group .zen-coin-icon + .zen-coin-icon {
+  margin-left: -8px;
+}
+
+.zen-coins-section .zen-coin-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 39px;
+  height: 39px;
+  min-width: 39px;
+  border-radius: 50%;
+  background-color: var(--wp--preset--color--primary-gold);
+  color: var(--wp--preset--color--primary-grey);
+  font-family: var(--wp--preset--font-family--dm-sans);
+  font-weight: 700;
+  font-size: 14px;
+  border: 1px solid var(--wp--preset--color--primary-grey);
+  box-shadow:
+    inset 0 0 0 3px var(--wp--preset--color--primary-gold),
+    inset 0 0 0 4px var(--wp--preset--color--primary-grey);
+}
+
+.zen-coins-section .zen-coin-icon--large {
+  width: 39px;
+  height: 39px;
+}
+
+@media (max-width: 991px) {
+  .zen-coins-section {
+    gap: 40px;
+  }
+
+  .zen-coins-section .zen-price-row {
+    row-gap: 14px;
+  }
+
+  .zen-coins-section .zen-price-row-right {
+    flex: 0 0 100%;
+    justify-content: flex-start;
+  }
+}
+
+/* Zencoin Styling */
+.zen-coin-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background-color: var(--wp--preset--color--primary-gold);
+  color: var(--wp--preset--color--primary-grey);
+  font-family: var(--wp--preset--font-family--dm-sans);
+  font-weight: 700;
+  font-size: 14px;
+  /* Simulate the inner ring */
+  border: 1px solid var(--wp--preset--color--primary-beige);
+  box-shadow: inset 0 0 0 3px var(--wp--preset--color--primary-gold), inset 0 0 0 4px var(--wp--preset--color--primary-grey);
+}
+
+.zen-coin-icon--large {
+  width: 48px;
+  height: 48px;
+  font-size: 20px;
+  /* Thicker rings for the header variant */
+  box-shadow: inset 0 0 0 4px var(--wp--preset--color--primary-gold), inset 0 0 0 5px var(--wp--preset--color--primary-grey);
+}
+
+.zen-coins-group {
+  display: flex !important;
+  align-items: center !important;
+}
+
+/* Force overlap on consecutive coins */
+.zen-coins-group .zen-coin-icon+.zen-coin-icon {
+  margin-left: -12px;
+  position: relative;
+  z-index: 10;
+}
+
+/* Stagger z-index so left-most coins render on top visually naturally like the design */
+.zen-coins-group .zen-coin-icon:nth-child(1) {
+  z-index: 30;
+}
+
+.zen-coins-group .zen-coin-icon:nth-child(2) {
+  z-index: 20;
+}
+
+.zen-coins-group .zen-coin-icon:nth-child(3) {
+  z-index: 10;
+}
+
+/* ==========================================
+   FEATURES GRID (AUTO-NUMBERING)
+   ========================================== */
+
+.zen-features-wrapper {
+  /* Establish our global counter for automatic numeric generation */
+  counter-reset: zen-feature-counter;
+}
+
+.zen-feature-item {
+  position: relative;
+  counter-increment: zen-feature-counter;
+  display: flex !important;
+  flex-direction: row;
+  align-items: flex-start;
+  gap: 32px;
+}
+
+/* Pseudo-element to dynamically generate 01, 02 sequentially */
+.zen-feature-item::before {
+  content: counter(zen-feature-counter, decimal-leading-zero);
+  font-size: 16px;
+  font-family: var(--wp--preset--font-family--dm-sans, inherit);
+  color: var(--wp--preset--color--primary-beige, #F6F2EA);
+  flex-shrink: 0;
+  margin-top: 6px;
+}
+
+.zen-feature-item .zen-feature-icon {
+  flex-shrink: 0;
+  margin: 0 !important;
+  line-height: 0;
+}
+
+.zen-faq-section .wp-block-group.is-layout-flow:not(.zen-overlap-right):not(.zen-faq-group) {
+  padding-right: 15%;
+  padding-left: 15%;
+  padding-top: 25%;
+  padding-bottom: 25%;
+}
+
+/* ==========================================
+   EXPERIENCE SPACE BLOCK
+   ========================================== */
+
+.zen-experience-space-block {
+  display: flex;
+  flex-direction: column;
+  gap: 80px;
+	padding-top: var(--zen-space-180);
+	padding-bottom: var(--zen-space-180);
+	padding-left: var(--zen-space-120);
+	padding-right: var(--zen-space-120);
+}
+
+/* Space section */
+.zen-space-section {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+/* Space header: icon + title inline */
+.zen-space-header {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.zen-space-icon {
+  width: 48px;
+  height: 48px;
+  flex-shrink: 0;
+  object-fit: contain;
+}
+
+.zen-space-title {
+  font-family: var(--zen-font-heading);
+  font-size: var(--zen-fs-h2);
+  font-weight: 700;
+  text-transform: uppercase;
+  color: var(--wp--preset--color--primary-gold);
+  margin: 0;
+  letter-spacing: 0.05em;
+}
+
+.zen-space-description {
+  font-size: var(--zen-fs-body-lg);
+  color: var(--wp--preset--color--primary-beige);
+  line-height: var(--zen-lh-body);
+  margin: 0;
+  max-width: 900px;
+}
+
+/* Accordion wrapper */
+.zen-accordion-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.zen-accordion-item {
+  border: 1px solid rgba(246, 242, 234, 0.15);
+  border-radius: var(--zen-radius-card);
+  overflow: hidden;
+}
+
+.zen-accordion-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding: 24px 32px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: var(--wp--preset--color--primary-beige);
+  font-family: var(--zen-font-heading);
+  font-size: var(--zen-fs-h4);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  text-align: left;
+}
+
+.zen-accordion-header:hover {
+  color: var(--wp--preset--color--primary-gold);
+}
+
+.zen-accordion-icon {
+  font-size: 20px;
+  line-height: 1;
+  flex-shrink: 0;
+}
+
+/* Toggle show/hide of icon halves */
+.zen-accordion-item--open .zen-accordion-icon--minus { display: inline; }
+.zen-accordion-item--open .zen-accordion-icon--plus  { display: none; }
+.zen-accordion-icon--minus { display: none; }
+.zen-accordion-icon--plus  { display: inline; }
+
+.zen-accordion-panel {
+  padding: 0 24px 32px;
+}
+
+/* 3-column card grid */
+.zen-class-cards-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+}
+
+/* Individual card */
+.zen-class-card {
+  background: var(--wp--preset--color--primary-beige);
+  border-radius: var(--zen-radius-card);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  color: var(--wp--preset--color--primary-grey);
+}
+
+/* Image section */
+.zen-class-card__image-wrap {
+  position: relative;
+  width: 100%;
+  height: 220px;
+  overflow: hidden;
+}
+
+.zen-class-card__image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.zen-class-card__image--placeholder {
+  width: 100%;
+  height: 100%;
+  background: var(--wp--preset--color--secondary-grey-dark);
+}
+
+/* Zencoins overlay */
+.zen-class-card__zencoins {
+  position: absolute;
+  bottom: 12px;
+  right: 12px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.zen-zencoins-label {
+  font-family: var(--zen-font-heading);
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: var(--wp--preset--color--primary-gold);
+  letter-spacing: 0.05em;
+}
+
+.zen-zencoins-badge {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: var(--wp--preset--color--primary-gold);
+  color: var(--wp--preset--color--primary-grey);
+  font-family: var(--zen-font-heading);
+  font-size: 13px;
+  font-weight: 700;
+}
+
+/* Card body */
+.zen-class-card__body {
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  flex: 1;
+}
+
+.zen-class-card__title {
+  font-family: var(--zen-font-heading);
+  font-size: var(--zen-fs-h4);
+  font-weight: 700;
+  text-transform: uppercase;
+  color: var(--wp--preset--color--primary-grey);
+  margin: 0;
+  line-height: 1.2;
+}
+
+/* Difficulty row */
+.zen-class-card__difficulty {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: var(--zen-fs-body);
+  font-weight: 600;
+  color: var(--wp--preset--color--primary-grey);
+}
+
+.zen-difficulty-icon {
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
+  color: var(--wp--preset--color--primary-grey);
+}
+
+.zen-class-card__desc {
+  font-size: var(--zen-fs-body-sm);
+  line-height: var(--zen-lh-body);
+  color: var(--wp--preset--color--secondary-grey-dark);
+  margin: 0;
+  flex: 1;
+}
+
+.zen-class-card__btn {
+  margin-top: auto;
+  display: block;
+  width: 100%;
+  text-align: center;
+}
+
+/* ==========================================
+   CONTACT MAP SECTION
+   ========================================== */
+
+.zen-contact-section {
+  position: relative;
+  overflow: hidden;
+  margin: 0 !important;
+}
+
+.zen-contact-section .wp-block-columns {
+  margin: 0 !important;
+}
+
+.zen-contact-section .wp-block-column {
+  margin: 0 !important;
+}
+
+.zen-contact-section .wp-block-image,
+.zen-contact-section .wp-block-image img,
+.zen-contact-section iframe {
+  width: 100%;
+  height: 680px;
+  object-fit: cover;
+  display: block;
+}
+
+.zen-contact-overlay {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  border: 1px solid rgba(246, 242, 234, 0.2);
+  border-radius: var(--zen-radius-card, 24px);
+  padding: 48px 64px !important;
+  min-width: 440px;
+  z-index: 10;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+}
+
+.zen-contact-item {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 24px;
+  font-size: 14px;
+  color: var(--wp--preset--color--primary-beige);
+}
+
+.zen-contact-item:last-child {
+  margin-bottom: 0;
+}
+
+.zen-contact-item svg {
+  width: 24px;
+  height: 24px;
+  color: var(--wp--preset--color--primary-gold);
+  flex-shrink: 0;
+}
+
+.wp-block-column.is-vertically-aligned-center.zen-about-section.is-layout-flow.wp-block-column-is-layout-flow {
+  padding: var(--zen-space-100) !important;
+  max-width: 712.5px;
+}
+
+/* .zen-about-image-block {
+  width: var(--zen-image-block-width);
+} */
+
+.zen-contact-logo {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 8px;
+}
+
+.zen-contact-logo img {
+  max-height: 64px;
+  max-width: 220px;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+}
+
+/* ==========================================
+   RESPONSIVE
+   ========================================== */
+
+@media (max-width: 1024px) {
+  .zen-grid-4 {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .zen-grid-3,
+  .zen-grid-2 {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 767px) {
+  .zen-page-padding {
+    padding-left: var(--zen-page-pad-x-mobile);
+    padding-right: var(--zen-page-pad-x-mobile);
+  }
+
+  .zen-section,
+  .zen-section--compact {
+    padding-top: var(--zen-space-50);
+    padding-bottom: var(--zen-space-50);
+    padding-right: var(--zen-space-50);
+    padding-left: var(--zen-space-50);
+  }
+
+  .zen-card {
+    border-radius: var(--zen-radius-card-mobile);
+    padding: 16px;
+  }
+
+  .zen-btn,
+  .wp-element-button,
+  .wp-block-button__link {
+    min-height: var(--zen-btn-height-lg);
+  }
+
+  .zen-popup {
+    border-radius: var(--zen-radius-popup-mobile);
+  }
+
+  /* Responsive Features Grid */
+  .zen-feature-item {
+    display: grid !important;
+    grid-template-columns: auto 1fr;
+    grid-template-rows: auto auto;
+    column-gap: 20px !important;
+    row-gap: 16px !important;
+    align-items: start;
+    gap: 0;
+    justify-items: start;
+    margin-bottom: 24px !important;
+  }
+
+  .zen-feature-item::before {
+    grid-column: 1;
+    grid-row: 1 / span 2;
+    margin-top: 5px;
+  }
+
+  .zen-feature-item .zen-feature-icon {
+    grid-column: 2;
+    grid-row: 1;
+    margin-bottom: 0 !important;
+  }
+
+  .zen-feature-item .wp-block-group {
+    grid-column: 2;
+    grid-row: 2;
+  }
+
+  .zen-faq-section .wp-block-group.is-layout-flow:not(.zen-overlap-right):not(.zen-faq-group) {
+    padding-right: 0;
+    padding-left: 0;
+  }
+
+  /* Responsive F.A.Q Categories */
+  :root :where(.zen-faq-section .is-layout-flex),
+  .zen-faq-section .wp-block-buttons {
+    flex-wrap: wrap !important;
+    gap: 0 !important;
+  }
+
+  :root :where(.zen-faq-section .is-layout-flex) {
+    align-items: center;
+    text-align: center;
+  }
+
+  .zen-faq-section {
+    min-height: auto;
+  }
+
+  /* Zencoin Mobile Adjustments */
+  .zen-zencoin-title-group.is-layout-flex {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  .zen-coin-icon {
+    width: 28px;
+    height: 28px;
+    font-size: 12px;
+  }
+
+  .zen-coin-icon--large {
+    width: 40px;
+    height: 40px;
+    font-size: 16px;
+  }
+
+  .zen-faq-section .wp-block-media-text__media {
+    display: none;
+  }
+
+  .zen-overlap-right {
+    min-width: 100%;
+  }
+
+  .wp-block-column.is-vertically-aligned-center.zen-about-section.is-layout-flow.wp-block-column-is-layout-flow {
+    padding: var(--zen-space-50) !important;
+  }
+
+  /* Contact Map Mobile */
+  .zen-contact-section .wp-block-columns {
+    flex-direction: column !important;
+  }
+
+  .zen-contact-section .wp-block-image,
+  .zen-contact-section .wp-block-image img,
+  .zen-contact-section iframe {
+    height: 400px;
+  }
+
+  .zen-contact-overlay {
+    position: relative;
+    top: auto;
+    left: auto;
+    transform: none;
+    margin: -100px auto 32px auto !important;
+    width: 90% !important;
+    min-width: 0;
+    padding: 32px !important;
+  }
+
+}

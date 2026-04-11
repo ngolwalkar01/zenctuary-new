@@ -1,0 +1,330 @@
+Zenctuary Master Scope Document  |  Page 1
+ZENCTUARY
+Master Scope Document
+Consolidated MVP scope, operational rules, and phase boundaries for developer alignment
+Version 1.0
+Purpose Single source of truth replacing fragmented notes / PDFs
+Document use
+This document is meant to be the current master reference for the project. It consolidates the original product 
+concept, the operational clarifications requested internally, and the scope boundaries that should be used for 
+milestone review with the developer.
+What this document is designed to solve
+ keep one clear scope version instead of multiple overlapping PDFs and email clarifications
+ make MVP boundaries explicit so pricing and milestones can be discussed on the same basis
+ separate included MVP functionality from post-MVP items and items that still require validation
+ capture operational rules clearly enough that the developer can map them to WordPress / WooCommerce / 
+plugin / custom work
+Scope status legend
+Status Meaning
+Included in MVP Expected in the initial live version and should be reflected 
+in milestone planning.
+Needs validation / tool decision Direction is defined, but exact accounting / legal / 
+integration setup still needs confirmation.
+Post-MVP / optional Not required for first launch unless separately agreed and 
+estimated.
+Zenctuary Master Scope Document  |  Page 2
+1. Platform overview
+Zenctuary is a wellness platform that combines content, schedule-based bookings, memberships, Zen Coins wallet 
+logic, user accounts, and operational tools for staff. The working technical direction remains a single WordPress 
+installation with multilingual support, WooCommerce as the transactional base, and plugin plus custom development 
+where the business logic goes beyond standard booking behavior.
+The current booking-driven core covers classes, guided/free flow Fire & Ice, workshops, and events. Treatments / 
+services require an explicit scope confirmation because the current concept notes also contain a manual request flow 
+for treatments.
+Core product areas
+ Marketing website and content pages
+ Single-site multilingual setup (English / German)
+ Auth, user accounts, profile, payment methods, bookings, invoices
+ Schedule, class detail, booking flows, waitlist, cancellation handling
+ Memberships and recurring payments
+ Zen Coins wallet, packages, drop-ins, wallet activity and refunds
+ Operational tools for sessions, rosters, capacity, check-in, and support actions
+2. User roles and internal roles
+Role Purpose / access
+Customer
+Can sign up, log in, manage profile, payment methods, 
+bookings, memberships, wallet activity, invoices, and 
+waitlist actions.
+Admin
+Full operational access, including refunds, manual 
+adjustments, membership support actions, invoice 
+exports, and wallet support tools.
+Manager / operations
+Session management, roster access, waitlist handling, 
+capacity oversight; no direct refund or wallet edit rights 
+unless explicitly granted.
+Teacher / instructor Lightweight restricted role if implemented: can only view 
+assigned sessions and record attendance / no-show.
+Important role boundary
+Teacher access, if included, should be deliberately limited. Refunds, financial corrections, studio cancellations, 
+wallet adjustments, and invoice actions remain in the admin / operations layer.
+3. MVP scope summary by module
+Module Included in MVP Post-MVP / validation
+Website & multilingual Marketing website, key content 
+pages, EN/DE setup, shared user/data Advanced campaign automation and 
+Zenctuary Master Scope Document  |  Page 3
+structure. deeper CMS enhancements.
+Bookings
+Schedule, class detail, session states, 
+capacity, waitlist join, booking flows, 
+cancellation rules.
+Auto-waitlist booking, complex 
+rescheduling, QR/self check-in.
+Memberships
+Monthly/yearly recurring plans, 
+cancel-at-end, ON_HOLD handling, 
+admin freeze exception flow.
+Automated upgrade/downgrade logic, 
+self-service pause/freeze.
+Wallet / Zen Coins
+Packages, drop-ins, wallet activity, 
+refund logic, expiry logic, bucket 
+model.
+Advanced reporting, loyalty 
+variations, extended promo rule 
+engine.
+Teacher management Internal trainer records and 
+assignment to sessions.
+Availability planner, rich teacher 
+portal, public teacher bios if later 
+desired.
+Invoices / accounting
+Invoice records, account 
+list/download, refunded status, basic 
+CSV export direction.
+Final DE/EU accounting setup, 
+numbering details, correction 
+documents, DATEV/Lexoffice/sevDesk 
+integration after validation.
+Check-in / attendance Manual attendance tracking via 
+internal roster, mobile-friendly.
+QR check-in, customer self-check-in, 
+access control workflows.
+4. Detailed functional scope
+4.1 Website, content, and multilingual setup
+ Single website instance with English and German language support.
+ Marketing pages for home, classes, memberships, pricing, and other content-driven sections.
+ Schedule page as a core destination from marketing CTAs.
+ Shared users, bookings, and commerce data across both languages.
+4.2 Auth, profile, and user account basics
+ Sign-up, sign-in, forgot password, and profile editing.
+ Stored payment methods with guardrails: the last usable method cannot be removed if required by an active 
+membership, ON_HOLD membership state, or outstanding payment need.
+ Profile area for memberships, bookings, wallet, invoices, and payment methods.
+ Account deletion only after any active membership / contract has ended.
+ MVP notifications primarily by email; SMS / push are not required for first launch.
+4.3 Sessions and booking objects
+The booking engine is expected to support the following primary session types for the core booking flow: classes, 
+guided/free flow Fire & Ice, workshops, and events.
+ Session fields should include at minimum: session type, title, start/end date and time, capacity, status, price in 
+Zen Coins, waitlist enabled yes/no, location/room, and assigned trainer.
+ Session states should support: OPEN, FULL, CANCELLED, ENDED.
+ Frontend schedule states should mirror availability clearly: available, waitlist, cancelled, ended.
+Zenctuary Master Scope Document  |  Page 4
+ Treatment / service booking must be confirmed explicitly. The current concept also contains a manual email-
+request flow for treatments, so this area should not be assumed to be part of the same automated booking 
+engine unless confirmed.
+4.4 Memberships and subscription handling
+Membership handling is intended for monthly and yearly plans with clear lifecycle states and predictable operational 
+rules.
+ Membership statuses: ACTIVE, ENDING_SOON, ENDED, ON_HOLD.
+ Recurring payments: monthly or yearly automatic renewal until cancelled.
+ Cancellation: users can cancel at any time, but the membership remains active until the end of the already paid 
+term; monthly plans end with the current billing month, yearly plans with the current annual term.
+ Upgrade / downgrade: not an automated MVP function. For launch, the user cancels the current plan and 
+purchases the new plan separately.
+ Pause / freeze: not self-service in MVP. If approved as an operational exception, it is handled manually by admin 
+only, based on sickness / certificate duration, and the renewal or end date shifts by the approved pause period.
+ Failed recurring payment: membership moves to ON_HOLD; related invoice stays open/unpaid until payment is 
+fixed; membership-related benefits and membership credits are paused until successful payment.
+ No dedicated self-service reactivation is required for MVP. If a cancelled membership ends, the user can 
+purchase a new membership again.
+Membership scope boundary
+The goal for MVP is reliable recurring billing and simple lifecycle handling - not a complex subscription engine. 
+Keeping direct upgrades, downgrades, and free-form self-service freezes out of MVP helps protect scope and 
+cost.
+4.5 Zen Coins wallet and pricing model
+Zen Coins are a central commercial and operational layer of the product. The wallet should be treated as a structured 
+ledger-backed system, not just a simple balance field.
+ Base display principle: wallet shows Zen Coins (ZC), not euro balance.
+ Reference pricing from the existing concept: 1 ZC = EUR 5; standard class / Fire & Ice session = 5 ZC. Workshop 
+and event tiers are intended to support higher ZC prices (for example 6 / 8 / 10 ZC tiers).
+ Purchased products in the concept include free trial drop-in, paid drop-in, packages, memberships, and gift-card-
+derived credits.
+Wallet bucket structure
+ Purchased credits: packages, drop-ins, gift-card-derived credits.
+ Membership credits: monthly allowance associated with an active membership.
+ Each bucket carries its own expiry logic and should remain traceable as a separate source of value.
+Wallet activity and transaction history
+ Each wallet movement should be stored as an append-only transaction history entry (no editing of history 
+entries).
+ Typical added entry types: package purchase, drop-in purchase, membership monthly credits, gift card 
+redeemed, refund, auto top-up purchase.
+ Typical used entry types: booking charge, late cancel, expired.
+ For user-facing wallet activity, no-show does not need to be shown as a separate customer-facing label. It is 
+better treated as an internal operational status. The wallet can simply show the resulting credit usage / late 
+cancel outcome.
+Zenctuary Master Scope Document  |  Page 5
+Wallet usage logic
+ Consumption order: membership credits first, then newly purchased top-up credits where applicable, and more 
+generally purchased credits by earliest expiry first.
+ Refunds return credits to the original bucket and keep the original expiry date.
+ Expiry is also logged as its own history event so balances remain auditable.
+ Wallet-to-payment traceability should connect payment, wallet entry, and invoice so the origin and use of credits 
+can be understood later.
+4.6 Booking, cancellation, refunds, waitlist, and capacity
+Booking rules should stay simple and consistent for MVP so that the customer journey is fast and the operational side 
+remains easy to control.
+Booking preconditions and booking flow
+ Logged-out users must sign in or sign up before a booking can complete.
+ Users cannot book the same session twice.
+ If enough ZC are available, booking should complete without forcing a separate payment screen.
+ Credits are deducted immediately once the booking is confirmed.
+ If payment succeeds but the booking cannot be completed (for example the session becomes full), the purchased 
+ZC stay in the wallet and the user receives a clear message to book again.
+Not-enough-ZC flows
+ Standard sessions (classes + Fire & Ice): if the user is missing only 1-2 ZC, show a fast top-up / buy-missing-ZC 
+flow; if the missing amount is larger, show a choose-your-plan screen (drop-in / package / membership, and free 
+drop-in where eligible).
+ Workshops / events: current intended direction is a simple exact-missing-amount purchase flow so the user buys 
+only what is missing and the workshop booking completes directly after payment.
+ Members may still buy additional credits when needed. If member pricing is applied for missing-ZC top-ups, it 
+should only appear inside that booking top-up flow, not as a separate public member shop.
+Cancellation and refund policy
+ Cancellation cutoff for MVP: 12 hours before session start.
+ Cancel in time (>= 12h before start): refund as Zen Coins to the original bucket, keeping the original expiry date.
+ Late cancel (< 12h): cancellation is still possible, but no refund is granted.
+ Studio cancellation: all booked users receive an automatic Zen Coins refund back to the original bucket, keeping 
+original expiry.
+ No-show: no refund. No-show is important internally, but does not need to be emphasized as a special customer-
+facing wallet label.
+ Reschedule in MVP can remain a manual pattern: cancel (if eligible) and rebook another session.
+Waitlist and capacity
+ Per session, a maximum capacity is defined and the current booked count is tracked.
+ Once capacity is reached, the session becomes FULL and normal booking stops.
+ If waitlist is enabled, users can join the waitlist.
+ No auto-booking in MVP: when a spot becomes available, the waitlisted user is notified by email and must book 
+manually.
+How booking logic should exist in the system
+ Each booking should carry a clear internal status such as BOOKED, CANCELLED_REFUNDED, 
+CANCELLED_NO_REFUND, ATTENDED, or NO_SHOW.
+ The system uses those statuses and the timing rules to determine whether credits are refunded or not.
+ Operations staff need an internal per-session roster / overview showing who is booked, who cancelled, who 
+attended, and who did not show up.
+Zenctuary Master Scope Document  |  Page 6
+4.7 Trainer / teacher management and attendance
+Trainer management exists partly in the current concept because sessions already display a teacher name. What is 
+added here is the operational handling required behind the scenes.
+ Internal trainer records should allow the team to create trainers, upload an image, maintain an internal bio, 
+maintain specialisations, and assign trainers to classes / events / services.
+ These trainer profile fields are primarily for internal management in MVP; they do not need to be public website 
+profiles unless separately requested.
+ Advanced availability planning is not required for MVP and should be treated as a separate later module.
+ Optional teacher self-access can be added later if needed. It should not be assumed automatically if it affects 
+budget or timeline.
+Attendance / check-in recommendation for MVP
+ Use a simple, mobile-friendly internal roster per session (suitable for tablet / iPad usage at the studio).
+ Attendance can be marked as attended or no-show.
+ This can be handled by operations staff, or by a restricted teacher role if the developer confirms it fits within the 
+agreed scope.
+ QR-code check-in and customer self-check-in are not required for MVP.
+Recommended MVP check-in model
+The cleanest launch approach is manual roster-based attendance tracking. It is operationally sufficient, fast to 
+build, and avoids overcomplicating the first release with QR logic or access-control features.
+4.8 Invoices, billing, and accounting direction
+This area is strategically important but should not be over-promised before legal / tax validation. The right framing is: 
+the operating direction is known, but the final DE/EU implementation details still need confirmation.
+ Every successful commercial transaction should create an invoice record.
+ Users should be able to view / download invoice PDFs from the account area.
+ Invoice states should support at minimum paid, unpaid/open, and refunded.
+ If refunds are supported, invoice status must update accordingly and any Zen Coins credit return must create the 
+matching wallet history entry.
+ Accounting exports should support at least CSV as a baseline.
+ The target direction is configurable tax rates per product / service, unique invoice numbering, correction / 
+cancellation documents, and accounting export compatibility - but the exact legal and tool implementation 
+should be validated with a tax advisor and a chosen accounting tool/integration.
+ A full custom-built German accounting engine is not recommended for MVP. A specialized external tool or 
+integration is the safer target direction.
+4.9 Admin / operations backend
+ Multiple internal accounts should be supported (no shared login).
+ Internal access should differentiate between full admin rights, operations rights, and check-in-only access where 
+needed.
+ Operations need tools to create/edit/cancel sessions, view rosters, manage waitlists, inspect user summaries, 
+and review invoices.
+ Admin-only support tools may include manual credit adjustments (always as new wallet history entries with 
+reason), voucher management, trial visibility, membership support actions, and financial refund actions.
+4.10 Notifications and operational emails
+ MVP can be email-first. SMS / push are optional later only.
+Zenctuary Master Scope Document  |  Page 7
+ Operational email triggers should cover sign-up / password reset, booking confirmation, booking cancellation, 
+waitlist join, waitlist spot available, purchase confirmation, refund notice, membership purchase, renewal 
+success, payment failed / ON_HOLD, membership cancellation, and membership ended.
+ Email copy can be managed later, but the system should be prepared to send these events reliably once per 
+event.
+Zenctuary Master Scope Document  |  Page 8
+5. Explicit non-MVP items and protected scope boundaries
+The following boundaries are important so the scope does not silently expand beyond the agreed MVP.
+ No automated direct upgrade / downgrade switching between membership plans.
+ No self-service membership pause / freeze by the customer.
+ No guaranteed teacher portal unless specifically confirmed; teacher access is optional and may be replaced by 
+staff-operated attendance handling for MVP.
+ No advanced trainer availability engine in MVP.
+ No QR-code check-in, customer self-check-in, or access-control hardware logic in MVP.
+ No auto-waitlist booking in MVP.
+ No invoice editing UI after issuance.
+ No SMS / push notification requirement in MVP.
+ No assumption that treatments / services are fully automated inside the same booking engine unless explicitly 
+confirmed and estimated.
+ No fully custom DE accounting stack without separate validation and tool decision.
+6. Items that still require formal validation
+ Final German / EU tax and invoice compliance requirements, including exact numbering, correction document 
+format, and accounting export detail.
+ Choice of accounting / invoicing tool or integration (for example CSV-only MVP vs deeper integration).
+ Final confirmation whether services / treatments are manual requests or part of the automated booking engine.
+ Final workshop / event pricing tiers and whether every workshop / event follows the exact same missing-ZC 
+purchase logic.
+ Whether restricted teacher login is included in the current budget or deferred.
+7. Proposed phase allocation against the current developer structure
+The developer’s 5-phase structure can still be used, but it should be mapped against the clarified scope more 
+explicitly so there is no misunderstanding about what is included at each milestone.
+Phase Recommended scope focus
+Phase 1 - Website & foundation Theme / UI foundation, multilingual setup, key content 
+pages, auth entry points, schedule foundations.
+Phase 2 - Booking core
+Schedule, class detail, booking, waitlist join, capacity logic, 
+booking states, cancellation rules, payment / checkout 
+core.
+Phase 3 - Memberships & wallet
+Recurring memberships, ON_HOLD logic, wallet, 
+packages / drop-ins, bucket logic, wallet history, purchase 
+flows.
+Phase 4 - Account / operations / invoice basics
+Profile area, bookings history, invoice record list + 
+download, roster / check-in basics, internal operations 
+tools needed for launch.
+Phase 5 - Enhancements / later scope
+Gift cards / voucher sales if deferred, newsletter 
+automation, richer teacher tooling, QR check-in, deeper 
+accounting integration, advanced features.
+Zenctuary Master Scope Document  |  Page 9
+Pricing conversation tip
+This document should now be used to ask the developer to confirm: (1) what is included in the current 6,000 
+USD price, (2) what stays in the MVP at that price, (3) what is post-MVP, and (4) which areas depend on third-
+party tools or need separate estimation.
+8. Developer confirmation checklist
+1. Confirm that this document can replace the older fragmented notes as the current main scope reference.
+2. Mark each major module as included in current MVP, post-MVP, or dependent on third-party tooling.
+3. Confirm treatment / service booking scope explicitly.
+4. Confirm whether restricted teacher attendance access is included or whether attendance is expected to remain 
+staff-operated in MVP.
+5. Confirm the accounting / invoicing approach proposed for DE/EU and whether it stays within the existing budget.
+6. Confirm whether the current milestone plan should be adjusted based on clarified scope, especially Phase 4 and 
+Phase 5.
+7. Confirm what, if anything, would require additional estimation beyond the current price.
+9. Final summary
+The product direction is strong and the existing concept already covers a large part of the core customer journey. The 
+main work now is not reinventing the concept, but consolidating it into one dependable scope reference, protecting 
+the MVP boundary, and forcing explicit confirmation where pricing, tools, or operational depth could otherwise 
+become ambiguous.
+Used correctly, this document should help align internal expectations, protect the current commercial discussion 
+with the developer, and reduce the risk of later scope misunderstandings.

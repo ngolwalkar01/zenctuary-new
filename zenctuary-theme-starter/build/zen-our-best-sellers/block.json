@@ -1,0 +1,27 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "zenctuary/zen-our-best-sellers",
+  "title": "Zen Our Best Sellers",
+  "category": "widgets",
+  "icon": "products",
+  "description": "Display up to three selected WooCommerce best sellers in a responsive grid with a mobile slider.",
+  "keywords": ["woocommerce", "products", "best sellers", "slider"],
+  "attributes": {
+    "showHeading": { "type": "boolean", "default": true },
+    "sectionPadding": { "type": "object", "default": { "top": "0px", "right": "0px", "bottom": "0px", "left": "0px" } },
+    "sectionMargin": { "type": "object", "default": { "top": "0px", "right": "0px", "bottom": "0px", "left": "0px" } },
+    "selectedProductIds": { "type": "array", "default": [] },
+    "selectedProducts": { "type": "array", "default": [] }
+  },
+  "supports": {
+    "html": false,
+    "anchor": true,
+    "align": ["wide", "full"]
+  },
+  "textdomain": "zenctuary",
+  "editorScript": "file:./index.js",
+  "viewScript": "file:./view.js",
+  "style": "file:./style-index.css",
+  "editorStyle": "file:./style-index.css"
+}

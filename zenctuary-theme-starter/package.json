@@ -1,0 +1,13 @@
+{
+  "name": "zenctuary-theme",
+  "version": "1.0.0",
+  "description": "Zenctuary Custom Block Compilation",
+  "main": "index.js",
+  "scripts": {
+    "build": "wp-scripts build --webpack-src-dir=blocks",
+    "start": "wp-scripts start --webpack-src-dir=blocks"
+  },
+  "devDependencies": {
+    "@wordpress/scripts": "^26.17.0"
+  }
+}

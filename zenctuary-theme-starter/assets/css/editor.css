@@ -1,0 +1,12 @@
+@import url("base.css");
+@import url("components.css");
+@import url("utilities.css");
+body { font-family: "DM Sans", sans-serif; }
+
+/* In the admin editor, disable the floating absolute overlap for the map overlay to prevent unclickable chaotic layout issues */
+.zen-contact-overlay {
+    position: static !important;
+    transform: none !important;
+    margin: 24px auto !important;
+    width: 100% !important;
+}

@@ -1,0 +1,51 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "zenctuary/zen-soul-kitchen-menu",
+	"title": "Zen Soul Kitchen Menu",
+	"category": "widgets",
+	"icon": "food",
+	"description": "Display WooCommerce products grouped by category with Drinks and Food tag filters.",
+	"keywords": [ "woocommerce", "menu", "products", "food", "drinks" ],
+	"attributes": {
+		"heading": {
+			"type": "string",
+			"default": "Soul Kitchen Menu"
+		},
+		"activeFilter": {
+			"type": "string",
+			"default": "drinks"
+		},
+		"drinksTagSlug": {
+			"type": "string",
+			"default": "drinks"
+		},
+		"foodTagSlug": {
+			"type": "string",
+			"default": "food"
+		},
+		"categorySettings": {
+			"type": "object",
+			"default": {}
+		},
+		"sectionPadding": {
+			"type": "object",
+			"default": { "top": "0px", "right": "0px", "bottom": "0px", "left": "0px" }
+		},
+		"sectionMargin": {
+			"type": "object",
+			"default": { "top": "0px", "right": "0px", "bottom": "0px", "left": "0px" }
+		}
+	},
+	"supports": {
+		"html": false,
+		"anchor": true,
+		"align": [ "wide", "full" ]
+	},
+	"textdomain": "zenctuary",
+	"editorScript": "file:./index.js",
+	"viewScript": "file:./view.js",
+	"style": "file:./style-index.css",
+	"editorStyle": "file:./style-index.css",
+	"render": "file:./render.php"
+}

@@ -1,0 +1,28 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "zenctuary/experience-cards",
+  "version": "1.0.0",
+  "title": "Experience Cards",
+  "category": "media",
+  "icon": "tickets-alt",
+  "description": "Displays WooCommerce products as styled overlay cards (Fire & Ice style). Filterable by experience category.",
+  "attributes": {
+    "heading":      { "type": "string",  "default": "CHOOSE YOUR EXPERIENCE" },
+    "description":  { "type": "string",  "default": "" },
+    "categorySlug": { "type": "string",  "default": "fire-and-ice" },
+    "showZencoins": { "type": "boolean", "default": true },
+    "showDuration": { "type": "boolean", "default": true },
+    "showIncludes": { "type": "boolean", "default": true },
+    "showBestFor":  { "type": "boolean", "default": true },
+    "showBookBtn":  { "type": "boolean", "default": true },
+    "bookBtnLabel": { "type": "string",  "default": "Book Now \u2192" }
+  },
+  "supports": {
+    "html": false,
+    "align": ["wide", "full"]
+  },
+  "textdomain": "zenctuary",
+  "editorScript": "file:./index.js",
+  "render": "file:./render.php"
+}

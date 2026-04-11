@@ -1,0 +1,54 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "zenctuary/icon-button",
+	"title": "Zenctuary Icon Button",
+	"category": "design",
+	"icon": "admin-links",
+	"description": "A customized button block enabling dynamic icons and advanced positioning natively in FSE.",
+	"attributes": {
+		"text": {
+			"type": "string",
+			"default": "Button Text"
+		},
+		"iconId": {
+			"type": "number"
+		},
+		"iconUrl": {
+			"type": "string"
+		},
+		"iconAlt": {
+			"type": "string",
+			"default": ""
+		},
+		"iconPos": {
+			"type": "string",
+			"default": "left"
+		},
+		"iconWidth": {
+			"type": "number",
+			"default": 24
+		},
+		"url": {
+			"type": "string",
+			"default": "#"
+		}
+	},
+	"supports": {
+		"color": {
+			"text": true,
+			"background": true
+		},
+		"typography": {
+			"fontSize": true,
+			"lineHeight": true
+		},
+		"spacing": {
+			"margin": true,
+			"padding": true
+		},
+		"customClassName": true
+	},
+	"textdomain": "zenctuary",
+	"editorScript": "file:./index.js"
+}

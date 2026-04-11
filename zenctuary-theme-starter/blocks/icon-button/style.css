@@ -1,0 +1,8 @@
+.zen-icon-btn {
+	transition: all 0.3s ease;
+}
+
+.zen-icon-btn img {
+	max-width: 100%;
+	object-fit: contain;
+}
