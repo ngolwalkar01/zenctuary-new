@@ -2,6 +2,8 @@ import { RichText, useBlockProps } from '@wordpress/block-editor';
 
 const DEFAULT_HEADING_COLOR = 'var(--wp--preset--color--primary)';
 const DEFAULT_TEXT_COLOR = '#ffffff';
+const DEFAULT_PARAGRAPH_FONT_SIZE = 18;
+const DEFAULT_PARAGRAPH_FONT_WEIGHT = '400';
 
 const spacingStyle = ( value = {}, property ) => ( {
 	[ `${ property }Top` ]: value.top || '0px',
@@ -10,18 +12,29 @@ const spacingStyle = ( value = {}, property ) => ( {
 	[ `${ property }Left` ]: value.left || '0px',
 } );
 
-const normalizeParagraphs = ( paragraphs, legacyParagraph ) => {
+const normalizeParagraphs = ( paragraphs, legacyParagraph, legacyTypography = {} ) => {
+	const fallbackTypography = {
+		fontSize: legacyTypography.fontSize || DEFAULT_PARAGRAPH_FONT_SIZE,
+		color: legacyTypography.color || DEFAULT_TEXT_COLOR,
+		fontWeight: legacyTypography.fontWeight || DEFAULT_PARAGRAPH_FONT_WEIGHT,
+	};
+
 	if ( Array.isArray( paragraphs ) && paragraphs.length ) {
 		return paragraphs.map( ( item ) => {
 			if ( typeof item === 'string' ) {
-				return { text: item };
+				return { text: item, ...fallbackTypography };
 			}
 
-			return { text: item?.text || '' };
+			return {
+				text: item?.text || '',
+				fontSize: item?.fontSize || fallbackTypography.fontSize,
+				color: item?.color || fallbackTypography.color,
+				fontWeight: item?.fontWeight || fallbackTypography.fontWeight,
+			};
 		} );
 	}
 
-	return [ { text: legacyParagraph || '' } ];
+	return [ { text: legacyParagraph || '', ...fallbackTypography } ];
 };
 
 function CheckIcon() {
@@ -63,6 +76,8 @@ export default function save( { attributes } ) {
 		buttonBorderColor,
 		buttonBorderWidth,
 		buttonBorderRadius,
+		buttonFontSize,
+		buttonFontWeight,
 		buttonPadding,
 		showArrow,
 		arrowPosition,
@@ -75,7 +90,11 @@ export default function save( { attributes } ) {
 	} = attributes;
 
 	const safeListItems = Array.isArray( listItems ) ? listItems : [];
-	const safeParagraphs = normalizeParagraphs( paragraphs, paragraph );
+	const safeParagraphs = normalizeParagraphs( paragraphs, paragraph, {
+		fontSize: paragraphFontSize,
+		color: paragraphColor,
+		fontWeight: paragraphFontWeight,
+	} );
 	const safeImages = Array.isArray( images ) ? images : [];
 
 	const blockProps = useBlockProps.save( {
@@ -92,6 +111,8 @@ export default function save( { attributes } ) {
 		borderColor: buttonBorderColor,
 		borderWidth: `${ buttonBorderWidth }px`,
 		borderRadius: `${ buttonBorderRadius }px`,
+		...( buttonFontSize ? { fontSize: `${ buttonFontSize }px` } : {} ),
+		...( buttonFontWeight ? { fontWeight: buttonFontWeight } : {} ),
 		...spacingStyle( buttonPadding, 'padding' ),
 	};
 
@@ -133,9 +154,9 @@ export default function save( { attributes } ) {
 									key={ index }
 									value={ item.text }
 									style={ {
-										color: paragraphColor || DEFAULT_TEXT_COLOR,
-										fontSize: `${ paragraphFontSize }px`,
-										fontWeight: paragraphFontWeight,
+										color: item.color || DEFAULT_TEXT_COLOR,
+										fontSize: `${ item.fontSize || DEFAULT_PARAGRAPH_FONT_SIZE }px`,
+										fontWeight: item.fontWeight || DEFAULT_PARAGRAPH_FONT_WEIGHT,
 									} }
 								/>
 							) ) }

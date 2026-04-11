@@ -35,6 +35,10 @@ const ARROW_POSITION_OPTIONS = [
 
 const DEFAULT_HEADING_COLOR = 'var(--wp--preset--color--primary)';
 const DEFAULT_TEXT_COLOR = '#ffffff';
+const DEFAULT_PARAGRAPH_FONT_SIZE = 18;
+const DEFAULT_PARAGRAPH_FONT_WEIGHT = '400';
+const DEFAULT_BUTTON_FONT_SIZE = 16;
+const DEFAULT_BUTTON_FONT_WEIGHT = '700';
 
 const spacingStyle = ( value = {}, property ) => ( {
 	[ `${ property }Top` ]: value.top || '0px',
@@ -43,18 +47,29 @@ const spacingStyle = ( value = {}, property ) => ( {
 	[ `${ property }Left` ]: value.left || '0px',
 } );
 
-const normalizeParagraphs = ( paragraphs, legacyParagraph ) => {
+const normalizeParagraphs = ( paragraphs, legacyParagraph, legacyTypography = {} ) => {
+	const fallbackTypography = {
+		fontSize: legacyTypography.fontSize || DEFAULT_PARAGRAPH_FONT_SIZE,
+		color: legacyTypography.color || DEFAULT_TEXT_COLOR,
+		fontWeight: legacyTypography.fontWeight || DEFAULT_PARAGRAPH_FONT_WEIGHT,
+	};
+
 	if ( Array.isArray( paragraphs ) && paragraphs.length ) {
 		return paragraphs.map( ( item ) => {
 			if ( typeof item === 'string' ) {
-				return { text: item };
+				return { text: item, ...fallbackTypography };
 			}
 
-			return { text: item?.text || '' };
+			return {
+				text: item?.text || '',
+				fontSize: item?.fontSize || fallbackTypography.fontSize,
+				color: item?.color || fallbackTypography.color,
+				fontWeight: item?.fontWeight || fallbackTypography.fontWeight,
+			};
 		} );
 	}
 
-	return [ { text: legacyParagraph || '' } ];
+	return [ { text: legacyParagraph || '', ...fallbackTypography } ];
 };
 
 function SpacingControls( { label, value = {}, onChange } ) {
@@ -122,6 +137,8 @@ export default function Edit( { attributes, setAttributes } ) {
 		buttonBorderColor,
 		buttonBorderWidth,
 		buttonBorderRadius,
+		buttonFontSize,
+		buttonFontWeight,
 		buttonPadding,
 		showArrow,
 		arrowPosition,
@@ -134,9 +151,15 @@ export default function Edit( { attributes, setAttributes } ) {
 	} = attributes;
 
 	const safeListItems = Array.isArray( listItems ) ? listItems : [];
-	const safeParagraphs = normalizeParagraphs( paragraphs, paragraph );
+	const safeParagraphs = normalizeParagraphs( paragraphs, paragraph, {
+		fontSize: paragraphFontSize,
+		color: paragraphColor,
+		fontWeight: paragraphFontWeight,
+	} );
 	const safeImages = Array.isArray( images ) ? images : [];
 	const [ activeImage, setActiveImage ] = useState( 0 );
+	const [ selectedParagraphIndex, setSelectedParagraphIndex ] = useState( 0 );
+	const selectedParagraph = safeParagraphs[ selectedParagraphIndex ] || safeParagraphs[ 0 ];
 
 	useEffect( () => {
 		if ( safeImages.length < 2 ) {
@@ -150,6 +173,12 @@ export default function Edit( { attributes, setAttributes } ) {
 
 		return () => window.clearInterval( interval );
 	}, [ safeImages.length, animationSpeed ] );
+
+	useEffect( () => {
+		if ( selectedParagraphIndex > safeParagraphs.length - 1 ) {
+			setSelectedParagraphIndex( Math.max( safeParagraphs.length - 1, 0 ) );
+		}
+	}, [ selectedParagraphIndex, safeParagraphs.length ] );
 
 	const blockProps = useBlockProps( {
 		className: `zen-split-showcase${ reverseLayout ? ' is-reversed' : '' }`,
@@ -187,8 +216,17 @@ export default function Edit( { attributes, setAttributes } ) {
 
 	const addParagraph = () => {
 		setAttributes( {
-			paragraphs: [ ...safeParagraphs, { text: '' } ],
+			paragraphs: [
+				...safeParagraphs,
+				{
+					text: '',
+					fontSize: paragraphFontSize || DEFAULT_PARAGRAPH_FONT_SIZE,
+					color: paragraphColor || DEFAULT_TEXT_COLOR,
+					fontWeight: paragraphFontWeight || DEFAULT_PARAGRAPH_FONT_WEIGHT,
+				},
+			],
 		} );
+		setSelectedParagraphIndex( safeParagraphs.length );
 	};
 
 	const removeParagraph = ( paragraphIndex ) => {
@@ -196,6 +234,15 @@ export default function Edit( { attributes, setAttributes } ) {
 
 		setAttributes( {
 			paragraphs: nextParagraphs.length ? nextParagraphs : [ { text: '' } ],
+		} );
+		setSelectedParagraphIndex( Math.max( paragraphIndex - 1, 0 ) );
+	};
+
+	const updateParagraphTypography = ( key, value ) => {
+		setAttributes( {
+			paragraphs: safeParagraphs.map( ( item, index ) => (
+				index === selectedParagraphIndex ? { ...item, [ key ]: value } : item
+			) ),
 		} );
 	};
 
@@ -223,6 +270,8 @@ export default function Edit( { attributes, setAttributes } ) {
 		borderColor: buttonBorderColor,
 		borderWidth: `${ buttonBorderWidth }px`,
 		borderRadius: `${ buttonBorderRadius }px`,
+		...( buttonFontSize ? { fontSize: `${ buttonFontSize }px` } : {} ),
+		...( buttonFontWeight ? { fontWeight: buttonFontWeight } : {} ),
 		...spacingStyle( buttonPadding, 'padding' ),
 	};
 
@@ -262,10 +311,19 @@ export default function Edit( { attributes, setAttributes } ) {
 				</PanelBody>
 
 				<PanelBody title={ __( 'Paragraph Typography', 'zenctuary' ) } initialOpen={ false }>
-					<RangeControl label={ __( 'Font Size', 'zenctuary' ) } value={ paragraphFontSize } onChange={ ( value ) => setAttributes( { paragraphFontSize: value } ) } min={ 12 } max={ 40 } />
-					<SelectControl label={ __( 'Font Weight', 'zenctuary' ) } value={ paragraphFontWeight } options={ FONT_WEIGHT_OPTIONS } onChange={ ( value ) => setAttributes( { paragraphFontWeight: value } ) } />
+					<SelectControl
+						label={ __( 'Paragraph', 'zenctuary' ) }
+						value={ selectedParagraphIndex }
+						options={ safeParagraphs.map( ( item, index ) => ( {
+							label: `${ __( 'Paragraph', 'zenctuary' ) } ${ index + 1 }`,
+							value: index,
+						} ) ) }
+						onChange={ ( value ) => setSelectedParagraphIndex( Number( value ) ) }
+					/>
+					<RangeControl label={ __( 'Font Size', 'zenctuary' ) } value={ selectedParagraph?.fontSize || DEFAULT_PARAGRAPH_FONT_SIZE } onChange={ ( value ) => updateParagraphTypography( 'fontSize', value ) } min={ 12 } max={ 40 } />
+					<SelectControl label={ __( 'Font Weight', 'zenctuary' ) } value={ selectedParagraph?.fontWeight || DEFAULT_PARAGRAPH_FONT_WEIGHT } options={ FONT_WEIGHT_OPTIONS } onChange={ ( value ) => updateParagraphTypography( 'fontWeight', value ) } />
 					<p className="components-base-control__label">{ __( 'Color', 'zenctuary' ) }</p>
-					<ColorPalette value={ paragraphColor } onChange={ ( value ) => setAttributes( { paragraphColor: value || DEFAULT_TEXT_COLOR } ) } />
+					<ColorPalette value={ selectedParagraph?.color || DEFAULT_TEXT_COLOR } onChange={ ( value ) => updateParagraphTypography( 'color', value || DEFAULT_TEXT_COLOR ) } />
 				</PanelBody>
 
 				<PanelBody title={ __( 'Button', 'zenctuary' ) } initialOpen={ false }>
@@ -282,6 +340,9 @@ export default function Edit( { attributes, setAttributes } ) {
 					<ColorPalette value={ buttonBorderColor } onChange={ ( value ) => setAttributes( { buttonBorderColor: value || '#3f3d3d' } ) } />
 					<RangeControl label={ __( 'Border Width', 'zenctuary' ) } value={ buttonBorderWidth } onChange={ ( value ) => setAttributes( { buttonBorderWidth: value } ) } min={ 0 } max={ 8 } />
 					<RangeControl label={ __( 'Border Radius', 'zenctuary' ) } value={ buttonBorderRadius } onChange={ ( value ) => setAttributes( { buttonBorderRadius: value } ) } min={ 0 } max={ 32 } />
+					<p className="components-base-control__label">{ __( 'Typography', 'zenctuary' ) }</p>
+					<RangeControl label={ __( 'Font Size', 'zenctuary' ) } value={ buttonFontSize || DEFAULT_BUTTON_FONT_SIZE } onChange={ ( value ) => setAttributes( { buttonFontSize: value } ) } min={ 12 } max={ 32 } />
+					<SelectControl label={ __( 'Font Weight', 'zenctuary' ) } value={ buttonFontWeight || DEFAULT_BUTTON_FONT_WEIGHT } options={ FONT_WEIGHT_OPTIONS } onChange={ ( value ) => setAttributes( { buttonFontWeight: value } ) } />
 					<SpacingControls label={ __( 'Padding', 'zenctuary' ) } value={ buttonPadding } onChange={ ( value ) => setAttributes( { buttonPadding: value } ) } />
 				</PanelBody>
 
@@ -359,18 +420,19 @@ export default function Edit( { attributes, setAttributes } ) {
 
 							<div className="zen-split-showcase__paragraphs">
 								{ safeParagraphs.map( ( item, index ) => (
-									<div className="zen-split-showcase__paragraph-row" key={ index }>
+									<div className={ `zen-split-showcase__paragraph-row${ index === selectedParagraphIndex ? ' is-selected' : '' }` } key={ index } onClick={ () => setSelectedParagraphIndex( index ) }>
 										<RichText
 											tagName="p"
 											className="zen-split-showcase__paragraph"
 											value={ item.text }
 											onChange={ ( value ) => updateParagraph( index, value ) }
+											onFocus={ () => setSelectedParagraphIndex( index ) }
 											placeholder={ __( 'Add supporting paragraph...', 'zenctuary' ) }
 											allowedFormats={ [ 'core/bold', 'core/italic', 'core/link' ] }
 											style={ {
-												color: paragraphColor || DEFAULT_TEXT_COLOR,
-												fontSize: `${ paragraphFontSize }px`,
-												fontWeight: paragraphFontWeight,
+												color: item.color || DEFAULT_TEXT_COLOR,
+												fontSize: `${ item.fontSize || DEFAULT_PARAGRAPH_FONT_SIZE }px`,
+												fontWeight: item.fontWeight || DEFAULT_PARAGRAPH_FONT_WEIGHT,
 											} }
 										/>
 										<Button className="zen-split-showcase__remove-paragraph" variant="tertiary" isDestructive onClick={ () => removeParagraph( index ) }>

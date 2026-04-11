@@ -106,6 +106,12 @@
       "type": "number",
       "default": 8
     },
+    "buttonFontSize": {
+      "type": "number"
+    },
+    "buttonFontWeight": {
+      "type": "string"
+    },
     "buttonPadding": {
       "type": "object",
       "default": {
