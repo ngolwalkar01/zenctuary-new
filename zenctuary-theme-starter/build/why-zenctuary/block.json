@@ -87,5 +87,7 @@
   },
   "textdomain": "zenctuary",
   "editorScript": "file:./index.js",
+  "style": "file:./style-index.css",
+  "editorStyle": "file:./index.css",
   "render": "file:./render.php"
 }
