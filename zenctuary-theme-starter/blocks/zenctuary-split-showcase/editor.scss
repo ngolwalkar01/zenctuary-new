@@ -1,0 +1,47 @@
+.wp-block-zenctuary-zenctuary-split-showcase {
+	.zen-split-showcase__remove-item {
+		flex: 0 0 auto;
+		margin-left: 8px;
+	}
+
+	.zen-split-showcase__add-item {
+		align-self: flex-start;
+		margin-top: 6px;
+	}
+
+	.zen-split-showcase__button {
+		cursor: text;
+	}
+}
+
+.zen-split-showcase-control-grid {
+	display: grid;
+	grid-template-columns: repeat(2, minmax(0, 1fr));
+	gap: 10px;
+	margin-bottom: 16px;
+
+	.components-base-control__label {
+		grid-column: 1 / -1;
+		margin-bottom: 0;
+	}
+}
+
+.zen-split-showcase-image-list {
+	display: grid;
+	gap: 10px;
+	margin: 14px 0;
+}
+
+.zen-split-showcase-image-list__item {
+	display: grid;
+	grid-template-columns: 64px 1fr;
+	align-items: center;
+	gap: 10px;
+
+	img {
+		width: 64px;
+		height: 64px;
+		object-fit: cover;
+		border-radius: 8px;
+	}
+}

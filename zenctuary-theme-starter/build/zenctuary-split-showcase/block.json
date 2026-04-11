@@ -1,0 +1,166 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "zenctuary/zenctuary-split-showcase",
+  "version": "1.0.0",
+  "title": "Zenctuary Split Showcase",
+  "category": "design",
+  "icon": "align-pull-left",
+  "description": "A full-width split content and image showcase with editable copy, custom list items, button controls, and a fading image loop.",
+  "keywords": [
+    "zenctuary",
+    "split",
+    "showcase",
+    "image"
+  ],
+  "attributes": {
+    "reverseLayout": {
+      "type": "boolean",
+      "default": false
+    },
+    "heading": {
+      "type": "string",
+      "default": "ABOUT ZENCTUARY"
+    },
+    "headingFontSize": {
+      "type": "number",
+      "default": 36
+    },
+    "headingColor": {
+      "type": "string",
+      "default": "#3f3d3d"
+    },
+    "headingFontWeight": {
+      "type": "string",
+      "default": "700"
+    },
+    "listItems": {
+      "type": "array",
+      "default": [
+        "Move with intention in a calm, elevated space.",
+        "Guided experiences for every level.",
+        "Reconnect through mindful rituals and community."
+      ]
+    },
+    "listFontSize": {
+      "type": "number",
+      "default": 18
+    },
+    "listColor": {
+      "type": "string",
+      "default": "#3f3d3d"
+    },
+    "listSpacing": {
+      "type": "number",
+      "default": 14
+    },
+    "paragraph": {
+      "type": "string",
+      "default": "Step into a grounded practice designed to help you reset, breathe, and feel fully present."
+    },
+    "paragraphFontSize": {
+      "type": "number",
+      "default": 18
+    },
+    "paragraphColor": {
+      "type": "string",
+      "default": "#3f3d3d"
+    },
+    "paragraphFontWeight": {
+      "type": "string",
+      "default": "400"
+    },
+    "buttonText": {
+      "type": "string",
+      "default": "Book your class"
+    },
+    "buttonUrl": {
+      "type": "string",
+      "default": "#"
+    },
+    "buttonTextColor": {
+      "type": "string",
+      "default": "#ffffff"
+    },
+    "buttonBackgroundColor": {
+      "type": "string",
+      "default": "#3f3d3d"
+    },
+    "buttonBorderColor": {
+      "type": "string",
+      "default": "#3f3d3d"
+    },
+    "buttonBorderWidth": {
+      "type": "number",
+      "default": 1
+    },
+    "buttonBorderRadius": {
+      "type": "number",
+      "default": 8
+    },
+    "buttonPadding": {
+      "type": "object",
+      "default": {
+        "top": "14px",
+        "right": "24px",
+        "bottom": "14px",
+        "left": "24px"
+      }
+    },
+    "showArrow": {
+      "type": "boolean",
+      "default": true
+    },
+    "arrowPosition": {
+      "type": "string",
+      "default": "right"
+    },
+    "images": {
+      "type": "array",
+      "default": []
+    },
+    "animationSpeed": {
+      "type": "number",
+      "default": 4
+    },
+    "imageWidth": {
+      "type": "number",
+      "default": 720
+    },
+    "imageHeight": {
+      "type": "number",
+      "default": 680
+    },
+    "sectionPadding": {
+      "type": "object",
+      "default": {
+        "top": "72px",
+        "right": "0px",
+        "bottom": "72px",
+        "left": "0px"
+      }
+    },
+    "sectionMargin": {
+      "type": "object",
+      "default": {
+        "top": "0px",
+        "right": "0px",
+        "bottom": "0px",
+        "left": "0px"
+      }
+    }
+  },
+  "supports": {
+    "html": false,
+    "anchor": true,
+    "align": [
+      "wide",
+      "full"
+    ]
+  },
+  "textdomain": "zenctuary",
+  "editorScript": "file:./index.js",
+  "viewScript": "file:./view.js",
+  "style": "file:./style-index.css",
+  "editorStyle": "file:./index.css"
+}
