@@ -1,0 +1,14 @@
+/* ==========================================================================
+   zen-why-zenctuary — Editor-only Styles
+   Loaded only inside the block editor iframe.
+   ========================================================================== */
+
+/* Ensure the editor canvas preview fills the block width */
+.wp-block-zenctuary-why-zenctuary {
+    width: 100%;
+}
+
+/* Smooth colour picker transitions in the inspector sidebar */
+.wp-block-zenctuary-why-zenctuary .components-color-picker {
+    margin-bottom: 8px;
+}

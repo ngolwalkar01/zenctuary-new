@@ -1,0 +1,190 @@
+/* ==========================================================================
+   zen-why-zenctuary — Frontend Styles
+   All colors/spacing are driven by CSS custom properties injected inline
+   by render.php so each block instance is fully independent.
+   ========================================================================== */
+
+/* ── Section wrapper ──────────────────────────────────────────────────────── */
+
+.zen-why-zenctuary {
+    background-color: var(--zwz-bg, #3F3E3E);
+    color: var(--zwz-text, #F6F2EA);
+    padding-top: var(--zwz-pt, 80px);
+    padding-bottom: var(--zwz-pb, 80px);
+}
+
+/* Full-width alignment class added by WP block editor */
+.alignfull.zen-why-zenctuary {
+    width: 100%;
+    max-width: none;
+}
+
+/* ── Inner container ─────────────────────────────────────────────────────── */
+
+.zen-why-zenctuary__inner {
+    max-width: var(--zen-container, 1200px);
+    margin-inline: auto;
+    padding-inline: var(--zen-page-pad-x, 120px);
+}
+
+/* ── Section header ──────────────────────────────────────────────────────── */
+
+.zen-why-zenctuary__header {
+    margin-bottom: 48px;
+}
+
+.zen-why-zenctuary__heading {
+    font-family: var(--zen-font-heading, "Montserrat", sans-serif);
+    font-size: clamp(24px, 3vw, 36px);
+    font-weight: 700;
+    line-height: 1.2;
+    text-transform: uppercase;
+    color: var(--zwz-heading, #D8B355);
+    letter-spacing: 0.02em;
+    margin: 0 0 12px;
+}
+
+.zen-why-zenctuary__subheading {
+    font-family: var(--zen-font-body, "DM Sans", sans-serif);
+    font-size: var(--zen-fs-body, 16px);
+    line-height: 1.6;
+    color: var(--zwz-text, #F6F2EA);
+    opacity: 0.75;
+    margin: 0;
+}
+
+/* ── Features grid ───────────────────────────────────────────────────────── */
+
+.zen-why-zenctuary__grid {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(var(--zwz-cols, 2), 1fr);
+    gap: 48px 64px;
+}
+
+/* ── Single feature item ─────────────────────────────────────────────────── */
+
+.zen-why-zenctuary__item {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+
+/* Top row: number + icon + (title hangs here on desktop) */
+.zen-why-zenctuary__item-meta {
+    display: flex;
+    align-items: flex-start;
+    gap: 20px;
+}
+
+/* ── Auto number ─────────────────────────────────────────────────────────── */
+
+.zen-why-zenctuary__number {
+    font-family: var(--zen-font-body, "DM Sans", sans-serif);
+    font-size: 13px;
+    font-weight: 500;
+    line-height: 1;
+    color: var(--zwz-text, #F6F2EA);
+    opacity: 0.55;
+    min-width: 22px;
+    padding-top: 4px;
+    flex-shrink: 0;
+}
+
+/* ── Icon ────────────────────────────────────────────────────────────────── */
+
+.zen-why-zenctuary__icon {
+    color: var(--zwz-accent, #D8B355);
+    flex-shrink: 0;
+    width: 48px;
+    height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.zen-why-zenctuary__icon img {
+    width: 48px;
+    height: 48px;
+    object-fit: contain;
+    display: block;
+}
+
+.zen-why-zenctuary__icon--placeholder {
+    opacity: 0.65;
+}
+
+/* ── Item content (title + desc) ─────────────────────────────────────────── */
+
+.zen-why-zenctuary__item-content {
+    /* Aligned with icon — indented past the number column */
+    padding-left: calc(22px + 20px); /* number width + gap */
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.zen-why-zenctuary__item-title {
+    font-family: var(--zen-font-heading, "Montserrat", sans-serif);
+    font-size: clamp(18px, 2vw, 24px);
+    font-weight: 700;
+    line-height: 1.2;
+    text-transform: uppercase;
+    letter-spacing: 0.01em;
+    color: var(--zwz-text, #F6F2EA);
+    margin: 0;
+}
+
+.zen-why-zenctuary__item-desc {
+    font-family: var(--zen-font-body, "DM Sans", sans-serif);
+    font-size: var(--zen-fs-body, 16px);
+    line-height: 1.6;
+    color: var(--zwz-text, #F6F2EA);
+    opacity: 0.8;
+    margin: 0;
+}
+
+/* ── Responsive ──────────────────────────────────────────────────────────── */
+
+/* Tablet: collapse to 2 cols regardless of setting, shrink padding */
+@media (max-width: 1024px) {
+    .zen-why-zenctuary__inner {
+        padding-inline: var(--zen-page-pad-x-mobile, 40px);
+    }
+
+    .zen-why-zenctuary__grid {
+        grid-template-columns: repeat(min(var(--zwz-cols, 2), 2), 1fr);
+        gap: 36px 40px;
+    }
+}
+
+/* Mobile: single column */
+@media (max-width: 767px) {
+    .zen-why-zenctuary {
+        padding-top: max(48px, calc(var(--zwz-pt, 80px) * 0.6));
+        padding-bottom: max(48px, calc(var(--zwz-pb, 80px) * 0.6));
+    }
+
+    .zen-why-zenctuary__inner {
+        padding-inline: var(--zen-page-pad-x-mobile, 32px);
+    }
+
+    .zen-why-zenctuary__grid {
+        grid-template-columns: 1fr;
+        gap: 36px;
+    }
+
+    .zen-why-zenctuary__heading {
+        font-size: clamp(22px, 6vw, 28px);
+    }
+
+    .zen-why-zenctuary__item-title {
+        font-size: clamp(16px, 5vw, 20px);
+    }
+
+    .zen-why-zenctuary__header {
+        margin-bottom: 32px;
+    }
+}

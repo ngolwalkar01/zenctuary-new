@@ -1,0 +1,91 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "zenctuary/why-zenctuary",
+  "version": "1.0.0",
+  "title": "Why Zenctuary",
+  "category": "design",
+  "icon": "star-filled",
+  "description": "Displays a fully-configurable 'Why Zenctuary?' features grid with auto-numbered items, icon uploads, titles, and descriptions.",
+  "attributes": {
+    "heading": {
+      "type": "string",
+      "default": "WHY ZENCTUARY?"
+    },
+    "subheading": {
+      "type": "string",
+      "default": ""
+    },
+    "items": {
+      "type": "array",
+      "default": [
+        {
+          "iconUrl": "",
+          "iconId": 0,
+          "iconAlt": "",
+          "title": "ALL-IN-ONE DAILY RETREAT",
+          "description": "Classes, Fire & Ice, café, and community — everything in one place, no extra trips."
+        },
+        {
+          "iconUrl": "",
+          "iconId": 0,
+          "iconAlt": "",
+          "title": "SAFE COMMUNITY",
+          "description": "Empathetic, open, international — come as you are."
+        },
+        {
+          "iconUrl": "",
+          "iconId": 0,
+          "iconAlt": "",
+          "title": "SPACE & ATMOSPHERE",
+          "description": "Minimal noise, maximum calm. Phone-free, so you can fully switch off."
+        },
+        {
+          "iconUrl": "",
+          "iconId": 0,
+          "iconAlt": "",
+          "title": "EXPERT GUIDANCE",
+          "description": "Certified teachers and wellness professionals at every step of your journey."
+        }
+      ]
+    },
+    "backgroundColor": {
+      "type": "string",
+      "default": "#3F3E3E"
+    },
+    "headingColor": {
+      "type": "string",
+      "default": "#D8B355"
+    },
+    "textColor": {
+      "type": "string",
+      "default": "#F6F2EA"
+    },
+    "accentColor": {
+      "type": "string",
+      "default": "#D8B355"
+    },
+    "paddingTop": {
+      "type": "number",
+      "default": 80
+    },
+    "paddingBottom": {
+      "type": "number",
+      "default": 80
+    },
+    "columns": {
+      "type": "number",
+      "default": 2
+    }
+  },
+  "supports": {
+    "html": false,
+    "align": [
+      "full",
+      "wide"
+    ]
+  },
+  "textdomain": "zenctuary",
+  "editorScript": "file:./index.js",
+  "render": "file:./render.php"
+}
