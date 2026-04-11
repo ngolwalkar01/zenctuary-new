@@ -1,12 +1,30 @@
+.wp-block-zenctuary-zen-split-showcase,
 .wp-block-zenctuary-zenctuary-split-showcase {
 	.zen-split-showcase__remove-item {
 		flex: 0 0 auto;
 		margin-left: 8px;
 	}
 
-	.zen-split-showcase__add-item {
+	.zen-split-showcase__remove-paragraph {
+		align-self: flex-start;
+		flex: 0 0 auto;
+		margin-left: 8px;
+	}
+
+	.zen-split-showcase__add-item,
+	.zen-split-showcase__add-paragraph {
 		align-self: flex-start;
 		margin-top: 6px;
+	}
+
+	.zen-split-showcase__paragraph-row {
+		display: flex;
+		align-items: flex-start;
+		gap: 8px;
+	}
+
+	.zen-split-showcase__paragraph-row .zen-split-showcase__paragraph {
+		flex: 1 1 auto;
 	}
 
 	.zen-split-showcase__button {

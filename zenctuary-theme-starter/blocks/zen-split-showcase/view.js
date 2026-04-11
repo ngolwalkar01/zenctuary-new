@@ -28,6 +28,6 @@
 	};
 
 	document.addEventListener( 'DOMContentLoaded', () => {
-		document.querySelectorAll( '.wp-block-zenctuary-zenctuary-split-showcase' ).forEach( initShowcase );
+		document.querySelectorAll( '.wp-block-zenctuary-zen-split-showcase, .wp-block-zenctuary-zenctuary-split-showcase' ).forEach( initShowcase );
 	} );
 } )();

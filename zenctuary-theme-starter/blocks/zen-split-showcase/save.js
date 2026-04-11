@@ -1,11 +1,28 @@
 import { RichText, useBlockProps } from '@wordpress/block-editor';
 
+const DEFAULT_HEADING_COLOR = 'var(--wp--preset--color--primary)';
+const DEFAULT_TEXT_COLOR = '#ffffff';
+
 const spacingStyle = ( value = {}, property ) => ( {
 	[ `${ property }Top` ]: value.top || '0px',
 	[ `${ property }Right` ]: value.right || '0px',
 	[ `${ property }Bottom` ]: value.bottom || '0px',
 	[ `${ property }Left` ]: value.left || '0px',
 } );
+
+const normalizeParagraphs = ( paragraphs, legacyParagraph ) => {
+	if ( Array.isArray( paragraphs ) && paragraphs.length ) {
+		return paragraphs.map( ( item ) => {
+			if ( typeof item === 'string' ) {
+				return { text: item };
+			}
+
+			return { text: item?.text || '' };
+		} );
+	}
+
+	return [ { text: legacyParagraph || '' } ];
+};
 
 function CheckIcon() {
 	return (
@@ -35,6 +52,7 @@ export default function save( { attributes } ) {
 		listColor,
 		listSpacing,
 		paragraph,
+		paragraphs,
 		paragraphFontSize,
 		paragraphColor,
 		paragraphFontWeight,
@@ -57,6 +75,7 @@ export default function save( { attributes } ) {
 	} = attributes;
 
 	const safeListItems = Array.isArray( listItems ) ? listItems : [];
+	const safeParagraphs = normalizeParagraphs( paragraphs, paragraph );
 	const safeImages = Array.isArray( images ) ? images : [];
 
 	const blockProps = useBlockProps.save( {
@@ -87,7 +106,7 @@ export default function save( { attributes } ) {
 							value={ heading }
 							style={ {
 								fontSize: `${ headingFontSize }px`,
-								color: headingColor,
+								color: headingColor || DEFAULT_HEADING_COLOR,
 								fontWeight: headingFontWeight,
 							} }
 						/>
@@ -100,22 +119,27 @@ export default function save( { attributes } ) {
 										tagName="span"
 										className="zen-split-showcase__list-text"
 										value={ item }
-										style={ { color: listColor, fontSize: `${ listFontSize }px` } }
+										style={ { color: listColor || DEFAULT_TEXT_COLOR, fontSize: `${ listFontSize }px` } }
 									/>
 								</div>
 							) ) }
 						</div>
 
-						<RichText.Content
-							tagName="p"
-							className="zen-split-showcase__paragraph"
-							value={ paragraph }
-							style={ {
-								color: paragraphColor,
-								fontSize: `${ paragraphFontSize }px`,
-								fontWeight: paragraphFontWeight,
-							} }
-						/>
+						<div className="zen-split-showcase__paragraphs">
+							{ safeParagraphs.map( ( item, index ) => (
+								<RichText.Content
+									tagName="p"
+									className="zen-split-showcase__paragraph"
+									key={ index }
+									value={ item.text }
+									style={ {
+										color: paragraphColor || DEFAULT_TEXT_COLOR,
+										fontSize: `${ paragraphFontSize }px`,
+										fontWeight: paragraphFontWeight,
+									} }
+								/>
+							) ) }
+						</div>
 
 						<a className={ `zen-split-showcase__button is-arrow-${ arrowPosition }` } href={ buttonUrl || '#' } style={ buttonStyle }>
 							{ showArrow && ( arrowPosition === 'left' || arrowPosition === 'top' ) && <span className="zen-split-showcase__button-icon"><ArrowIcon /></span> }

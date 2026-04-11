@@ -1,9 +1,9 @@
 {
   "$schema": "https://schemas.wp.org/trunk/block.json",
   "apiVersion": 3,
-  "name": "zenctuary/zenctuary-split-showcase",
+  "name": "zenctuary/zen-split-showcase",
   "version": "1.0.0",
-  "title": "Zenctuary Split Showcase",
+  "title": "Zen Split Showcase",
   "category": "design",
   "icon": "align-pull-left",
   "description": "A full-width split content and image showcase with editable copy, custom list items, button controls, and a fading image loop.",
@@ -28,7 +28,7 @@
     },
     "headingColor": {
       "type": "string",
-      "default": "#3f3d3d"
+      "default": "var(--wp--preset--color--primary)"
     },
     "headingFontWeight": {
       "type": "string",
@@ -48,7 +48,7 @@
     },
     "listColor": {
       "type": "string",
-      "default": "#3f3d3d"
+      "default": "#ffffff"
     },
     "listSpacing": {
       "type": "number",
@@ -58,13 +58,21 @@
       "type": "string",
       "default": "Step into a grounded practice designed to help you reset, breathe, and feel fully present."
     },
+    "paragraphs": {
+      "type": "array",
+      "default": [
+        {
+          "text": "Step into a grounded practice designed to help you reset, breathe, and feel fully present."
+        }
+      ]
+    },
     "paragraphFontSize": {
       "type": "number",
       "default": 18
     },
     "paragraphColor": {
       "type": "string",
-      "default": "#3f3d3d"
+      "default": "#ffffff"
     },
     "paragraphFontWeight": {
       "type": "string",

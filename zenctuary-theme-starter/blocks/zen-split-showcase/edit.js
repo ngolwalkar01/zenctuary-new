@@ -33,12 +33,29 @@ const ARROW_POSITION_OPTIONS = [
 	{ label: 'Bottom', value: 'bottom' },
 ];
 
+const DEFAULT_HEADING_COLOR = 'var(--wp--preset--color--primary)';
+const DEFAULT_TEXT_COLOR = '#ffffff';
+
 const spacingStyle = ( value = {}, property ) => ( {
 	[ `${ property }Top` ]: value.top || '0px',
 	[ `${ property }Right` ]: value.right || '0px',
 	[ `${ property }Bottom` ]: value.bottom || '0px',
 	[ `${ property }Left` ]: value.left || '0px',
 } );
+
+const normalizeParagraphs = ( paragraphs, legacyParagraph ) => {
+	if ( Array.isArray( paragraphs ) && paragraphs.length ) {
+		return paragraphs.map( ( item ) => {
+			if ( typeof item === 'string' ) {
+				return { text: item };
+			}
+
+			return { text: item?.text || '' };
+		} );
+	}
+
+	return [ { text: legacyParagraph || '' } ];
+};
 
 function SpacingControls( { label, value = {}, onChange } ) {
 	const nextValue = {
@@ -94,6 +111,7 @@ export default function Edit( { attributes, setAttributes } ) {
 		listColor,
 		listSpacing,
 		paragraph,
+		paragraphs,
 		paragraphFontSize,
 		paragraphColor,
 		paragraphFontWeight,
@@ -116,6 +134,7 @@ export default function Edit( { attributes, setAttributes } ) {
 	} = attributes;
 
 	const safeListItems = Array.isArray( listItems ) ? listItems : [];
+	const safeParagraphs = normalizeParagraphs( paragraphs, paragraph );
 	const safeImages = Array.isArray( images ) ? images : [];
 	const [ activeImage, setActiveImage ] = useState( 0 );
 
@@ -155,6 +174,28 @@ export default function Edit( { attributes, setAttributes } ) {
 	const removeListItem = ( itemIndex ) => {
 		setAttributes( {
 			listItems: safeListItems.filter( ( item, index ) => index !== itemIndex ),
+		} );
+	};
+
+	const updateParagraph = ( paragraphIndex, value ) => {
+		setAttributes( {
+			paragraphs: safeParagraphs.map( ( item, index ) => (
+				index === paragraphIndex ? { ...item, text: value } : item
+			) ),
+		} );
+	};
+
+	const addParagraph = () => {
+		setAttributes( {
+			paragraphs: [ ...safeParagraphs, { text: '' } ],
+		} );
+	};
+
+	const removeParagraph = ( paragraphIndex ) => {
+		const nextParagraphs = safeParagraphs.filter( ( item, index ) => index !== paragraphIndex );
+
+		setAttributes( {
+			paragraphs: nextParagraphs.length ? nextParagraphs : [ { text: '' } ],
 		} );
 	};
 
@@ -210,21 +251,21 @@ export default function Edit( { attributes, setAttributes } ) {
 					<RangeControl label={ __( 'Font Size', 'zenctuary' ) } value={ headingFontSize } onChange={ ( value ) => setAttributes( { headingFontSize: value } ) } min={ 18 } max={ 84 } />
 					<SelectControl label={ __( 'Font Weight', 'zenctuary' ) } value={ headingFontWeight } options={ FONT_WEIGHT_OPTIONS } onChange={ ( value ) => setAttributes( { headingFontWeight: value } ) } />
 					<p className="components-base-control__label">{ __( 'Color', 'zenctuary' ) }</p>
-					<ColorPalette value={ headingColor } onChange={ ( value ) => setAttributes( { headingColor: value || '#3f3d3d' } ) } />
+					<ColorPalette value={ headingColor } onChange={ ( value ) => setAttributes( { headingColor: value || DEFAULT_HEADING_COLOR } ) } />
 				</PanelBody>
 
 				<PanelBody title={ __( 'List Typography', 'zenctuary' ) } initialOpen={ false }>
 					<RangeControl label={ __( 'Font Size', 'zenctuary' ) } value={ listFontSize } onChange={ ( value ) => setAttributes( { listFontSize: value } ) } min={ 12 } max={ 36 } />
 					<RangeControl label={ __( 'Item Spacing', 'zenctuary' ) } value={ listSpacing } onChange={ ( value ) => setAttributes( { listSpacing: value } ) } min={ 0 } max={ 40 } />
 					<p className="components-base-control__label">{ __( 'Color', 'zenctuary' ) }</p>
-					<ColorPalette value={ listColor } onChange={ ( value ) => setAttributes( { listColor: value || '#3f3d3d' } ) } />
+					<ColorPalette value={ listColor } onChange={ ( value ) => setAttributes( { listColor: value || DEFAULT_TEXT_COLOR } ) } />
 				</PanelBody>
 
 				<PanelBody title={ __( 'Paragraph Typography', 'zenctuary' ) } initialOpen={ false }>
 					<RangeControl label={ __( 'Font Size', 'zenctuary' ) } value={ paragraphFontSize } onChange={ ( value ) => setAttributes( { paragraphFontSize: value } ) } min={ 12 } max={ 40 } />
 					<SelectControl label={ __( 'Font Weight', 'zenctuary' ) } value={ paragraphFontWeight } options={ FONT_WEIGHT_OPTIONS } onChange={ ( value ) => setAttributes( { paragraphFontWeight: value } ) } />
 					<p className="components-base-control__label">{ __( 'Color', 'zenctuary' ) }</p>
-					<ColorPalette value={ paragraphColor } onChange={ ( value ) => setAttributes( { paragraphColor: value || '#3f3d3d' } ) } />
+					<ColorPalette value={ paragraphColor } onChange={ ( value ) => setAttributes( { paragraphColor: value || DEFAULT_TEXT_COLOR } ) } />
 				</PanelBody>
 
 				<PanelBody title={ __( 'Button', 'zenctuary' ) } initialOpen={ false }>
@@ -288,7 +329,7 @@ export default function Edit( { attributes, setAttributes } ) {
 								allowedFormats={ [ 'core/bold', 'core/italic' ] }
 								style={ {
 									fontSize: `${ headingFontSize }px`,
-									color: headingColor,
+									color: headingColor || DEFAULT_HEADING_COLOR,
 									fontWeight: headingFontWeight,
 								} }
 							/>
@@ -304,7 +345,7 @@ export default function Edit( { attributes, setAttributes } ) {
 											onChange={ ( value ) => updateListItem( index, value ) }
 											placeholder={ __( 'List item', 'zenctuary' ) }
 											allowedFormats={ [ 'core/bold', 'core/italic' ] }
-											style={ { color: listColor, fontSize: `${ listFontSize }px` } }
+											style={ { color: listColor || DEFAULT_TEXT_COLOR, fontSize: `${ listFontSize }px` } }
 										/>
 										<Button className="zen-split-showcase__remove-item" variant="tertiary" isDestructive onClick={ () => removeListItem( index ) }>
 											{ __( 'Remove', 'zenctuary' ) }
@@ -316,19 +357,31 @@ export default function Edit( { attributes, setAttributes } ) {
 								</Button>
 							</div>
 
-							<RichText
-								tagName="p"
-								className="zen-split-showcase__paragraph"
-								value={ paragraph }
-								onChange={ ( value ) => setAttributes( { paragraph: value } ) }
-								placeholder={ __( 'Add supporting paragraph...', 'zenctuary' ) }
-								allowedFormats={ [ 'core/bold', 'core/italic', 'core/link' ] }
-								style={ {
-									color: paragraphColor,
-									fontSize: `${ paragraphFontSize }px`,
-									fontWeight: paragraphFontWeight,
-								} }
-							/>
+							<div className="zen-split-showcase__paragraphs">
+								{ safeParagraphs.map( ( item, index ) => (
+									<div className="zen-split-showcase__paragraph-row" key={ index }>
+										<RichText
+											tagName="p"
+											className="zen-split-showcase__paragraph"
+											value={ item.text }
+											onChange={ ( value ) => updateParagraph( index, value ) }
+											placeholder={ __( 'Add supporting paragraph...', 'zenctuary' ) }
+											allowedFormats={ [ 'core/bold', 'core/italic', 'core/link' ] }
+											style={ {
+												color: paragraphColor || DEFAULT_TEXT_COLOR,
+												fontSize: `${ paragraphFontSize }px`,
+												fontWeight: paragraphFontWeight,
+											} }
+										/>
+										<Button className="zen-split-showcase__remove-paragraph" variant="tertiary" isDestructive onClick={ () => removeParagraph( index ) }>
+											{ __( 'Remove', 'zenctuary' ) }
+										</Button>
+									</div>
+								) ) }
+								<Button className="zen-split-showcase__add-paragraph" variant="secondary" onClick={ addParagraph }>
+									{ __( 'Add Paragraph', 'zenctuary' ) }
+								</Button>
+							</div>
 
 							<a className={ `zen-split-showcase__button is-arrow-${ arrowPosition }` } href={ buttonUrl || '#' } style={ buttonStyle } onClick={ ( event ) => event.preventDefault() }>
 								{ showArrow && ( arrowPosition === 'left' || arrowPosition === 'top' ) && <span className="zen-split-showcase__button-icon"><ArrowIcon /></span> }
