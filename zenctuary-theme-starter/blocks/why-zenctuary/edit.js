@@ -88,9 +88,9 @@ export default function Edit( { attributes, setAttributes } ) {
         maxWidth, headingMarginBottom, rowGap, columnGap,
         gapNumIcon, gapIconContent, gapTitleDesc,
         headingFontSize, headingFontWeight, headingLetterSpacing, headingTextTransform,
-        numberFontSize, numberMinWidth,
+        numberFontSize, numberMinWidth, numberOpacity,
         titleFontSize, titleFontWeight, titleTextTransform, titleLineHeight,
-        descFontSize, descLineHeight,
+        descFontSize, descLineHeight, descOpacity,
         iconSize,
     } = attributes;
 
@@ -136,7 +136,7 @@ export default function Edit( { attributes, setAttributes } ) {
         fontFamily: '"DM Sans", sans-serif',
         fontSize: `${ numberFontSize }px`,
         color: numberColor,
-        opacity: 0.45,
+        opacity: numberOpacity,
         lineHeight: 1,
         paddingTop: '6px',
     };
@@ -176,7 +176,7 @@ export default function Edit( { attributes, setAttributes } ) {
         fontSize: `${ descFontSize }px`,
         lineHeight: descLineHeight,
         color: descriptionColor,
-        opacity: 0.8,
+        opacity: descOpacity,
         margin: 0,
     };
 
@@ -263,6 +263,7 @@ export default function Edit( { attributes, setAttributes } ) {
                     <p style={ { fontSize: '11px', fontWeight: 600, textTransform: 'uppercase', color: '#aaa', marginBottom: '8px' } }>Number</p>
                     <RangeControl label={ __( 'Font Size (px)',  'zenctuary' ) } value={ numberFontSize } min={ 10 } max={ 24 } step={ 1 } onChange={ ( v ) => setAttributes( { numberFontSize: v } ) } />
                     <RangeControl label={ __( 'Min Width (px)', 'zenctuary' ) } value={ numberMinWidth } min={ 16 } max={ 48 } step={ 2 } onChange={ ( v ) => setAttributes( { numberMinWidth: v } ) } />
+                    <RangeControl label={ __( 'Opacity',        'zenctuary' ) } value={ numberOpacity }  min={ 0.1 } max={ 1 } step={ 0.05 } onChange={ ( v ) => setAttributes( { numberOpacity: v } ) } />
 
                     <Divider />
 
@@ -283,6 +284,7 @@ export default function Edit( { attributes, setAttributes } ) {
                     <p style={ { fontSize: '11px', fontWeight: 600, textTransform: 'uppercase', color: '#aaa', marginBottom: '8px' } }>Description</p>
                     <RangeControl label={ __( 'Font Size (px)', 'zenctuary' ) } value={ descFontSize }  min={ 12 } max={ 24 } step={ 1 } onChange={ ( v ) => setAttributes( { descFontSize: v } ) } />
                     <RangeControl label={ __( 'Line Height',   'zenctuary' ) } value={ descLineHeight } min={ 1 }  max={ 2 }  step={ 0.05 } onChange={ ( v ) => setAttributes( { descLineHeight: v } ) } />
+                    <RangeControl label={ __( 'Opacity',       'zenctuary' ) } value={ descOpacity }    min={ 0.1 } max={ 1 } step={ 0.05 } onChange={ ( v ) => setAttributes( { descOpacity: v } ) } />
 
                     <Divider />
 
@@ -340,8 +342,14 @@ export default function Edit( { attributes, setAttributes } ) {
                                                     />
                                                 </div>
                                                 <Button variant="secondary" isDestructive onClick={ () => {
-                                                    updateItem( index, 'iconUrl', '' );
-                                                    updateItem( index, 'iconId', 0 );
+                                                    // Single setAttributes call to avoid stale-closure overwrite
+                                                    setAttributes( {
+                                                        items: items.map( ( it, i ) =>
+                                                            i === index
+                                                                ? { ...it, iconUrl: '', iconId: 0, iconAlt: '' }
+                                                                : it
+                                                        ),
+                                                    } );
                                                 } }>
                                                     { __( 'Remove', 'zenctuary' ) }
                                                 </Button>
@@ -350,9 +358,18 @@ export default function Edit( { attributes, setAttributes } ) {
                                             <MediaUploadCheck>
                                                 <MediaUpload
                                                     onSelect={ ( media ) => {
-                                                        updateItem( index, 'iconUrl', media.url );
-                                                        updateItem( index, 'iconId', media.id );
-                                                        updateItem( index, 'iconAlt', media.alt || '' );
+                                                        // Merge all three icon fields in ONE setAttributes call.
+                                                        // Three separate updateItem() calls each read the same
+                                                        // stale 'items' closure and overwrite each other — only
+                                                        // the last one (iconAlt) would survive, leaving iconUrl
+                                                        // empty and the placeholder icon always showing.
+                                                        setAttributes( {
+                                                            items: items.map( ( it, i ) =>
+                                                                i === index
+                                                                    ? { ...it, iconUrl: media.url, iconId: media.id, iconAlt: media.alt || '' }
+                                                                    : it
+                                                            ),
+                                                        } );
                                                     } }
                                                     allowedTypes={ [ 'image' ] }
                                                     value={ item.iconId }

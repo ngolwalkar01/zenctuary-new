@@ -14,12 +14,23 @@
 
     "items": {
       "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "iconUrl":     { "type": "string" },
+          "iconId":      { "type": "number" },
+          "iconAlt":     { "type": "string" },
+          "title":       { "type": "string" },
+          "description": { "type": "string" }
+        }
+      },
       "default": [
         { "iconUrl": "", "iconId": 0, "iconAlt": "", "title": "ALL-IN-ONE DAILY RETREAT",  "description": "Classes, Fire & Ice, café, and community — everything in one place, no extra trips." },
         { "iconUrl": "", "iconId": 0, "iconAlt": "", "title": "SAFE COMMUNITY",             "description": "Empathetic, open, international — come as you are." },
         { "iconUrl": "", "iconId": 0, "iconAlt": "", "title": "SPACE & ATMOSPHERE",         "description": "Minimal noise, maximum calm. Phone-free, so you can fully switch off." },
         { "iconUrl": "", "iconId": 0, "iconAlt": "", "title": "EXPERT GUIDANCE",            "description": "Certified teachers and wellness professionals at every step of your journey." }
       ]
+
     },
 
     "columns": { "type": "number", "default": 2 },
@@ -53,6 +64,7 @@
     "numberFontSize":    { "type": "number", "default": 13 },
     "numberFontWeight":  { "type": "string", "default": "400" },
     "numberMinWidth":    { "type": "number", "default": 24 },
+    "numberOpacity":     { "type": "number", "default": 0.45 },
 
     "titleFontSize":      { "type": "number", "default": 22 },
     "titleFontWeight":    { "type": "string", "default": "700" },
@@ -61,6 +73,7 @@
 
     "descFontSize":   { "type": "number", "default": 16 },
     "descLineHeight": { "type": "number", "default": 1.6 },
+    "descOpacity":    { "type": "number", "default": 0.8 },
 
     "iconSize": { "type": "number", "default": 48 }
   },

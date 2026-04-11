@@ -18,6 +18,26 @@
     },
     "items": {
       "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "iconUrl": {
+            "type": "string"
+          },
+          "iconId": {
+            "type": "number"
+          },
+          "iconAlt": {
+            "type": "string"
+          },
+          "title": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          }
+        }
+      },
       "default": [
         {
           "iconUrl": "",
@@ -149,6 +169,10 @@
       "type": "number",
       "default": 24
     },
+    "numberOpacity": {
+      "type": "number",
+      "default": 0.45
+    },
     "titleFontSize": {
       "type": "number",
       "default": 22
@@ -172,6 +196,10 @@
     "descLineHeight": {
       "type": "number",
       "default": 1.6
+    },
+    "descOpacity": {
+      "type": "number",
+      "default": 0.8
     },
     "iconSize": {
       "type": "number",

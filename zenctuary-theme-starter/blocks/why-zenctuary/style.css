@@ -102,7 +102,7 @@
     font-weight: var(--zwz-num-fw, 400);
     line-height: 1;
     color:       var(--zwz-num-color, #F6F2EA);
-    opacity:     0.45;
+    opacity:     var(--zwz-num-op, 0.45);
 
     /* Nudge down slightly so it sits at cap-height of the title */
     padding-top: 6px;
@@ -167,7 +167,7 @@
     font-weight: 400;
     line-height: var(--zwz-desc-lh, 1.6);
     color:       var(--zwz-desc-color, #F6F2EA);
-    opacity:     0.8;
+    opacity:     var(--zwz-desc-op, 0.8);
     margin:      0;
 }
 

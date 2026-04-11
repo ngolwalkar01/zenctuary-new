@@ -51,6 +51,7 @@ $h_tt  = esc_attr( $attributes['headingTextTransform'] ?? 'uppercase' );
 $num_fs  = absint( $attributes['numberFontSize']  ?? 13 );
 $num_fw  = esc_attr( $attributes['numberFontWeight'] ?? '400' );
 $num_mw  = absint( $attributes['numberMinWidth']  ?? 24 );
+$num_op  = floatval( $attributes['numberOpacity'] ?? 0.45 );
 
 $title_fs  = absint( $attributes['titleFontSize']      ?? 22 );
 $title_fw  = esc_attr( $attributes['titleFontWeight']  ?? '700' );
@@ -59,6 +60,7 @@ $title_lh  = floatval( $attributes['titleLineHeight']  ?? 1.2 );
 
 $desc_fs = absint( $attributes['descFontSize']  ?? 16 );
 $desc_lh = floatval( $attributes['descLineHeight'] ?? 1.6 );
+$desc_op = floatval( $attributes['descOpacity'] ?? 0.8 );
 
 $icon_size = absint( $attributes['iconSize'] ?? 48 );
 
@@ -94,6 +96,7 @@ $vars = [
     '--zwz-num-fs:'          . $num_fs . 'px',
     '--zwz-num-fw:'          . $num_fw,
     '--zwz-num-mw:'          . $num_mw . 'px',
+    '--zwz-num-op:'          . $num_op,
 
     '--zwz-title-fs:'        . $title_fs . 'px',
     '--zwz-title-fw:'        . $title_fw,
@@ -102,6 +105,7 @@ $vars = [
 
     '--zwz-desc-fs:'         . $desc_fs . 'px',
     '--zwz-desc-lh:'         . $desc_lh,
+    '--zwz-desc-op:'         . $desc_op,
 
     '--zwz-icon-size:'       . $icon_size . 'px',
 ];
