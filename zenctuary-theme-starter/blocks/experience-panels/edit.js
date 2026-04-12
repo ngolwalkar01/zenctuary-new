@@ -307,8 +307,11 @@ export default function Edit( { attributes, setAttributes, clientId } ) {
                     
                     <Button variant="primary" onClick={() => {
                         const newPanels = [...panels, {
-                            bgImageUrl: '', bgImageId: 0, overlayEnable: true, overlayColor: '#1D1D1B', overlayOpacity: 0.5,
-                            centerIconUrl: '', centerIconId: 0, centerTitle: 'NEW PANEL', centerDescription: 'Description...', leftHotspots: [], rightHotspots: []
+                            defaultBgImageUrl: '', defaultBgImageId: 0, defaultBgImageAlt: '',
+                            activeBgImageUrl: '', activeBgImageId: 0, activeBgImageAlt: '',
+                            bgTransition: 'fade', contentTransition: 'slide-up',
+                            overlayEnable: true, overlayColor: '#1D1D1B', overlayOpacity: 0.5,
+                            centerIconUrl: '', centerIconId: 0, centerIconAlt: '', centerTitle: 'NEW PANEL', centerDescription: 'Description...', leftHotspots: [], rightHotspots: []
                         }];
                         setAttributes({ panels: newPanels });
                     }} style={{ width: '100%', justifyContent: 'center', marginTop: '16px' }}>+ Add New Panel</Button>
