@@ -4,11 +4,14 @@
 
 /* ── 1. Scoped CSS Variables ── */
 .zenctuary-experience-panels {
-    width: 100%;
-    background-color: var(--zep-bg, #f9f9f9);
+    width: 100vw;
     position: relative;
+    left: 50%;
+    right: 50%;
+    margin-left: -50vw;
+    margin-right: -50vw;
+    background-color: var(--zep-bg, #f9f9f9);
     overflow: hidden;
-    /* Default height assignment to viewport on Desktop! */
     min-height: 100vh; 
 }
 
@@ -30,12 +33,16 @@
 }
 
 .zenctuary-experience-panels.has-active-panel .zep-panel {
-    /* When ONE panel is active, the others shrink slightly more than flex: 1 normally would *relative* to the active panel flex */
-    /* To ensure deep immersive coverage, active goes to flex: 10+, inactive stays flex: 1 */
+    flex: 0 0 0%; /* Completely collapse non-active panels */
+    min-width: 0;
+    opacity: 0; /* Fade them out cleanly so they don't squish weirdly */
+    pointer-events: none; /* Remove interactions */
 }
 
 .zenctuary-experience-panels.has-active-panel .zep-panel.is-active {
-    flex: 12;
+    flex: 1 0 100%; /* Active panel takes over the ENTIRE view visibly */
+    opacity: 1; /* Keep active visible */
+    pointer-events: auto; /* Allow interactions */
     cursor: default;
 }
 
@@ -174,27 +181,23 @@
 
 .zep-panel__hotspots--left {
     left: 8%;
-    align-items: flex-start;
+    align-items: center;
 }
 
 .zep-panel__hotspots--right {
     right: 8%;
-    align-items: flex-end;
+    align-items: center;
 }
 
 .zep-hotspot {
     display: flex;
+    flex-direction: column; /* ALWAYS VERTICAL STACK */
     align-items: center;
+    text-align: center;
     gap: var(--zep-gap-hot-it, 12px);
     color: var(--zep-hot-c, #ffffff);
     text-decoration: none;
     font-family: inherit;
-}
-
-/* Ensure right hotspots have icon on right side if desired by design. 
-   Usually left hotspots icon is left, right hotspots icon is right. */
-.zep-panel__hotspots--right .zep-hotspot {
-    flex-direction: row-reverse;
 }
 
 .zep-hotspot__icon {
@@ -272,7 +275,7 @@
     .zep-panel__hotspots--right { margin-top: 24px; }
 
     .zep-hotspot {
-        flex-direction: column !important; /* Stack icon top, desc bottom */
+        flex-direction: column; /* Stack icon top, desc bottom */
         text-align: center;
     }
     
