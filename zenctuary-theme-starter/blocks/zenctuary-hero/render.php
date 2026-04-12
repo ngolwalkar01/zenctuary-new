@@ -22,9 +22,11 @@ $contact_acts  = is_array( $attributes['contactActions'] ?? null ) ? $attributes
 ];
 
 // Parse animations
-function zh_anim_attrs( $type, $dur, $del ) {
-    if ( $type === 'none' ) return '';
-    return sprintf( ' data-animate="%s" style="transition-duration: %ss; transition-delay: %ss;"', esc_attr($type), floatval($dur), floatval($del) );
+if ( ! function_exists( 'zh_anim_attrs' ) ) {
+    function zh_anim_attrs( $type, $dur, $del ) {
+        if ( $type === 'none' ) return '';
+        return sprintf( ' data-animate="%s" style="transition-duration: %ss; transition-delay: %ss;"', esc_attr($type), floatval($dur), floatval($del) );
+    }
 }
 
 $vars = [
@@ -72,11 +74,13 @@ $icons = [
 ];
 
 // Determine link formatting
-function zh_format_link( $type, $val ) {
-    if ( $type === 'email' ) return 'mailto:' . esc_attr($val);
-    if ( $type === 'phone' ) return 'tel:' . esc_attr(preg_replace('/[^0-9+]/', '', $val));
-    if ( $type === 'whatsapp' ) return 'https://wa.me/' . esc_attr(preg_replace('/[^0-9+]/', '', $val));
-    return esc_url($val);
+if ( ! function_exists( 'zh_format_link' ) ) {
+    function zh_format_link( $type, $val ) {
+        if ( $type === 'email' ) return 'mailto:' . esc_attr($val);
+        if ( $type === 'phone' ) return 'tel:' . esc_attr(preg_replace('/[^0-9+]/', '', $val));
+        if ( $type === 'whatsapp' ) return 'https://wa.me/' . esc_attr(preg_replace('/[^0-9+]/', '', $val));
+        return esc_url($val);
+    }
 }
 ?>
 <section class="zenctuary-hero" style="<?php echo esc_attr( $inline_style ); ?>">
