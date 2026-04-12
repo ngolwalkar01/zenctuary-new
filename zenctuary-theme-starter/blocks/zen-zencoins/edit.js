@@ -6,6 +6,11 @@ import apiFetch from '@wordpress/api-fetch';
 
 const WEIGHTS = [ '400', '500', '600', '700', '800' ].map( ( value ) => ( { label: value, value } ) );
 const ARROWS = [ 'left', 'right', 'top', 'bottom' ].map( ( value ) => ( { label: value, value } ) );
+const BUTTON_WIDTH_OPTIONS = [
+	{ label: 'Auto', value: 'auto' },
+	{ label: 'Full width', value: 'full' },
+	{ label: 'Custom width', value: 'custom' },
+];
 const TYPES = [
 	{ label: 'Taxonomy + Price Row', value: 'taxonomy' },
 	{ label: 'Separator', value: 'separator' },
@@ -23,7 +28,7 @@ function SpacingControls( { label, value, onChange } ) {
 	const s = norm( value );
 	const set = ( side, sideValue ) => onChange( { ...s, [ side ]: sideValue || '0px' } );
 	return (
-		<div className="zen-zencoins-control-grid">
+		<div className="zen-what-zencoins-control-grid">
 			<p className="components-base-control__label">{ label }</p>
 			<UnitControl label="Top" value={ s.top } onChange={ ( v ) => set( 'top', v ) } />
 			<UnitControl label="Right" value={ s.right } onChange={ ( v ) => set( 'right', v ) } />
@@ -36,17 +41,17 @@ function SpacingControls( { label, value, onChange } ) {
 function Coin( { value = '', size = 52, className = '' } ) {
 	const hasValue = value !== undefined && value !== null && `${ value }` !== '';
 	return (
-		<span className={ `zen-zencoins-coin ${ className }` } style={ { width: `${ size }px`, height: `${ size }px`, fontSize: `${ Math.max( 12, Math.round( size * 0.34 ) ) }px` } }>
-			<span className="zen-zencoins-coin__ring" />
-			{ hasValue && <span className="zen-zencoins-coin__value">{ value }</span> }
+		<span className={ `zen-what-zencoins-coin ${ className }` } style={ { width: `${ size }px`, height: `${ size }px`, fontSize: `${ Math.max( 12, Math.round( size * 0.34 ) ) }px` } }>
+			<span className="zen-what-zencoins-coin__ring" />
+			{ hasValue && <span className="zen-what-zencoins-coin__value">{ value }</span> }
 		</span>
 	);
 }
 
 function CoinStack( { coins = [], size = 52 } ) {
 	return (
-		<span className="zen-zencoins-coin-stack" style={ { '--zen-zencoins-overlap': `${ Math.round( size * -0.34 ) }px` } }>
-			{ coins.map( ( coin, index ) => <Coin key={ index } value={ coin?.value ?? coin ?? '' } size={ size } className="zen-zencoins-coin-stack__coin" /> ) }
+		<span className="zen-what-zencoins-coin-stack" style={ { '--zen-what-zencoins-overlap': `${ Math.round( size * -0.34 ) }px` } }>
+			{ coins.map( ( coin, index ) => <Coin key={ index } value={ coin?.value ?? coin ?? '' } size={ size } className="zen-what-zencoins-coin-stack__coin" /> ) }
 		</span>
 	);
 }
@@ -99,24 +104,29 @@ export default function Edit( { attributes, setAttributes } ) {
 	};
 
 	const blockProps = useBlockProps( {
-		className: 'zen-zencoins',
-		style: { ...spacingStyle( attributes.sectionPadding, 'padding' ), '--zen-zencoins-column-gap': `${ attributes.columnGap }px` },
+		className: 'zen-what-zencoins',
+		style: { ...spacingStyle( attributes.sectionPadding, 'padding' ), '--zen-what-zencoins-column-gap': `${ attributes.columnGap }px` },
 	} );
-	const buttonStyle = { backgroundColor: attributes.buttonBackgroundColor, color: attributes.buttonTextColor, fontSize: `${ attributes.buttonFontSize }px`, fontWeight: attributes.buttonFontWeight, borderRadius: `${ attributes.buttonBorderRadius }px`, ...spacingStyle( attributes.buttonPadding, 'padding' ) };
+	const buttonWidthStyle = attributes.buttonWidthMode === 'full'
+		? { width: '100%' }
+		: attributes.buttonWidthMode === 'custom'
+			? { width: attributes.buttonCustomWidth || '340px' }
+			: {};
+	const buttonStyle = { backgroundColor: attributes.buttonBackgroundColor, color: attributes.buttonTextColor, fontSize: `${ attributes.buttonFontSize }px`, fontWeight: attributes.buttonFontWeight, borderRadius: `${ attributes.buttonBorderRadius }px`, ...spacingStyle( attributes.buttonPadding, 'padding' ), ...buttonWidthStyle };
 	const renderCoins = ( row ) => row.id === 'taxonomy-2' ? [ { value: '6' }, { value: '8' } ] : [ { value: '5' } ];
 
 	const renderRow = ( row, index ) => {
 		if ( row.type === 'separator' ) {
-			return <div className="zen-zencoins__row-control" key={ row.id || index } onClick={ () => setSelectedRowIndex( index ) }><span className="zen-zencoins__separator" style={ { width: `${ row.width || 100 }%`, borderTopColor: row.color, borderTopWidth: `${ row.thickness || 1 }px` } } /></div>;
+			return <div className="zen-what-zencoins__row-control" key={ row.id || index } onClick={ () => setSelectedRowIndex( index ) }><span className="zen-what-zencoins__separator" style={ { width: `${ row.width || 100 }%`, borderTopColor: row.color, borderTopWidth: `${ row.thickness || 1 }px` } } /></div>;
 		}
 		if ( row.type === 'paragraph' ) {
-			return <RichText key={ row.id || index } tagName="p" className="zen-zencoins__right-paragraph" value={ row.text } onChange={ ( text ) => setRow( index, { text } ) } onFocus={ () => setSelectedRowIndex( index ) } placeholder="Description..." style={ { color: row.color, fontSize: `${ row.fontSize }px`, fontWeight: row.fontWeight, ...spacingStyle( row.margin, 'margin' ), ...spacingStyle( row.padding, 'padding' ) } } allowedFormats={ [ 'core/bold', 'core/italic', 'core/link' ] } />;
+			return <RichText key={ row.id || index } tagName="p" className="zen-what-zencoins__right-paragraph" value={ row.text } onChange={ ( text ) => setRow( index, { text } ) } onFocus={ () => setSelectedRowIndex( index ) } placeholder="Description..." style={ { color: row.color, fontSize: `${ row.fontSize }px`, fontWeight: row.fontWeight, ...spacingStyle( row.margin, 'margin' ), ...spacingStyle( row.padding, 'padding' ) } } allowedFormats={ [ 'core/bold', 'core/italic', 'core/link' ] } />;
 		}
 		const names = row.termNames?.length ? row.termNames : ( row.termIds || [] ).map( ( id ) => termNames[ String( id ) ] ).filter( Boolean );
 		return (
-			<div className="zen-zencoins__data-row" key={ row.id || index } onClick={ () => setSelectedRowIndex( index ) }>
-				<div className="zen-zencoins__term-label" style={ { color: row.labelColor, fontSize: `${ row.labelFontSize }px`, fontWeight: row.labelFontWeight } }>{ ( names.length ? names.join( ' + ' ) : 'Select experience category' ).toUpperCase() }</div>
-				<div className="zen-zencoins__price" style={ { fontSize: `${ row.priceFontSize }px`, fontWeight: row.priceFontWeight } }><span style={ { color: row.priceLabelColor } }>ZENCOINS:</span><CoinStack coins={ renderCoins( row ) } size={ row.coinSize || 50 } /></div>
+			<div className="zen-what-zencoins__data-row" key={ row.id || index } onClick={ () => setSelectedRowIndex( index ) }>
+				<div className="zen-what-zencoins__term-label" style={ { color: row.labelColor, fontSize: `${ row.labelFontSize }px`, fontWeight: row.labelFontWeight } }>{ ( names.length ? names.join( ' + ' ) : 'Select experience category' ).toUpperCase() }</div>
+				<div className="zen-what-zencoins__price" style={ { fontSize: `${ row.priceFontSize }px`, fontWeight: row.priceFontWeight } }><span style={ { color: row.priceLabelColor } }>ZENCOINS:</span><CoinStack coins={ renderCoins( row ) } size={ row.coinSize || 50 } /></div>
 			</div>
 		);
 	};
@@ -147,6 +157,8 @@ export default function Edit( { attributes, setAttributes } ) {
 					<RangeControl label="Font size" value={ attributes.buttonFontSize } onChange={ ( buttonFontSize ) => setAttributes( { buttonFontSize } ) } min={ 12 } max={ 32 } />
 					<SelectControl label="Font weight" value={ attributes.buttonFontWeight } options={ WEIGHTS } onChange={ ( buttonFontWeight ) => setAttributes( { buttonFontWeight } ) } />
 					<RangeControl label="Border radius" value={ attributes.buttonBorderRadius } onChange={ ( buttonBorderRadius ) => setAttributes( { buttonBorderRadius } ) } min={ 0 } max={ 60 } />
+					<SelectControl label="Button width" value={ attributes.buttonWidthMode || 'auto' } options={ BUTTON_WIDTH_OPTIONS } onChange={ ( buttonWidthMode ) => setAttributes( { buttonWidthMode } ) } />
+					{ attributes.buttonWidthMode === 'custom' && <TextControl label="Custom width" value={ attributes.buttonCustomWidth || '340px' } onChange={ ( buttonCustomWidth ) => setAttributes( { buttonCustomWidth } ) } help="Use px or %, for example 340px or 70%." /> }
 					<p className="components-base-control__label">Text color</p><ColorPalette value={ attributes.buttonTextColor } onChange={ ( buttonTextColor ) => setAttributes( { buttonTextColor: buttonTextColor || '#3f3d3d' } ) } />
 					<p className="components-base-control__label">Background</p><ColorPalette value={ attributes.buttonBackgroundColor } onChange={ ( buttonBackgroundColor ) => setAttributes( { buttonBackgroundColor: buttonBackgroundColor || '#d8b354' } ) } />
 					<SpacingControls label="Padding" value={ attributes.buttonPadding } onChange={ ( buttonPadding ) => setAttributes( { buttonPadding } ) } />
@@ -188,31 +200,31 @@ export default function Edit( { attributes, setAttributes } ) {
 						<SpacingControls label="Margin" value={ selectedRow.margin } onChange={ ( margin ) => setRow( selectedRowIndex, { margin } ) } />
 						<SpacingControls label="Padding" value={ selectedRow.padding } onChange={ ( padding ) => setRow( selectedRowIndex, { padding } ) } />
 					</> }
-					<div className="zen-zencoins-actions"><Button variant="secondary" onClick={ () => moveRow( -1 ) }>Move up</Button><Button variant="secondary" onClick={ () => moveRow( 1 ) }>Move down</Button><Button variant="tertiary" isDestructive onClick={ removeRow }>Remove</Button></div>
-					<div className="zen-zencoins-actions"><Button variant="primary" onClick={ () => addRow( 'taxonomy' ) }>Add taxonomy row</Button><Button variant="secondary" onClick={ () => addRow( 'separator' ) }>Add separator</Button><Button variant="secondary" onClick={ () => addRow( 'paragraph' ) }>Add paragraph</Button></div>
+					<div className="zen-what-zencoins-actions"><Button variant="secondary" onClick={ () => moveRow( -1 ) }>Move up</Button><Button variant="secondary" onClick={ () => moveRow( 1 ) }>Move down</Button><Button variant="tertiary" isDestructive onClick={ removeRow }>Remove</Button></div>
+					<div className="zen-what-zencoins-actions"><Button variant="primary" onClick={ () => addRow( 'taxonomy' ) }>Add taxonomy row</Button><Button variant="secondary" onClick={ () => addRow( 'separator' ) }>Add separator</Button><Button variant="secondary" onClick={ () => addRow( 'paragraph' ) }>Add paragraph</Button></div>
 				</PanelBody>
 			</InspectorControls>
 			<section { ...blockProps }>
-				<div className="zen-zencoins__inner">
-					<div className="zen-zencoins__left">
-						<div className="zen-zencoins__heading-row">
-							<RichText tagName="h2" className="zen-zencoins__heading" value={ attributes.heading } onChange={ ( heading ) => setAttributes( { heading } ) } style={ { color: attributes.headingColor, fontSize: `${ attributes.headingFontSize }px`, fontWeight: attributes.headingFontWeight } } allowedFormats={ [ 'core/bold', 'core/italic' ] } />
+				<div className="zen-what-zencoins__inner">
+					<div className="zen-what-zencoins__left">
+						<div className="zen-what-zencoins__heading-row">
+							<RichText tagName="h2" className="zen-what-zencoins__heading" value={ attributes.heading } onChange={ ( heading ) => setAttributes( { heading } ) } style={ { color: attributes.headingColor, fontSize: `${ attributes.headingFontSize }px`, fontWeight: attributes.headingFontWeight } } allowedFormats={ [ 'core/bold', 'core/italic' ] } />
 							<CoinStack coins={ headingCoins } size={ attributes.headingCoinSize } />
 						</div>
-						<RichText tagName="p" className="zen-zencoins__paragraph" value={ attributes.paragraph } onChange={ ( paragraph ) => setAttributes( { paragraph } ) } style={ { color: attributes.paragraphColor, fontSize: `${ attributes.paragraphFontSize }px`, fontWeight: attributes.paragraphFontWeight } } allowedFormats={ [ 'core/bold', 'core/italic', 'core/link' ] } />
-						<a className={ `zen-zencoins__button is-arrow-${ attributes.arrowPosition }` } href={ attributes.buttonUrl || '#' } style={ buttonStyle } onClick={ ( event ) => event.preventDefault() }>
-							{ attributes.showArrow && [ 'left', 'top' ].includes( attributes.arrowPosition ) && <span className="zen-zencoins__button-icon"><ArrowIcon /></span> }
+						<RichText tagName="p" className="zen-what-zencoins__paragraph" value={ attributes.paragraph } onChange={ ( paragraph ) => setAttributes( { paragraph } ) } style={ { color: attributes.paragraphColor, fontSize: `${ attributes.paragraphFontSize }px`, fontWeight: attributes.paragraphFontWeight } } allowedFormats={ [ 'core/bold', 'core/italic', 'core/link' ] } />
+						<a className={ `zen-what-zencoins__button is-arrow-${ attributes.arrowPosition }` } href={ attributes.buttonUrl || '#' } style={ buttonStyle } onClick={ ( event ) => event.preventDefault() }>
+							{ attributes.showArrow && [ 'left', 'top' ].includes( attributes.arrowPosition ) && <span className="zen-what-zencoins__button-icon"><ArrowIcon /></span> }
 							<RichText tagName="span" value={ attributes.buttonText } onChange={ ( buttonText ) => setAttributes( { buttonText } ) } allowedFormats={ [ 'core/bold', 'core/italic' ] } />
-							{ attributes.showArrow && [ 'right', 'bottom' ].includes( attributes.arrowPosition ) && <span className="zen-zencoins__button-icon"><ArrowIcon /></span> }
+							{ attributes.showArrow && [ 'right', 'bottom' ].includes( attributes.arrowPosition ) && <span className="zen-what-zencoins__button-icon"><ArrowIcon /></span> }
 						</a>
 					</div>
-					<div className="zen-zencoins__panel" style={ { borderColor: attributes.panelBorderColor, borderWidth: `${ attributes.panelBorderWidth }px`, borderRadius: `${ attributes.panelBorderRadius }px` } }>
-						<div className="zen-zencoins__conversion" style={ { fontSize: `${ attributes.conversionFontSize }px`, fontWeight: attributes.conversionFontWeight } }>
-							<span className="zen-zencoins__conversion-accent" style={ { color: attributes.conversionAccentColor } }><Coin value={ attributes.conversionCoinValue } size={ attributes.conversionCoinSize } />{ attributes.conversionLabel }</span>
+					<div className="zen-what-zencoins__panel" style={ { borderColor: attributes.panelBorderColor, borderWidth: `${ attributes.panelBorderWidth }px`, borderRadius: `${ attributes.panelBorderRadius }px` } }>
+						<div className="zen-what-zencoins__conversion" style={ { fontSize: `${ attributes.conversionFontSize }px`, fontWeight: attributes.conversionFontWeight } }>
+							<span className="zen-what-zencoins__conversion-accent" style={ { color: attributes.conversionAccentColor } }><Coin value={ attributes.conversionCoinValue } size={ attributes.conversionCoinSize } />{ attributes.conversionLabel }</span>
 							<span style={ { color: attributes.conversionValueColor } }>{ attributes.conversionValue }</span>
 						</div>
-						<span className="zen-zencoins__separator" style={ { width: `${ attributes.separatorWidth }%`, borderTopColor: attributes.separatorColor, borderTopWidth: `${ attributes.separatorThickness }px` } } />
-						<div className="zen-zencoins__rows">{ rows.map( renderRow ) }</div>
+						<span className="zen-what-zencoins__separator" style={ { width: `${ attributes.separatorWidth }%`, borderTopColor: attributes.separatorColor, borderTopWidth: `${ attributes.separatorThickness }px` } } />
+						<div className="zen-what-zencoins__rows">{ rows.map( renderRow ) }</div>
 					</div>
 				</div>
 			</section>

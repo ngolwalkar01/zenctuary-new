@@ -1,9 +1,9 @@
 {
   "$schema": "https://schemas.wp.org/trunk/block.json",
   "apiVersion": 3,
-  "name": "zenctuary/zen-zencoins",
+  "name": "zenctuary/zen-what-zencoins",
   "version": "1.0.0",
-  "title": "Zen Zencoins",
+  "title": "Zen-What-Zencoins",
   "category": "design",
   "icon": "money-alt",
   "description": "A responsive Zencoins information and dynamic taxonomy pricing panel.",
@@ -50,7 +50,7 @@
     },
     "paragraph": {
       "type": "string",
-      "default": "To train at Zenctuary, you need “Zencoins.” This is our own currency, which allows you to book your courses, workshops & Events flexibly. You purchase the desired credit package and are then free to decide how you want to use your Zencoins."
+      "default": "To train at Zenctuary, you need \"Zencoins.\" This is our own currency, which allows you to book your courses, workshops & Events flexibly. You purchase the desired credit package and are then free to decide how you want to use your Zencoins."
     },
     "paragraphColor": {
       "type": "string",
@@ -100,6 +100,14 @@
         "bottom": "18px",
         "left": "34px"
       }
+    },
+    "buttonWidthMode": {
+      "type": "string",
+      "default": "auto"
+    },
+    "buttonCustomWidth": {
+      "type": "string",
+      "default": "340px"
     },
     "showArrow": {
       "type": "boolean",
