@@ -23,26 +23,35 @@ document.addEventListener('DOMContentLoaded', () => {
             clearHandlers();
 
             if (mql.matches) {
-                // Mobile: Strip 'is-active' classes so everything is equal
+                // Mobile: Strip 'is-active' classes and wrapper classes so everything is equal vertically
+                block.classList.remove('has-active-panel');
                 panels.forEach(p => p.classList.remove('is-active'));
             } else {
-                // Desktop: Interactive hover accordion
-                const defaultActive = block.hasAttribute('data-default-active') ? parseInt(block.getAttribute('data-default-active'), 10) : 0;
+                // Desktop: Interactive hover accordion with Neutral base
                 
                 panels.forEach((p, index) => {
-                    // Reset to default
-                    if (index === defaultActive) p.classList.add('is-active');
-                    else p.classList.remove('is-active');
+                    // Start in grouped neutral state
+                    p.classList.remove('is-active');
+                    block.classList.remove('has-active-panel');
                     
-                    // Attach hover
+                    // Attach hover to panels
                     const enterHandler = () => {
                         panels.forEach(pa => pa.classList.remove('is-active'));
+                        block.classList.add('has-active-panel');
                         p.classList.add('is-active');
                     };
 
                     p.addEventListener('mouseenter', enterHandler);
                     handlers[index] = enterHandler;
                 });
+                
+                // Add mouseleave to reset block
+                const leaveHandler = () => {
+                    block.classList.remove('has-active-panel');
+                    panels.forEach(pa => pa.classList.remove('is-active'));
+                };
+                block.addEventListener('mouseleave', leaveHandler);
+                handlers['blockLeave'] = leaveHandler;
             }
         };
 

@@ -10,11 +10,6 @@ if ( empty($panels) ) {
     return;
 }
 
-$default_active = absint( $attributes['defaultActiveIndex'] ?? 0 );
-if ( $default_active >= count($panels) ) {
-    $default_active = 0;
-}
-
 $vars = [
     '--zep-dur:'          . floatval( $attributes['transitionDur'] ?? 0.6 ) . 's',
     '--zep-bg:'           . sanitize_hex_color( $attributes['sectionBgColor'] ?? '#f9f9f9' ),
@@ -59,32 +54,49 @@ $zh_format_hotspot = function( $item, $inner_html ) {
 };
 
 ?>
-<section class="zenctuary-experience-panels" style="<?php echo esc_attr( $inline_style ); ?>" data-default-active="<?php echo esc_attr($default_active); ?>">
+<section class="zenctuary-experience-panels" style="<?php echo esc_attr( $inline_style ); ?>">
     <div class="zep-layout-wrapper">
         <?php foreach ( $panels as $i => $panel ) : 
-            $is_active = ( $i === $default_active ) ? ' is-active' : '';
             
-            $bg_url    = esc_url( $panel['bgImageUrl'] ?? '' );
-            $bg_alt    = esc_attr( $panel['bgImageAlt'] ?? '' );
-            $has_ovl   = rest_sanitize_boolean( $panel['overlayEnable'] ?? true );
-            $ovl_c     = sanitize_hex_color( $panel['overlayColor'] ?? '#1D1D1B' );
-            $ovl_op    = floatval( $panel['overlayOpacity'] ?? 0.5 );
+            $def_bg_url = esc_url( $panel['defaultBgImageUrl'] ?? '' );
+            $def_bg_alt = esc_attr( $panel['defaultBgImageAlt'] ?? '' );
             
-            $icon_url  = esc_url( $panel['centerIconUrl'] ?? '' );
-            $icon_alt  = esc_attr( $panel['centerIconAlt'] ?? '' );
-            $title     = esc_html( $panel['centerTitle'] ?? '' );
-            $desc      = esc_html( $panel['centerDescription'] ?? '' );
+            $act_bg_url = esc_url( $panel['activeBgImageUrl'] ?? '' );
+            $act_bg_alt = esc_attr( $panel['activeBgImageAlt'] ?? '' );
             
-            $left_hq   = is_array( $panel['leftHotspots'] ?? null ) ? $panel['leftHotspots'] : [];
-            $right_hq  = is_array( $panel['rightHotspots'] ?? null ) ? $panel['rightHotspots'] : [];
+            $bg_trans   = esc_attr( $panel['bgTransition'] ?? 'fade' );
+            $cont_trans = esc_attr( $panel['contentTransition'] ?? 'slide-up' );
+            
+            $has_ovl    = rest_sanitize_boolean( $panel['overlayEnable'] ?? true );
+            $ovl_c      = sanitize_hex_color( $panel['overlayColor'] ?? '#1D1D1B' );
+            $ovl_op     = floatval( $panel['overlayOpacity'] ?? 0.5 );
+            
+            $icon_url   = esc_url( $panel['centerIconUrl'] ?? '' );
+            $icon_alt   = esc_attr( $panel['centerIconAlt'] ?? '' );
+            $title      = esc_html( $panel['centerTitle'] ?? '' );
+            $desc       = esc_html( $panel['centerDescription'] ?? '' );
+            
+            $left_hq    = is_array( $panel['leftHotspots'] ?? null ) ? $panel['leftHotspots'] : [];
+            $right_hq   = is_array( $panel['rightHotspots'] ?? null ) ? $panel['rightHotspots'] : [];
         ?>
-            <article class="zep-panel<?php echo $is_active; ?>" data-index="<?php echo esc_attr($i); ?>">
+            <article class="zep-panel" data-index="<?php echo esc_attr($i); ?>" data-bg-trans="<?php echo $bg_trans; ?>" data-content-trans="<?php echo $cont_trans; ?>">
                 
-                <!-- Background Layer -->
+                <!-- Background Layer Collection -->
                 <div class="zep-panel__bg-layer">
-                    <?php if ( $bg_url ) : ?>
-                        <img class="zep-panel__bg-img" src="<?php echo $bg_url; ?>" alt="<?php echo $bg_alt; ?>" loading="lazy" />
+                    <!-- Default Background -->
+                    <?php if ( $def_bg_url ) : ?>
+                        <div class="zep-panel__bg-cell zep-panel__bg-cell--default">
+                            <img class="zep-panel__bg-img" src="<?php echo $def_bg_url; ?>" alt="<?php echo $def_bg_alt; ?>" loading="lazy" />
+                        </div>
                     <?php endif; ?>
+                    
+                    <!-- Active Background -->
+                    <?php if ( $act_bg_url ) : ?>
+                        <div class="zep-panel__bg-cell zep-panel__bg-cell--active">
+                            <img class="zep-panel__bg-img" src="<?php echo $act_bg_url; ?>" alt="<?php echo $act_bg_alt; ?>" loading="lazy" />
+                        </div>
+                    <?php endif; ?>
+                    
                     <?php if ( $has_ovl ) : ?>
                         <div class="zep-panel__overlay" style="background-color: <?php echo esc_attr($ovl_c); ?>; opacity: <?php echo esc_attr($ovl_op); ?>;"></div>
                     <?php endif; ?>

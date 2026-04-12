@@ -39,7 +39,6 @@ function ColorRow( { label, value, onChange } ) {
 export default function Edit( { attributes, setAttributes, clientId } ) {
     const {
         panels = [],
-        defaultActiveIndex = 0,
         transitionDur = 0.6,
         sectionBgColor = '#f9f9f9',
         
@@ -111,26 +110,18 @@ export default function Edit( { attributes, setAttributes, clientId } ) {
         setAttributes({ panels: newPanels });
     };
 
-    // Track active panel strictly for Editor UI preview capabilities (bypasses Hover in editor)
-    const [editorActiveIndex, setEditorActiveIndex] = useState(defaultActiveIndex);
+    // -1 represents the 'Null' grouped neutral state exactly mimicking frontend.
+    const [editorActiveIndex, setEditorActiveIndex] = useState(-1);
 
     const fwOptions = [{label:'300',value:'300'},{label:'400',value:'400'},{label:'500',value:'500'},{label:'600',value:'600'},{label:'700',value:'700'}];
     const ttOptions = [{label:'None',value:'none'},{label:'Uppercase',value:'uppercase'},{label:'Lowercase',value:'lowercase'}];
+    const bgTransOpts = [{label:'Fade Only',value:'fade'},{label:'Fade & Zoom',value:'fade-zoom'},{label:'None',value:'none'}];
+    const contentTransOpts = [{label:'Slide Up',value:'slide-up'},{label:'Slide Left',value:'slide-left'},{label:'Slide Right',value:'slide-right'},{label:'None',value:'none'}];
 
     return (
         <div { ...blockProps }>
             <InspectorControls>
                 <PanelBody title="1. Global Configuration" initialOpen={true}>
-                    <SelectControl 
-                        label="Default Active Panel" 
-                        help="Which panel expands on page load?"
-                        value={ defaultActiveIndex } 
-                        options={ panels.map((p,i) => ({ label: `Panel ${i+1}: ${p.centerTitle || 'Untitled'}`, value: i })) } 
-                        onChange={ v => {
-                            setAttributes({ defaultActiveIndex: parseInt(v, 10) });
-                            setEditorActiveIndex(parseInt(v, 10));
-                        }} 
-                    />
                     <ToggleControl 
                         label="Enable Content Animation" 
                         checked={ attributes.enableContentAnim } 
@@ -208,34 +199,63 @@ export default function Edit( { attributes, setAttributes, clientId } ) {
                             ) }
 
                             <Divider />
+                            <h4 style={{ margin: '0 0 12px 0' }}>Background Layer</h4>
                             <MediaUploadCheck>
                                 <MediaUpload
                                     onSelect={ media => {
-                                        updatePanelField(pIndex, 'bgImageId', media.id);
-                                        updatePanelField(pIndex, 'bgImageUrl', media.url);
-                                        updatePanelField(pIndex, 'bgImageAlt', media.alt);
+                                        updatePanelField(pIndex, 'defaultBgImageId', media.id);
+                                        updatePanelField(pIndex, 'defaultBgImageUrl', media.url);
+                                        updatePanelField(pIndex, 'defaultBgImageAlt', media.alt);
                                     }}
                                     allowedTypes={ ['image'] }
-                                    value={ panel.bgImageId }
+                                    value={ panel.defaultBgImageId }
                                     render={ ({ open }) => (
-                                        <Button variant="secondary" onClick={ open } style={{ width: '100%', justifyContent: 'center', marginBottom: '16px' }}>
-                                            { panel.bgImageUrl ? 'Change Background Image' : 'Set Background Image' }
+                                        <Button variant="secondary" onClick={ open } style={{ width: '100%', justifyContent: 'center', marginBottom: '8px' }}>
+                                            { panel.defaultBgImageUrl ? 'Change Default Base Image' : 'Set Default Base Image' }
                                         </Button>
                                     )}
                                 />
                             </MediaUploadCheck>
-                            { panel.bgImageUrl && (
-                                <div style={{ marginBottom: '16px' }}>
-                                    <ToggleControl label="Enable Dark Overlay" checked={ panel.overlayEnable ?? true } onChange={ v => updatePanelField(pIndex, 'overlayEnable', v) } />
-                                    { (panel.overlayEnable ?? true) && (
-                                        <>
-                                            <ColorRow label="Overlay Color" value={ panel.overlayColor } onChange={ v => updatePanelField(pIndex, 'overlayColor', v) } />
-                                            <RangeControl label="Overlay Opacity" value={ panel.overlayOpacity ?? 0.5 } min={0} max={1} step={0.05} onChange={ v => updatePanelField(pIndex, 'overlayOpacity', v) } />
-                                        </>
-                                    )}
-                                    <Button variant="link" isDestructive onClick={ () => { updatePanelField(pIndex, 'bgImageUrl', ''); updatePanelField(pIndex, 'bgImageId', 0); } }>Remove Background</Button>
-                                </div>
+                            { panel.defaultBgImageUrl && (
+                                <Button variant="link" isDestructive onClick={ () => { updatePanelField(pIndex, 'defaultBgImageUrl', ''); updatePanelField(pIndex, 'defaultBgImageId', 0); } } style={{ display:'block', marginBottom:'8px' }}>Remove Default Base Image</Button>
                             ) }
+
+                            <MediaUploadCheck>
+                                <MediaUpload
+                                    onSelect={ media => {
+                                        updatePanelField(pIndex, 'activeBgImageId', media.id);
+                                        updatePanelField(pIndex, 'activeBgImageUrl', media.url);
+                                        updatePanelField(pIndex, 'activeBgImageAlt', media.alt);
+                                    }}
+                                    allowedTypes={ ['image'] }
+                                    value={ panel.activeBgImageId }
+                                    render={ ({ open }) => (
+                                        <Button variant="secondary" onClick={ open } style={{ width: '100%', justifyContent: 'center', marginBottom: '8px' }}>
+                                            { panel.activeBgImageUrl ? 'Change Active Hover Image' : 'Set Active Hover Image' }
+                                        </Button>
+                                    )}
+                                />
+                            </MediaUploadCheck>
+                            { panel.activeBgImageUrl && (
+                                <Button variant="link" isDestructive onClick={ () => { updatePanelField(pIndex, 'activeBgImageUrl', ''); updatePanelField(pIndex, 'activeBgImageId', 0); } } style={{ display:'block', marginBottom:'8px' }}>Remove Active Hover Image</Button>
+                            ) }
+                            
+                            <Divider />
+                            <h4 style={{ margin: '0 0 12px 0' }}>Animations</h4>
+                            <SelectControl label="Background Swap Transition" value={ panel.bgTransition || 'fade' } options={ bgTransOpts } onChange={ v => updatePanelField(pIndex, 'bgTransition', v) } />
+                            <SelectControl label="Content Reveal Transition" value={ panel.contentTransition || 'slide-up' } options={ contentTransOpts } onChange={ v => updatePanelField(pIndex, 'contentTransition', v) } />
+
+                            <Divider />
+                            
+                            <div style={{ marginBottom: '16px' }}>
+                                <ToggleControl label="Enable Dark Overlay" checked={ panel.overlayEnable ?? true } onChange={ v => updatePanelField(pIndex, 'overlayEnable', v) } />
+                                { (panel.overlayEnable ?? true) && (
+                                    <>
+                                        <ColorRow label="Overlay Color" value={ panel.overlayColor } onChange={ v => updatePanelField(pIndex, 'overlayColor', v) } />
+                                        <RangeControl label="Overlay Opacity" value={ panel.overlayOpacity ?? 0.5 } min={0} max={1} step={0.05} onChange={ v => updatePanelField(pIndex, 'overlayOpacity', v) } />
+                                    </>
+                                )}
+                            </div>
 
                             <Divider />
                             
@@ -296,7 +316,16 @@ export default function Edit( { attributes, setAttributes, clientId } ) {
             </InspectorControls>
 
             {/* PREVIEW CANVAS */}
-            <div className="zep-layout-wrapper">
+            <div className="editor-styles-wrapper">
+                <Button 
+                    variant={editorActiveIndex === -1 ? "primary" : "secondary"}
+                    onClick={() => setEditorActiveIndex(-1)}
+                    style={{ position:'absolute', top: 0, left: 0, zIndex: 9999, margin: '8px' }}
+                >
+                    Reset Grid to Grouped Neutral Preview
+                </Button>
+            </div>
+            <div className={editorActiveIndex !== -1 ? "zep-layout-wrapper has-active-panel" : "zep-layout-wrapper"}>
                 { panels.map((panel, i) => {
                     // We use editorActiveIndex to mock CSS active classes cleanly within Gutenberg layout so editors can see their changes predictably.
                     const isActive = ( i === editorActiveIndex ) ? ' is-active' : '';
@@ -305,10 +334,19 @@ export default function Edit( { attributes, setAttributes, clientId } ) {
                     const rightHQ = panel.rightHotspots || [];
 
                     return (
-                        <article key={i} className={`zep-panel${isActive}`} data-index={i} onClick={() => setEditorActiveIndex(i)}>
+                        <article key={i} className={`zep-panel${isActive}`} data-index={i} data-bg-trans={panel.bgTransition || 'fade'} data-content-trans={panel.contentTransition || 'slide-up'} onClick={() => setEditorActiveIndex(i)}>
                             
                             <div className="zep-panel__bg-layer">
-                                { panel.bgImageUrl && <img className="zep-panel__bg-img" src={panel.bgImageUrl} alt={panel.bgImageAlt || ''} /> }
+                                { panel.defaultBgImageUrl && (
+                                    <div className="zep-panel__bg-cell zep-panel__bg-cell--default">
+                                        <img className="zep-panel__bg-img" src={panel.defaultBgImageUrl} alt={panel.defaultBgImageAlt || ''} /> 
+                                    </div>
+                                )}
+                                { panel.activeBgImageUrl && (
+                                    <div className="zep-panel__bg-cell zep-panel__bg-cell--active">
+                                        <img className="zep-panel__bg-img" src={panel.activeBgImageUrl} alt={panel.activeBgImageAlt || ''} /> 
+                                    </div>
+                                )}
                                 { (panel.overlayEnable ?? true) && (
                                     <div className="zep-panel__overlay" style={{ backgroundColor: panel.overlayColor || '#1D1D1B', opacity: panel.overlayOpacity ?? 0.5 }}></div>
                                 )}
