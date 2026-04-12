@@ -14,70 +14,9 @@
   ],
   "textdomain": "zenctuary",
   "attributes": {
-    "panels": {
-      "type": "array",
-      "default": [
-        {
-          "defaultBgImageUrl": "",
-          "defaultBgImageId": 0,
-          "defaultBgImageAlt": "",
-          "activeBgImageUrl": "",
-          "activeBgImageId": 0,
-          "activeBgImageAlt": "",
-          "bgTransition": "fade",
-          "contentTransition": "slide-up",
-          "overlayEnable": true,
-          "overlayColor": "#1D1D1B",
-          "overlayOpacity": 0.5,
-          "centerIconUrl": "",
-          "centerIconId": 0,
-          "centerIconAlt": "",
-          "centerTitle": "FIRE & ICE",
-          "centerDescription": "An energizing contrast therapy experience.",
-          "leftHotspots": [],
-          "rightHotspots": []
-        },
-        {
-          "defaultBgImageUrl": "",
-          "defaultBgImageId": 0,
-          "defaultBgImageAlt": "",
-          "activeBgImageUrl": "",
-          "activeBgImageId": 0,
-          "activeBgImageAlt": "",
-          "bgTransition": "fade",
-          "contentTransition": "slide-up",
-          "overlayEnable": true,
-          "overlayColor": "#1D1D1B",
-          "overlayOpacity": 0.5,
-          "centerIconUrl": "",
-          "centerIconId": 0,
-          "centerIconAlt": "",
-          "centerTitle": "YOGA",
-          "centerDescription": "Find your center, flow with purpose.",
-          "leftHotspots": [],
-          "rightHotspots": []
-        },
-        {
-          "defaultBgImageUrl": "",
-          "defaultBgImageId": 0,
-          "defaultBgImageAlt": "",
-          "activeBgImageUrl": "",
-          "activeBgImageId": 0,
-          "activeBgImageAlt": "",
-          "bgTransition": "fade",
-          "contentTransition": "slide-up",
-          "overlayEnable": true,
-          "overlayColor": "#1D1D1B",
-          "overlayOpacity": 0.5,
-          "centerIconUrl": "",
-          "centerIconId": 0,
-          "centerIconAlt": "",
-          "centerTitle": "MEDITATION",
-          "centerDescription": "Quiet the mind and look inward.",
-          "leftHotspots": [],
-          "rightHotspots": []
-        }
-      ]
+    "panelData": {
+      "type": "string",
+      "default": ""
     },
     "defaultActiveIndex": {
       "type": "number",

@@ -38,7 +38,7 @@ function ColorRow( { label, value, onChange } ) {
 
 export default function Edit( { attributes, setAttributes, clientId } ) {
     const {
-        panels = [],
+        panelData = "",
         transitionDur = 0.6,
         sectionBgColor = '#f9f9f9',
         
@@ -75,11 +75,52 @@ export default function Edit( { attributes, setAttributes, clientId } ) {
         }
     });
 
+    const fallbackPanels = [
+        {
+            defaultBgImageUrl: '', defaultBgImageId: 0, defaultBgImageAlt: '',
+            activeBgImageUrl: '', activeBgImageId: 0, activeBgImageAlt: '',
+            bgTransition: 'fade', contentTransition: 'slide-up',
+            overlayEnable: true, overlayColor: '#1D1D1B', overlayOpacity: 0.5,
+            centerIconUrl: '', centerIconId: 0, centerIconAlt: '',
+            centerTitle: 'FIRE & ICE', centerDescription: 'An energizing contrast therapy experience.',
+            leftHotspots: [], rightHotspots: []
+        },
+        {
+            defaultBgImageUrl: '', defaultBgImageId: 0, defaultBgImageAlt: '',
+            activeBgImageUrl: '', activeBgImageId: 0, activeBgImageAlt: '',
+            bgTransition: 'fade', contentTransition: 'slide-up',
+            overlayEnable: true, overlayColor: '#1D1D1B', overlayOpacity: 0.5,
+            centerIconUrl: '', centerIconId: 0, centerIconAlt: '',
+            centerTitle: 'YOGA', centerDescription: 'Find your center, flow with purpose.',
+            leftHotspots: [], rightHotspots: []
+        },
+        {
+            defaultBgImageUrl: '', defaultBgImageId: 0, defaultBgImageAlt: '',
+            activeBgImageUrl: '', activeBgImageId: 0, activeBgImageAlt: '',
+            bgTransition: 'fade', contentTransition: 'slide-up',
+            overlayEnable: true, overlayColor: '#1D1D1B', overlayOpacity: 0.5,
+            centerIconUrl: '', centerIconId: 0, centerIconAlt: '',
+            centerTitle: 'MEDITATION', centerDescription: 'Quiet the mind and look inward.',
+            leftHotspots: [], rightHotspots: []
+        }
+    ];
+
+    let panels = [];
+    try {
+        panels = panelData ? JSON.parse(panelData) : fallbackPanels;
+    } catch(e) {
+        panels = fallbackPanels;
+    }
+
+    const setPanelsState = (newArr) => {
+        setAttributes({ panelData: JSON.stringify(newArr) });
+    };
+
     // Helper for modifying the primary Panels array safely
     const updatePanelField = (index, key, val) => {
         const newPanels = [...panels];
         newPanels[index] = { ...newPanels[index], [key]: val };
-        setAttributes({ panels: newPanels });
+        setPanelsState(newPanels);
     };
 
     // Helper for nested Array modification (Left/Right Hotspots)
@@ -89,7 +130,7 @@ export default function Edit( { attributes, setAttributes, clientId } ) {
         if (!newHotspots[hsIndex]) newHotspots[hsIndex] = {};
         newHotspots[hsIndex] = { ...newHotspots[hsIndex], [key]: val };
         newPanels[panelIndex] = { ...newPanels[panelIndex], [side]: newHotspots };
-        setAttributes({ panels: newPanels });
+        setPanelsState(newPanels);
     };
 
     const addHotspot = (panelIndex, side) => {
@@ -99,7 +140,7 @@ export default function Edit( { attributes, setAttributes, clientId } ) {
             ...newPanels[panelIndex], 
             [side]: [...hsArray, { description: 'New Hotspot', linkEnable: false }] 
         };
-        setAttributes({ panels: newPanels });
+        setPanelsState(newPanels);
     };
 
     const removeHotspot = (panelIndex, side, hsIndex) => {
@@ -107,7 +148,7 @@ export default function Edit( { attributes, setAttributes, clientId } ) {
         const hsArray = [...(newPanels[panelIndex][side] || [])];
         hsArray.splice(hsIndex, 1);
         newPanels[panelIndex] = { ...newPanels[panelIndex], [side]: hsArray };
-        setAttributes({ panels: newPanels });
+        setPanelsState(newPanels);
     };
 
     // -1 represents the 'Null' grouped neutral state exactly mimicking frontend.
@@ -160,7 +201,7 @@ export default function Edit( { attributes, setAttributes, clientId } ) {
                                 <Button isDestructive variant="link" onClick={() => {
                                     const newPanels = [...panels];
                                     newPanels.splice(pIndex, 1);
-                                    setAttributes({ panels: newPanels });
+                                    setPanelsState(newPanels);
                                 }}>Remove Panel</Button>
                             </div>
                             
@@ -313,7 +354,7 @@ export default function Edit( { attributes, setAttributes, clientId } ) {
                             overlayEnable: true, overlayColor: '#1D1D1B', overlayOpacity: 0.5,
                             centerIconUrl: '', centerIconId: 0, centerIconAlt: '', centerTitle: 'NEW PANEL', centerDescription: 'Description...', leftHotspots: [], rightHotspots: []
                         }];
-                        setAttributes({ panels: newPanels });
+                        setPanelsState(newPanels);
                     }} style={{ width: '100%', justifyContent: 'center', marginTop: '16px' }}>+ Add New Panel</Button>
                 </PanelBody>
             </InspectorControls>

@@ -5,9 +5,30 @@
  * @package Zenctuary
  */
 
-$panels = is_array( $attributes['panels'] ?? null ) ? $attributes['panels'] : [];
-if ( empty($panels) ) {
-    return;
+$panels_str = $attributes['panelData'] ?? '';
+$panels = json_decode($panels_str, true);
+
+if ( ! is_array($panels) || empty($panels) ) {
+    $panels = [
+        [
+            'defaultBgImageUrl' => '', 'activeBgImageUrl' => '', 'bgTransition' => 'fade', 'contentTransition' => 'slide-up',
+            'overlayEnable' => true, 'overlayColor' => '#1D1D1B', 'overlayOpacity' => 0.5,
+            'centerTitle' => 'FIRE & ICE', 'centerDescription' => 'An energizing contrast therapy experience.',
+            'leftHotspots' => [], 'rightHotspots' => []
+        ],
+        [
+            'defaultBgImageUrl' => '', 'activeBgImageUrl' => '', 'bgTransition' => 'fade', 'contentTransition' => 'slide-up',
+            'overlayEnable' => true, 'overlayColor' => '#1D1D1B', 'overlayOpacity' => 0.5,
+            'centerTitle' => 'YOGA', 'centerDescription' => 'Find your center, flow with purpose.',
+            'leftHotspots' => [], 'rightHotspots' => []
+        ],
+        [
+            'defaultBgImageUrl' => '', 'activeBgImageUrl' => '', 'bgTransition' => 'fade', 'contentTransition' => 'slide-up',
+            'overlayEnable' => true, 'overlayColor' => '#1D1D1B', 'overlayOpacity' => 0.5,
+            'centerTitle' => 'MEDITATION', 'centerDescription' => 'Quiet the mind and look inward.',
+            'leftHotspots' => [], 'rightHotspots' => []
+        ]
+    ];
 }
 
 $vars = [
