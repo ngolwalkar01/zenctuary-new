@@ -1,0 +1,278 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "zenctuary/zen-zencoins",
+  "version": "1.0.0",
+  "title": "Zen Zencoins",
+  "category": "design",
+  "icon": "money-alt",
+  "description": "A responsive Zencoins information and dynamic taxonomy pricing panel.",
+  "keywords": [
+    "zenctuary",
+    "zencoins",
+    "pricing",
+    "coins"
+  ],
+  "attributes": {
+    "heading": {
+      "type": "string",
+      "default": "WHAT ARE ZENCOINS?"
+    },
+    "headingFontSize": {
+      "type": "number",
+      "default": 36
+    },
+    "headingColor": {
+      "type": "string",
+      "default": "#d8b354"
+    },
+    "headingFontWeight": {
+      "type": "string",
+      "default": "800"
+    },
+    "headingCoins": {
+      "type": "array",
+      "default": [
+        {
+          "value": ""
+        },
+        {
+          "value": ""
+        },
+        {
+          "value": ""
+        }
+      ]
+    },
+    "headingCoinSize": {
+      "type": "number",
+      "default": 56
+    },
+    "paragraph": {
+      "type": "string",
+      "default": "To train at Zenctuary, you need “Zencoins.” This is our own currency, which allows you to book your courses, workshops & Events flexibly. You purchase the desired credit package and are then free to decide how you want to use your Zencoins."
+    },
+    "paragraphColor": {
+      "type": "string",
+      "default": "#f1eee7"
+    },
+    "paragraphFontSize": {
+      "type": "number",
+      "default": 18
+    },
+    "paragraphFontWeight": {
+      "type": "string",
+      "default": "400"
+    },
+    "buttonText": {
+      "type": "string",
+      "default": "More about Zencoins"
+    },
+    "buttonUrl": {
+      "type": "string",
+      "default": "#"
+    },
+    "buttonBackgroundColor": {
+      "type": "string",
+      "default": "#d8b354"
+    },
+    "buttonTextColor": {
+      "type": "string",
+      "default": "#3f3d3d"
+    },
+    "buttonFontSize": {
+      "type": "number",
+      "default": 16
+    },
+    "buttonFontWeight": {
+      "type": "string",
+      "default": "700"
+    },
+    "buttonBorderRadius": {
+      "type": "number",
+      "default": 30
+    },
+    "buttonPadding": {
+      "type": "object",
+      "default": {
+        "top": "18px",
+        "right": "34px",
+        "bottom": "18px",
+        "left": "34px"
+      }
+    },
+    "showArrow": {
+      "type": "boolean",
+      "default": true
+    },
+    "arrowPosition": {
+      "type": "string",
+      "default": "right"
+    },
+    "panelBorderColor": {
+      "type": "string",
+      "default": "#f1eee7"
+    },
+    "panelBorderWidth": {
+      "type": "number",
+      "default": 2
+    },
+    "panelBorderRadius": {
+      "type": "number",
+      "default": 22
+    },
+    "conversionCoinValue": {
+      "type": "string",
+      "default": "1"
+    },
+    "conversionCoinSize": {
+      "type": "number",
+      "default": 56
+    },
+    "conversionLabel": {
+      "type": "string",
+      "default": "ZENCOIN ="
+    },
+    "conversionValue": {
+      "type": "string",
+      "default": "5 EURO"
+    },
+    "conversionFontSize": {
+      "type": "number",
+      "default": 18
+    },
+    "conversionFontWeight": {
+      "type": "string",
+      "default": "800"
+    },
+    "conversionAccentColor": {
+      "type": "string",
+      "default": "#d8b354"
+    },
+    "conversionValueColor": {
+      "type": "string",
+      "default": "#f1eee7"
+    },
+    "separatorWidth": {
+      "type": "number",
+      "default": 100
+    },
+    "separatorThickness": {
+      "type": "number",
+      "default": 3
+    },
+    "separatorColor": {
+      "type": "string",
+      "default": "#949494"
+    },
+    "rows": {
+      "type": "array",
+      "default": [
+        {
+          "id": "taxonomy-1",
+          "type": "taxonomy",
+          "termIds": [],
+          "termNames": [
+            "Classes",
+            "Fire & Ice Zone"
+          ],
+          "coinSize": 50,
+          "labelFontSize": 18,
+          "labelFontWeight": "800",
+          "labelColor": "#f1eee7",
+          "priceLabelColor": "#d8b354",
+          "priceFontSize": 18,
+          "priceFontWeight": "800"
+        },
+        {
+          "id": "paragraph-1",
+          "type": "paragraph",
+          "text": "Yoga, Eisbad, Meditation, Sound Healing, Pilates, Sauna Sound Healing, Pilates, Sauna",
+          "color": "#b9b9b9",
+          "fontSize": 17,
+          "fontWeight": "400",
+          "margin": {
+            "top": "8px",
+            "right": "0px",
+            "bottom": "0px",
+            "left": "0px"
+          },
+          "padding": {
+            "top": "0px",
+            "right": "0px",
+            "bottom": "0px",
+            "left": "0px"
+          }
+        },
+        {
+          "id": "separator-1",
+          "type": "separator",
+          "width": 100,
+          "thickness": 3,
+          "color": "#949494"
+        },
+        {
+          "id": "taxonomy-2",
+          "type": "taxonomy",
+          "termIds": [],
+          "termNames": [
+            "Workshops & Events:"
+          ],
+          "coinSize": 50,
+          "labelFontSize": 18,
+          "labelFontWeight": "800",
+          "labelColor": "#f1eee7",
+          "priceLabelColor": "#d8b354",
+          "priceFontSize": 18,
+          "priceFontWeight": "800"
+        },
+        {
+          "id": "paragraph-2",
+          "type": "paragraph",
+          "text": "Special Workshops and Community Events",
+          "color": "#b9b9b9",
+          "fontSize": 17,
+          "fontWeight": "400",
+          "margin": {
+            "top": "8px",
+            "right": "0px",
+            "bottom": "0px",
+            "left": "0px"
+          },
+          "padding": {
+            "top": "0px",
+            "right": "0px",
+            "bottom": "0px",
+            "left": "0px"
+          }
+        }
+      ]
+    },
+    "sectionPadding": {
+      "type": "object",
+      "default": {
+        "top": "130px",
+        "right": "90px",
+        "bottom": "130px",
+        "left": "90px"
+      }
+    },
+    "columnGap": {
+      "type": "number",
+      "default": 120
+    }
+  },
+  "supports": {
+    "html": false,
+    "anchor": true,
+    "align": [
+      "wide",
+      "full"
+    ]
+  },
+  "textdomain": "zenctuary",
+  "editorScript": "file:./index.js",
+  "style": "file:./style-index.css",
+  "editorStyle": "file:./index.css",
+  "render": "file:./render.php"
+}

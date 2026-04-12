@@ -1,0 +1,35 @@
+.wp-block-zenctuary-zen-zencoins {
+	min-height: 520px;
+}
+
+.zen-zencoins__data-row,
+.zen-zencoins__row-control,
+.zen-zencoins__right-paragraph {
+	cursor: pointer;
+}
+
+.zen-zencoins__data-row:hover,
+.zen-zencoins__row-control:hover,
+.zen-zencoins__right-paragraph:hover {
+	outline: 1px dashed rgba(216, 179, 84, 0.8);
+	outline-offset: 6px;
+}
+
+.zen-zencoins-control-grid {
+	display: grid;
+	grid-template-columns: repeat(2, minmax(0, 1fr));
+	gap: 8px;
+	margin-bottom: 16px;
+}
+
+.zen-zencoins-control-grid > .components-base-control__label {
+	grid-column: 1 / -1;
+	margin-bottom: 0;
+}
+
+.zen-zencoins-actions {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 8px;
+	margin-top: 14px;
+}
