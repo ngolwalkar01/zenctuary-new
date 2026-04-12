@@ -77,29 +77,29 @@ export default function Edit( { attributes, setAttributes, clientId } ) {
 
     const fallbackPanels = [
         {
-            defaultBgImageUrl: '', defaultBgImageId: 0, defaultBgImageAlt: '',
-            activeBgImageUrl: '', activeBgImageId: 0, activeBgImageAlt: '',
-            bgTransition: 'fade', contentTransition: 'slide-up',
+            defaultBackground: { id: 0, url: '', alt: '' },
+            activeBackground: { id: 0, url: '', alt: '' },
+            centerIcon: { id: 0, url: '', alt: '' },
+            bgTransition: 'fade',
             overlayEnable: true, overlayColor: '#1D1D1B', overlayOpacity: 0.5,
-            centerIconUrl: '', centerIconId: 0, centerIconAlt: '',
             centerTitle: 'FIRE & ICE', centerDescription: 'An energizing contrast therapy experience.',
             leftHotspots: [], rightHotspots: []
         },
         {
-            defaultBgImageUrl: '', defaultBgImageId: 0, defaultBgImageAlt: '',
-            activeBgImageUrl: '', activeBgImageId: 0, activeBgImageAlt: '',
-            bgTransition: 'fade', contentTransition: 'slide-up',
+            defaultBackground: { id: 0, url: '', alt: '' },
+            activeBackground: { id: 0, url: '', alt: '' },
+            centerIcon: { id: 0, url: '', alt: '' },
+            bgTransition: 'fade',
             overlayEnable: true, overlayColor: '#1D1D1B', overlayOpacity: 0.5,
-            centerIconUrl: '', centerIconId: 0, centerIconAlt: '',
             centerTitle: 'YOGA', centerDescription: 'Find your center, flow with purpose.',
             leftHotspots: [], rightHotspots: []
         },
         {
-            defaultBgImageUrl: '', defaultBgImageId: 0, defaultBgImageAlt: '',
-            activeBgImageUrl: '', activeBgImageId: 0, activeBgImageAlt: '',
-            bgTransition: 'fade', contentTransition: 'slide-up',
+            defaultBackground: { id: 0, url: '', alt: '' },
+            activeBackground: { id: 0, url: '', alt: '' },
+            centerIcon: { id: 0, url: '', alt: '' },
+            bgTransition: 'fade',
             overlayEnable: true, overlayColor: '#1D1D1B', overlayOpacity: 0.5,
-            centerIconUrl: '', centerIconId: 0, centerIconAlt: '',
             centerTitle: 'MEDITATION', centerDescription: 'Quiet the mind and look inward.',
             leftHotspots: [], rightHotspots: []
         }
@@ -119,6 +119,7 @@ export default function Edit( { attributes, setAttributes, clientId } ) {
     // Helper for modifying the primary Panels array safely
     const updatePanelField = (index, key, val) => {
         const newPanels = [...panels];
+        // Merge unified Media object logic fully across the property boundary without risking key-drops
         newPanels[index] = { ...newPanels[index], [key]: val };
         setPanelsState(newPanels);
     };
@@ -127,7 +128,7 @@ export default function Edit( { attributes, setAttributes, clientId } ) {
     const updateHotspotField = (panelIndex, side, hsIndex, key, val) => {
         const newPanels = [...panels];
         const newHotspots = [...(newPanels[panelIndex][side] || [])];
-        if (!newHotspots[hsIndex]) newHotspots[hsIndex] = {};
+        if (!newHotspots[hsIndex]) newHotspots[hsIndex] = { icon: { id: 0, url: '', alt: '' } };
         newHotspots[hsIndex] = { ...newHotspots[hsIndex], [key]: val };
         newPanels[panelIndex] = { ...newPanels[panelIndex], [side]: newHotspots };
         setPanelsState(newPanels);
@@ -221,70 +222,57 @@ export default function Edit( { attributes, setAttributes, clientId } ) {
                             
                             <MediaUploadCheck>
                                 <MediaUpload
-                                    onSelect={ media => {
-                                        updatePanelField(pIndex, 'centerIconId', media.id);
-                                        updatePanelField(pIndex, 'centerIconUrl', media.url);
-                                        updatePanelField(pIndex, 'centerIconAlt', media.alt);
-                                    }}
+                                    onSelect={ media => updatePanelField(pIndex, 'centerIcon', { id: media.id, url: media.url, alt: media.alt }) }
                                     allowedTypes={ ['image'] }
-                                    value={ panel.centerIconId }
+                                    value={ panel.centerIcon?.id || 0 }
                                     render={ ({ open }) => (
-                                        <Button variant="secondary" onClick={ open } style={{ width: '100%', justifyContent: 'center', marginBottom: '16px' }}>
-                                            { panel.centerIconUrl ? 'Change Center Icon' : 'Set Center Icon' }
+                                        <Button variant="secondary" onClick={ open } style={{ width: '100%', justifyContent: 'center', marginBottom: '8px' }}>
+                                            { panel.centerIcon?.url ? 'Change Center Icon' : 'Set Center Icon' }
                                         </Button>
                                     )}
                                 />
                             </MediaUploadCheck>
-                            { panel.centerIconUrl && (
-                                <Button variant="link" isDestructive onClick={ () => { updatePanelField(pIndex, 'centerIconUrl', ''); updatePanelField(pIndex, 'centerIconId', 0); } }>Remove Center Icon</Button>
+                            { panel.centerIcon?.url && (
+                                <Button variant="link" isDestructive onClick={ () => updatePanelField(pIndex, 'centerIcon', { id: 0, url: '', alt: '' }) } style={{ display:'block', marginBottom:'16px' }}>Remove Center Icon</Button>
                             ) }
 
                             <Divider />
                             <h4 style={{ margin: '0 0 12px 0' }}>Background Layer</h4>
                             <MediaUploadCheck>
                                 <MediaUpload
-                                    onSelect={ media => {
-                                        updatePanelField(pIndex, 'defaultBgImageId', media.id);
-                                        updatePanelField(pIndex, 'defaultBgImageUrl', media.url);
-                                        updatePanelField(pIndex, 'defaultBgImageAlt', media.alt);
-                                    }}
+                                    onSelect={ media => updatePanelField(pIndex, 'defaultBackground', { id: media.id, url: media.url, alt: media.alt }) }
                                     allowedTypes={ ['image'] }
-                                    value={ panel.defaultBgImageId }
+                                    value={ panel.defaultBackground?.id || 0 }
                                     render={ ({ open }) => (
                                         <Button variant="secondary" onClick={ open } style={{ width: '100%', justifyContent: 'center', marginBottom: '8px' }}>
-                                            { panel.defaultBgImageUrl ? 'Change Default Base Image' : 'Set Default Base Image' }
+                                            { panel.defaultBackground?.url ? 'Change Default Base Image' : 'Set Default Base Image' }
                                         </Button>
                                     )}
                                 />
                             </MediaUploadCheck>
-                            { panel.defaultBgImageUrl && (
-                                <Button variant="link" isDestructive onClick={ () => { updatePanelField(pIndex, 'defaultBgImageUrl', ''); updatePanelField(pIndex, 'defaultBgImageId', 0); } } style={{ display:'block', marginBottom:'8px' }}>Remove Default Base Image</Button>
+                            { panel.defaultBackground?.url && (
+                                <Button variant="link" isDestructive onClick={ () => updatePanelField(pIndex, 'defaultBackground', { id: 0, url: '', alt: '' }) } style={{ display:'block', marginBottom:'8px' }}>Remove Default Base Image</Button>
                             ) }
 
                             <MediaUploadCheck>
                                 <MediaUpload
-                                    onSelect={ media => {
-                                        updatePanelField(pIndex, 'activeBgImageId', media.id);
-                                        updatePanelField(pIndex, 'activeBgImageUrl', media.url);
-                                        updatePanelField(pIndex, 'activeBgImageAlt', media.alt);
-                                    }}
+                                    onSelect={ media => updatePanelField(pIndex, 'activeBackground', { id: media.id, url: media.url, alt: media.alt }) }
                                     allowedTypes={ ['image'] }
-                                    value={ panel.activeBgImageId }
+                                    value={ panel.activeBackground?.id || 0 }
                                     render={ ({ open }) => (
                                         <Button variant="secondary" onClick={ open } style={{ width: '100%', justifyContent: 'center', marginBottom: '8px' }}>
-                                            { panel.activeBgImageUrl ? 'Change Active Hover Image' : 'Set Active Hover Image' }
+                                            { panel.activeBackground?.url ? 'Change Active Hover Image' : 'Set Active Hover Image' }
                                         </Button>
                                     )}
                                 />
                             </MediaUploadCheck>
-                            { panel.activeBgImageUrl && (
-                                <Button variant="link" isDestructive onClick={ () => { updatePanelField(pIndex, 'activeBgImageUrl', ''); updatePanelField(pIndex, 'activeBgImageId', 0); } } style={{ display:'block', marginBottom:'8px' }}>Remove Active Hover Image</Button>
+                            { panel.activeBackground?.url && (
+                                <Button variant="link" isDestructive onClick={ () => updatePanelField(pIndex, 'activeBackground', { id: 0, url: '', alt: '' }) } style={{ display:'block', marginBottom:'8px' }}>Remove Active Hover Image</Button>
                             ) }
                             
                             <Divider />
                             <h4 style={{ margin: '0 0 12px 0' }}>Animations</h4>
                             <SelectControl label="Background Swap Transition" value={ panel.bgTransition || 'fade' } options={ bgTransOpts } onChange={ v => updatePanelField(pIndex, 'bgTransition', v) } />
-                            <SelectControl label="Content Reveal Transition" value={ panel.contentTransition || 'slide-up' } options={ contentTransOpts } onChange={ v => updatePanelField(pIndex, 'contentTransition', v) } />
 
                             <Divider />
                             
@@ -310,16 +298,12 @@ export default function Edit( { attributes, setAttributes, clientId } ) {
                                             <TextControl label="Description Text" value={ hot.description || '' } onChange={ v => updateHotspotField(pIndex, side, hIndex, 'description', v) } />
                                             <MediaUploadCheck>
                                                 <MediaUpload
-                                                    onSelect={ m => {
-                                                        updateHotspotField(pIndex, side, hIndex, 'iconUrl', m.url);
-                                                        updateHotspotField(pIndex, side, hIndex, 'iconId', m.id);
-                                                        updateHotspotField(pIndex, side, hIndex, 'iconAlt', m.alt);
-                                                    }}
+                                                    onSelect={ m => updateHotspotField(pIndex, side, hIndex, 'icon', { id: m.id, url: m.url, alt: m.alt }) }
                                                     allowedTypes={ ['image'] }
-                                                    value={ hot.iconId }
+                                                    value={ hot.icon?.id || 0 }
                                                     render={ ({ open }) => (
                                                         <Button variant="secondary" onClick={ open } style={{ marginBottom: '8px' }}>
-                                                            { hot.iconUrl ? 'Change Hotspot Icon' : 'Set Icon' }
+                                                            { hot.icon?.url ? 'Change Hotspot Icon' : 'Set Icon' }
                                                         </Button>
                                                     )}
                                                 />
@@ -348,11 +332,12 @@ export default function Edit( { attributes, setAttributes, clientId } ) {
                     
                     <Button variant="primary" onClick={() => {
                         const newPanels = [...panels, {
-                            defaultBgImageUrl: '', defaultBgImageId: 0, defaultBgImageAlt: '',
-                            activeBgImageUrl: '', activeBgImageId: 0, activeBgImageAlt: '',
-                            bgTransition: 'fade', contentTransition: 'slide-up',
+                            defaultBackground: { id: 0, url: '', alt: '' },
+                            activeBackground: { id: 0, url: '', alt: '' },
+                            centerIcon: { id: 0, url: '', alt: '' },
+                            bgTransition: 'fade',
                             overlayEnable: true, overlayColor: '#1D1D1B', overlayOpacity: 0.5,
-                            centerIconUrl: '', centerIconId: 0, centerIconAlt: '', centerTitle: 'NEW PANEL', centerDescription: 'Description...', leftHotspots: [], rightHotspots: []
+                            centerTitle: 'NEW PANEL', centerDescription: 'Description...', leftHotspots: [], rightHotspots: []
                         }];
                         setPanelsState(newPanels);
                     }} style={{ width: '100%', justifyContent: 'center', marginTop: '16px' }}>+ Add New Panel</Button>
@@ -360,7 +345,7 @@ export default function Edit( { attributes, setAttributes, clientId } ) {
             </InspectorControls>
 
             {/* PREVIEW CANVAS */}
-            <div className="editor-styles-wrapper">
+            <div className={`editor-styles-wrapper ${editorActiveIndex === -1 ? 'zep-editor-default-mode' : 'zep-editor-preview-mode'}`}>
                 <Button 
                     variant={editorActiveIndex === -1 ? "primary" : "secondary"}
                     onClick={() => setEditorActiveIndex(-1)}
@@ -377,18 +362,23 @@ export default function Edit( { attributes, setAttributes, clientId } ) {
                     const leftHQ = panel.leftHotspots || [];
                     const rightHQ = panel.rightHotspots || [];
 
+                    // Calculate animation direction natively
+                    let contentTrans = 'popup-center';
+                    if ( i === 0 || i < Math.floor(panels.length / 2) ) contentTrans = 'slide-from-left';
+                    else if ( i > Math.floor(panels.length / 2) ) contentTrans = 'slide-from-left'; // requested by user for side panels explicitly
+
                     return (
-                        <article key={i} className={`zep-panel${isActive}`} data-index={i} data-bg-trans={panel.bgTransition || 'fade'} data-content-trans={panel.contentTransition || 'slide-up'} onClick={() => setEditorActiveIndex(i)}>
+                        <article key={i} className={`zep-panel${isActive}`} data-index={i} data-bg-trans={panel.bgTransition || 'fade'} data-content-trans={contentTrans} onClick={() => setEditorActiveIndex(i)}>
                             
                             <div className="zep-panel__bg-layer">
-                                { panel.defaultBgImageUrl && (
+                                { panel.defaultBackground?.url && (
                                     <div className="zep-panel__bg-cell zep-panel__bg-cell--default">
-                                        <img className="zep-panel__bg-img" src={panel.defaultBgImageUrl} alt={panel.defaultBgImageAlt || ''} /> 
+                                        <img className="zep-panel__bg-img" src={panel.defaultBackground.url} alt={panel.defaultBackground.alt || ''} /> 
                                     </div>
                                 )}
-                                { panel.activeBgImageUrl && (
+                                { panel.activeBackground?.url && (
                                     <div className="zep-panel__bg-cell zep-panel__bg-cell--active">
-                                        <img className="zep-panel__bg-img" src={panel.activeBgImageUrl} alt={panel.activeBgImageAlt || ''} /> 
+                                        <img className="zep-panel__bg-img" src={panel.activeBackground.url} alt={panel.activeBackground.alt || ''} /> 
                                     </div>
                                 )}
                                 { (panel.overlayEnable ?? true) && (
@@ -401,7 +391,7 @@ export default function Edit( { attributes, setAttributes, clientId } ) {
                                     <div className="zep-panel__hotspots zep-panel__hotspots--left">
                                         { leftHQ.map((hot, h) => (
                                             <div key={h} className="zep-hotspot">
-                                                { hot.iconUrl && <img className="zep-hotspot__icon" src={hot.iconUrl} alt={hot.iconAlt || ''} /> }
+                                                { hot.icon?.url && <img className="zep-hotspot__icon" src={hot.icon.url} alt={hot.icon.alt || ''} /> }
                                                 { hot.description && <span className="zep-hotspot__desc">{ hot.description }</span> }
                                             </div>
                                         )) }
@@ -409,7 +399,7 @@ export default function Edit( { attributes, setAttributes, clientId } ) {
                                 )}
 
                                 <div className="zep-panel__center">
-                                    { panel.centerIconUrl && <img className="zep-panel__center-icon" src={panel.centerIconUrl} alt={panel.centerIconAlt || ''} /> }
+                                    { panel.centerIcon?.url && <img className="zep-panel__center-icon" src={panel.centerIcon.url} alt={panel.centerIcon.alt || ''} /> }
                                     { panel.centerTitle && <h3 className="zep-panel__title">{ panel.centerTitle }</h3> }
                                     { panel.centerDescription && <p className="zep-panel__desc">{ panel.centerDescription }</p> }
                                 </div>
@@ -418,7 +408,7 @@ export default function Edit( { attributes, setAttributes, clientId } ) {
                                     <div className="zep-panel__hotspots zep-panel__hotspots--right">
                                         { rightHQ.map((hot, h) => (
                                             <div key={h} className="zep-hotspot">
-                                                { hot.iconUrl && <img className="zep-hotspot__icon" src={hot.iconUrl} alt={hot.iconAlt || ''} /> }
+                                                { hot.icon?.url && <img className="zep-hotspot__icon" src={hot.icon.url} alt={hot.icon.alt || ''} /> }
                                                 { hot.description && <span className="zep-hotspot__desc">{ hot.description }</span> }
                                             </div>
                                         )) }

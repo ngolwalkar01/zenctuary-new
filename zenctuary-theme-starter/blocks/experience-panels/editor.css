@@ -11,14 +11,39 @@
     min-height: 600px; /* Sensible minimum for the editor grid */
 }
 
-/* Add a visual hint for hotspots in Gutenberg so editors can always see them to click/edit them */
+/* Force Hotspots to be visible while editing to click/inspect */
 .editor-styles-wrapper .zep-panel__hotspots {
     opacity: 1 !important;
     visibility: visible !important;
     outline: 1px dashed rgba(255, 255, 255, 0.3);
 }
 
+/* Force Panel Center to always be inspectable */
 .editor-styles-wrapper .zep-panel__center {
     opacity: 1 !important;
     transform: none !important;
+}
+
+/* Force Background Previews to always be visible depending on modes */
+.zep-editor-default-mode .zep-panel__bg-cell--default {
+    opacity: 1 !important;
+    z-index: 2 !important;
+}
+.zep-editor-default-mode .zep-panel__bg-cell--active {
+    opacity: 0.8 !important; /* Slight ghosting allows inspecting the active background beneath it */
+    z-index: 1 !important;
+}
+
+.zep-editor-preview-mode .zep-panel.is-active .zep-panel__bg-cell--active {
+    opacity: 1 !important;
+    z-index: 2 !important;
+}
+.zep-editor-preview-mode .zep-panel.is-active .zep-panel__bg-cell--default {
+    opacity: 0.5 !important; 
+    z-index: 1 !important;
+}
+
+/* Dim unselected panels aggressively while previewing active to simulate focus */
+.zep-editor-preview-mode .zep-panel:not(.is-active) {
+    opacity: 0.4 !important;
 }

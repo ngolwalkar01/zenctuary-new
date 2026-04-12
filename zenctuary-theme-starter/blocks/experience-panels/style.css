@@ -114,14 +114,13 @@
 }
 
 /* Base starting points for animations when NOT active but in an active block */
-.zenctuary-experience-panels.has-active-panel .zep-panel[data-content-trans="slide-up"]:not(.is-active) .zep-panel__center { transform: translateY(20px); }
-.zenctuary-experience-panels.has-active-panel .zep-panel[data-content-trans="slide-left"]:not(.is-active) .zep-panel__center { transform: translateX(20px); }
-.zenctuary-experience-panels.has-active-panel .zep-panel[data-content-trans="slide-right"]:not(.is-active) .zep-panel__center { transform: translateX(-20px); }
+.zenctuary-experience-panels.has-active-panel .zep-panel[data-content-trans="slide-from-left"]:not(.is-active) .zep-panel__center { transform: translateX(-40px); }
+.zenctuary-experience-panels.has-active-panel .zep-panel[data-content-trans="popup-center"]:not(.is-active) .zep-panel__center { transform: scale(0.95); }
 
 /* When active, pop it perfectly back into place */
 .zenctuary-experience-panels.has-active-panel .zep-panel.is-active .zep-panel__center {
     opacity: 1;
-    transform: translate(0, 0);
+    transform: translate(0, 0) scale(1);
 }
 
 .zep-panel__center-icon {
@@ -163,12 +162,13 @@
 }
 
 /* Base starting points for Hotspots */
-.zep-panel[data-content-trans="slide-up"] .zep-panel__hotspots { margin-top: 20px; transition: opacity 0.4s ease, margin-top 0.4s ease, visibility 0.4s ease; }
+.zep-panel[data-content-trans="slide-from-left"] .zep-panel__hotspots { transform: translate(-20px, -50%); transition: opacity 0.4s ease, transform 0.4s ease, visibility 0.4s ease; }
+.zep-panel[data-content-trans="popup-center"] .zep-panel__hotspots { transform: translate(0, -50%) scale(0.95); transition: opacity 0.4s ease, transform 0.4s ease, visibility 0.4s ease; }
 
 .zep-panel.is-active .zep-panel__hotspots {
     opacity: 1;
     visibility: visible;
-    margin-top: 0; /* Reset sliding margins */
+    transform: translate(0, -50%) scale(1); /* Reset sliding margins */
     transition-delay: 0.2s;
 }
 

@@ -11,19 +11,28 @@ $panels = json_decode($panels_str, true);
 if ( ! is_array($panels) || empty($panels) ) {
     $panels = [
         [
-            'defaultBgImageUrl' => '', 'activeBgImageUrl' => '', 'bgTransition' => 'fade', 'contentTransition' => 'slide-up',
+            'defaultBackground' => ['id'=>0, 'url'=>'', 'alt'=>''],
+            'activeBackground' => ['id'=>0, 'url'=>'', 'alt'=>''],
+            'bgTransition' => 'fade',
+            'centerIcon' => ['id'=>0, 'url'=>'', 'alt'=>''],
             'overlayEnable' => true, 'overlayColor' => '#1D1D1B', 'overlayOpacity' => 0.5,
             'centerTitle' => 'FIRE & ICE', 'centerDescription' => 'An energizing contrast therapy experience.',
             'leftHotspots' => [], 'rightHotspots' => []
         ],
         [
-            'defaultBgImageUrl' => '', 'activeBgImageUrl' => '', 'bgTransition' => 'fade', 'contentTransition' => 'slide-up',
+            'defaultBackground' => ['id'=>0, 'url'=>'', 'alt'=>''],
+            'activeBackground' => ['id'=>0, 'url'=>'', 'alt'=>''],
+            'bgTransition' => 'fade',
+            'centerIcon' => ['id'=>0, 'url'=>'', 'alt'=>''],
             'overlayEnable' => true, 'overlayColor' => '#1D1D1B', 'overlayOpacity' => 0.5,
             'centerTitle' => 'YOGA', 'centerDescription' => 'Find your center, flow with purpose.',
             'leftHotspots' => [], 'rightHotspots' => []
         ],
         [
-            'defaultBgImageUrl' => '', 'activeBgImageUrl' => '', 'bgTransition' => 'fade', 'contentTransition' => 'slide-up',
+            'defaultBackground' => ['id'=>0, 'url'=>'', 'alt'=>''],
+            'activeBackground' => ['id'=>0, 'url'=>'', 'alt'=>''],
+            'bgTransition' => 'fade',
+            'centerIcon' => ['id'=>0, 'url'=>'', 'alt'=>''],
             'overlayEnable' => true, 'overlayColor' => '#1D1D1B', 'overlayOpacity' => 0.5,
             'centerTitle' => 'MEDITATION', 'centerDescription' => 'Quiet the mind and look inward.',
             'leftHotspots' => [], 'rightHotspots' => []
@@ -79,21 +88,29 @@ $zh_format_hotspot = function( $item, $inner_html ) {
     <div class="zep-layout-wrapper">
         <?php foreach ( $panels as $i => $panel ) : 
             
-            $def_bg_url = esc_url( $panel['defaultBgImageUrl'] ?? '' );
-            $def_bg_alt = esc_attr( $panel['defaultBgImageAlt'] ?? '' );
+            $def_bg = is_array($panel['defaultBackground'] ?? null) ? $panel['defaultBackground'] : [];
+            $def_bg_url = esc_url( $def_bg['url'] ?? '' );
+            $def_bg_alt = esc_attr( $def_bg['alt'] ?? '' );
             
-            $act_bg_url = esc_url( $panel['activeBgImageUrl'] ?? '' );
-            $act_bg_alt = esc_attr( $panel['activeBgImageAlt'] ?? '' );
+            $act_bg = is_array($panel['activeBackground'] ?? null) ? $panel['activeBackground'] : [];
+            $act_bg_url = esc_url( $act_bg['url'] ?? '' );
+            $act_bg_alt = esc_attr( $act_bg['alt'] ?? '' );
             
             $bg_trans   = esc_attr( $panel['bgTransition'] ?? 'fade' );
-            $cont_trans = esc_attr( $panel['contentTransition'] ?? 'slide-up' );
+            
+            // Calculate panel animations logically
+            $cont_trans = 'popup-center';
+            if ( $i === 0 || $i < floor(count($panels) / 2) ) $cont_trans = 'slide-from-left';
+            else if ( $i > floor(count($panels) / 2) ) $cont_trans = 'slide-from-left';
             
             $has_ovl    = rest_sanitize_boolean( $panel['overlayEnable'] ?? true );
             $ovl_c      = sanitize_hex_color( $panel['overlayColor'] ?? '#1D1D1B' );
             $ovl_op     = floatval( $panel['overlayOpacity'] ?? 0.5 );
             
-            $icon_url   = esc_url( $panel['centerIconUrl'] ?? '' );
-            $icon_alt   = esc_attr( $panel['centerIconAlt'] ?? '' );
+            $icon = is_array($panel['centerIcon'] ?? null) ? $panel['centerIcon'] : [];
+            $icon_url   = esc_url( $icon['url'] ?? '' );
+            $icon_alt   = esc_attr( $icon['alt'] ?? '' );
+            
             $title      = esc_html( $panel['centerTitle'] ?? '' );
             $desc       = esc_html( $panel['centerDescription'] ?? '' );
             
@@ -130,8 +147,9 @@ $zh_format_hotspot = function( $item, $inner_html ) {
                     <?php if ( !empty($left_hq) ) : ?>
                     <div class="zep-panel__hotspots zep-panel__hotspots--left">
                         <?php foreach ( $left_hq as $hot ) : 
-                            $h_icon = esc_url($hot['iconUrl'] ?? '');
-                            $h_alt  = esc_attr($hot['iconAlt'] ?? '');
+                            $hObj = is_array($hot['icon'] ?? null) ? $hot['icon'] : [];
+                            $h_icon = esc_url($hObj['url'] ?? '');
+                            $h_alt  = esc_attr($hObj['alt'] ?? '');
                             $h_desc = esc_html($hot['description'] ?? '');
                             
                             $inner = '';
@@ -166,8 +184,9 @@ $zh_format_hotspot = function( $item, $inner_html ) {
                     <?php if ( !empty($right_hq) ) : ?>
                     <div class="zep-panel__hotspots zep-panel__hotspots--right">
                         <?php foreach ( $right_hq as $hot ) : 
-                            $h_icon = esc_url($hot['iconUrl'] ?? '');
-                            $h_alt  = esc_attr($hot['iconAlt'] ?? '');
+                            $hObj = is_array($hot['icon'] ?? null) ? $hot['icon'] : [];
+                            $h_icon = esc_url($hObj['url'] ?? '');
+                            $h_alt  = esc_attr($hObj['alt'] ?? '');
                             $h_desc = esc_html($hot['description'] ?? '');
                             
                             $inner = '';
