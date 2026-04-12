@@ -1,0 +1,253 @@
+/**
+ * Zenctuary Experience Panels Styles
+ */
+
+/* ── 1. Scoped CSS Variables ── */
+.zenctuary-experience-panels {
+    width: 100%;
+    background-color: var(--zep-bg, #f9f9f9);
+    position: relative;
+    overflow: hidden;
+    /* Default height assignment to viewport on Desktop! */
+    min-height: 100vh; 
+}
+
+.zep-layout-wrapper {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    height: 100%;
+    min-height: 100vh;
+}
+
+/* ── 2. Panels Architecture (Desktop Accordion) ── */
+.zep-panel {
+    flex: 1;
+    position: relative;
+    overflow: hidden;
+    cursor: pointer;
+    transition: flex var(--zep-dur, 0.6s) cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+.zep-panel.is-active {
+    flex: 3;
+    cursor: default;
+}
+
+/* Background Layers */
+.zep-panel__bg-layer {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+}
+
+.zep-panel__bg-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform var(--zep-dur, 0.6s) cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+.zep-panel.is-active .zep-panel__bg-img {
+    transform: scale(1.05);
+}
+
+.zep-panel__overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 2;
+}
+
+/* ── 3. Content Architecture ── */
+.zep-panel__core {
+    position: relative;
+    z-index: 10;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 40px;
+}
+
+/* Center Block */
+.zep-panel__center {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    max-width: 400px;
+    opacity: 0.8;
+    transform: translateY(10px);
+    transition: all var(--zep-dur, 0.6s) cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+.zep-panel.is-active .zep-panel__center {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.zep-panel__center-icon {
+    display: block;
+    margin-bottom: var(--zep-gap-it, 24px);
+    max-width: 80px;
+}
+
+.zep-panel__title {
+    margin: 0 0 var(--zep-gap-td, 16px) 0;
+    font-size: var(--zep-tt-fs, 48px);
+    font-weight: var(--zep-tt-fw, 400);
+    line-height: var(--zep-tt-lh, 1.1);
+    letter-spacing: var(--zep-tt-ls, 0.05em);
+    text-transform: var(--zep-tt-tc, uppercase);
+    color: var(--zep-tt-c, #ffffff);
+}
+
+.zep-panel__desc {
+    margin: 0;
+    font-size: var(--zep-desc-fs, 16px);
+    font-weight: var(--zep-desc-fw, 400);
+    line-height: var(--zep-desc-lh, 1.5);
+    color: var(--zep-desc-c, #ffffff);
+}
+
+/* Hotspots (Desktop) */
+.zep-panel__hotspots {
+    display: flex;
+    flex-direction: column;
+    gap: var(--zep-gap-hot-v, 24px);
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.4s ease, visibility 0.4s ease;
+    /* Delay appearance slightly so panel expands first */
+    transition-delay: 0s; 
+}
+
+.zep-panel.is-active .zep-panel__hotspots {
+    opacity: 1;
+    visibility: visible;
+    transition-delay: 0.2s;
+}
+
+.zep-panel__hotspots--left {
+    left: 8%;
+    align-items: flex-start;
+}
+
+.zep-panel__hotspots--right {
+    right: 8%;
+    align-items: flex-end;
+}
+
+.zep-hotspot {
+    display: flex;
+    align-items: center;
+    gap: var(--zep-gap-hot-it, 12px);
+    color: var(--zep-hot-c, #ffffff);
+    text-decoration: none;
+    font-family: inherit;
+}
+
+/* Ensure right hotspots have icon on right side if desired by design. 
+   Usually left hotspots icon is left, right hotspots icon is right. */
+.zep-panel__hotspots--right .zep-hotspot {
+    flex-direction: row-reverse;
+}
+
+.zep-hotspot__icon {
+    display: block;
+    width: 32px;
+    height: 32px;
+    object-fit: contain;
+}
+
+.zep-hotspot__desc {
+    font-size: var(--zep-hot-fs, 14px);
+    font-weight: var(--zep-hot-fw, 500);
+    line-height: var(--zep-hot-lh, 1.4);
+    white-space: nowrap;
+}
+
+/* Prevent text wrapping breaking accordion while narrow */
+.zep-panel__center, 
+.zep-panel__hotspots {
+    pointer-events: none; /* Inactive states shouldn't capture hover if perfectly centered */
+}
+.zep-panel.is-active .zep-panel__center,
+.zep-panel.is-active .zep-panel__hotspots {
+    pointer-events: auto;
+}
+
+
+/* ── 4. Mobile Layout (Vertical Stacking) ── */
+@media (max-width: 1024px) {
+    .zenctuary-experience-panels {
+        height: auto;
+        min-height: 0;
+    }
+
+    .zep-layout-wrapper {
+        flex-direction: column;
+        height: auto;
+        min-height: 0;
+    }
+
+    .zep-panel {
+        /* Turn off Flex accordion */
+        flex: none !important;
+        width: 100%;
+        min-height: 600px; /* Sensible minimum for mobile cards */
+        height: auto;
+        display: flex;
+        flex-direction: column;
+    }
+
+    /* Override hover states visually for Mobile */
+    .zep-panel__center {
+        opacity: 1 !important;
+        transform: none !important;
+    }
+
+    .zep-panel__core {
+        flex-direction: column;
+        padding: 60px 20px;
+        justify-content: center;
+    }
+
+    /* Restructure Hotspots so they stack cleanly on mobile */
+    .zep-panel__hotspots {
+        position: static;
+        transform: none;
+        opacity: 1 !important;
+        visibility: visible !important;
+        width: 100%;
+        margin-top: 40px;
+        align-items: center !important; /* Center stack everything on mobile */
+    }
+
+    .zep-panel__hotspots--left { margin-top: 40px; }
+    .zep-panel__hotspots--right { margin-top: 24px; }
+
+    .zep-hotspot {
+        flex-direction: column !important; /* Stack icon top, desc bottom */
+        text-align: center;
+    }
+    
+    .zep-hotspot__desc {
+        white-space: normal; /* Fix narrow screens */
+    }
+
+    .zep-panel__title {
+        font-size: calc(var(--zep-tt-fs) * 0.75); /* Slight shrink */
+    }
+}

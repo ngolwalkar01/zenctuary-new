@@ -1,0 +1,24 @@
+/**
+ * Editor-specific style for Experience Panels
+ */
+.wp-block-zenctuary-experience-panels {
+    /* Prevent editor UI from making the block absolutely huge if unused */
+    min-height: 600px;
+}
+
+/* Because Gutenberg UI wraps elements, flex 100vh height can collapse if we're not careful. */
+.wp-block-zenctuary-experience-panels > .zenctuary-experience-panels {
+    min-height: 600px; /* Sensible minimum for the editor grid */
+}
+
+/* Add a visual hint for hotspots in Gutenberg so editors can always see them to click/edit them */
+.editor-styles-wrapper .zep-panel__hotspots {
+    opacity: 1 !important;
+    visibility: visible !important;
+    outline: 1px dashed rgba(255, 255, 255, 0.3);
+}
+
+.editor-styles-wrapper .zep-panel__center {
+    opacity: 1 !important;
+    transform: none !important;
+}

@@ -1,0 +1,86 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "zenctuary/experience-panels",
+  "title": "Zenctuary Experience Panels",
+  "category": "design",
+  "icon": "columns",
+  "description": "Hover-driven horizontal experiences showcase spanning 100vh on desktop.",
+  "keywords": ["experience", "panels", "accordion", "hover"],
+  "textdomain": "zenctuary",
+  "attributes": {
+
+    "panels": {
+      "type": "array",
+      "items": { "type": "object" },
+      "default": [
+        {
+          "bgImageUrl": "", "bgImageId": 0, "bgImageAlt": "",
+          "overlayEnable": true, "overlayColor": "#1D1D1B", "overlayOpacity": 0.5,
+          "centerIconUrl": "", "centerIconId": 0, "centerIconAlt": "",
+          "centerTitle": "FIRE & ICE",
+          "centerDescription": "An energizing contrast therapy experience.",
+          "leftHotspots": [],
+          "rightHotspots": []
+        },
+        {
+          "bgImageUrl": "", "bgImageId": 0, "bgImageAlt": "",
+          "overlayEnable": true, "overlayColor": "#1D1D1B", "overlayOpacity": 0.5,
+          "centerIconUrl": "", "centerIconId": 0, "centerIconAlt": "",
+          "centerTitle": "YOGA",
+          "centerDescription": "Find your center, flow with purpose.",
+          "leftHotspots": [],
+          "rightHotspots": []
+        },
+        {
+          "bgImageUrl": "", "bgImageId": 0, "bgImageAlt": "",
+          "overlayEnable": true, "overlayColor": "#1D1D1B", "overlayOpacity": 0.5,
+          "centerIconUrl": "", "centerIconId": 0, "centerIconAlt": "",
+          "centerTitle": "MEDITATION",
+          "centerDescription": "Quiet the mind and look inward.",
+          "leftHotspots": [],
+          "rightHotspots": []
+        }
+      ]
+    },
+
+    "defaultActiveIndex": { "type": "number", "default": 0 },
+    "transitionDur": { "type": "number", "default": 0.6 },
+    "enableContentAnim": { "type": "boolean", "default": true },
+
+    "sectionBgColor": { "type": "string", "default": "#f9f9f9" },
+    
+    "titleFontSize": { "type": "number", "default": 48 },
+    "titleFontWeight": { "type": "string", "default": "400" },
+    "titleLineHeight": { "type": "number", "default": 1.1 },
+    "titleLetterSpacing": { "type": "number", "default": 0.05 },
+    "titleTextTransform": { "type": "string", "default": "uppercase" },
+    "titleColor": { "type": "string", "default": "#ffffff" },
+
+    "descFontSize": { "type": "number", "default": 16 },
+    "descFontWeight": { "type": "string", "default": "400" },
+    "descLineHeight": { "type": "number", "default": 1.5 },
+    "descColor": { "type": "string", "default": "#ffffff" },
+
+    "hotspotFontSize": { "type": "number", "default": 14 },
+    "hotspotFontWeight": { "type": "string", "default": "500" },
+    "hotspotLineHeight": { "type": "number", "default": 1.4 },
+    "hotspotColor": { "type": "string", "default": "#ffffff" },
+
+    "gapIconTitle": { "type": "number", "default": 24 },
+    "gapTitleDesc": { "type": "number", "default": 16 },
+    "gapHotspotIconText": { "type": "number", "default": 12 },
+    "gapHotspotVertical": { "type": "number", "default": 24 }
+
+  },
+  "supports": {
+    "align": ["full"],
+    "html": false,
+    "className": false
+  },
+  "style": "file:./style-index.css",
+  "editorStyle": "file:./index.css",
+  "editorScript": "file:./index.js",
+  "viewScript": "file:./view.js",
+  "render": "file:./render.php"
+}
