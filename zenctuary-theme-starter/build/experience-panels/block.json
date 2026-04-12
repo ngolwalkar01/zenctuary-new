@@ -18,6 +18,10 @@
       "type": "string",
       "default": ""
     },
+    "align": {
+      "type": "string",
+      "default": "full"
+    },
     "defaultActiveIndex": {
       "type": "number",
       "default": 0

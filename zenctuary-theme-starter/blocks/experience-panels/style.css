@@ -4,12 +4,10 @@
 
 /* ── 1. Scoped CSS Variables ── */
 .zenctuary-experience-panels {
-    width: 100vw;
-    position: relative;
-    left: 50%;
-    right: 50%;
-    margin-left: -50vw;
-    margin-right: -50vw;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    max-width: none;
     background-color: var(--zep-bg, #f9f9f9);
     overflow: hidden;
     min-height: 100vh; 

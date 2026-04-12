@@ -15,6 +15,7 @@
       "default": ""
     },
 
+    "align": { "type": "string", "default": "full" },
     "defaultActiveIndex": { "type": "number", "default": 0 },
     "transitionDur": { "type": "number", "default": 0.6 },
     "enableContentAnim": { "type": "boolean", "default": true },

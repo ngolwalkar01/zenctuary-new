@@ -83,8 +83,12 @@ $zh_format_hotspot = function( $item, $inner_html ) {
     return sprintf('<div class="zep-hotspot">%s</div>', $inner_html);
 };
 
+// Ensure WP layout classes apply organically
+$align_class = ! empty( $attributes['align'] ) ? 'align' . $attributes['align'] : 'alignfull';
+$wrapper_class = trim( "zenctuary-experience-panels wp-block-zenctuary-experience-panels {$align_class}" );
+
 ?>
-<section class="zenctuary-experience-panels" style="<?php echo esc_attr( $inline_style ); ?>">
+<section class="<?php echo esc_attr( $wrapper_class ); ?>" style="<?php echo esc_attr( $inline_style ); ?>">
     <div class="zep-layout-wrapper">
         <?php foreach ( $panels as $i => $panel ) : 
             
