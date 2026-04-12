@@ -213,7 +213,7 @@
 .zenctuary-hero__contact-wrapper.is-open .zh-cclose-icon {
     display: block !important;
 }
-.zenctuary-hero__contact-wrapper.is-open svg:first-child {
+.zenctuary-hero__contact-wrapper.is-open .zenctuary-hero__contact-trigger svg:first-child {
     display: none !important;
 }
 
