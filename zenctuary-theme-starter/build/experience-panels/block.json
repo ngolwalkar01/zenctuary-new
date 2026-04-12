@@ -17,13 +17,126 @@
     "panels": {
       "type": "array",
       "items": {
-        "type": "object"
+        "type": "object",
+        "properties": {
+          "defaultBgImageUrl": {
+            "type": "string"
+          },
+          "defaultBgImageId": {
+            "type": "number"
+          },
+          "defaultBgImageAlt": {
+            "type": "string"
+          },
+          "activeBgImageUrl": {
+            "type": "string"
+          },
+          "activeBgImageId": {
+            "type": "number"
+          },
+          "activeBgImageAlt": {
+            "type": "string"
+          },
+          "bgTransition": {
+            "type": "string"
+          },
+          "contentTransition": {
+            "type": "string"
+          },
+          "overlayEnable": {
+            "type": "boolean"
+          },
+          "overlayColor": {
+            "type": "string"
+          },
+          "overlayOpacity": {
+            "type": "number"
+          },
+          "centerIconUrl": {
+            "type": "string"
+          },
+          "centerIconId": {
+            "type": "number"
+          },
+          "centerIconAlt": {
+            "type": "string"
+          },
+          "centerTitle": {
+            "type": "string"
+          },
+          "centerDescription": {
+            "type": "string"
+          },
+          "leftHotspots": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "iconUrl": {
+                  "type": "string"
+                },
+                "iconId": {
+                  "type": "number"
+                },
+                "iconAlt": {
+                  "type": "string"
+                },
+                "description": {
+                  "type": "string"
+                },
+                "linkEnable": {
+                  "type": "boolean"
+                },
+                "linkUrl": {
+                  "type": "string"
+                },
+                "newTab": {
+                  "type": "boolean"
+                }
+              }
+            }
+          },
+          "rightHotspots": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "iconUrl": {
+                  "type": "string"
+                },
+                "iconId": {
+                  "type": "number"
+                },
+                "iconAlt": {
+                  "type": "string"
+                },
+                "description": {
+                  "type": "string"
+                },
+                "linkEnable": {
+                  "type": "boolean"
+                },
+                "linkUrl": {
+                  "type": "string"
+                },
+                "newTab": {
+                  "type": "boolean"
+                }
+              }
+            }
+          }
+        }
       },
       "default": [
         {
-          "bgImageUrl": "",
-          "bgImageId": 0,
-          "bgImageAlt": "",
+          "defaultBgImageUrl": "",
+          "defaultBgImageId": 0,
+          "defaultBgImageAlt": "",
+          "activeBgImageUrl": "",
+          "activeBgImageId": 0,
+          "activeBgImageAlt": "",
+          "bgTransition": "fade",
+          "contentTransition": "slide-up",
           "overlayEnable": true,
           "overlayColor": "#1D1D1B",
           "overlayOpacity": 0.5,
@@ -36,9 +149,14 @@
           "rightHotspots": []
         },
         {
-          "bgImageUrl": "",
-          "bgImageId": 0,
-          "bgImageAlt": "",
+          "defaultBgImageUrl": "",
+          "defaultBgImageId": 0,
+          "defaultBgImageAlt": "",
+          "activeBgImageUrl": "",
+          "activeBgImageId": 0,
+          "activeBgImageAlt": "",
+          "bgTransition": "fade",
+          "contentTransition": "slide-up",
           "overlayEnable": true,
           "overlayColor": "#1D1D1B",
           "overlayOpacity": 0.5,
@@ -51,9 +169,14 @@
           "rightHotspots": []
         },
         {
-          "bgImageUrl": "",
-          "bgImageId": 0,
-          "bgImageAlt": "",
+          "defaultBgImageUrl": "",
+          "defaultBgImageId": 0,
+          "defaultBgImageAlt": "",
+          "activeBgImageUrl": "",
+          "activeBgImageId": 0,
+          "activeBgImageAlt": "",
+          "bgTransition": "fade",
+          "contentTransition": "slide-up",
           "overlayEnable": true,
           "overlayColor": "#1D1D1B",
           "overlayOpacity": 0.5,

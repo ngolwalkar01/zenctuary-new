@@ -29,8 +29,13 @@
     transition: flex var(--zep-dur, 0.6s) cubic-bezier(0.25, 1, 0.5, 1);
 }
 
-.zep-panel.is-active {
-    flex: 3;
+.zenctuary-experience-panels.has-active-panel .zep-panel {
+    /* When ONE panel is active, the others shrink slightly more than flex: 1 normally would *relative* to the active panel flex */
+    /* To ensure deep immersive coverage, active goes to flex: 10+, inactive stays flex: 1 */
+}
+
+.zenctuary-experience-panels.has-active-panel .zep-panel.is-active {
+    flex: 12;
     cursor: default;
 }
 
@@ -44,17 +49,32 @@
     z-index: 1;
 }
 
+.zep-panel__bg-cell {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
 .zep-panel__bg-img {
     width: 100%;
     height: 100%;
     object-fit: cover;
     display: block;
-    transition: transform var(--zep-dur, 0.6s) cubic-bezier(0.25, 1, 0.5, 1);
+    transition: all var(--zep-dur, 0.6s) cubic-bezier(0.25, 1, 0.5, 1);
 }
 
-.zep-panel.is-active .zep-panel__bg-img {
-    transform: scale(1.05);
-}
+/* Background Dual-Layer Logic */
+.zep-panel__bg-cell--default { opacity: 1; transition: opacity var(--zep-dur, 0.6s) ease; }
+.zep-panel__bg-cell--active { opacity: 0; transition: opacity var(--zep-dur, 0.6s) ease; }
+
+.zep-panel.is-active .zep-panel__bg-cell--default { opacity: 0; }
+.zep-panel.is-active .zep-panel__bg-cell--active { opacity: 1; }
+
+/* bgTransition: fade-zoom */
+.zep-panel[data-bg-trans="fade-zoom"] .zep-panel__bg-cell--active .zep-panel__bg-img { transform: scale(1.1); }
+.zep-panel[data-bg-trans="fade-zoom"].is-active .zep-panel__bg-cell--active .zep-panel__bg-img { transform: scale(1); }
 
 .zep-panel__overlay {
     position: absolute;
@@ -84,14 +104,24 @@
     align-items: center;
     text-align: center;
     max-width: 400px;
-    opacity: 0.8;
-    transform: translateY(10px);
+    opacity: 1;
     transition: all var(--zep-dur, 0.6s) cubic-bezier(0.25, 1, 0.5, 1);
 }
 
-.zep-panel.is-active .zep-panel__center {
+/* data-content-trans logic */
+.zenctuary-experience-panels.has-active-panel .zep-panel:not(.is-active) .zep-panel__center {
+    opacity: 0; /* Hide inactive panel contents while ONE is dominating */
+}
+
+/* Base starting points for animations when NOT active but in an active block */
+.zenctuary-experience-panels.has-active-panel .zep-panel[data-content-trans="slide-up"]:not(.is-active) .zep-panel__center { transform: translateY(20px); }
+.zenctuary-experience-panels.has-active-panel .zep-panel[data-content-trans="slide-left"]:not(.is-active) .zep-panel__center { transform: translateX(20px); }
+.zenctuary-experience-panels.has-active-panel .zep-panel[data-content-trans="slide-right"]:not(.is-active) .zep-panel__center { transform: translateX(-20px); }
+
+/* When active, pop it perfectly back into place */
+.zenctuary-experience-panels.has-active-panel .zep-panel.is-active .zep-panel__center {
     opacity: 1;
-    transform: translateY(0);
+    transform: translate(0, 0);
 }
 
 .zep-panel__center-icon {
@@ -129,13 +159,16 @@
     opacity: 0;
     visibility: hidden;
     transition: opacity 0.4s ease, visibility 0.4s ease;
-    /* Delay appearance slightly so panel expands first */
     transition-delay: 0s; 
 }
+
+/* Base starting points for Hotspots */
+.zep-panel[data-content-trans="slide-up"] .zep-panel__hotspots { margin-top: 20px; transition: opacity 0.4s ease, margin-top 0.4s ease, visibility 0.4s ease; }
 
 .zep-panel.is-active .zep-panel__hotspots {
     opacity: 1;
     visibility: visible;
+    margin-top: 0; /* Reset sliding margins */
     transition-delay: 0.2s;
 }
 
