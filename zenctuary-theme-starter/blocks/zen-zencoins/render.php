@@ -30,8 +30,9 @@ if ( ! function_exists( 'zen_what_zencoins_coin' ) ) {
 }
 
 if ( ! function_exists( 'zen_what_zencoins_coin_stack' ) ) {
-	function zen_what_zencoins_coin_stack( array $coins, int $size = 52 ): string {
-		$output = '<span class="zen-what-zencoins-coin-stack" style="--zen-what-zencoins-overlap:' . esc_attr( round( $size * -0.34 ) ) . 'px;">';
+	function zen_what_zencoins_coin_stack( array $coins, int $size = 52, ?int $spacing = null ): string {
+		$coin_spacing = $spacing ?? (int) round( $size * -0.34 );
+		$output = '<span class="zen-what-zencoins-coin-stack" style="--zen-what-zencoins-overlap:' . esc_attr( $coin_spacing ) . 'px;">';
 		foreach ( $coins as $coin ) {
 			$value = is_array( $coin ) && array_key_exists( 'value', $coin ) ? $coin['value'] : $coin;
 			$output .= zen_what_zencoins_coin( $value, $size, 'zen-what-zencoins-coin-stack__coin' );
@@ -136,8 +137,8 @@ $button_style = sprintf(
 	<div class="zen-what-zencoins__inner">
 		<div class="zen-what-zencoins__left">
 			<div class="zen-what-zencoins__heading-row">
-				<h2 class="zen-what-zencoins__heading" style="color:<?php echo esc_attr( $attributes['headingColor'] ?? '#d8b354' ); ?>;font-size:<?php echo absint( $attributes['headingFontSize'] ?? 36 ); ?>px;font-weight:<?php echo esc_attr( $attributes['headingFontWeight'] ?? '800' ); ?>;"><?php echo wp_kses_post( $attributes['heading'] ?? '' ); ?></h2>
-				<?php echo zen_what_zencoins_coin_stack( is_array( $attributes['headingCoins'] ?? null ) ? $attributes['headingCoins'] : [], absint( $attributes['headingCoinSize'] ?? 56 ) ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
+				<h2 class="zen-what-zencoins__heading" style="color:<?php echo esc_attr( $attributes['headingColor'] ?? '#d8b354' ); ?>;font-size:<?php echo absint( $attributes['headingFontSize'] ?? 36 ); ?>px;font-weight:<?php echo esc_attr( $attributes['headingFontWeight'] ?? '800' ); ?>;letter-spacing:<?php echo esc_attr( $attributes['headingLetterSpacing'] ?? 2 ); ?>px;"><?php echo wp_kses_post( $attributes['heading'] ?? '' ); ?></h2>
+				<?php echo zen_what_zencoins_coin_stack( is_array( $attributes['headingCoins'] ?? null ) ? $attributes['headingCoins'] : [], absint( $attributes['headingCoinSize'] ?? 56 ), (int) ( $attributes['headingCoinSpacing'] ?? -19 ) ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
 			</div>
 			<p class="zen-what-zencoins__paragraph" style="color:<?php echo esc_attr( $attributes['paragraphColor'] ?? '#f1eee7' ); ?>;font-size:<?php echo absint( $attributes['paragraphFontSize'] ?? 18 ); ?>px;font-weight:<?php echo esc_attr( $attributes['paragraphFontWeight'] ?? '400' ); ?>;"><?php echo wp_kses_post( $attributes['paragraph'] ?? '' ); ?></p>
 			<a class="zen-what-zencoins__button is-arrow-<?php echo esc_attr( $arrow_position ); ?>" href="<?php echo esc_url( $attributes['buttonUrl'] ?? '#' ); ?>" style="<?php echo esc_attr( $button_style ); ?>">

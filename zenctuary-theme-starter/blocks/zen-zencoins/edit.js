@@ -48,9 +48,11 @@ function Coin( { value = '', size = 52, className = '' } ) {
 	);
 }
 
-function CoinStack( { coins = [], size = 52 } ) {
+function CoinStack( { coins = [], size = 52, spacing } ) {
+	const coinSpacing = typeof spacing === 'number' ? spacing : Math.round( size * -0.34 );
+
 	return (
-		<span className="zen-what-zencoins-coin-stack" style={ { '--zen-what-zencoins-overlap': `${ Math.round( size * -0.34 ) }px` } }>
+		<span className="zen-what-zencoins-coin-stack" style={ { '--zen-what-zencoins-overlap': `${ coinSpacing }px` } }>
 			{ coins.map( ( coin, index ) => <Coin key={ index } value={ coin?.value ?? coin ?? '' } size={ size } className="zen-what-zencoins-coin-stack__coin" /> ) }
 		</span>
 	);
@@ -136,13 +138,15 @@ export default function Edit( { attributes, setAttributes } ) {
 			<InspectorControls>
 				<PanelBody title="Layout" initialOpen>
 					<SpacingControls label="Section padding" value={ attributes.sectionPadding } onChange={ ( sectionPadding ) => setAttributes( { sectionPadding } ) } />
-					<RangeControl label="Column gap" value={ attributes.columnGap } onChange={ ( columnGap ) => setAttributes( { columnGap } ) } min={ 20 } max={ 180 } />
+					<RangeControl label="Gap between sections" value={ attributes.columnGap } onChange={ ( columnGap ) => setAttributes( { columnGap } ) } min={ 20 } max={ 180 } help="Controls only the space between the left and right columns." />
 				</PanelBody>
 				<PanelBody title="Heading and coins" initialOpen={ false }>
 					<RangeControl label="Heading size" value={ attributes.headingFontSize } onChange={ ( headingFontSize ) => setAttributes( { headingFontSize } ) } min={ 18 } max={ 80 } />
 					<SelectControl label="Heading weight" value={ attributes.headingFontWeight } options={ WEIGHTS } onChange={ ( headingFontWeight ) => setAttributes( { headingFontWeight } ) } />
+					<RangeControl label="Heading letter spacing" value={ attributes.headingLetterSpacing } onChange={ ( headingLetterSpacing ) => setAttributes( { headingLetterSpacing } ) } min={ 0 } max={ 12 } step={ 0.5 } />
 					<p className="components-base-control__label">Heading color</p><ColorPalette value={ attributes.headingColor } onChange={ ( headingColor ) => setAttributes( { headingColor: headingColor || '#d8b354' } ) } />
 					<RangeControl label="Coin size" value={ attributes.headingCoinSize } onChange={ ( headingCoinSize ) => setAttributes( { headingCoinSize } ) } min={ 28 } max={ 110 } />
+					<RangeControl label="Coin group spacing" value={ attributes.headingCoinSpacing } onChange={ ( headingCoinSpacing ) => setAttributes( { headingCoinSpacing } ) } min={ -50 } max={ 20 } help="Negative values increase the overlap between coins." />
 					{ headingCoins.map( ( coin, index ) => <TextControl key={ index } label={ `Coin ${ index + 1 } value` } value={ coin?.value || '' } onChange={ ( value ) => setAttributes( { headingCoins: headingCoins.map( ( c, i ) => i === index ? { value } : c ) } ) } help="Leave empty for a blank coin." /> ) }
 				</PanelBody>
 				<PanelBody title="Paragraph" initialOpen={ false }>
@@ -208,8 +212,8 @@ export default function Edit( { attributes, setAttributes } ) {
 				<div className="zen-what-zencoins__inner">
 					<div className="zen-what-zencoins__left">
 						<div className="zen-what-zencoins__heading-row">
-							<RichText tagName="h2" className="zen-what-zencoins__heading" value={ attributes.heading } onChange={ ( heading ) => setAttributes( { heading } ) } style={ { color: attributes.headingColor, fontSize: `${ attributes.headingFontSize }px`, fontWeight: attributes.headingFontWeight } } allowedFormats={ [ 'core/bold', 'core/italic' ] } />
-							<CoinStack coins={ headingCoins } size={ attributes.headingCoinSize } />
+							<RichText tagName="h2" className="zen-what-zencoins__heading" value={ attributes.heading } onChange={ ( heading ) => setAttributes( { heading } ) } style={ { color: attributes.headingColor, fontSize: `${ attributes.headingFontSize }px`, fontWeight: attributes.headingFontWeight, letterSpacing: `${ attributes.headingLetterSpacing }px` } } allowedFormats={ [ 'core/bold', 'core/italic' ] } />
+							<CoinStack coins={ headingCoins } size={ attributes.headingCoinSize } spacing={ attributes.headingCoinSpacing } />
 						</div>
 						<RichText tagName="p" className="zen-what-zencoins__paragraph" value={ attributes.paragraph } onChange={ ( paragraph ) => setAttributes( { paragraph } ) } style={ { color: attributes.paragraphColor, fontSize: `${ attributes.paragraphFontSize }px`, fontWeight: attributes.paragraphFontWeight } } allowedFormats={ [ 'core/bold', 'core/italic', 'core/link' ] } />
 						<a className={ `zen-what-zencoins__button is-arrow-${ attributes.arrowPosition }` } href={ attributes.buttonUrl || '#' } style={ buttonStyle } onClick={ ( event ) => event.preventDefault() }>

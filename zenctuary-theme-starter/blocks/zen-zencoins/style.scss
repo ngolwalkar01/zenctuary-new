@@ -18,8 +18,9 @@
 .zen-what-zencoins__inner {
 	display: grid;
 	grid-template-columns: repeat(2, minmax(0, 1fr));
-	gap: var(--zen-what-zencoins-column-gap, 120px);
-	align-items: center;
+	column-gap: var(--zen-what-zencoins-column-gap, 120px);
+	row-gap: 54px;
+	align-items: start;
 	width: min(100%, 1610px);
 	margin: 0 auto;
 }
@@ -40,7 +41,7 @@
 	flex: 0 1 auto;
 	margin: 0;
 	line-height: 1.05;
-	letter-spacing: 0.13em;
+	letter-spacing: 2px;
 	text-transform: uppercase;
 	white-space: nowrap;
 }
@@ -232,14 +233,14 @@
 	}
 
 	.zen-what-zencoins__inner {
-		gap: clamp(44px, 6vw, var(--zen-what-zencoins-column-gap, 120px));
+		column-gap: clamp(44px, 6vw, var(--zen-what-zencoins-column-gap, 120px));
 	}
 }
 
 @media (max-width: 900px) {
 	.zen-what-zencoins__inner {
 		grid-template-columns: 1fr;
-		gap: 54px;
+		row-gap: 54px;
 	}
 
 	.zen-what-zencoins__panel {

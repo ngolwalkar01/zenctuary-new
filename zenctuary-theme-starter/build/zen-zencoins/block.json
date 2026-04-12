@@ -30,6 +30,10 @@
       "type": "string",
       "default": "800"
     },
+    "headingLetterSpacing": {
+      "type": "number",
+      "default": 2
+    },
     "headingCoins": {
       "type": "array",
       "default": [
@@ -47,6 +51,10 @@
     "headingCoinSize": {
       "type": "number",
       "default": 56
+    },
+    "headingCoinSpacing": {
+      "type": "number",
+      "default": -19
     },
     "paragraph": {
       "type": "string",
