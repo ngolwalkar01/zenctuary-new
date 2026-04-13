@@ -19,6 +19,19 @@ const TYPES = [
 const DEFAULT_SPACING = { top: '0px', right: '0px', bottom: '0px', left: '0px' };
 
 const norm = ( value = {} ) => ( { ...DEFAULT_SPACING, ...value } );
+const mergeSpacing = ( ...values ) => values.reduce( ( merged, value ) => {
+	const spacing = norm( value );
+	return Object.fromEntries(
+		Object.keys( DEFAULT_SPACING ).map( ( side ) => {
+			const current = merged[ side ];
+			const next = spacing[ side ];
+
+			if ( ! current || current === '0px' ) return [ side, next ];
+			if ( ! next || next === '0px' ) return [ side, current ];
+			return [ side, `calc(${ current } + ${ next })` ];
+		} )
+	);
+}, DEFAULT_SPACING );
 const spacingStyle = ( value = {}, prop ) => {
 	const s = norm( value );
 	return { [ `${ prop }Top` ]: s.top, [ `${ prop }Right` ]: s.right, [ `${ prop }Bottom` ]: s.bottom, [ `${ prop }Left` ]: s.left };
@@ -119,14 +132,14 @@ export default function Edit( { attributes, setAttributes } ) {
 
 	const renderRow = ( row, index ) => {
 		if ( row.type === 'separator' ) {
-			return <div className="zen-what-zencoins__row-control" key={ row.id || index } onClick={ () => setSelectedRowIndex( index ) }><span className="zen-what-zencoins__separator" style={ { width: `${ row.width || 100 }%`, borderTopColor: row.color, borderTopWidth: `${ row.thickness || 1 }px` } } /></div>;
+			return <div className="zen-what-zencoins__row-control" key={ row.id || index } onClick={ () => setSelectedRowIndex( index ) } style={ spacingStyle( attributes.separatorRowMargin, 'margin' ) }><span className="zen-what-zencoins__separator" style={ { width: `${ row.width || 100 }%`, borderTopColor: row.color, borderTopWidth: `${ row.thickness || 1 }px` } } /></div>;
 		}
 		if ( row.type === 'paragraph' ) {
-			return <RichText key={ row.id || index } tagName="p" className="zen-what-zencoins__right-paragraph" value={ row.text } onChange={ ( text ) => setRow( index, { text } ) } onFocus={ () => setSelectedRowIndex( index ) } placeholder="Description..." style={ { color: row.color, fontSize: `${ row.fontSize }px`, fontWeight: row.fontWeight, ...spacingStyle( row.margin, 'margin' ), ...spacingStyle( row.padding, 'padding' ) } } allowedFormats={ [ 'core/bold', 'core/italic', 'core/link' ] } />;
+			return <RichText key={ row.id || index } tagName="p" className="zen-what-zencoins__right-paragraph" value={ row.text } onChange={ ( text ) => setRow( index, { text } ) } onFocus={ () => setSelectedRowIndex( index ) } placeholder="Description..." style={ { color: row.color, fontSize: `${ row.fontSize }px`, fontWeight: row.fontWeight, ...spacingStyle( mergeSpacing( attributes.paragraphRowMargin, row.margin ), 'margin' ), ...spacingStyle( row.padding, 'padding' ) } } allowedFormats={ [ 'core/bold', 'core/italic', 'core/link' ] } />;
 		}
 		const names = row.termNames?.length ? row.termNames : ( row.termIds || [] ).map( ( id ) => termNames[ String( id ) ] ).filter( Boolean );
 		return (
-			<div className="zen-what-zencoins__data-row" key={ row.id || index } onClick={ () => setSelectedRowIndex( index ) }>
+			<div className="zen-what-zencoins__data-row" key={ row.id || index } onClick={ () => setSelectedRowIndex( index ) } style={ spacingStyle( attributes.taxonomyRowMargin, 'margin' ) }>
 				<div className="zen-what-zencoins__term-label" style={ { color: row.labelColor, fontSize: `${ row.labelFontSize }px`, fontWeight: row.labelFontWeight } }>{ ( names.length ? names.join( ' + ' ) : 'Select experience category' ).toUpperCase() }</div>
 				<div className="zen-what-zencoins__price" style={ { fontSize: `${ row.priceFontSize }px`, fontWeight: row.priceFontWeight } }><span style={ { color: row.priceLabelColor } }>ZENCOINS:</span><CoinStack coins={ renderCoins( row ) } size={ row.coinSize || 50 } /></div>
 			</div>
@@ -136,9 +149,24 @@ export default function Edit( { attributes, setAttributes } ) {
 	return (
 		<>
 			<InspectorControls>
-				<PanelBody title="Layout" initialOpen>
+				<PanelBody title="Section Spacing" initialOpen>
 					<SpacingControls label="Section padding" value={ attributes.sectionPadding } onChange={ ( sectionPadding ) => setAttributes( { sectionPadding } ) } />
+					<SpacingControls label="Left section padding" value={ attributes.leftSectionPadding } onChange={ ( leftSectionPadding ) => setAttributes( { leftSectionPadding } ) } />
+					<SpacingControls label="Left section margin" value={ attributes.leftSectionMargin } onChange={ ( leftSectionMargin ) => setAttributes( { leftSectionMargin } ) } />
+					<SpacingControls label="Right section padding" value={ attributes.rightSectionPadding } onChange={ ( rightSectionPadding ) => setAttributes( { rightSectionPadding } ) } />
+					<SpacingControls label="Right section margin" value={ attributes.rightSectionMargin } onChange={ ( rightSectionMargin ) => setAttributes( { rightSectionMargin } ) } />
 					<RangeControl label="Gap between sections" value={ attributes.columnGap } onChange={ ( columnGap ) => setAttributes( { columnGap } ) } min={ 20 } max={ 180 } help="Controls only the space between the left and right columns." />
+				</PanelBody>
+				<PanelBody title="Left Content Spacing" initialOpen={ false }>
+					<SpacingControls label="Heading + coin row margin" value={ attributes.leftHeadingRowMargin } onChange={ ( leftHeadingRowMargin ) => setAttributes( { leftHeadingRowMargin } ) } />
+					<SpacingControls label="Paragraph margin" value={ attributes.leftParagraphMargin } onChange={ ( leftParagraphMargin ) => setAttributes( { leftParagraphMargin } ) } />
+					<SpacingControls label="Button margin" value={ attributes.leftButtonMargin } onChange={ ( leftButtonMargin ) => setAttributes( { leftButtonMargin } ) } />
+				</PanelBody>
+				<PanelBody title="Right Row Spacing" initialOpen={ false }>
+					<SpacingControls label="Conversion row margin" value={ attributes.conversionRowMargin } onChange={ ( conversionRowMargin ) => setAttributes( { conversionRowMargin } ) } />
+					<SpacingControls label="Taxonomy row margin" value={ attributes.taxonomyRowMargin } onChange={ ( taxonomyRowMargin ) => setAttributes( { taxonomyRowMargin } ) } />
+					<SpacingControls label="Paragraph row margin" value={ attributes.paragraphRowMargin } onChange={ ( paragraphRowMargin ) => setAttributes( { paragraphRowMargin } ) } />
+					<SpacingControls label="Separator row margin" value={ attributes.separatorRowMargin } onChange={ ( separatorRowMargin ) => setAttributes( { separatorRowMargin } ) } />
 				</PanelBody>
 				<PanelBody title="Heading and coins" initialOpen={ false }>
 					<RangeControl label="Heading size" value={ attributes.headingFontSize } onChange={ ( headingFontSize ) => setAttributes( { headingFontSize } ) } min={ 18 } max={ 80 } />
@@ -210,25 +238,27 @@ export default function Edit( { attributes, setAttributes } ) {
 			</InspectorControls>
 			<section { ...blockProps }>
 				<div className="zen-what-zencoins__inner">
-					<div className="zen-what-zencoins__left">
-						<div className="zen-what-zencoins__heading-row">
+					<div className="zen-what-zencoins__left" style={ { ...spacingStyle( attributes.leftSectionPadding, 'padding' ), ...spacingStyle( attributes.leftSectionMargin, 'margin' ) } }>
+						<div className="zen-what-zencoins__heading-row" style={ spacingStyle( attributes.leftHeadingRowMargin, 'margin' ) }>
 							<RichText tagName="h2" className="zen-what-zencoins__heading" value={ attributes.heading } onChange={ ( heading ) => setAttributes( { heading } ) } style={ { color: attributes.headingColor, fontSize: `${ attributes.headingFontSize }px`, fontWeight: attributes.headingFontWeight, letterSpacing: `${ attributes.headingLetterSpacing }px` } } allowedFormats={ [ 'core/bold', 'core/italic' ] } />
 							<CoinStack coins={ headingCoins } size={ attributes.headingCoinSize } spacing={ attributes.headingCoinSpacing } />
 						</div>
-						<RichText tagName="p" className="zen-what-zencoins__paragraph" value={ attributes.paragraph } onChange={ ( paragraph ) => setAttributes( { paragraph } ) } style={ { color: attributes.paragraphColor, fontSize: `${ attributes.paragraphFontSize }px`, fontWeight: attributes.paragraphFontWeight } } allowedFormats={ [ 'core/bold', 'core/italic', 'core/link' ] } />
-						<a className={ `zen-what-zencoins__button is-arrow-${ attributes.arrowPosition }` } href={ attributes.buttonUrl || '#' } style={ buttonStyle } onClick={ ( event ) => event.preventDefault() }>
+						<RichText tagName="p" className="zen-what-zencoins__paragraph" value={ attributes.paragraph } onChange={ ( paragraph ) => setAttributes( { paragraph } ) } style={ { color: attributes.paragraphColor, fontSize: `${ attributes.paragraphFontSize }px`, fontWeight: attributes.paragraphFontWeight, ...spacingStyle( attributes.leftParagraphMargin, 'margin' ) } } allowedFormats={ [ 'core/bold', 'core/italic', 'core/link' ] } />
+						<a className={ `zen-what-zencoins__button is-arrow-${ attributes.arrowPosition }` } href={ attributes.buttonUrl || '#' } style={ { ...buttonStyle, ...spacingStyle( attributes.leftButtonMargin, 'margin' ) } } onClick={ ( event ) => event.preventDefault() }>
 							{ attributes.showArrow && [ 'left', 'top' ].includes( attributes.arrowPosition ) && <span className="zen-what-zencoins__button-icon"><ArrowIcon /></span> }
 							<RichText tagName="span" value={ attributes.buttonText } onChange={ ( buttonText ) => setAttributes( { buttonText } ) } allowedFormats={ [ 'core/bold', 'core/italic' ] } />
 							{ attributes.showArrow && [ 'right', 'bottom' ].includes( attributes.arrowPosition ) && <span className="zen-what-zencoins__button-icon"><ArrowIcon /></span> }
 						</a>
 					</div>
-					<div className="zen-what-zencoins__panel" style={ { borderColor: attributes.panelBorderColor, borderWidth: `${ attributes.panelBorderWidth }px`, borderRadius: `${ attributes.panelBorderRadius }px` } }>
-						<div className="zen-what-zencoins__conversion" style={ { fontSize: `${ attributes.conversionFontSize }px`, fontWeight: attributes.conversionFontWeight } }>
-							<span className="zen-what-zencoins__conversion-accent" style={ { color: attributes.conversionAccentColor } }><Coin value={ attributes.conversionCoinValue } size={ attributes.conversionCoinSize } />{ attributes.conversionLabel }</span>
-							<span style={ { color: attributes.conversionValueColor } }>{ attributes.conversionValue }</span>
+					<div className="zen-what-zencoins__right" style={ { ...spacingStyle( attributes.rightSectionPadding, 'padding' ), ...spacingStyle( attributes.rightSectionMargin, 'margin' ) } }>
+						<div className="zen-what-zencoins__panel" style={ { borderColor: attributes.panelBorderColor, borderWidth: `${ attributes.panelBorderWidth }px`, borderRadius: `${ attributes.panelBorderRadius }px` } }>
+							<div className="zen-what-zencoins__conversion" style={ { fontSize: `${ attributes.conversionFontSize }px`, fontWeight: attributes.conversionFontWeight, ...spacingStyle( attributes.conversionRowMargin, 'margin' ) } }>
+								<span className="zen-what-zencoins__conversion-accent" style={ { color: attributes.conversionAccentColor } }><Coin value={ attributes.conversionCoinValue } size={ attributes.conversionCoinSize } />{ attributes.conversionLabel }</span>
+								<span style={ { color: attributes.conversionValueColor } }>{ attributes.conversionValue }</span>
+							</div>
+							<span className="zen-what-zencoins__separator" style={ { width: `${ attributes.separatorWidth }%`, borderTopColor: attributes.separatorColor, borderTopWidth: `${ attributes.separatorThickness }px`, ...spacingStyle( attributes.separatorRowMargin, 'margin' ) } } />
+							<div className="zen-what-zencoins__rows">{ rows.map( renderRow ) }</div>
 						</div>
-						<span className="zen-what-zencoins__separator" style={ { width: `${ attributes.separatorWidth }%`, borderTopColor: attributes.separatorColor, borderTopWidth: `${ attributes.separatorThickness }px` } } />
-						<div className="zen-what-zencoins__rows">{ rows.map( renderRow ) }</div>
 					</div>
 				</div>
 			</section>

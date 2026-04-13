@@ -58,6 +58,17 @@
 			]
 		},
 		"sectionPadding": { "type": "object", "default": { "top": "130px", "right": "90px", "bottom": "130px", "left": "90px" } },
+		"leftSectionPadding": { "type": "object", "default": { "top": "0px", "right": "0px", "bottom": "0px", "left": "0px" } },
+		"leftSectionMargin": { "type": "object", "default": { "top": "0px", "right": "0px", "bottom": "0px", "left": "0px" } },
+		"rightSectionPadding": { "type": "object", "default": { "top": "0px", "right": "0px", "bottom": "0px", "left": "0px" } },
+		"rightSectionMargin": { "type": "object", "default": { "top": "0px", "right": "0px", "bottom": "0px", "left": "0px" } },
+		"leftHeadingRowMargin": { "type": "object", "default": { "top": "0px", "right": "0px", "bottom": "34px", "left": "0px" } },
+		"leftParagraphMargin": { "type": "object", "default": { "top": "0px", "right": "0px", "bottom": "36px", "left": "0px" } },
+		"leftButtonMargin": { "type": "object", "default": { "top": "0px", "right": "0px", "bottom": "0px", "left": "0px" } },
+		"conversionRowMargin": { "type": "object", "default": { "top": "0px", "right": "0px", "bottom": "24px", "left": "0px" } },
+		"taxonomyRowMargin": { "type": "object", "default": { "top": "0px", "right": "0px", "bottom": "26px", "left": "0px" } },
+		"paragraphRowMargin": { "type": "object", "default": { "top": "0px", "right": "0px", "bottom": "26px", "left": "0px" } },
+		"separatorRowMargin": { "type": "object", "default": { "top": "0px", "right": "0px", "bottom": "30px", "left": "0px" } },
 		"columnGap": { "type": "number", "default": 120 }
 	},
 	"supports": { "html": false, "anchor": true, "align": [ "wide", "full" ] },
