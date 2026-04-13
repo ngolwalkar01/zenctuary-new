@@ -1,0 +1,246 @@
+.wp-block-zenctuary-zen-our-spaces {
+	width: 100%;
+	box-sizing: border-box;
+	background: #3f3d3d;
+}
+
+.wp-block-zenctuary-zen-our-spaces * {
+	box-sizing: border-box;
+}
+
+.wp-block-zenctuary-zen-our-spaces.alignfull {
+	width: 100vw;
+	margin-left: calc(50% - 50vw);
+	margin-right: calc(50% - 50vw);
+}
+
+.zen-our-spaces__content {
+	width: 100%;
+	max-width: 1600px;
+	margin: 0 auto;
+	display: grid;
+	grid-template-columns: minmax(0, 30%) minmax(0, 70%);
+	column-gap: 64px;
+	align-items: start;
+}
+
+.zen-our-spaces__left {
+	min-width: 0;
+}
+
+.zen-our-spaces__heading {
+	margin: 0;
+	line-height: 1.04;
+	text-align: left;
+	color: #d8b354;
+	font-weight: 800;
+	letter-spacing: 0.03em;
+	text-transform: uppercase;
+	overflow-wrap: anywhere;
+}
+
+.zen-our-spaces__right {
+	min-width: 0;
+	display: flex;
+	flex-direction: column;
+}
+
+.zen-our-spaces__card {
+	position: relative;
+	display: block;
+	background-position: center;
+	background-repeat: no-repeat;
+	background-size: cover;
+	border-radius: 32px;
+	overflow: hidden;
+	min-height: 260px;
+	background-color: #2f2c2c;
+	box-shadow: 0 20px 48px rgba(14, 12, 10, 0.32);
+}
+
+.zen-our-spaces__card-overlay {
+	position: absolute;
+	inset: 0;
+	background:
+		linear-gradient(90deg, rgba(16, 15, 14, 0.74) 0%, rgba(16, 15, 14, 0.55) 46%, rgba(16, 15, 14, 0.28) 100%),
+		linear-gradient(180deg, rgba(0, 0, 0, 0.22) 0%, rgba(0, 0, 0, 0.3) 100%);
+	pointer-events: none;
+}
+
+.zen-our-spaces__card-inner {
+	position: relative;
+	z-index: 1;
+	height: 100%;
+	display: grid;
+	grid-template-columns: 170px minmax(0, 1fr);
+	column-gap: 30px;
+	padding: clamp(28px, 3.6vw, 48px);
+	align-items: center;
+}
+
+.zen-our-spaces__card-icon-col {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.zen-our-spaces__icon-wrap {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	min-width: 24px;
+	min-height: 24px;
+	width: 100%;
+}
+
+.zen-our-spaces__icon-image {
+	display: block;
+	object-fit: contain;
+	max-width: 130px;
+	max-height: 130px;
+}
+
+.zen-our-spaces__card-content-col {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	gap: 18px;
+	min-width: 0;
+}
+
+.zen-our-spaces__card-title {
+	margin: 0;
+	line-height: 1.08;
+	font-weight: 800;
+	letter-spacing: 0.05em;
+	text-transform: uppercase;
+	overflow-wrap: anywhere;
+}
+
+.zen-our-spaces__card-paragraph {
+	margin: 0;
+	line-height: 1.62;
+	color: #f1ede4;
+	max-width: 700px;
+}
+
+.zen-our-spaces__button {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	gap: 10px;
+	width: fit-content;
+	padding: 13px 28px;
+	border-style: solid;
+	border-color: #d8b354;
+	background: rgba(216, 179, 84, 0.12);
+	text-decoration: none;
+	line-height: 1.2;
+	font-weight: 700;
+	transition: background-color 0.25s ease, border-color 0.25s ease, color 0.25s ease;
+	backdrop-filter: blur(2px);
+}
+
+.zen-our-spaces__button--left {
+	flex-direction: row-reverse;
+}
+
+.zen-our-spaces__button--right {
+	flex-direction: row;
+}
+
+.zen-our-spaces__button--top {
+	flex-direction: column-reverse;
+}
+
+.zen-our-spaces__button--bottom {
+	flex-direction: column;
+}
+
+.zen-our-spaces__button-text {
+	display: inline-block;
+}
+
+.zen-our-spaces__arrow-svg {
+	width: 19px;
+	height: 19px;
+	fill: currentcolor;
+	flex-shrink: 0;
+}
+
+.zen-our-spaces__card:hover .zen-our-spaces__button {
+	background: rgba(216, 179, 84, 0.2);
+	border-color: #e0bf6a;
+}
+
+@media (max-width: 1200px) {
+	.wp-block-zenctuary-zen-our-spaces {
+		padding-left: 48px !important;
+		padding-right: 48px !important;
+	}
+
+	.zen-our-spaces__content {
+		column-gap: 36px;
+	}
+
+	.zen-our-spaces__card-inner {
+		grid-template-columns: 122px minmax(0, 1fr);
+		column-gap: 20px;
+	}
+}
+
+@media (max-width: 900px) {
+	.zen-our-spaces__content {
+		grid-template-columns: 1fr;
+		row-gap: 34px;
+	}
+
+	.zen-our-spaces__left {
+		max-width: 520px;
+	}
+
+	.zen-our-spaces__card {
+		border-radius: 24px;
+	}
+
+	.zen-our-spaces__card-inner {
+		padding: 26px 24px;
+	}
+}
+
+@media (max-width: 767px) {
+	.wp-block-zenctuary-zen-our-spaces {
+		padding: 64px 18px !important;
+	}
+
+	.zen-our-spaces__heading {
+		font-size: clamp(32px, 9vw, 46px) !important;
+	}
+
+	.zen-our-spaces__card {
+		min-height: 280px;
+		border-radius: 20px;
+	}
+
+	.zen-our-spaces__card-inner {
+		grid-template-columns: 1fr;
+		row-gap: 16px;
+		padding: 22px 18px 24px;
+	}
+
+	.zen-our-spaces__card-icon-col {
+		justify-content: flex-start;
+	}
+
+	.zen-our-spaces__icon-wrap {
+		justify-content: flex-start;
+	}
+
+	.zen-our-spaces__card-title {
+		font-size: clamp(24px, 7vw, 34px) !important;
+	}
+
+	.zen-our-spaces__button {
+		padding: 11px 22px;
+	}
+}

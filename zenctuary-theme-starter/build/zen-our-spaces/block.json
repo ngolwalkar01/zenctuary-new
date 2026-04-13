@@ -1,0 +1,132 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "zenctuary/zen-our-spaces",
+  "version": "1.0.0",
+  "title": "Zen-Our-Spaces",
+  "category": "design",
+  "icon": "cover-image",
+  "description": "A premium two-column spaces showcase with editable image cards and CTA.",
+  "keywords": [
+    "zenctuary",
+    "spaces",
+    "showcase",
+    "cards"
+  ],
+  "attributes": {
+    "sectionPadding": {
+      "type": "object",
+      "default": {
+        "top": "96px",
+        "right": "84px",
+        "bottom": "96px",
+        "left": "84px"
+      }
+    },
+    "sectionMargin": {
+      "type": "object",
+      "default": {
+        "top": "0px",
+        "right": "0px",
+        "bottom": "0px",
+        "left": "0px"
+      }
+    },
+    "heading": {
+      "type": "string",
+      "default": "OUR SPACES"
+    },
+    "headingColor": {
+      "type": "string",
+      "default": "#d8b354"
+    },
+    "headingFontSize": {
+      "type": "number",
+      "default": 54
+    },
+    "headingFontWeight": {
+      "type": "string",
+      "default": "800"
+    },
+    "headingPadding": {
+      "type": "object",
+      "default": {
+        "top": "0px",
+        "right": "0px",
+        "bottom": "0px",
+        "left": "0px"
+      }
+    },
+    "headingMargin": {
+      "type": "object",
+      "default": {
+        "top": "0px",
+        "right": "0px",
+        "bottom": "0px",
+        "left": "0px"
+      }
+    },
+    "cardsGap": {
+      "type": "string",
+      "default": "28px"
+    },
+    "cards": {
+      "type": "array",
+      "default": [
+        {
+          "id": "card-1",
+          "backgroundImage": {
+            "id": 0,
+            "url": "",
+            "alt": ""
+          },
+          "backgroundSize": "cover",
+          "cardWidth": "100%",
+          "cardHeight": "320px",
+          "iconImage": {
+            "id": 0,
+            "url": "",
+            "alt": ""
+          },
+          "iconWidth": 74,
+          "iconHeight": 74,
+          "title": "SOUL KITCHEN",
+          "titleColor": "#f6f2e9",
+          "titleFontSize": 32,
+          "titleFontWeight": "800",
+          "titleLetterSpacing": "0.06em",
+          "paragraph": "A warm social space for nourishing food, connection, and grounding rituals.",
+          "paragraphColor": "#f2eee4",
+          "paragraphFontSize": 17,
+          "paragraphFontWeight": "400",
+          "paragraphMargin": {
+            "top": "0px",
+            "right": "0px",
+            "bottom": "0px",
+            "left": "0px"
+          },
+          "buttonText": "Explore space",
+          "buttonBackgroundColor": "rgba(216, 179, 84, 0.15)",
+          "buttonTextColor": "#f6f2e9",
+          "buttonBorderColor": "#d8b354",
+          "buttonBorderWidth": 1,
+          "buttonBorderRadius": 999,
+          "showArrow": true,
+          "arrowPosition": "right"
+        }
+      ]
+    }
+  },
+  "supports": {
+    "html": false,
+    "anchor": true,
+    "align": [
+      "wide",
+      "full"
+    ]
+  },
+  "textdomain": "zenctuary",
+  "editorScript": "file:./index.js",
+  "style": "file:./style-index.css",
+  "editorStyle": "file:./index.css"
+}
