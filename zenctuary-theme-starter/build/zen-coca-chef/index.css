@@ -1,0 +1,1 @@
+.zen-coca-chef-control-grid{display:grid;gap:8px;grid-template-columns:repeat(2,minmax(0,1fr));margin-bottom:16px}.zen-coca-chef-control-grid>.components-base-control__label{grid-column:1/-1;margin-bottom:0}

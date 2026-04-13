@@ -1,0 +1,64 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "zenctuary/zen-coca-chef",
+	"version": "1.0.0",
+	"title": "Zen-Coca-Chef",
+	"category": "design",
+	"icon": "id-alt",
+	"description": "A premium profile feature section with image overlay text and rich content column.",
+	"keywords": [ "zenctuary", "profile", "chef", "feature" ],
+	"attributes": {
+		"sectionPadding": { "type": "object", "default": { "top": "96px", "right": "84px", "bottom": "96px", "left": "84px" } },
+		"sectionMargin": { "type": "object", "default": { "top": "0px", "right": "0px", "bottom": "0px", "left": "0px" } },
+		"columnGap": { "type": "string", "default": "64px" },
+
+		"image": { "type": "object", "default": { "id": 0, "url": "", "alt": "" } },
+		"imageFit": { "type": "string", "default": "cover" },
+		"imageRadius": { "type": "number", "default": 28 },
+
+		"nameText": { "type": "string", "default": "SHERVIN<br>ZAMANI" },
+		"nameColor": { "type": "string", "default": "#f5f3ed" },
+		"nameFontSize": { "type": "number", "default": 62 },
+		"nameFontWeight": { "type": "string", "default": "800" },
+		"nameLetterSpacing": { "type": "string", "default": "0.02em" },
+
+		"roleText": { "type": "string", "default": "FOUNDER & CEO" },
+		"roleColor": { "type": "string", "default": "#f5f3ed" },
+		"roleFontSize": { "type": "number", "default": 17 },
+		"roleFontWeight": { "type": "string", "default": "500" },
+		"roleLetterSpacing": { "type": "string", "default": "0.08em" },
+
+		"heading": { "type": "string", "default": "COOLA CHEF" },
+		"headingColor": { "type": "string", "default": "#d8b354" },
+		"headingFontSize": { "type": "number", "default": 60 },
+		"headingFontWeight": { "type": "string", "default": "800" },
+		"headingLetterSpacing": { "type": "string", "default": "0.03em" },
+		"headingMargin": { "type": "object", "default": { "top": "0px", "right": "0px", "bottom": "28px", "left": "0px" } },
+
+		"paragraphOne": {
+			"type": "string",
+			"default": "We founded this concept because we believe inner peace is the most powerful force in the universe to cultivate change."
+		},
+		"paragraphOneColor": { "type": "string", "default": "#f2eee4" },
+		"paragraphOneFontSize": { "type": "number", "default": 21 },
+		"paragraphOneFontWeight": { "type": "string", "default": "400" },
+		"paragraphOneLineHeight": { "type": "number", "default": 1.45 },
+		"paragraphOneMargin": { "type": "object", "default": { "top": "0px", "right": "0px", "bottom": "34px", "left": "0px" } },
+
+		"paragraphTwo": {
+			"type": "string",
+			"default": "As former strategic consultants and managers in fast-paced corporate and startup environments, we looked for tools to help us unplug and reconnect."
+		},
+		"paragraphTwoColor": { "type": "string", "default": "#f2eee4" },
+		"paragraphTwoFontSize": { "type": "number", "default": 21 },
+		"paragraphTwoFontWeight": { "type": "string", "default": "400" },
+		"paragraphTwoLineHeight": { "type": "number", "default": 1.45 },
+		"paragraphTwoMargin": { "type": "object", "default": { "top": "0px", "right": "0px", "bottom": "0px", "left": "0px" } }
+	},
+	"supports": { "html": false, "anchor": true, "align": [ "wide", "full" ] },
+	"textdomain": "zenctuary",
+	"editorScript": "file:./index.js",
+	"style": "file:./style-index.css",
+	"editorStyle": "file:./index.css"
+}

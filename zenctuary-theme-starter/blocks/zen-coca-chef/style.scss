@@ -1,0 +1,142 @@
+.wp-block-zenctuary-zen-coca-chef {
+	width: 100%;
+	box-sizing: border-box;
+	background: #3f3d3d;
+}
+
+.wp-block-zenctuary-zen-coca-chef * {
+	box-sizing: border-box;
+}
+
+.wp-block-zenctuary-zen-coca-chef.alignfull {
+	width: 100vw;
+	margin-left: calc(50% - 50vw);
+	margin-right: calc(50% - 50vw);
+}
+
+.zen-coca-chef__content {
+	width: 100%;
+	max-width: 1600px;
+	margin: 0 auto;
+	display: grid;
+	grid-template-columns: minmax(0, 41%) minmax(0, 59%);
+	align-items: center;
+}
+
+.zen-coca-chef__left,
+.zen-coca-chef__right {
+	min-width: 0;
+}
+
+.zen-coca-chef__image {
+	position: relative;
+	width: 100%;
+	min-height: 640px;
+	background-position: center;
+	background-repeat: no-repeat;
+	background-size: cover;
+	overflow: hidden;
+}
+
+.zen-coca-chef__image-overlay {
+	position: absolute;
+	inset: 0;
+	background: linear-gradient(180deg, rgba(0, 0, 0, 0.22) 0%, rgba(0, 0, 0, 0.34) 100%);
+	pointer-events: none;
+}
+
+.zen-coca-chef__name,
+.zen-coca-chef__role {
+	position: absolute;
+	z-index: 1;
+	text-transform: uppercase;
+	max-width: calc(100% - 64px);
+}
+
+.zen-coca-chef__name {
+	top: 34px;
+	left: 34px;
+	line-height: 0.95;
+}
+
+.zen-coca-chef__role {
+	left: 34px;
+	bottom: 30px;
+	line-height: 1.2;
+}
+
+.zen-coca-chef__heading {
+	margin-top: 0;
+	line-height: 1.05;
+	text-transform: uppercase;
+}
+
+.zen-coca-chef__paragraph {
+	margin-top: 0;
+	max-width: 920px;
+}
+
+@media (max-width: 1200px) {
+	.wp-block-zenctuary-zen-coca-chef {
+		padding-left: 48px !important;
+		padding-right: 48px !important;
+	}
+
+	.zen-coca-chef__image {
+		min-height: 560px;
+	}
+
+	.zen-coca-chef__heading {
+		font-size: clamp(34px, 5.2vw, 52px) !important;
+	}
+}
+
+@media (max-width: 900px) {
+	.zen-coca-chef__content {
+		grid-template-columns: 1fr;
+	}
+
+	.zen-coca-chef__left {
+		margin-bottom: 28px;
+	}
+
+	.zen-coca-chef__image {
+		min-height: 520px;
+	}
+}
+
+@media (max-width: 767px) {
+	.wp-block-zenctuary-zen-coca-chef {
+		padding: 64px 18px !important;
+	}
+
+	.zen-coca-chef__image {
+		min-height: 440px;
+	}
+
+	.zen-coca-chef__name,
+	.zen-coca-chef__role {
+		max-width: calc(100% - 38px);
+	}
+
+	.zen-coca-chef__name {
+		top: 20px;
+		left: 20px;
+		font-size: clamp(34px, 10vw, 54px) !important;
+	}
+
+	.zen-coca-chef__role {
+		left: 20px;
+		bottom: 20px;
+		font-size: clamp(14px, 4.2vw, 20px) !important;
+	}
+
+	.zen-coca-chef__heading {
+		font-size: clamp(30px, 8vw, 44px) !important;
+	}
+
+	.zen-coca-chef__paragraph {
+		font-size: clamp(17px, 4.8vw, 22px) !important;
+		line-height: 1.5 !important;
+	}
+}
