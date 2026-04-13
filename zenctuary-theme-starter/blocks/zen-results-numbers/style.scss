@@ -63,10 +63,28 @@
 
 .zen-results-numbers__box-top {
 	line-height: 1;
+	text-align: center;
 }
 
 .zen-results-numbers__box-bottom {
 	line-height: 1.45;
+}
+
+.zen-results-numbers__box-top-value {
+	display: inline-flex;
+	align-items: baseline;
+	justify-content: center;
+	gap: 0.06em;
+}
+
+.zen-results-numbers__box-top-number {
+	display: inline-block;
+	line-height: 1;
+}
+
+.zen-results-numbers__box-top-percent {
+	display: inline-block;
+	line-height: 1;
 }
 
 @media (max-width: 1200px) {

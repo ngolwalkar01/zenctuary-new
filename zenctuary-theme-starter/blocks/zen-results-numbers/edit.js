@@ -8,6 +8,7 @@ const DEFAULT_BOX = {
 	bottomText: 'Customer satisfaction',
 	topColor: '#d8b354',
 	topFontSize: 54,
+	percentFontSize: 30,
 	topFontWeight: '800',
 	bottomColor: '#f1eee7',
 	bottomFontSize: 17,
@@ -36,6 +37,17 @@ const spacingStyle = ( value = {}, prop ) => {
 	};
 };
 const normalizeBox = ( box = {} ) => ( { ...DEFAULT_BOX, ...box, padding: normSpacing( box.padding || DEFAULT_BOX.padding ) } );
+const getPlainText = ( value = '' ) => String( value ).replace( /<[^>]+>/g, '' ).replace( /&nbsp;/g, ' ' ).trim();
+const parsePercentValue = ( value = '' ) => {
+	const plainValue = getPlainText( value );
+	const match = plainValue.match( /^(.*?)(%)$/ );
+
+	if ( ! match ) {
+		return null;
+	}
+
+	return { numberPart: match[ 1 ].trimEnd(), percentPart: match[ 2 ] };
+};
 
 function SpacingControls( { label, value, onChange } ) {
 	const spacing = normSpacing( value );
@@ -85,8 +97,11 @@ export default function Edit( { attributes, setAttributes } ) {
 	} );
 	const contentStyle = attributes.widthMode === 'custom' ? { maxWidth: attributes.customWidth || '1200px' } : {};
 
-	const renderBox = ( box, index ) => (
-		<div
+	const renderBox = ( box, index ) => {
+		const parsedTopValue = parsePercentValue( box.topText );
+
+		return (
+			<div
 			className={ `zen-results-numbers__box${ selectedBoxIndex === index ? ' is-selected' : '' }` }
 			key={ box.id || index }
 			onClick={ () => setSelectedBoxIndex( index ) }
@@ -99,14 +114,22 @@ export default function Edit( { attributes, setAttributes } ) {
 				gap: box.contentGap,
 			} }
 		>
-			<RichText
-				tagName="div"
-				className="zen-results-numbers__box-top"
-				value={ box.topText }
-				onChange={ ( topText ) => updateBox( index, { topText } ) }
-				style={ { color: box.topColor, fontSize: `${ box.topFontSize }px`, fontWeight: box.topFontWeight } }
-				allowedFormats={ [ 'core/bold', 'core/italic' ] }
-			/>
+			<div className="zen-results-numbers__box-top" style={ { color: box.topColor, fontWeight: box.topFontWeight } }>
+				{ parsedTopValue ? (
+					<span className="zen-results-numbers__box-top-value">
+						<span className="zen-results-numbers__box-top-number" style={ { fontSize: `${ box.topFontSize }px` } }>
+							{ parsedTopValue.numberPart }
+						</span>
+						<span className="zen-results-numbers__box-top-percent" style={ { fontSize: `${ box.percentFontSize }px` } }>
+							{ parsedTopValue.percentPart }
+						</span>
+					</span>
+				) : (
+					<span className="zen-results-numbers__box-top-number" style={ { fontSize: `${ box.topFontSize }px` } }>
+						{ getPlainText( box.topText ) }
+					</span>
+				) }
+			</div>
 			<RichText
 				tagName="div"
 				className="zen-results-numbers__box-bottom"
@@ -116,7 +139,8 @@ export default function Edit( { attributes, setAttributes } ) {
 				allowedFormats={ [ 'core/bold', 'core/italic', 'core/link' ] }
 			/>
 		</div>
-	);
+		);
+	};
 
 	return (
 		<>
@@ -152,7 +176,8 @@ export default function Edit( { attributes, setAttributes } ) {
 					{ boxes.length > 0 && <SelectControl label="Selected box" value={ selectedBoxIndex } options={ boxes.map( ( box, index ) => ( { label: `${ index + 1 }. ${ box.topText || 'Box' }`, value: index } ) ) } onChange={ ( value ) => setSelectedBoxIndex( Number( value ) ) } /> }
 					{ selectedBox && <>
 						<TextControl label="Top text" value={ selectedBox.topText } onChange={ ( topText ) => updateBox( selectedBoxIndex, { topText } ) } />
-						<RangeControl label="Top font size" value={ selectedBox.topFontSize } onChange={ ( topFontSize ) => updateBox( selectedBoxIndex, { topFontSize } ) } min={ 22 } max={ 96 } />
+						<RangeControl label="Number font size" value={ selectedBox.topFontSize } onChange={ ( topFontSize ) => updateBox( selectedBoxIndex, { topFontSize } ) } min={ 22 } max={ 96 } />
+						<RangeControl label="Percent (%) font size" value={ selectedBox.percentFontSize } onChange={ ( percentFontSize ) => updateBox( selectedBoxIndex, { percentFontSize } ) } min={ 12 } max={ 72 } />
 						<SelectControl label="Top font weight" value={ selectedBox.topFontWeight } options={ WEIGHTS } onChange={ ( topFontWeight ) => updateBox( selectedBoxIndex, { topFontWeight } ) } />
 						<p className="components-base-control__label">Top color</p>
 						<ColorPalette value={ selectedBox.topColor } onChange={ ( topColor ) => updateBox( selectedBoxIndex, { topColor: topColor || '#d8b354' } ) } />

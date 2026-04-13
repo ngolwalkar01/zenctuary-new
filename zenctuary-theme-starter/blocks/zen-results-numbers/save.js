@@ -11,6 +11,17 @@ const spacingStyle = ( value = {}, prop ) => {
 		[ `${ prop }Left` ]: spacing.left,
 	};
 };
+const getPlainText = ( value = '' ) => String( value ).replace( /<[^>]+>/g, '' ).replace( /&nbsp;/g, ' ' ).trim();
+const parsePercentValue = ( value = '' ) => {
+	const plainValue = getPlainText( value );
+	const match = plainValue.match( /^(.*?)(%)$/ );
+
+	if ( ! match ) {
+		return null;
+	}
+
+	return { numberPart: match[ 1 ].trimEnd(), percentPart: match[ 2 ] };
+};
 
 export default function save( { attributes } ) {
 	const boxes = Array.isArray( attributes.boxes ) ? attributes.boxes : [];
@@ -39,8 +50,11 @@ export default function save( { attributes } ) {
 					style={ { color: attributes.paragraphColor, fontSize: `${ attributes.paragraphFontSize }px`, fontWeight: attributes.paragraphFontWeight, letterSpacing: attributes.paragraphLetterSpacing, marginBottom: attributes.rowSpacingParagraph, ...spacingStyle( attributes.paragraphMargin, 'margin' ) } }
 				/>
 				<div className="zen-results-numbers__boxes" style={ { gap: attributes.boxesGap, ...spacingStyle( attributes.boxesMargin, 'margin' ) } }>
-					{ boxes.map( ( box, index ) => (
-						<div
+					{ boxes.map( ( box, index ) => {
+						const parsedTopValue = parsePercentValue( box.topText );
+
+						return (
+							<div
 							className="zen-results-numbers__box"
 							key={ box.id || index }
 							style={ {
@@ -52,12 +66,22 @@ export default function save( { attributes } ) {
 								gap: box.contentGap,
 							} }
 						>
-							<RichText.Content
-								tagName="div"
-								className="zen-results-numbers__box-top"
-								value={ box.topText }
-								style={ { color: box.topColor, fontSize: `${ box.topFontSize }px`, fontWeight: box.topFontWeight } }
-							/>
+							<div className="zen-results-numbers__box-top" style={ { color: box.topColor, fontWeight: box.topFontWeight } }>
+								{ parsedTopValue ? (
+									<span className="zen-results-numbers__box-top-value">
+										<span className="zen-results-numbers__box-top-number" style={ { fontSize: `${ box.topFontSize }px` } }>
+											{ parsedTopValue.numberPart }
+										</span>
+										<span className="zen-results-numbers__box-top-percent" style={ { fontSize: `${ box.percentFontSize ?? box.topFontSize }px` } }>
+											{ parsedTopValue.percentPart }
+										</span>
+									</span>
+								) : (
+									<span className="zen-results-numbers__box-top-number" style={ { fontSize: `${ box.topFontSize }px` } }>
+										{ getPlainText( box.topText ) }
+									</span>
+								) }
+							</div>
 							<RichText.Content
 								tagName="div"
 								className="zen-results-numbers__box-bottom"
@@ -65,7 +89,8 @@ export default function save( { attributes } ) {
 								style={ { color: box.bottomColor, fontSize: `${ box.bottomFontSize }px`, fontWeight: box.bottomFontWeight } }
 							/>
 						</div>
-					) ) }
+						);
+					} ) }
 				</div>
 			</div>
 		</section>
