@@ -10,7 +10,7 @@
     max-width: none;
     background-color: var(--zep-bg, #f9f9f9);
     overflow: hidden;
-    min-height: 100vh; 
+    min-height: 100vh;
 }
 
 .zep-layout-wrapper {
@@ -31,16 +31,22 @@
 }
 
 .zenctuary-experience-panels.has-active-panel .zep-panel {
-    flex: 0 0 0%; /* Completely collapse non-active panels */
+    flex: 0 0 0%;
+    /* Completely collapse non-active panels */
     min-width: 0;
-    opacity: 0; /* Fade them out cleanly so they don't squish weirdly */
-    pointer-events: none; /* Remove interactions */
+    opacity: 0;
+    /* Fade them out cleanly so they don't squish weirdly */
+    pointer-events: none;
+    /* Remove interactions */
 }
 
 .zenctuary-experience-panels.has-active-panel .zep-panel.is-active {
-    flex: 1 0 100%; /* Active panel takes over the ENTIRE view visibly */
-    opacity: 1; /* Keep active visible */
-    pointer-events: auto; /* Allow interactions */
+    flex: 1 0 100%;
+    /* Active panel takes over the ENTIRE view visibly */
+    opacity: 1;
+    /* Keep active visible */
+    pointer-events: auto;
+    /* Allow interactions */
     cursor: default;
 }
 
@@ -71,15 +77,32 @@
 }
 
 /* Background Dual-Layer Logic */
-.zep-panel__bg-cell--default { opacity: 1; transition: opacity var(--zep-dur, 0.6s) ease; }
-.zep-panel__bg-cell--active { opacity: 0; transition: opacity var(--zep-dur, 0.6s) ease; }
+.zep-panel__bg-cell--default {
+    opacity: 1;
+    transition: opacity var(--zep-dur, 0.6s) ease;
+}
 
-.zep-panel.is-active .zep-panel__bg-cell--default { opacity: 0; }
-.zep-panel.is-active .zep-panel__bg-cell--active { opacity: 1; }
+.zep-panel__bg-cell--active {
+    opacity: 0;
+    transition: opacity var(--zep-dur, 0.6s) ease;
+}
+
+.zep-panel.is-active .zep-panel__bg-cell--default {
+    opacity: 0;
+}
+
+.zep-panel.is-active .zep-panel__bg-cell--active {
+    opacity: 1;
+}
 
 /* bgTransition: fade-zoom */
-.zep-panel[data-bg-trans="fade-zoom"] .zep-panel__bg-cell--active .zep-panel__bg-img { transform: scale(1.1); }
-.zep-panel[data-bg-trans="fade-zoom"].is-active .zep-panel__bg-cell--active .zep-panel__bg-img { transform: scale(1); }
+.zep-panel[data-bg-trans="fade-zoom"] .zep-panel__bg-cell--active .zep-panel__bg-img {
+    transform: scale(1.1);
+}
+
+.zep-panel[data-bg-trans="fade-zoom"].is-active .zep-panel__bg-cell--active .zep-panel__bg-img {
+    transform: scale(1);
+}
 
 .zep-panel__overlay {
     position: absolute;
@@ -109,21 +132,29 @@
     flex-direction: column;
     align-items: center;
     text-align: center;
-    width: 480px; /* Force fixed width to totally prevent text jumping/reflows during hover layout resizing */
+    width: 480px;
+    /* Force fixed width to totally prevent text jumping/reflows during hover layout resizing */
     max-width: 90vw;
-    flex-shrink: 0; /* Prevent shrinking logic from breaking the fixed width */
+    flex-shrink: 0;
+    /* Prevent shrinking logic from breaking the fixed width */
     opacity: 1;
     transition: all var(--zep-dur, 0.6s) cubic-bezier(0.25, 1, 0.5, 1);
 }
 
 /* data-content-trans logic */
 .zenctuary-experience-panels.has-active-panel .zep-panel:not(.is-active) .zep-panel__center {
-    opacity: 0; /* Hide inactive panel contents while ONE is dominating */
+    opacity: 0;
+    /* Hide inactive panel contents while ONE is dominating */
 }
 
 /* Base starting points for animations when NOT active but in an active block */
-.zenctuary-experience-panels.has-active-panel .zep-panel[data-content-trans="slide-from-left"]:not(.is-active) .zep-panel__center { transform: translateX(-40px); }
-.zenctuary-experience-panels.has-active-panel .zep-panel[data-content-trans="popup-center"]:not(.is-active) .zep-panel__center { transform: scale(0.95); }
+.zenctuary-experience-panels.has-active-panel .zep-panel[data-content-trans="slide-from-left"]:not(.is-active) .zep-panel__center {
+    transform: translateX(-40px);
+}
+
+.zenctuary-experience-panels.has-active-panel .zep-panel[data-content-trans="popup-center"]:not(.is-active) .zep-panel__center {
+    transform: scale(0.95);
+}
 
 /* When active, pop it perfectly back into place */
 .zenctuary-experience-panels.has-active-panel .zep-panel.is-active .zep-panel__center {
@@ -155,6 +186,7 @@
     font-weight: var(--zep-desc-fw, 400);
     line-height: var(--zep-desc-lh, 1.5);
     color: var(--zep-desc-c, #ffffff);
+    width: 250px;
 }
 
 /* Hotspots (Desktop) */
@@ -163,38 +195,48 @@
     flex-direction: column;
     gap: var(--zep-gap-hot-v, 24px);
     position: absolute;
-    top: 50%;
+    top: 40%;
     transform: translateY(-50%);
     opacity: 0;
     visibility: hidden;
     transition: opacity 0.4s ease, visibility 0.4s ease;
-    transition-delay: 0s; 
+    transition-delay: 0s;
 }
 
 /* Base starting points for Hotspots */
-.zep-panel[data-content-trans="slide-from-left"] .zep-panel__hotspots { transform: translate(-20px, -50%); transition: opacity 0.4s ease, transform 0.4s ease, visibility 0.4s ease; }
-.zep-panel[data-content-trans="popup-center"] .zep-panel__hotspots { transform: translate(0, -50%) scale(0.95); transition: opacity 0.4s ease, transform 0.4s ease, visibility 0.4s ease; }
+.zep-panel[data-content-trans="slide-from-left"] .zep-panel__hotspots {
+    transform: translate(-20px, -50%);
+    transition: opacity 0.4s ease, transform 0.4s ease, visibility 0.4s ease;
+}
+
+.zep-panel[data-content-trans="popup-center"] .zep-panel__hotspots {
+    transform: translate(0, -50%) scale(0.95);
+    transition: opacity 0.4s ease, transform 0.4s ease, visibility 0.4s ease;
+}
 
 .zep-panel.is-active .zep-panel__hotspots {
     opacity: 1;
     visibility: visible;
-    transform: translate(0, -50%) scale(1); /* Reset sliding margins */
+    transform: translate(0, -50%) scale(1);
+    /* Reset sliding margins */
     transition-delay: 0.2s;
 }
 
 .zep-panel__hotspots--left {
-    left: max(4vw, 40px); /* Anchor fixed distance so they don't slide as percentages shift */
+    left: max(14vw, 40px);
+    /* Anchor fixed distance so they don't slide as percentages shift */
     align-items: center;
 }
 
 .zep-panel__hotspots--right {
-    right: max(4vw, 40px);
+    right: max(14vw, 40px);
     align-items: center;
 }
 
 .zep-hotspot {
     display: flex;
-    flex-direction: column; /* ALWAYS VERTICAL STACK */
+    flex-direction: column;
+    /* ALWAYS VERTICAL STACK */
     align-items: center;
     text-align: center;
     gap: var(--zep-gap-hot-it, 12px);
@@ -218,10 +260,12 @@
 }
 
 /* Prevent text wrapping breaking accordion while narrow */
-.zep-panel__center, 
+.zep-panel__center,
 .zep-panel__hotspots {
-    pointer-events: none; /* Inactive states shouldn't capture hover if perfectly centered */
+    pointer-events: none;
+    /* Inactive states shouldn't capture hover if perfectly centered */
 }
+
 .zep-panel.is-active .zep-panel__center,
 .zep-panel.is-active .zep-panel__hotspots {
     pointer-events: auto;
@@ -245,7 +289,8 @@
         /* Turn off Flex accordion */
         flex: none !important;
         width: 100%;
-        min-height: 600px; /* Sensible minimum for mobile cards */
+        min-height: 600px;
+        /* Sensible minimum for mobile cards */
         height: auto;
         display: flex;
         flex-direction: column;
@@ -273,22 +318,31 @@
         visibility: visible !important;
         width: 100%;
         margin-top: 40px;
-        align-items: center !important; /* Center stack everything on mobile */
+        align-items: center !important;
+        /* Center stack everything on mobile */
     }
 
-    .zep-panel__hotspots--left { margin-top: 40px; }
-    .zep-panel__hotspots--right { margin-top: 24px; }
+    .zep-panel__hotspots--left {
+        margin-top: 40px;
+    }
+
+    .zep-panel__hotspots--right {
+        margin-top: 24px;
+    }
 
     .zep-hotspot {
-        flex-direction: column; /* Stack icon top, desc bottom */
+        flex-direction: column;
+        /* Stack icon top, desc bottom */
         text-align: center;
     }
-    
+
     .zep-hotspot__desc {
-        white-space: normal; /* Fix narrow screens */
+        white-space: normal;
+        /* Fix narrow screens */
     }
 
     .zep-panel__title {
-        font-size: calc(var(--zep-tt-fs) * 0.75); /* Slight shrink */
+        font-size: calc(var(--zep-tt-fs) * 0.75);
+        /* Slight shrink */
     }
 }
