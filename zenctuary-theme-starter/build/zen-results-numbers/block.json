@@ -1,0 +1,224 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "zenctuary/zen-results-numbers",
+  "version": "1.0.0",
+  "title": "Zen-Results-Numbers",
+  "category": "design",
+  "icon": "chart-bar",
+  "description": "A premium responsive statistics section with editable heading, paragraph, and stat cards.",
+  "keywords": [
+    "zenctuary",
+    "results",
+    "numbers",
+    "stats",
+    "metrics"
+  ],
+  "attributes": {
+    "widthMode": {
+      "type": "string",
+      "default": "full"
+    },
+    "customWidth": {
+      "type": "string",
+      "default": "1200px"
+    },
+    "sectionPadding": {
+      "type": "object",
+      "default": {
+        "top": "96px",
+        "right": "90px",
+        "bottom": "104px",
+        "left": "90px"
+      }
+    },
+    "rowSpacingHeading": {
+      "type": "string",
+      "default": "22px"
+    },
+    "rowSpacingParagraph": {
+      "type": "string",
+      "default": "48px"
+    },
+    "boxesGap": {
+      "type": "string",
+      "default": "28px"
+    },
+    "backgroundColor": {
+      "type": "string",
+      "default": "#3f3d3d"
+    },
+    "heading": {
+      "type": "string",
+      "default": "OUR RESULTS IN NUMBERS"
+    },
+    "headingColor": {
+      "type": "string",
+      "default": "#d8b354"
+    },
+    "headingFontSize": {
+      "type": "number",
+      "default": 36
+    },
+    "headingFontWeight": {
+      "type": "string",
+      "default": "800"
+    },
+    "headingLetterSpacing": {
+      "type": "string",
+      "default": "2px"
+    },
+    "headingMargin": {
+      "type": "object",
+      "default": {
+        "top": "0px",
+        "right": "0px",
+        "bottom": "0px",
+        "left": "0px"
+      }
+    },
+    "paragraph": {
+      "type": "string",
+      "default": "Real progress, consistent care, and a calmer way to measure what matters."
+    },
+    "paragraphColor": {
+      "type": "string",
+      "default": "#f1eee7"
+    },
+    "paragraphFontSize": {
+      "type": "number",
+      "default": 18
+    },
+    "paragraphFontWeight": {
+      "type": "string",
+      "default": "400"
+    },
+    "paragraphLetterSpacing": {
+      "type": "string",
+      "default": "0.04em"
+    },
+    "paragraphMargin": {
+      "type": "object",
+      "default": {
+        "top": "0px",
+        "right": "0px",
+        "bottom": "0px",
+        "left": "0px"
+      }
+    },
+    "boxesMargin": {
+      "type": "object",
+      "default": {
+        "top": "0px",
+        "right": "0px",
+        "bottom": "0px",
+        "left": "0px"
+      }
+    },
+    "boxes": {
+      "type": "array",
+      "default": [
+        {
+          "id": "box-1",
+          "topText": "99%",
+          "bottomText": "Customer satisfaction",
+          "topColor": "#d8b354",
+          "topFontSize": 54,
+          "topFontWeight": "800",
+          "bottomColor": "#f1eee7",
+          "bottomFontSize": 17,
+          "bottomFontWeight": "500",
+          "contentGap": "18px",
+          "padding": {
+            "top": "44px",
+            "right": "34px",
+            "bottom": "42px",
+            "left": "34px"
+          },
+          "borderColor": "#d8b354",
+          "borderWidth": 2,
+          "borderRadius": 22,
+          "backgroundColor": "transparent"
+        },
+        {
+          "id": "box-2",
+          "topText": "50",
+          "bottomText": "Weekly classes",
+          "topColor": "#d8b354",
+          "topFontSize": 54,
+          "topFontWeight": "800",
+          "bottomColor": "#f1eee7",
+          "bottomFontSize": 17,
+          "bottomFontWeight": "500",
+          "contentGap": "18px",
+          "padding": {
+            "top": "44px",
+            "right": "34px",
+            "bottom": "42px",
+            "left": "34px"
+          },
+          "borderColor": "#d8b354",
+          "borderWidth": 2,
+          "borderRadius": 22,
+          "backgroundColor": "transparent"
+        },
+        {
+          "id": "box-3",
+          "topText": "240%",
+          "bottomText": "Growth in mindful habits",
+          "topColor": "#d8b354",
+          "topFontSize": 54,
+          "topFontWeight": "800",
+          "bottomColor": "#f1eee7",
+          "bottomFontSize": 17,
+          "bottomFontWeight": "500",
+          "contentGap": "18px",
+          "padding": {
+            "top": "44px",
+            "right": "34px",
+            "bottom": "42px",
+            "left": "34px"
+          },
+          "borderColor": "#d8b354",
+          "borderWidth": 2,
+          "borderRadius": 22,
+          "backgroundColor": "transparent"
+        },
+        {
+          "id": "box-4",
+          "topText": "10.00",
+          "bottomText": "Minutes to reset",
+          "topColor": "#d8b354",
+          "topFontSize": 54,
+          "topFontWeight": "800",
+          "bottomColor": "#f1eee7",
+          "bottomFontSize": 17,
+          "bottomFontWeight": "500",
+          "contentGap": "18px",
+          "padding": {
+            "top": "44px",
+            "right": "34px",
+            "bottom": "42px",
+            "left": "34px"
+          },
+          "borderColor": "#d8b354",
+          "borderWidth": 2,
+          "borderRadius": 22,
+          "backgroundColor": "transparent"
+        }
+      ]
+    }
+  },
+  "supports": {
+    "html": false,
+    "anchor": true,
+    "align": [
+      "wide",
+      "full"
+    ]
+  },
+  "textdomain": "zenctuary",
+  "editorScript": "file:./index.js",
+  "style": "file:./style-index.css",
+  "editorStyle": "file:./index.css"
+}
