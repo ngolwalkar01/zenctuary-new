@@ -1,0 +1,155 @@
+/**
+ * Zenctuary Session Phases — Frontend Stylesheet
+ */
+
+/* ─── 1. Section Wrapper ─── */
+.zenctuary-session-phases {
+	width: 100%;
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+}
+
+.zsp-inner {
+	background-color: var(--zsp-bg, #3d3e3b);
+	padding: var(--zsp-pt, 80px) var(--zsp-px, 24px) var(--zsp-pb, 80px);
+	box-sizing: border-box;
+}
+
+.zsp-content {
+	max-width: var(--zsp-max-w, 1200px);
+	margin: 0 auto;
+}
+
+/* ─── 2. Section Heading ─── */
+.zsp-heading {
+	font-size: var(--zsp-h-fs, 36px);
+	font-weight: var(--zsp-h-fw, 600);
+	line-height: var(--zsp-h-lh, 1.2);
+	text-transform: var(--zsp-h-tt, uppercase);
+	color: var(--zsp-h-c, #c6b36a);
+	max-width: var(--zsp-h-mw, 800px);
+	margin: 0 0 var(--zsp-gap-hd, 24px) 0;
+}
+
+/* ─── 3. Section Description ─── */
+.zsp-desc {
+	font-size: var(--zsp-d-fs, 16px);
+	font-weight: var(--zsp-d-fw, 400);
+	line-height: var(--zsp-d-lh, 1.5);
+	color: var(--zsp-d-c, #e5e5e5);
+	max-width: var(--zsp-d-mw, 1000px);
+	margin: 0 0 var(--zsp-gap-dd, 48px) 0;
+}
+
+/* ─── 4. Cards Grid ─── */
+.zsp-grid {
+	display: flex;
+	flex-wrap: wrap;
+	gap: var(--zsp-cards-gap, 24px);
+}
+
+/* Each card grows equally — adapts to any card count */
+.zsp-card {
+	flex: 1 1 0;
+	min-width: 180px;
+	display: flex;
+	flex-direction: column;
+	gap: 0;
+	border: var(--zsp-card-bw, 1px) solid var(--zsp-card-bc, #c6b36a);
+	border-radius: var(--zsp-card-br, 12px);
+	padding: var(--zsp-card-pad, 24px);
+	min-height: var(--zsp-card-mh, 200px);
+	background-color: var(--zsp-card-bg, transparent);
+	box-sizing: border-box;
+}
+
+/* ─── 5. Card Title Row ─── */
+.zsp-card__title-row {
+	display: flex;
+	align-items: flex-start;
+	justify-content: space-between;
+	gap: var(--zsp-gap-ti, 12px);
+	margin-bottom: var(--zsp-gap-tr, 16px);
+}
+
+.zsp-card__title {
+	font-size: var(--zsp-t-fs, 18px);
+	font-weight: var(--zsp-t-fw, 600);
+	line-height: var(--zsp-t-lh, 1.3);
+	color: var(--zsp-t-c, #c6b36a);
+	max-width: var(--zsp-t-mw, 150px);
+	margin: 0;
+	flex-shrink: 1;
+}
+
+.zsp-card__title-icon {
+	display: block;
+	width: var(--zsp-ti-sz, 40px);
+	height: var(--zsp-ti-sz, 40px);
+	object-fit: contain;
+	flex-shrink: 0;
+}
+
+/* ─── 6. Time Row ─── */
+.zsp-card__time-row {
+	display: flex;
+	align-items: center;
+	gap: var(--zsp-gap-tit, 8px);
+	margin-bottom: var(--zsp-gap-tp, 12px);
+}
+
+.zsp-card__time-icon {
+	display: block;
+	width: var(--zsp-tii-sz, 16px);
+	height: var(--zsp-tii-sz, 16px);
+	object-fit: contain;
+	flex-shrink: 0;
+}
+
+.zsp-card__time-text {
+	font-size: var(--zsp-time-fs, 14px);
+	font-weight: var(--zsp-time-fw, 400);
+	color: var(--zsp-time-c, #e5e5e5);
+	margin: 0;
+	line-height: 1.4;
+}
+
+/* ─── 7. Points / Bullet Description ─── */
+.zsp-card__points {
+	font-size: var(--zsp-p-fs, 14px);
+	font-weight: var(--zsp-p-fw, 400);
+	line-height: var(--zsp-p-lh, 1.5);
+	color: var(--zsp-p-c, #ffffff);
+	margin: 0;
+}
+
+/* ─── 8. Responsive Behaviour ─── */
+@media (max-width: 1024px) {
+	.zsp-grid {
+		flex-wrap: wrap;
+	}
+
+	/* On tablet, clamp to at most 2 per row */
+	.zsp-card {
+		flex: 1 1 calc(50% - var(--zsp-cards-gap, 24px));
+		min-width: 220px;
+	}
+}
+
+@media (max-width: 640px) {
+	.zsp-inner {
+		padding-left: 16px;
+		padding-right: 16px;
+	}
+
+	/* Full-width stack on mobile */
+	.zsp-card {
+		flex: 1 1 100%;
+		min-width: 0;
+	}
+
+	.zsp-card__title-row {
+		flex-direction: row; /* keep icon right of title on mobile */
+	}
+}
