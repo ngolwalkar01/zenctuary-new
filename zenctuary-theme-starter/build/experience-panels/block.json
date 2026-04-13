@@ -109,6 +109,14 @@
     "gapHotspotVertical": {
       "type": "number",
       "default": 24
+    },
+    "hotspotIconSize": {
+      "type": "number",
+      "default": 48
+    },
+    "centerIconSize": {
+      "type": "number",
+      "default": 64
     }
   },
   "supports": {

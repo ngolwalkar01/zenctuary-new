@@ -65,6 +65,9 @@ $vars = [
     '--zep-gap-td:'       . absint( $attributes['gapTitleDesc'] ?? 16 ) . 'px',
     '--zep-gap-hot-it:'   . absint( $attributes['gapHotspotIconText'] ?? 12 ) . 'px',
     '--zep-gap-hot-v:'    . absint( $attributes['gapHotspotVertical'] ?? 24 ) . 'px',
+    
+    '--zep-hot-icon-sz:'  . absint( $attributes['hotspotIconSize'] ?? 48 ) . 'px',
+    '--zep-center-icon-sz:'. absint( $attributes['centerIconSize'] ?? 64 ) . 'px',
 ];
 
 $inline_style = implode( '; ', $vars );

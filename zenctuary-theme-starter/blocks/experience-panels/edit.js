@@ -46,7 +46,8 @@ export default function Edit( { attributes, setAttributes, clientId } ) {
         descFontSize = 16, descFontWeight = '400', descLineHeight = 1.5, descColor = '#ffffff',
         hotspotFontSize = 14, hotspotFontWeight = '500', hotspotLineHeight = 1.4, hotspotColor = '#ffffff',
         
-        gapIconTitle = 24, gapTitleDesc = 16, gapHotspotIconText = 12, gapHotspotVertical = 24
+        gapIconTitle = 24, gapTitleDesc = 16, gapHotspotIconText = 12, gapHotspotVertical = 24,
+        hotspotIconSize = 48, centerIconSize = 64
     } = attributes;
 
     const blockProps = useBlockProps({
@@ -72,6 +73,8 @@ export default function Edit( { attributes, setAttributes, clientId } ) {
             '--zep-gap-td': `${gapTitleDesc}px`,
             '--zep-gap-hot-it': `${gapHotspotIconText}px`,
             '--zep-gap-hot-v': `${gapHotspotVertical}px`,
+            '--zep-hot-icon-sz': `${hotspotIconSize}px`,
+            '--zep-center-icon-sz': `${centerIconSize}px`,
         }
     });
 
@@ -175,8 +178,9 @@ export default function Edit( { attributes, setAttributes, clientId } ) {
                     <ColorRow label="Section Background" value={ sectionBgColor } onChange={ v => setAttributes({ sectionBgColor: v }) } />
                 </PanelBody>
 
-                <PanelBody title="2. Global Typography" initialOpen={false}>
-                    <h3 style={{ fontSize:'12px',textTransform:'uppercase',color:'#888',margin:'0 0 8px' }}>Center Title</h3>
+                <PanelBody title="2. Global Element Sizing & Typography" initialOpen={false}>
+                    <h3 style={{ fontSize:'12px',textTransform:'uppercase',color:'#888',margin:'0 0 8px' }}>Center Title & Icon</h3>
+                    <RangeControl label="Center Icon Size" value={ centerIconSize } min={24} max={160} step={2} onChange={ v => setAttributes({ centerIconSize: v }) } />
                     <RangeControl label="Font Size" value={ titleFontSize } min={16} max={96} step={1} onChange={ v => setAttributes({ titleFontSize: v }) } />
                     <SelectControl label="Font Weight" value={ titleFontWeight } options={ fwOptions } onChange={ v => setAttributes({ titleFontWeight: v }) } />
                     <SelectControl label="Text Transform" value={ titleTextTransform } options={ ttOptions } onChange={ v => setAttributes({ titleTextTransform: v }) } />
@@ -190,6 +194,7 @@ export default function Edit( { attributes, setAttributes, clientId } ) {
                     
                     <Divider />
                     <h3 style={{ fontSize:'12px',textTransform:'uppercase',color:'#888',margin:'0 0 8px' }}>Hotspots</h3>
+                    <RangeControl label="Hotspot Icon Size" value={ hotspotIconSize } min={16} max={120} step={2} onChange={ v => setAttributes({ hotspotIconSize: v }) } />
                     <RangeControl label="Font Size" value={ hotspotFontSize } min={10} max={32} step={1} onChange={ v => setAttributes({ hotspotFontSize: v }) } />
                     <ColorRow label="Text Color" value={ hotspotColor } onChange={ v => setAttributes({ hotspotColor: v }) } />
                 </PanelBody>

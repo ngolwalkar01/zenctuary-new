@@ -92,14 +92,15 @@
 
 /* ── 3. Content Architecture ── */
 .zep-panel__core {
-    position: relative;
+    position: absolute;
     z-index: 10;
     width: 100%;
     height: 100%;
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 40px;
+    top: 0;
+    left: 0;
 }
 
 /* Center Block */
@@ -108,7 +109,9 @@
     flex-direction: column;
     align-items: center;
     text-align: center;
-    max-width: 400px;
+    width: 480px; /* Force fixed width to totally prevent text jumping/reflows during hover layout resizing */
+    max-width: 90vw;
+    flex-shrink: 0; /* Prevent shrinking logic from breaking the fixed width */
     opacity: 1;
     transition: all var(--zep-dur, 0.6s) cubic-bezier(0.25, 1, 0.5, 1);
 }
@@ -131,7 +134,9 @@
 .zep-panel__center-icon {
     display: block;
     margin-bottom: var(--zep-gap-it, 24px);
-    max-width: 80px;
+    width: var(--zep-center-icon-sz, 64px);
+    height: var(--zep-center-icon-sz, 64px);
+    object-fit: contain;
 }
 
 .zep-panel__title {
@@ -178,12 +183,12 @@
 }
 
 .zep-panel__hotspots--left {
-    left: 8%;
+    left: max(4vw, 40px); /* Anchor fixed distance so they don't slide as percentages shift */
     align-items: center;
 }
 
 .zep-panel__hotspots--right {
-    right: 8%;
+    right: max(4vw, 40px);
     align-items: center;
 }
 
@@ -200,8 +205,8 @@
 
 .zep-hotspot__icon {
     display: block;
-    width: 32px;
-    height: 32px;
+    width: var(--zep-hot-icon-sz, 48px);
+    height: var(--zep-hot-icon-sz, 48px);
     object-fit: contain;
 }
 
@@ -253,9 +258,11 @@
     }
 
     .zep-panel__core {
+        position: relative;
         flex-direction: column;
         padding: 60px 20px;
         justify-content: center;
+        height: auto;
     }
 
     /* Restructure Hotspots so they stack cleanly on mobile */

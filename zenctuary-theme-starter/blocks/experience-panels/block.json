@@ -42,7 +42,10 @@
     "gapIconTitle": { "type": "number", "default": 24 },
     "gapTitleDesc": { "type": "number", "default": 16 },
     "gapHotspotIconText": { "type": "number", "default": 12 },
-    "gapHotspotVertical": { "type": "number", "default": 24 }
+    "gapHotspotVertical": { "type": "number", "default": 24 },
+
+    "hotspotIconSize": { "type": "number", "default": 48 },
+    "centerIconSize": { "type": "number", "default": 64 }
 
   },
   "supports": {
