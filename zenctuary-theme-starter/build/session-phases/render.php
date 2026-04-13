@@ -34,15 +34,31 @@ if ( ! is_array( $cards ) || empty( $cards ) ) {
 			'pointsText'  => 'Movement · Presence · Breathing',
 			'borderColor' => '#c6b36a',
 		],
+		[
+			'title'       => 'PHASE 4: Fire Integration',
+			'titleIcon'   => [ 'id' => 0, 'url' => '', 'alt' => '' ],
+			'timeText'    => '10–15 min',
+			'timeIcon'    => [ 'id' => 0, 'url' => '', 'alt' => '' ],
+			'pointsText'  => 'Sauna · Heat · Relaxation',
+			'borderColor' => '#c6b36a',
+		],
+		[
+			'title'       => 'PHASE 5: Reflection',
+			'titleIcon'   => [ 'id' => 0, 'url' => '', 'alt' => '' ],
+			'timeText'    => '5 min',
+			'timeIcon'    => [ 'id' => 0, 'url' => '', 'alt' => '' ],
+			'pointsText'  => 'Sit · Breath · Arrive',
+			'borderColor' => '#c6b36a',
+		],
 	];
 }
 
 // ── Build global CSS variables ──────────────────────────────────────────────
 $css_vars = [
-	'--zsp-bg'          => sanitize_hex_color( $attributes['sectionBgColor']    ?? '#3d3e3b' ),
+	'--zsp-bg'          => sanitize_hex_color( $attributes['sectionBgColor']    ?? '#3a3b38' ),
 	'--zsp-pt'          => absint( $attributes['sectionPaddingTop']    ?? 80 ) . 'px',
 	'--zsp-pb'          => absint( $attributes['sectionPaddingBottom'] ?? 80 ) . 'px',
-	'--zsp-px'          => absint( $attributes['sectionPaddingX']      ?? 24 ) . 'px',
+	'--zsp-px'          => absint( $attributes['sectionPaddingX']      ?? 60 ) . 'px',
 	'--zsp-max-w'       => absint( $attributes['sectionMaxWidth']      ?? 1200 ) . 'px',
 
 	'--zsp-h-fs'        => absint( $attributes['headingFontSize']      ?? 36 ) . 'px',

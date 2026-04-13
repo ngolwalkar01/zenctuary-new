@@ -1,8 +1,11 @@
 /**
  * Zenctuary Session Phases — Frontend Stylesheet
+ * Matches the "Free Flow Session" design reference exactly.
  */
 
-/* ─── 1. Section Wrapper ─── */
+/* ─────────────────────────────────────────────────────────────────────
+   1. Section Wrapper — Full-width background, inner container centres
+   ───────────────────────────────────────────────────────────────────── */
 .zenctuary-session-phases {
 	width: 100%;
 	margin: 0;
@@ -10,93 +13,121 @@
 	box-sizing: border-box;
 }
 
+/* The coloured background fills edge-to-edge */
 .zsp-inner {
-	background-color: var(--zsp-bg, #3d3e3b);
-	padding: var(--zsp-pt, 80px) var(--zsp-px, 24px) var(--zsp-pb, 80px);
+	background-color: var(--zsp-bg, #3a3b38);
+	padding: var(--zsp-pt, 80px) var(--zsp-px, 60px) var(--zsp-pb, 80px);
 	box-sizing: border-box;
+	width: 100%;
 }
 
+/* The inner container constrains readable width and left-aligns everything */
 .zsp-content {
-	max-width: var(--zsp-max-w, 1200px);
+	max-width: var(--zsp-max-w, 1240px);
 	margin: 0 auto;
-}
-
-/* ─── 2. Section Heading ─── */
-.zsp-heading {
-	font-size: var(--zsp-h-fs, 36px);
-	font-weight: var(--zsp-h-fw, 600);
-	line-height: var(--zsp-h-lh, 1.2);
-	text-transform: var(--zsp-h-tt, uppercase);
-	color: var(--zsp-h-c, #c6b36a);
-	max-width: var(--zsp-h-mw, 800px);
-	margin: 0 0 var(--zsp-gap-hd, 24px) 0;
-}
-
-/* ─── 3. Section Description ─── */
-.zsp-desc {
-	font-size: var(--zsp-d-fs, 16px);
-	font-weight: var(--zsp-d-fw, 400);
-	line-height: var(--zsp-d-lh, 1.5);
-	color: var(--zsp-d-c, #e5e5e5);
-	max-width: var(--zsp-d-mw, 1000px);
-	margin: 0 0 var(--zsp-gap-dd, 48px) 0;
-}
-
-/* ─── 4. Cards Grid ─── */
-.zsp-grid {
-	display: flex;
-	flex-wrap: wrap;
-	gap: var(--zsp-cards-gap, 24px);
-}
-
-/* Each card grows equally — adapts to any card count */
-.zsp-card {
-	flex: 1 1 0;
-	min-width: 180px;
 	display: flex;
 	flex-direction: column;
-	gap: 0;
-	border: var(--zsp-card-bw, 1px) solid var(--zsp-card-bc, #c6b36a);
-	border-radius: var(--zsp-card-br, 12px);
-	padding: var(--zsp-card-pad, 24px);
-	min-height: var(--zsp-card-mh, 200px);
-	background-color: var(--zsp-card-bg, transparent);
-	box-sizing: border-box;
+	align-items: flex-start;
 }
 
-/* ─── 5. Card Title Row ─── */
+/* ─────────────────────────────────────────────────────────────────────
+   2. Heading
+   ───────────────────────────────────────────────────────────────────── */
+.zsp-heading {
+	font-size: var(--zsp-h-fs, 36px);
+	font-weight: var(--zsp-h-fw, 700);
+	line-height: var(--zsp-h-lh, 1.15);
+	letter-spacing: var(--zsp-h-ls, 0.02em);
+	text-transform: var(--zsp-h-tt, uppercase);
+	color: var(--zsp-h-c, #c6b36a);
+	max-width: var(--zsp-h-mw, 900px);
+	margin: 0 0 var(--zsp-gap-hd, 20px) 0;
+	padding: 0;
+}
+
+/* ─────────────────────────────────────────────────────────────────────
+   3. Description
+   ───────────────────────────────────────────────────────────────────── */
+.zsp-desc {
+	font-size: var(--zsp-d-fs, 15px);
+	font-weight: var(--zsp-d-fw, 400);
+	line-height: var(--zsp-d-lh, 1.6);
+	color: var(--zsp-d-c, #d4d4d2);
+	max-width: var(--zsp-d-mw, 900px);
+	margin: 0 0 var(--zsp-gap-dd, 48px) 0;
+	padding: 0;
+}
+
+/* ─────────────────────────────────────────────────────────────────────
+   4. Cards Row — Horizontal, equal-width, single row on desktop
+   ───────────────────────────────────────────────────────────────────── */
+.zsp-grid {
+	display: flex;
+	flex-direction: row;
+	flex-wrap: nowrap;               /* single row on desktop */
+	gap: var(--zsp-cards-gap, 20px);
+	width: 100%;
+	align-items: stretch;            /* equal height */
+}
+
+/* ─────────────────────────────────────────────────────────────────────
+   5. Card Box — Compact, bordered, rounded
+   ───────────────────────────────────────────────────────────────────── */
+.zsp-card {
+	flex: 1 1 0;                     /* equal width for any card count */
+	min-width: 0;                    /* allow cards to shrink below content */
+	display: flex;
+	flex-direction: column;
+	box-sizing: border-box;
+
+	border: var(--zsp-card-bw, 1px) solid var(--zsp-card-bc, #c6b36a);
+	border-radius: var(--zsp-card-br, 10px);
+	padding: var(--zsp-card-pad, 20px);
+	min-height: var(--zsp-card-mh, 180px);
+	background-color: var(--zsp-card-bg, transparent);
+}
+
+/* ─────────────────────────────────────────────────────────────────────
+   6. Card — Zone 1: Title Row (title left, icon right)
+   ───────────────────────────────────────────────────────────────────── */
 .zsp-card__title-row {
 	display: flex;
+	flex-direction: row;
 	align-items: flex-start;
 	justify-content: space-between;
-	gap: var(--zsp-gap-ti, 12px);
+	gap: var(--zsp-gap-ti, 10px);
 	margin-bottom: var(--zsp-gap-tr, 16px);
 }
 
 .zsp-card__title {
-	font-size: var(--zsp-t-fs, 18px);
-	font-weight: var(--zsp-t-fw, 600);
-	line-height: var(--zsp-t-lh, 1.3);
+	font-size: var(--zsp-t-fs, 15px);
+	font-weight: var(--zsp-t-fw, 700);
+	line-height: var(--zsp-t-lh, 1.35);
 	color: var(--zsp-t-c, #c6b36a);
-	max-width: var(--zsp-t-mw, 150px);
 	margin: 0;
-	flex-shrink: 1;
+	flex: 1 1 auto;
+	min-width: 0;
+	word-break: break-word;
 }
 
 .zsp-card__title-icon {
 	display: block;
-	width: var(--zsp-ti-sz, 40px);
-	height: var(--zsp-ti-sz, 40px);
+	width: var(--zsp-ti-sz, 36px);
+	height: var(--zsp-ti-sz, 36px);
 	object-fit: contain;
 	flex-shrink: 0;
+	opacity: 0.85;
 }
 
-/* ─── 6. Time Row ─── */
+/* ─────────────────────────────────────────────────────────────────────
+   7. Card — Zone 2: Time Row (icon + text, horizontal)
+   ───────────────────────────────────────────────────────────────────── */
 .zsp-card__time-row {
 	display: flex;
+	flex-direction: row;
 	align-items: center;
 	gap: var(--zsp-gap-tit, 8px);
-	margin-bottom: var(--zsp-gap-tp, 12px);
+	margin-bottom: var(--zsp-gap-tp, 14px);
 }
 
 .zsp-card__time-icon {
@@ -105,51 +136,73 @@
 	height: var(--zsp-tii-sz, 16px);
 	object-fit: contain;
 	flex-shrink: 0;
+	opacity: 0.9;
 }
 
 .zsp-card__time-text {
-	font-size: var(--zsp-time-fs, 14px);
+	font-size: var(--zsp-time-fs, 13px);
 	font-weight: var(--zsp-time-fw, 400);
-	color: var(--zsp-time-c, #e5e5e5);
-	margin: 0;
 	line-height: 1.4;
-}
-
-/* ─── 7. Points / Bullet Description ─── */
-.zsp-card__points {
-	font-size: var(--zsp-p-fs, 14px);
-	font-weight: var(--zsp-p-fw, 400);
-	line-height: var(--zsp-p-lh, 1.5);
-	color: var(--zsp-p-c, #ffffff);
+	color: var(--zsp-time-c, #d4d4d2);
 	margin: 0;
 }
 
-/* ─── 8. Responsive Behaviour ─── */
+/* ─────────────────────────────────────────────────────────────────────
+   8. Card — Zone 3: Points / Bottom Text
+   ───────────────────────────────────────────────────────────────────── */
+.zsp-card__points {
+	font-size: var(--zsp-p-fs, 13px);
+	font-weight: var(--zsp-p-fw, 400);
+	line-height: var(--zsp-p-lh, 1.55);
+	color: var(--zsp-p-c, #c8c8c6);
+	margin: 0;
+	/* push to bottom of card so cards look 'filled' consistently */
+	margin-top: auto;
+}
+
+/* ─────────────────────────────────────────────────────────────────────
+   9. Responsive — Tablet: allow wrap, ~2 per row
+   ───────────────────────────────────────────────────────────────────── */
 @media (max-width: 1024px) {
+	.zsp-inner {
+		padding-left: 32px;
+		padding-right: 32px;
+	}
+
 	.zsp-grid {
 		flex-wrap: wrap;
 	}
 
-	/* On tablet, clamp to at most 2 per row */
 	.zsp-card {
-		flex: 1 1 calc(50% - var(--zsp-cards-gap, 24px));
-		min-width: 220px;
+		flex: 1 1 calc(50% - var(--zsp-cards-gap, 20px));
+		min-width: 200px;
 	}
 }
 
+/* ─────────────────────────────────────────────────────────────────────
+   10. Responsive — Mobile: full-width stack
+   ───────────────────────────────────────────────────────────────────── */
 @media (max-width: 640px) {
 	.zsp-inner {
-		padding-left: 16px;
-		padding-right: 16px;
+		padding-left: 20px;
+		padding-right: 20px;
+		padding-top: 48px;
+		padding-bottom: 48px;
 	}
 
-	/* Full-width stack on mobile */
+	.zsp-grid {
+		flex-wrap: wrap;
+		flex-direction: column;
+	}
+
 	.zsp-card {
-		flex: 1 1 100%;
+		flex: none;
+		width: 100%;
 		min-width: 0;
+		min-height: auto;
 	}
 
-	.zsp-card__title-row {
-		flex-direction: row; /* keep icon right of title on mobile */
+	.zsp-card__title {
+		font-size: calc( var(--zsp-t-fs, 15px) * 1.1 );
 	}
 }

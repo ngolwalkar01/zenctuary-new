@@ -5,7 +5,7 @@
   "title": "Zenctuary Session Phases",
   "category": "design",
   "icon": "columns",
-  "description": "Configurable session phases or steps grids with dynamic layouts.",
+  "description": "Session phases / steps cards row with full typography and layout control.",
   "keywords": [
     "session",
     "phases",
@@ -25,7 +25,7 @@
     },
     "sectionBgColor": {
       "type": "string",
-      "default": "#3d3e3b"
+      "default": "#3a3b38"
     },
     "sectionPaddingTop": {
       "type": "number",
@@ -37,7 +37,7 @@
     },
     "sectionPaddingX": {
       "type": "number",
-      "default": 24
+      "default": 60
     },
     "sectionMaxWidth": {
       "type": "number",
@@ -208,8 +208,8 @@
     "html": false,
     "className": false
   },
-  "style": "file:./style-index.css",
-  "editorStyle": "file:./index.css",
+  "style": "file:./style.css",
+  "editorStyle": "file:./editor.css",
   "editorScript": "file:./index.js",
   "viewScript": "file:./view.js",
   "render": "file:./render.php"

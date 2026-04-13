@@ -66,6 +66,8 @@ const DEFAULT_CARDS = [
 	{ title: 'PHASE 1: Activation',    titleIcon: {id:0,url:'',alt:''}, timeText: '3–4 min',   timeIcon: {id:0,url:'',alt:''}, pointsText: 'Breathwork · Presence · Intention', borderColor: '#c6b36a' },
 	{ title: 'PHASE 2: Ice Immersion', titleIcon: {id:0,url:'',alt:''}, timeText: '3–5 min',   timeIcon: {id:0,url:'',alt:''}, pointsText: 'Icebath · Presence · Breathing',     borderColor: '#c6b36a' },
 	{ title: 'PHASE 3: Afterdrop',     titleIcon: {id:0,url:'',alt:''}, timeText: '10–15 min', timeIcon: {id:0,url:'',alt:''}, pointsText: 'Movement · Presence · Breathing',    borderColor: '#c6b36a' },
+	{ title: 'PHASE 4: Fire Integration', titleIcon: {id:0,url:'',alt:''}, timeText: '10–15 min', timeIcon: {id:0,url:'',alt:''}, pointsText: 'Sauna · Heat · Relaxation',        borderColor: '#c6b36a' },
+	{ title: 'PHASE 5: Reflection',    titleIcon: {id:0,url:'',alt:''}, timeText: '5 min',     timeIcon: {id:0,url:'',alt:''}, pointsText: 'Sit · Breath · Arrive',             borderColor: '#c6b36a' },
 ];
 
 const EMPTY_CARD = { title: 'NEW PHASE', titleIcon: {id:0,url:'',alt:''}, timeText: '0 min', timeIcon: {id:0,url:'',alt:''}, pointsText: '', borderColor: '#c6b36a' };
@@ -83,9 +85,9 @@ const TT_OPTS = [
 export default function Edit( { attributes, setAttributes } ) {
 	const {
 		cardsData = '',
-		sectionBgColor = '#3d3e3b',
+		sectionBgColor = '#3a3b38',
 		sectionPaddingTop = 80, sectionPaddingBottom = 80,
-		sectionPaddingX = 24, sectionMaxWidth = 1200,
+		sectionPaddingX = 60, sectionMaxWidth = 1200,
 
 		headingText = 'FREE FLOW SESSION',
 		headingColor = '#c6b36a', headingFontSize = 36,

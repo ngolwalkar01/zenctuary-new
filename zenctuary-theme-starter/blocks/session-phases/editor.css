@@ -2,20 +2,26 @@
  * Session Phases Editor Styles — only applied inside Gutenberg canvas.
  */
 
-.zenctuary-session-phases {
-	min-height: 120px;
-}
-
-/* Editor: make section readable against the grey canvas */
+/* Make the inner container visible in editor */
 .zenctuary-session-phases .zsp-inner {
-	background-color: var(--zsp-bg, #3d3e3b);
+	background-color: var(--zsp-bg, #3a3b38);
 }
 
-/* Ensure repeater cards show their configured border in the editor */
+/* Give the cards proper box rendering in editor (mirrors frontend border) */
 .zenctuary-session-phases .zsp-card {
 	border: var(--zsp-card-bw, 1px) solid var(--zsp-card-bc, #c6b36a);
-	border-radius: var(--zsp-card-br, 12px);
-	padding: var(--zsp-card-pad, 24px);
-	min-height: var(--zsp-card-mh, 200px);
+	border-radius: var(--zsp-card-br, 10px);
+	padding: var(--zsp-card-pad, 20px);
+	min-height: var(--zsp-card-mh, 180px);
 	background-color: var(--zsp-card-bg, transparent);
+}
+
+/* Ensure title/points text colours render in dark editor */
+.zenctuary-session-phases .zsp-card__title {
+	color: var(--zsp-t-c, #c6b36a);
+}
+
+.zenctuary-session-phases .zsp-card__time-text,
+.zenctuary-session-phases .zsp-card__points {
+	color: var(--zsp-p-c, #d4d4d2);
 }
