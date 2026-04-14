@@ -1,0 +1,275 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "zenctuary/zen-choose-your-experience",
+	"version": "1.0.0",
+	"title": "Zen-Choose-Your-Experience",
+	"category": "design",
+	"icon": "screenoptions",
+	"description": "Premium, responsive experience cards with rich controls for each content section.",
+	"keywords": [ "zenctuary", "experience", "cards", "zencoin" ],
+	"attributes": {
+		"sectionPadding": {
+			"type": "object",
+			"default": {
+				"top": "72px",
+				"right": "24px",
+				"bottom": "72px",
+				"left": "24px"
+			}
+		},
+		"sectionMargin": {
+			"type": "object",
+			"default": {
+				"top": "0px",
+				"right": "0px",
+				"bottom": "0px",
+				"left": "0px"
+			}
+		},
+		"headingText": {
+			"type": "string",
+			"default": "CHOOSE YOUR EXPERIENCE"
+		},
+		"headingColor": {
+			"type": "string",
+			"default": "#d7b24e"
+		},
+		"headingFontSize": {
+			"type": "number",
+			"default": 56
+		},
+		"headingFontWeight": {
+			"type": "string",
+			"default": "700"
+		},
+		"headingLetterSpacing": {
+			"type": "number",
+			"default": 1
+		},
+		"headingPadding": {
+			"type": "object",
+			"default": {
+				"top": "0px",
+				"right": "0px",
+				"bottom": "0px",
+				"left": "0px"
+			}
+		},
+		"headingMargin": {
+			"type": "object",
+			"default": {
+				"top": "0px",
+				"right": "0px",
+				"bottom": "24px",
+				"left": "0px"
+			}
+		},
+		"paragraphText": {
+			"type": "string",
+			"default": "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua."
+		},
+		"paragraphColor": {
+			"type": "string",
+			"default": "#f2f1ec"
+		},
+		"paragraphFontSize": {
+			"type": "number",
+			"default": 22
+		},
+		"paragraphFontWeight": {
+			"type": "string",
+			"default": "400"
+		},
+		"paragraphLineHeight": {
+			"type": "number",
+			"default": 1.5
+		},
+		"paragraphPadding": {
+			"type": "object",
+			"default": {
+				"top": "0px",
+				"right": "0px",
+				"bottom": "0px",
+				"left": "0px"
+			}
+		},
+		"paragraphMargin": {
+			"type": "object",
+			"default": {
+				"top": "0px",
+				"right": "0px",
+				"bottom": "48px",
+				"left": "0px"
+			}
+		},
+		"cardGap": {
+			"type": "number",
+			"default": 48
+		},
+		"cards": {
+			"type": "array",
+			"default": [
+				{
+					"id": "card-1",
+					"coinLabel": "ZENCOINS:",
+					"coinValue": "5",
+					"coinSize": 44,
+					"topBarBg": "#434346",
+					"topBarTextColor": "#d7b24e",
+					"topBarFontSize": 38,
+					"topBarFontWeight": "700",
+					"topSeparatorColor": "#9a9a9a",
+					"topSeparatorThickness": 1,
+					"topSeparatorWidth": 100,
+					"imageId": 0,
+					"imageUrl": "",
+					"imageAlt": "",
+					"imageFit": "cover",
+					"imagePosition": "center center",
+					"overlayHeading": "FREE FLOW SESSION",
+					"overlayHeadingColor": "#f2f1ec",
+					"overlayHeadingSize": 62,
+					"overlayHeadingWeight": "700",
+					"overlayHeadingLetterSpacing": 0.5,
+					"overlayHeadingPadding": {
+						"top": "0px",
+						"right": "0px",
+						"bottom": "0px",
+						"left": "0px"
+					},
+					"timeText": "(60 min)",
+					"timeTextColor": "#f2f1ec",
+					"timeTextSize": 18,
+					"timeTextWeight": "500",
+					"clockIconSize": 20,
+					"timeGap": 12,
+					"description": "Ideal if you already know your rhythm",
+					"descriptionColor": "#f2f1ec",
+					"descriptionSize": 18,
+					"descriptionWeight": "400",
+					"descriptionLineHeight": 1.45,
+					"featureRows": [
+						{
+							"id": "fr-1",
+							"label": "Includes:",
+							"text": "Sauna | Ice Bath | Infrared"
+						},
+						{
+							"id": "fr-2",
+							"label": "Best for:",
+							"text": "experienced users | own rhythm | Self-guided"
+						}
+					],
+					"featureBoldColor": "#f2f1ec",
+					"featureBoldSize": 17,
+					"featureBoldWeight": "700",
+					"featureTextColor": "#f2f1ec",
+					"featureTextSize": 17,
+					"featureTextWeight": "400",
+					"buttonText": "Book Now",
+					"buttonBg": "#434346",
+					"buttonTextColor": "#d7b24e",
+					"buttonBorderColor": "#d7b24e",
+					"buttonBorderWidth": 2,
+					"buttonBorderRadius": 999,
+					"buttonShowArrow": true,
+					"buttonArrowPosition": "right",
+					"bottomSeparatorColor": "#bcbcbc",
+					"bottomSeparatorThickness": 1,
+					"bottomSeparatorWidth": 100,
+					"footerText": "What to expect",
+					"footerTextColor": "#f2f1ec",
+					"footerTextSize": 17,
+					"footerTextWeight": "700",
+					"footerPlusSize": 46,
+					"footerPlusColor": "#f2f1ec"
+				},
+				{
+					"id": "card-2",
+					"coinLabel": "ZENCOINS:",
+					"coinValue": "5",
+					"coinSize": 44,
+					"topBarBg": "#434346",
+					"topBarTextColor": "#d7b24e",
+					"topBarFontSize": 38,
+					"topBarFontWeight": "700",
+					"topSeparatorColor": "#9a9a9a",
+					"topSeparatorThickness": 1,
+					"topSeparatorWidth": 100,
+					"imageId": 0,
+					"imageUrl": "",
+					"imageAlt": "",
+					"imageFit": "cover",
+					"imagePosition": "center center",
+					"overlayHeading": "GUIDED SESSION",
+					"overlayHeadingColor": "#f2f1ec",
+					"overlayHeadingSize": 62,
+					"overlayHeadingWeight": "700",
+					"overlayHeadingLetterSpacing": 0.5,
+					"overlayHeadingPadding": {
+						"top": "0px",
+						"right": "0px",
+						"bottom": "0px",
+						"left": "0px"
+					},
+					"timeText": "(60 min)",
+					"timeTextColor": "#f2f1ec",
+					"timeTextSize": 18,
+					"timeTextWeight": "500",
+					"clockIconSize": 20,
+					"timeGap": 12,
+					"description": "Ideal for first-timers + deeper reset",
+					"descriptionColor": "#f2f1ec",
+					"descriptionSize": 18,
+					"descriptionWeight": "400",
+					"descriptionLineHeight": 1.45,
+					"featureRows": [
+						{
+							"id": "fr-1",
+							"label": "Includes:",
+							"text": "Guided Breathwork -> Sauna -> Ice Bath -> Infrared"
+						},
+						{
+							"id": "fr-2",
+							"label": "Best for:",
+							"text": "First-timers | Deeper experience | Sichere Einstieg"
+						}
+					],
+					"featureBoldColor": "#f2f1ec",
+					"featureBoldSize": 17,
+					"featureBoldWeight": "700",
+					"featureTextColor": "#f2f1ec",
+					"featureTextSize": 17,
+					"featureTextWeight": "400",
+					"buttonText": "Book Now",
+					"buttonBg": "#434346",
+					"buttonTextColor": "#d7b24e",
+					"buttonBorderColor": "#d7b24e",
+					"buttonBorderWidth": 2,
+					"buttonBorderRadius": 999,
+					"buttonShowArrow": true,
+					"buttonArrowPosition": "right",
+					"bottomSeparatorColor": "#bcbcbc",
+					"bottomSeparatorThickness": 1,
+					"bottomSeparatorWidth": 100,
+					"footerText": "What to expect",
+					"footerTextColor": "#f2f1ec",
+					"footerTextSize": 17,
+					"footerTextWeight": "700",
+					"footerPlusSize": 46,
+					"footerPlusColor": "#f2f1ec"
+				}
+			]
+		}
+	},
+	"supports": {
+		"html": false,
+		"anchor": true,
+		"align": [ "wide", "full" ]
+	},
+	"textdomain": "zenctuary",
+	"editorScript": "file:./index.js",
+	"style": "file:./style-index.css",
+	"editorStyle": "file:./index.css"
+}

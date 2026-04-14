@@ -1,0 +1,242 @@
+.zen-choose-exp {
+	background: #464649;
+	color: #f2f1ec;
+	width: 100%;
+}
+
+.zen-choose-exp__inner {
+	max-width: 1280px;
+	margin: 0 auto;
+}
+
+.zen-choose-exp__heading {
+	text-align: center;
+	text-transform: uppercase;
+	line-height: 1.05;
+	margin: 0;
+}
+
+.zen-choose-exp__paragraph {
+	text-align: center;
+	max-width: 920px;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+.zen-choose-exp__cards {
+	display: grid;
+	grid-template-columns: repeat(2, minmax(0, 1fr));
+	gap: var(--zen-choose-exp-card-gap, 48px);
+}
+
+.zen-choose-exp__card {
+	overflow: hidden;
+	border: 1px solid #a9a9aa;
+	border-radius: 26px;
+	background: #434346;
+	display: flex;
+	flex-direction: column;
+	min-height: 760px;
+}
+
+.zen-choose-exp__card-top {
+	padding: 22px 22px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.zen-choose-exp__coin-row {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	gap: 16px;
+	text-transform: uppercase;
+	line-height: 1;
+}
+
+.zen-choose-exp__coin-label {
+	font-size: 0.42em;
+}
+
+.zen-choose-exp__coin {
+	position: relative;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	border-radius: 999px;
+	background: #d7b24e;
+	border: 1px solid #d7b24e;
+	color: #3f3f42;
+	font-weight: 700;
+	line-height: 1;
+}
+
+.zen-choose-exp__coin-ring {
+	position: absolute;
+	inset: 4px;
+	border-radius: 999px;
+	border: 2px solid #3f3f42;
+}
+
+.zen-choose-exp__coin-value {
+	position: relative;
+	z-index: 1;
+}
+
+.zen-choose-exp__separator {
+	border-top-style: solid;
+	margin: 0 auto;
+}
+
+.zen-choose-exp__media {
+	position: relative;
+	flex: 1;
+	background-repeat: no-repeat;
+	background-color: #515155;
+	min-height: 650px;
+}
+
+.zen-choose-exp__media::before {
+	content: '';
+	position: absolute;
+	inset: 0;
+	background: linear-gradient(180deg, rgba(20, 20, 21, 0.3) 0%, rgba(20, 20, 21, 0.62) 55%, rgba(20, 20, 21, 0.78) 100%);
+}
+
+.zen-choose-exp__overlay {
+	position: relative;
+	z-index: 1;
+	display: flex;
+	flex-direction: column;
+	height: 100%;
+	padding: 42px 32px 28px;
+}
+
+.zen-choose-exp__card-heading {
+	text-transform: uppercase;
+	line-height: 0.98;
+	margin: 0 0 16px;
+	max-width: 82%;
+}
+
+.zen-choose-exp__time-row {
+	display: inline-flex;
+	align-items: center;
+	margin-bottom: 18px;
+}
+
+.zen-choose-exp__clock {
+	display: inline-flex;
+	color: #d7b24e;
+}
+
+.zen-choose-exp__clock svg {
+	width: 100%;
+	height: 100%;
+	fill: currentColor;
+}
+
+.zen-choose-exp__time-text {
+	line-height: 1;
+}
+
+.zen-choose-exp__description {
+	margin: 0 0 14px;
+	max-width: 95%;
+}
+
+.zen-choose-exp__feature-list {
+	display: flex;
+	flex-direction: column;
+	gap: 6px;
+}
+
+.zen-choose-exp__feature-row {
+	display: flex;
+	align-items: baseline;
+	flex-wrap: wrap;
+	gap: 4px;
+}
+
+.zen-choose-exp__button {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	gap: 10px;
+	text-decoration: none;
+	border-style: solid;
+	padding: 14px 22px;
+	width: 100%;
+	max-width: 360px;
+	margin-top: 30px;
+	font-size: 17px;
+	font-weight: 700;
+	line-height: 1;
+}
+
+.zen-choose-exp__button-icon {
+	width: 18px;
+	height: 18px;
+	display: inline-flex;
+}
+
+.zen-choose-exp__button-icon svg {
+	width: 100%;
+	height: 100%;
+	fill: currentColor;
+}
+
+.zen-choose-exp__button.is-arrow-top,
+.zen-choose-exp__button.is-arrow-bottom {
+	flex-direction: column;
+}
+
+.zen-choose-exp__separator--bottom {
+	margin-top: 24px;
+}
+
+.zen-choose-exp__footer-row {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	margin-top: 14px;
+}
+
+.zen-choose-exp__footer-plus {
+	line-height: 1;
+}
+
+@media (max-width: 1120px) {
+	.zen-choose-exp__cards {
+		gap: clamp(22px, 2.8vw, 36px);
+	}
+
+	.zen-choose-exp__card-heading {
+		font-size: clamp(38px, 5.4vw, 52px) !important;
+	}
+}
+
+@media (max-width: 900px) {
+	.zen-choose-exp__overlay {
+		padding: 30px 24px 24px;
+	}
+
+	.zen-choose-exp__paragraph {
+		max-width: 100%;
+	}
+}
+
+@media (max-width: 782px) {
+	.zen-choose-exp__cards {
+		grid-template-columns: 1fr;
+	}
+
+	.zen-choose-exp__card {
+		min-height: 680px;
+	}
+
+	.zen-choose-exp__button {
+		max-width: 100%;
+	}
+}
