@@ -68,7 +68,7 @@ export default function save( { attributes } ) {
 							href={ item.anchor || '#' }
 							style={ itemStyle }
 						>
-							<span dangerouslySetInnerHTML={ { __html: item.label || '' } } />
+							<span>{ item.label || '' }</span>
 						</a>
 					);
 				} ) }

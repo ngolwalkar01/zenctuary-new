@@ -80,7 +80,7 @@ $wrapper_attrs = get_block_wrapper_attributes( [
 				href="<?php echo esc_url( $anchor ); ?>"
 				style="<?php echo esc_attr( $item_style ); ?>"
 			>
-				<?php echo wp_kses_post( $label ); ?>
+				<span><?php echo wp_kses_post( $label ); ?></span>
 			</a>
 		<?php endforeach; ?>
 	</div>
