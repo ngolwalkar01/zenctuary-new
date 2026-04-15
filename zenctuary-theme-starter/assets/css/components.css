@@ -53,6 +53,50 @@
 }
 
 /* ==========================================
+   SCROLL REVEAL — .zen-reveal
+   Add this class to any section to animate
+   its non-heading children up on scroll.
+   Headings (h1–h6) are always excluded.
+   Use data-no-reveal on any child to opt it out.
+   ========================================== */
+
+@keyframes zen-slide-up {
+  from {
+    opacity: 0;
+    transform: translateY(36px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* All direct children except headings start hidden */
+.zen-reveal > *:not(h1, h2, h3, h4, h5, h6, [data-no-reveal]) {
+  opacity: 0;
+  transform: translateY(36px);
+  transition:
+    opacity  0.65s cubic-bezier(0.22, 1, 0.36, 1),
+    transform 0.65s cubic-bezier(0.22, 1, 0.36, 1);
+  will-change: opacity, transform;
+}
+
+/* JS adds .is-visible when section enters viewport */
+.zen-reveal.is-visible > *:not(h1, h2, h3, h4, h5, h6, [data-no-reveal]) {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Respect user preference for reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .zen-reveal > *:not(h1, h2, h3, h4, h5, h6, [data-no-reveal]) {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+  }
+}
+
+/* ==========================================
    HEADER / FOOTER
    ========================================== */
 
@@ -520,8 +564,8 @@ input[type="checkbox"] {
 /* Custom Plus Icon using pseudo-element fixed width to prevent toggling jitter */
 .zen-faq-accordion summary::after {
   content: "+";
-  font-size: 32px;
-  font-weight: 300;
+  font-size: 50px;
+  font-weight: 100;
   line-height: 1;
   color: var(--wp--preset--color--primary-beige);
   margin-left: 16px;

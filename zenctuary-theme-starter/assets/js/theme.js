@@ -9,7 +9,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Dynamic FSE Pattern FAQ Tab Filter Logic
   const faqSections = document.querySelectorAll('.zen-faq-section');
-  
+
   faqSections.forEach(section => {
     // FSE Buttons behave as our Tabs
     const tabButtons = section.querySelectorAll('.wp-block-button__link');
@@ -25,34 +25,69 @@ document.addEventListener('DOMContentLoaded', () => {
         // 1. Reset all FSE Buttons to outline (inactive state)
         tabButtons.forEach(b => {
           const parent = b.closest('.wp-block-button');
-          if(parent) {
-             parent.classList.remove('zen-btn--primary');
-             parent.classList.add('zen-btn--outline-neutral');
+          if (parent) {
+            parent.classList.remove('zen-btn--primary');
+            parent.classList.add('zen-btn--outline-neutral');
           }
         });
 
         // 2. Set the clicked FSE Button to primary (active state)
         const activeParent = btn.closest('.wp-block-button');
-        if(activeParent) {
-            activeParent.classList.remove('zen-btn--outline-neutral');
-            activeParent.classList.add('zen-btn--primary');
+        if (activeParent) {
+          activeParent.classList.remove('zen-btn--outline-neutral');
+          activeParent.classList.add('zen-btn--primary');
         }
 
         // 3. Hide all groups, then show the group matching the text
         faqGroups.forEach(group => {
-            const h3 = group.querySelector('h3.wp-block-heading');
-            if (h3 && h3.textContent.trim().toLowerCase() === targetCategory) {
-                group.style.display = 'block'; // Or 'flex' depending on your native WP css
-            } else {
-                group.style.display = 'none';
-            }
+          const h3 = group.querySelector('h3.wp-block-heading');
+          if (h3 && h3.textContent.trim().toLowerCase() === targetCategory) {
+            group.style.display = 'block'; // Or 'flex' depending on your native WP css
+          } else {
+            group.style.display = 'none';
+          }
         });
       });
     });
 
     // Auto-click the first button on page load so it's not empty
-    if(tabButtons.length > 0) {
-        tabButtons[0].click();
+    if (tabButtons.length > 0) {
+      tabButtons[0].click();
     }
+  });
+
+  // ==========================================
+  // SCROLL REVEAL — .zen-reveal
+  // Observes sections with this class and adds
+  // .is-visible when they enter the viewport.
+  // Non-heading children animate up with stagger.
+  // ==========================================
+  const HEADING_TAGS = new Set(['H1', 'H2', 'H4', 'H5', 'H6']);
+
+  document.querySelectorAll('.zen-reveal').forEach((section) => {
+    // Collect animatable children (exclude headings and data-no-reveal)
+    const animatableChildren = Array.from(section.children).filter((child) => {
+      return !HEADING_TAGS.has(child.tagName) && !child.hasAttribute('data-no-reveal');
+    });
+
+    // Apply staggered transition-delay to each child
+    animatableChildren.forEach((child, index) => {
+      child.style.transitionDelay = (index * 0.1) + 's';
+    });
+
+    // Observe the section and add .is-visible once in viewport
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('is-visible');
+            observer.unobserve(entry.target); // animate once only
+          }
+        });
+      },
+      { threshold: 0.12 } // trigger when 12% of section is visible
+    );
+
+    observer.observe(section);
   });
 });
