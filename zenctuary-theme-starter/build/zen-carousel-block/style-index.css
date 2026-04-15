@@ -1,9 +1,9 @@
 .wp-block-zenctuary-zen-carousel-block {
-  --zen-carousel-width: 1200px;
+  --zen-carousel-width: 100%;
   --zen-carousel-height: 971px;
-  --zen-carousel-card-width: 370px;
+  --zen-carousel-card-width: 100%;
   --zen-carousel-card-height: 483px;
-  --zen-carousel-gap: 24px;
+  --zen-carousel-gap: 28px;
   --zen-carousel-speed: 450ms;
   --zen-visible-desktop: 3.3;
   --zen-visible-tablet: 2;
@@ -121,7 +121,6 @@
 }
 
 .wp-block-zenctuary-zen-carousel-block .zen-carousel__viewport {
-  overflow: hidden;
   position: relative;
 }
 
@@ -134,7 +133,7 @@
 }
 
 .wp-block-zenctuary-zen-carousel-block .zen-carousel__slide {
-  min-width: 0;
+  min-width: 370px;
   flex: 0 0 calc((100% - (var(--zen-carousel-gap) * (var(--zen-visible-desktop) - 1))) / var(--zen-visible-desktop));
 }
 
