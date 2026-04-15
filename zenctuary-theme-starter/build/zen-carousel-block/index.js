@@ -107,7 +107,7 @@
 			carouselBorderRadius: { type: 'number', default: 0 },
 			cardWidth: { type: 'number', default: 370 },
 			cardHeight: { type: 'number', default: 483 },
-			slideGap: { type: 'number', default: 24 },
+			slideGap: { type: 'number', default: 28 },
 			slideSpeed: { type: 'number', default: 450 },
 			visibleDesktop: { type: 'number', default: 3.3 },
 			visibleTablet: { type: 'number', default: 2 },
@@ -300,9 +300,7 @@
 	function getCarouselStyle( attributes ) {
 		return Object.assign(
 			{
-				'--zen-carousel-width': attributes.carouselWidth + 'px',
 				'--zen-carousel-height': attributes.carouselHeight + 'px',
-				'--zen-carousel-card-width': attributes.cardWidth + 'px',
 				'--zen-carousel-card-height': attributes.cardHeight + 'px',
 				'--zen-carousel-gap': attributes.slideGap + 'px',
 				'--zen-carousel-speed': attributes.slideSpeed + 'ms',
