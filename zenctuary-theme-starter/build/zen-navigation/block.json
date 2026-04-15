@@ -1,0 +1,115 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "zenctuary/zen-navigation",
+  "version": "1.0.0",
+  "title": "Zen-Navigation",
+  "category": "design",
+  "icon": "menu",
+  "description": "A clean, minimal navigation block with three items that scroll to sections on click.",
+  "keywords": [
+    "zenctuary",
+    "navigation",
+    "menu",
+    "scroll"
+  ],
+  "attributes": {
+    "navItems": {
+      "type": "array",
+      "default": [
+        {
+          "label": "Memberships",
+          "anchor": "#memberships"
+        },
+        {
+          "label": "Zencoins Packages",
+          "anchor": "#zencoins"
+        },
+        {
+          "label": "Drop-In",
+          "anchor": "#dropin"
+        }
+      ]
+    },
+    "itemGap": {
+      "type": "number",
+      "default": 32
+    },
+    "textColor": {
+      "type": "string",
+      "default": "#000000"
+    },
+    "fontSize": {
+      "type": "number",
+      "default": 16
+    },
+    "fontWeight": {
+      "type": "string",
+      "default": "500"
+    },
+    "letterSpacing": {
+      "type": "number",
+      "default": 1
+    },
+    "hoverBgColor": {
+      "type": "string",
+      "default": "#f5f5f5"
+    },
+    "hoverTextColor": {
+      "type": "string",
+      "default": "#000000"
+    },
+    "hoverBorderRadius": {
+      "type": "number",
+      "default": 8
+    },
+    "hoverPadding": {
+      "type": "object",
+      "default": {
+        "top": "12px",
+        "right": "24px",
+        "bottom": "12px",
+        "left": "24px"
+      }
+    },
+    "sectionPadding": {
+      "type": "object",
+      "default": {
+        "top": "24px",
+        "right": "24px",
+        "bottom": "24px",
+        "left": "24px"
+      }
+    },
+    "sectionMargin": {
+      "type": "object",
+      "default": {
+        "top": "0px",
+        "right": "0px",
+        "bottom": "0px",
+        "left": "0px"
+      }
+    },
+    "backgroundColor": {
+      "type": "string",
+      "default": "transparent"
+    },
+    "mobileLayout": {
+      "type": "string",
+      "default": "row"
+    }
+  },
+  "supports": {
+    "html": false,
+    "anchor": true,
+    "align": [
+      "wide",
+      "full"
+    ]
+  },
+  "textdomain": "zenctuary",
+  "editorScript": "file:./index.js",
+  "viewScript": "file:./view.js",
+  "style": "file:./style-index.css",
+  "editorStyle": "file:./index.css"
+}

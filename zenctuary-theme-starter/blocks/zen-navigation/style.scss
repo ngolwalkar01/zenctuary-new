@@ -1,0 +1,58 @@
+// Frontend styles for Zen-Navigation block
+
+.zen-navigation {
+	display: block;
+	width: 100%;
+}
+
+.zen-navigation__inner {
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: center;
+	align-items: center;
+	gap: 32px;
+}
+
+.zen-navigation__item {
+	display: inline-block;
+	text-decoration: none;
+	text-transform: uppercase;
+	text-align: center;
+	cursor: pointer;
+	transition: all 0.3s ease;
+	outline: none;
+	white-space: nowrap;
+
+	&:hover,
+	&:focus {
+		text-decoration: none;
+		outline: none;
+	}
+
+	&:active {
+		transform: scale(0.98);
+	}
+}
+
+// Responsive styles
+@media (max-width: 768px) {
+	.zen-navigation__inner {
+		gap: 16px;
+	}
+
+	.zen-navigation__item {
+		font-size: 14px !important;
+	}
+}
+
+@media (max-width: 480px) {
+	.zen-navigation[data-mobile-layout="column"] .zen-navigation__inner {
+		flex-direction: column;
+		gap: 12px;
+	}
+
+	.zen-navigation[data-mobile-layout="column"] .zen-navigation__item {
+		width: 100%;
+		max-width: 100%;
+	}
+}

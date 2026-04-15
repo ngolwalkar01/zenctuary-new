@@ -1,0 +1,62 @@
+// Editor styles for Zen-Navigation block
+
+.zen-navigation {
+	display: block;
+	width: 100%;
+}
+
+.zen-navigation__inner {
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: center;
+	align-items: center;
+}
+
+.zen-navigation__item {
+	display: inline-block;
+	text-decoration: none;
+	cursor: pointer;
+	transition: all 0.3s ease;
+	outline: none;
+
+	&:hover,
+	&:focus {
+		text-decoration: none;
+	}
+}
+
+// Controls grid layout
+.zen-navigation-control-grid {
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	gap: 12px;
+	margin-bottom: 16px;
+}
+
+.zen-navigation-item-control {
+	padding: 16px;
+	border: 1px solid #e0e0e0;
+	border-radius: 4px;
+	margin-bottom: 12px;
+	background: #f9f9f9;
+
+	.components-base-control {
+		margin-bottom: 12px;
+	}
+
+	button {
+		margin-top: 8px;
+	}
+}
+
+// Responsive editor preview
+@media (max-width: 782px) {
+	.zen-navigation__inner {
+		flex-direction: column;
+	}
+
+	.zen-navigation__item {
+		width: 100%;
+		text-align: center;
+	}
+}

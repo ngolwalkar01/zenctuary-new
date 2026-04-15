@@ -29,3 +29,10 @@ Thumbs.db
 
 # Optional: cache
 .cache/
+
+
+blocks/zen-carousel-block
+build/zen-carousel-block
+
+blocks/zen-our-best-sellers
+build/zen-our-best-sellers
