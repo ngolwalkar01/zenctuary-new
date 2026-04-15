@@ -1,0 +1,73 @@
+/* Editor Specific Styles for Zen Memberships Section */
+.wp-block-zenctuary-zen-memberships-section {
+  padding: 40px 20px;
+  background-color: #2b2b2b; /* Just to provide contrast in editor */
+}
+
+.zen-editor-tabs-control {
+  margin-bottom: 20px;
+  background: #1e1e1e;
+  padding: 10px;
+  border-radius: 5px;
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+}
+
+.zen-editor-tabs-control button {
+  padding: 5px 15px;
+  border-radius: 3px;
+  border: 1px solid #555;
+  background: transparent;
+  color: #fff;
+  cursor: pointer;
+}
+
+.zen-editor-tabs-control button.active {
+  background: #007cba;
+  border-color: #007cba;
+}
+
+.zen-editor-add-card-btn {
+  display: block;
+  margin: 20px auto;
+  padding: 10px 20px;
+  background: #333;
+  color: #fff;
+  border: 1px dashed #666;
+  cursor: pointer;
+  border-radius: 5px;
+  text-align: center;
+}
+.zen-editor-add-card-btn:hover {
+  background: #444;
+}
+
+/* Card overrides for editor (making them interactable) */
+.zen-editor-card-controls {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  z-index: 20;
+  display: flex;
+  gap: 5px;
+}
+.zen-editor-card-controls button {
+  background: rgba(0,0,0,0.5);
+  color: #fff;
+  border: none;
+  border-radius: 3px;
+  cursor: pointer;
+  padding: 2px 5px;
+  font-size: 12px;
+}
+.zen-editor-card-controls button:hover {
+  background: rgba(0,0,0,0.8);
+}
+
+.zen-memberships-card {
+  border: 1px dashed transparent;
+}
+.zen-memberships-card:focus-within {
+  border: 1px dashed #007cba;
+}
