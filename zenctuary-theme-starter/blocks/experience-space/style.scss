@@ -150,30 +150,20 @@
             /* ── Zencoins Badge ── */
             .zen-class-card__zencoins {
                 position: absolute;
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0;
                 display: flex;
-                align-items: center;
-                gap: var(--zen-exp-zencoin-gap, 8px);
+                align-items: var(--zen-exp-zencoin-align-items, flex-end);
+                justify-content: var(--zen-exp-zencoin-justify-content, flex-end);
                 padding: 12px;
+                pointer-events: none;
 
-                /* Placement variants */
-                &.zen-zencoins--top-left {
-                    top: 0;
-                    left: 0;
-                }
-
-                &.zen-zencoins--top-right {
-                    top: 0;
-                    right: 0;
-                }
-
-                &.zen-zencoins--bottom-left {
-                    bottom: 0;
-                    left: 0;
-                }
-
-                &.zen-zencoins--bottom-right {
-                    bottom: 0;
-                    right: 0;
+                .zen-class-card__zencoins-inner {
+                    display: flex;
+                    align-items: center;
+                    gap: var(--zen-exp-zencoin-gap, 8px);
                 }
 
                 .zen-zencoins-label {

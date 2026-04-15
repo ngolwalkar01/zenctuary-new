@@ -48,6 +48,27 @@ $accordion_icon_weight          = esc_attr( $attributes['accordionIconWeight'] ?
 $accordion_gap                  = (int) ( $attributes['accordionGap'] ?? 8 );
 
 $zencoin_placement       = esc_attr( $attributes['zencoinPlacement'] ?? 'bottom-right' );
+
+// Convert placement to flexbox values
+switch ( $zencoin_placement ) {
+    case 'top-left':
+        $zencoin_align_items   = 'flex-start';
+        $zencoin_justify_content = 'flex-start';
+        break;
+    case 'top-right':
+        $zencoin_align_items   = 'flex-start';
+        $zencoin_justify_content = 'flex-end';
+        break;
+    case 'bottom-left':
+        $zencoin_align_items   = 'flex-end';
+        $zencoin_justify_content = 'flex-start';
+        break;
+    case 'bottom-right':
+    default:
+        $zencoin_align_items   = 'flex-end';
+        $zencoin_justify_content = 'flex-end';
+        break;
+}
 $zencoin_label_font_size = (int) ( $attributes['zencoinLabelFontSize'] ?? 11 );
 $zencoin_label_font_weight = esc_attr( $attributes['zencoinLabelFontWeight'] ?? '700' );
 $zencoin_label_color     = esc_attr( $attributes['zencoinLabelColor'] ?? '#D8B355' );
@@ -122,7 +143,8 @@ $inline_styles = '
     --zen-exp-accordion-icon-weight: ' . $accordion_icon_weight . ';
     --zen-exp-accordion-gap: ' . $accordion_gap . 'px;
 
-    --zen-exp-zencoin-placement: ' . $zencoin_placement . ';
+    --zen-exp-zencoin-align-items: ' . $zencoin_align_items . ';
+    --zen-exp-zencoin-justify-content: ' . $zencoin_justify_content . ';
     --zen-exp-zencoin-label-font-size: ' . $zencoin_label_font_size . 'px;
     --zen-exp-zencoin-label-font-weight: ' . $zencoin_label_font_weight . ';
     --zen-exp-zencoin-label-color: ' . $zencoin_label_color . ';
@@ -209,7 +231,6 @@ $inline_styles = '
                             $link      = get_permalink( $product->ID );
                             $title     = get_the_title( $product );
                             $thumb_url = get_the_post_thumbnail_url( $product->ID, 'large' );
-                            $zencoin_placement_class = 'zen-zencoins--' . $zencoin_placement;
                         ?>
                         <article class="zen-class-card">
                             <div class="zen-class-card__image-wrap">
@@ -219,9 +240,11 @@ $inline_styles = '
                                     <div class="zen-class-card__image zen-class-card__image--placeholder"></div>
                                 <?php endif; ?>
                                 <?php if ( $show_zencoins && $meta['zen_coins'] ) : ?>
-                                <div class="zen-class-card__zencoins <?php echo esc_attr( $zencoin_placement_class ); ?>">
-                                    <span class="zen-zencoins-label"><?php esc_html_e( 'ZENCOINS:', 'zenctuary' ); ?></span>
-                                    <span class="zen-zencoins-badge"><?php echo (int) $meta['zen_coins']; ?></span>
+                                <div class="zen-class-card__zencoins">
+                                    <div class="zen-class-card__zencoins-inner">
+                                        <span class="zen-zencoins-label"><?php esc_html_e( 'ZENCOINS:', 'zenctuary' ); ?></span>
+                                        <span class="zen-zencoins-badge"><?php echo (int) $meta['zen_coins']; ?></span>
+                                    </div>
                                 </div>
                                 <?php endif; ?>
                             </div>
@@ -260,7 +283,6 @@ $inline_styles = '
                 $link      = get_permalink( $product->ID );
                 $title     = get_the_title( $product );
                 $thumb_url = get_the_post_thumbnail_url( $product->ID, 'large' );
-                $zencoin_placement_class = 'zen-zencoins--' . $zencoin_placement;
             ?>
             <article class="zen-class-card">
                 <div class="zen-class-card__image-wrap">
@@ -270,9 +292,11 @@ $inline_styles = '
                         <div class="zen-class-card__image zen-class-card__image--placeholder"></div>
                     <?php endif; ?>
                     <?php if ( $show_zencoins && $meta['zen_coins'] ) : ?>
-                    <div class="zen-class-card__zencoins <?php echo esc_attr( $zencoin_placement_class ); ?>">
-                        <span class="zen-zencoins-label"><?php esc_html_e( 'ZENCOINS:', 'zenctuary' ); ?></span>
-                        <span class="zen-zencoins-badge"><?php echo (int) $meta['zen_coins']; ?></span>
+                    <div class="zen-class-card__zencoins">
+                        <div class="zen-class-card__zencoins-inner">
+                            <span class="zen-zencoins-label"><?php esc_html_e( 'ZENCOINS:', 'zenctuary' ); ?></span>
+                            <span class="zen-zencoins-badge"><?php echo (int) $meta['zen_coins']; ?></span>
+                        </div>
                     </div>
                     <?php endif; ?>
                 </div>
