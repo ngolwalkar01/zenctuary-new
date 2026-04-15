@@ -93,9 +93,9 @@ if ( empty( $grouped ) ) {
     return;
 }
 
-// Build inline styles.
+// Build inline styles scoped to this block instance.
 $inline_styles = '
-:root {
+.zen-experience-space-block {
     --zen-exp-heading-icon-size: ' . $heading_icon_size . 'px;
     --zen-exp-heading-icon-gap: ' . $heading_icon_gap . 'px;
     --zen-exp-heading-font-size: ' . $heading_font_size . 'px;
