@@ -134,6 +134,7 @@
 
 .wp-block-zenctuary-zen-carousel-block .zen-carousel__slide {
   min-width: 370px;
+  max-width: 370px;
   flex: 0 0 calc((100% - (var(--zen-carousel-gap) * (var(--zen-visible-desktop) - 1))) / var(--zen-visible-desktop));
 }
 
@@ -155,7 +156,7 @@
   flex-direction: column;
   justify-content: space-between;
   height: var(--zen-carousel-card-height);
-  max-width: var(--zen-carousel-card-width);
+  max-width: 370px;
   width: 100%;
   border-radius: 24px;
   overflow: hidden;

@@ -233,7 +233,7 @@
 		}
 
 		function render() {
-			const offset = snapOffsets[currentIndex] + 100 || 0;
+			const offset = snapOffsets[currentIndex] || 0;
 
 			track.style.transform = 'translate3d(-' + offset + 'px, 0, 0)';
 			updateButtons();
