@@ -121,12 +121,15 @@ $placeholder_svg = '<svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.or
     <path d="M16 52h32" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
 </svg>';
 
+<?php
+$wrapper_attrs = get_block_wrapper_attributes( [
+    'class' => 'zen-why-zenctuary',
+    'style' => esc_attr( $inline_style ),
+    'aria-labelledby' => 'zwz-heading-' . esc_attr( uniqid() ),
+] );
 ?>
-<section
-    class="zen-why-zenctuary"
-    style="<?php echo esc_attr( $inline_style ); ?>"
-    aria-labelledby="zwz-heading-<?php echo esc_attr( uniqid() ); ?>"
->
+<section <?php echo $wrapper_attrs; ?>>
+
     <div class="zen-why-zenctuary__inner">
 
         <?php if ( $heading || $subheading ) : ?>
