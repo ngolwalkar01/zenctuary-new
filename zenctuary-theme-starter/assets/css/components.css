@@ -56,8 +56,8 @@
    HEADER / FOOTER
    ========================================== */
 
-.zen-site-header .zen-container{
-	margin-block-start:32px;
+.zen-site-header .zen-container {
+  margin-block-start: 32px;
 }
 
 .zen-site-header {
@@ -183,11 +183,11 @@
 }
 
 .wp-block-navigation__responsive-container .wp-block-navigation__responsive-container-content {
-    gap: 23px;
+  gap: 23px;
 }
 
-.wpml-ls-legacy-dropdown a{
-	line-height:0 !important;
+.wpml-ls-legacy-dropdown a {
+  line-height: 0 !important;
 }
 
 /* ==========================================
@@ -458,8 +458,8 @@ input[type="checkbox"] {
 
 /* Perfect shrinking for category tabs in FAQs */
 .zen-faq-section .wp-block-button__link {
-  font-size: 13px !important;
-  padding: 6px 20px !important;
+  font-size: 16px !important;
+  padding: 11px 20px !important;
   min-height: auto !important;
   border-radius: 24px !important;
   /* Forces the pill shape! */
@@ -585,7 +585,7 @@ input[type="checkbox"] {
 
 .zen-coins-section .zen-pricing-box {
   border-radius: 24px;
-background-color:var(--wp--preset--color--primary-grey,#3f3e3e);
+  background-color: var(--wp--preset--color--primary-grey, #3f3e3e);
 }
 
 .zen-coins-section .zen-price-top {
@@ -610,13 +610,13 @@ background-color:var(--wp--preset--color--primary-grey,#3f3e3e);
 }
 
 .zen-coins-section .zen-price-row {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    justify-content: space-between;
-    column-gap: 32px;
-    row-gap: 20px;
-    align-content: space-around;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  column-gap: 32px;
+  row-gap: 20px;
+  align-content: space-around;
 }
 
 .zen-coins-section .zen-price-title {
@@ -626,7 +626,7 @@ background-color:var(--wp--preset--color--primary-grey,#3f3e3e);
   font-weight: 700;
   text-transform: uppercase;
   line-height: 1.2;
-	font-size:18px;
+  font-size: 18px;
 }
 
 .zen-coins-section .zen-price-row-right {
@@ -658,7 +658,7 @@ background-color:var(--wp--preset--color--primary-grey,#3f3e3e);
   align-items: center;
 }
 
-.zen-coins-section .zen-coins-group .zen-coin-icon + .zen-coin-icon {
+.zen-coins-section .zen-coins-group .zen-coin-icon+.zen-coin-icon {
   margin-left: -8px;
 }
 
@@ -801,10 +801,10 @@ background-color:var(--wp--preset--color--primary-grey,#3f3e3e);
   display: flex;
   flex-direction: column;
   gap: 80px;
-	padding-top: var(--zen-space-180);
-	padding-bottom: var(--zen-space-180);
-	padding-left: var(--zen-space-120);
-	padding-right: var(--zen-space-120);
+  padding-top: var(--zen-space-180);
+  padding-bottom: var(--zen-space-180);
+  padding-left: var(--zen-space-120);
+  padding-right: var(--zen-space-120);
 }
 
 /* Space section */
@@ -888,10 +888,21 @@ background-color:var(--wp--preset--color--primary-grey,#3f3e3e);
 }
 
 /* Toggle show/hide of icon halves */
-.zen-accordion-item--open .zen-accordion-icon--minus { display: inline; }
-.zen-accordion-item--open .zen-accordion-icon--plus  { display: none; }
-.zen-accordion-icon--minus { display: none; }
-.zen-accordion-icon--plus  { display: inline; }
+.zen-accordion-item--open .zen-accordion-icon--minus {
+  display: inline;
+}
+
+.zen-accordion-item--open .zen-accordion-icon--plus {
+  display: none;
+}
+
+.zen-accordion-icon--minus {
+  display: none;
+}
+
+.zen-accordion-icon--plus {
+  display: inline;
+}
 
 .zen-accordion-panel {
   padding: 0 24px 32px;
