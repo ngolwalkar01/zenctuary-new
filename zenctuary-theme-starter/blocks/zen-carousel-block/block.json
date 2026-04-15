@@ -35,7 +35,7 @@
     "visibleDesktop": { "type": "number", "default": 3.3 },
     "visibleTablet": { "type": "number", "default": 2 },
     "visibleMobile": { "type": "number", "default": 1 },
-    "cardType": { "type": "string", "default": "product" },
+    "cardType": { "type": "string", "default": "experience" },
     "cards": {
       "type": "array",
       "default": [
