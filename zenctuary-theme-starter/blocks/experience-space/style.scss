@@ -1,0 +1,286 @@
+/**
+ * Experience Space Block - Frontend Styles
+ * Uses CSS custom properties (variables) set by render.php
+ */
+
+.zen-experience-space-block {
+    /* ── Space Header ── */
+    .zen-space-header {
+        display: flex;
+        align-items: center;
+        gap: var(--zen-exp-heading-icon-gap, 16px);
+        margin-bottom: 24px;
+
+        .zen-space-icon {
+            width: var(--zen-exp-heading-icon-size, 48px);
+            height: var(--zen-exp-heading-icon-size, 48px);
+            object-fit: contain;
+        }
+
+        .zen-space-title {
+            font-size: var(--zen-exp-heading-font-size, 36px);
+            font-weight: var(--zen-exp-heading-font-weight, 700);
+            letter-spacing: var(--zen-exp-heading-letter-spacing, 0.05px);
+            text-transform: var(--zen-exp-heading-text-transform, uppercase);
+            color: var(--zen-exp-heading-color, #D8B355);
+            margin: 0;
+        }
+    }
+
+    /* ── Space Description ── */
+    .zen-space-description {
+        font-size: var(--zen-exp-desc-font-size, 16px);
+        font-weight: var(--zen-exp-desc-font-weight, 400);
+        line-height: var(--zen-exp-desc-line-height, 1.6);
+        color: var(--zen-exp-desc-color, #F6F2EA);
+        max-width: var(--zen-exp-desc-max-width, 900px);
+        margin-bottom: 40px;
+    }
+
+    /* ── Accordion Wrapper ── */
+    .zen-accordion-wrapper {
+        display: flex;
+        flex-direction: column;
+        gap: var(--zen-exp-accordion-gap, 8px);
+
+        .zen-accordion-item {
+            border: var(--zen-exp-accordion-border-width, 1px) solid var(--zen-exp-accordion-border-color, #3d3c3c);
+            border-radius: var(--zen-exp-accordion-border-radius, 24px);
+            overflow: hidden;
+
+            .zen-accordion-header {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                width: 100%;
+                padding: var(--zen-exp-accordion-padding-y, 24px) var(--zen-exp-accordion-padding-x, 32px);
+                background: transparent;
+                border: none;
+                cursor: pointer;
+                text-align: left;
+
+                .zen-accordion-title {
+                    font-size: var(--zen-exp-accordion-title-font-size, 20px);
+                    font-weight: var(--zen-exp-accordion-title-font-weight, 700);
+                    color: var(--zen-exp-accordion-title-color, #F6F2EA);
+                }
+
+                .zen-accordion-icon {
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    width: var(--zen-exp-accordion-icon-size, 28px);
+                    height: var(--zen-exp-accordion-icon-size, 28px);
+                    font-weight: var(--zen-exp-accordion-icon-weight, 300);
+                    font-size: var(--zen-exp-accordion-icon-size, 28px);
+                    color: var(--zen-exp-accordion-title-color, #F6F2EA);
+                    line-height: 1;
+
+                    .zen-accordion-icon--minus,
+                    .zen-accordion-icon--plus {
+                        display: none;
+                    }
+
+                    .zen-accordion-icon--plus {
+                        display: inline;
+                    }
+                }
+            }
+
+            &.zen-accordion-item--open {
+                .zen-accordion-header {
+                    .zen-accordion-icon {
+                        .zen-accordion-icon--minus {
+                            display: inline;
+                        }
+
+                        .zen-accordion-icon--plus {
+                            display: none;
+                        }
+                    }
+                }
+
+                .zen-accordion-panel {
+                    display: block;
+                }
+            }
+
+            .zen-accordion-panel {
+                display: none;
+                padding: 0 var(--zen-exp-accordion-padding-x, 32px) var(--zen-exp-accordion-padding-y, 24px);
+
+                &[hidden] {
+                    display: none !important;
+                }
+            }
+        }
+    }
+
+    /* ── Class Cards Grid ── */
+    .zen-class-cards-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+        gap: 24px;
+        padding: 24px 0;
+    }
+
+    /* ── Individual Card ── */
+    .zen-class-card {
+        background: #F6F2EA;
+        border-radius: var(--zen-exp-card-border-radius, 24px);
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
+
+        .zen-class-card__image-wrap {
+            position: relative;
+            height: var(--zen-exp-card-image-height, 220px);
+            overflow: hidden;
+
+            .zen-class-card__image {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+
+                &.zen-class-card__image--placeholder {
+                    background: #e0e0e0;
+                }
+            }
+
+            /* ── Zencoins Badge ── */
+            .zen-class-card__zencoins {
+                position: absolute;
+                display: flex;
+                align-items: center;
+                gap: var(--zen-exp-zencoin-gap, 8px);
+                padding: 12px;
+
+                /* Placement variants */
+                &.zen-zencoins--top-left {
+                    top: 0;
+                    left: 0;
+                }
+
+                &.zen-zencoins--top-right {
+                    top: 0;
+                    right: 0;
+                }
+
+                &.zen-zencoins--bottom-left {
+                    bottom: 0;
+                    left: 0;
+                }
+
+                &.zen-zencoins--bottom-right {
+                    bottom: 0;
+                    right: 0;
+                }
+
+                .zen-zencoins-label {
+                    font-size: var(--zen-exp-zencoin-label-font-size, 11px);
+                    font-weight: var(--zen-exp-zencoin-label-font-weight, 700);
+                    color: var(--zen-exp-zencoin-label-color, #D8B355);
+                }
+
+                .zen-zencoins-badge {
+                    width: var(--zen-exp-zencoin-badge-size, 32px);
+                    height: var(--zen-exp-zencoin-badge-size, 32px);
+                    border-radius: 50%;
+                    background: var(--zen-exp-zencoin-badge-bg-color, #D8B355);
+                    color: var(--zen-exp-zencoin-badge-text-color, #3F3E3E);
+                    font-size: var(--zen-exp-zencoin-badge-font-size, 13px);
+                    font-weight: 700;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    border: 2px solid rgba(0, 0, 0, 0.2);
+                }
+            }
+        }
+
+        .zen-class-card__body {
+            padding: var(--zen-exp-card-body-padding, 24px);
+            display: flex;
+            flex-direction: column;
+            flex: 1;
+
+            .zen-class-card__title {
+                font-size: 20px;
+                font-weight: 700;
+                color: #3F3E3E;
+                text-transform: uppercase;
+                margin: 0 0 16px 0;
+            }
+
+            .zen-class-card__difficulty {
+                display: flex;
+                align-items: center;
+                gap: 8px;
+                margin-bottom: 16px;
+                color: #3F3E3E;
+                font-size: 14px;
+                font-weight: 500;
+
+                .zen-difficulty-icon {
+                    width: 20px;
+                    height: 20px;
+                    color: #D8B355;
+                }
+            }
+
+            .zen-class-card__desc {
+                font-size: 14px;
+                line-height: 1.6;
+                color: #3F3E3E;
+                margin: 0 0 16px 0;
+                flex: 1;
+            }
+
+            .zen-class-card__btn {
+                font-size: var(--zen-exp-btn-font-size, 16px);
+                font-weight: var(--zen-exp-btn-font-weight, 700);
+                padding: var(--zen-exp-btn-padding-y, 16px) var(--zen-exp-btn-padding-x, 32px);
+                border-radius: var(--zen-exp-btn-border-radius, 999px);
+                border: var(--zen-exp-btn-border-width, 1px) solid var(--zen-exp-btn-border-color, #D8B355);
+                background: var(--zen-exp-btn-bg-color, #D8B355);
+                color: var(--zen-exp-btn-text-color, #1D1D1B);
+                text-decoration: none;
+                text-align: center;
+                display: inline-block;
+                margin-top: var(--zen-exp-btn-margin-top, 0);
+                transition: all 0.2s ease;
+
+                &:hover {
+                    opacity: 0.9;
+                    transform: translateY(-1px);
+                }
+            }
+        }
+    }
+
+    /* ── Fallback flat grid (no accordion) ── */
+    > .zen-class-cards-grid {
+        padding: 24px 0;
+    }
+
+    .zen-no-results {
+        text-align: center;
+        padding: 40px;
+        color: #999;
+    }
+}
+
+/* ── Responsive Adjustments ── */
+@media (max-width: 768px) {
+    .zen-experience-space-block {
+        .zen-class-cards-grid {
+            grid-template-columns: 1fr;
+        }
+
+        .zen-space-header {
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 12px;
+        }
+    }
+}

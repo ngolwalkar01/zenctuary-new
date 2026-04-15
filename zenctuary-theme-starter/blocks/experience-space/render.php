@@ -20,6 +20,58 @@ $show_difficulty    = (bool) ( $attributes['showDifficulty']  ?? true );
 $show_book_btn      = (bool) ( $attributes['showBookButton']  ?? true );
 $book_btn_label     = esc_html( $attributes['bookButtonLabel'] ?? 'Book now →' );
 
+// Styling attributes.
+$heading_icon_size      = (int) ( $attributes['headingIconSize'] ?? 48 );
+$heading_icon_gap       = (int) ( $attributes['headingIconGap'] ?? 16 );
+$heading_font_size      = (int) ( $attributes['headingFontSize'] ?? 36 );
+$heading_font_weight    = esc_attr( $attributes['headingFontWeight'] ?? '700' );
+$heading_letter_spacing = (float) ( $attributes['headingLetterSpacing'] ?? 0.05 );
+$heading_text_transform = esc_attr( $attributes['headingTextTransform'] ?? 'uppercase' );
+$heading_color          = esc_attr( $attributes['headingColor'] ?? '#D8B355' );
+
+$desc_font_size      = (int) ( $attributes['descFontSize'] ?? 16 );
+$desc_font_weight    = esc_attr( $attributes['descFontWeight'] ?? '400' );
+$desc_line_height    = (float) ( $attributes['descLineHeight'] ?? 1.6 );
+$desc_color          = esc_attr( $attributes['descColor'] ?? '#F6F2EA' );
+$desc_max_width      = (int) ( $attributes['descMaxWidth'] ?? 900 );
+
+$accordion_border_width   = (int) ( $attributes['accordionBorderWidth'] ?? 1 );
+$accordion_border_color   = esc_attr( $attributes['accordionBorderColor'] ?? '#3d3c3c' );
+$accordion_border_radius  = (int) ( $attributes['accordionBorderRadius'] ?? 24 );
+$accordion_padding_x      = (int) ( $attributes['accordionPaddingX'] ?? 32 );
+$accordion_padding_y      = (int) ( $attributes['accordionPaddingY'] ?? 24 );
+$accordion_title_font_size      = (int) ( $attributes['accordionTitleFontSize'] ?? 20 );
+$accordion_title_font_weight    = esc_attr( $attributes['accordionTitleFontWeight'] ?? '700' );
+$accordion_title_color          = esc_attr( $attributes['accordionTitleColor'] ?? '#F6F2EA' );
+$accordion_icon_size            = (int) ( $attributes['accordionIconSize'] ?? 28 );
+$accordion_icon_weight          = esc_attr( $attributes['accordionIconWeight'] ?? '300' );
+$accordion_gap                  = (int) ( $attributes['accordionGap'] ?? 8 );
+
+$zencoin_placement       = esc_attr( $attributes['zencoinPlacement'] ?? 'bottom-right' );
+$zencoin_label_font_size = (int) ( $attributes['zencoinLabelFontSize'] ?? 11 );
+$zencoin_label_font_weight = esc_attr( $attributes['zencoinLabelFontWeight'] ?? '700' );
+$zencoin_label_color     = esc_attr( $attributes['zencoinLabelColor'] ?? '#D8B355' );
+$zencoin_badge_size      = (int) ( $attributes['zencoinBadgeSize'] ?? 32 );
+$zencoin_badge_font_size = (int) ( $attributes['zencoinBadgeFontSize'] ?? 13 );
+$zencoin_badge_bg_color  = esc_attr( $attributes['zencoinBadgeBgColor'] ?? '#D8B355' );
+$zencoin_badge_text_color = esc_attr( $attributes['zencoinBadgeTextColor'] ?? '#3F3E3E' );
+$zencoin_gap             = (int) ( $attributes['zencoinGap'] ?? 8 );
+
+$btn_font_size     = (int) ( $attributes['btnFontSize'] ?? 16 );
+$btn_font_weight   = esc_attr( $attributes['btnFontWeight'] ?? '700' );
+$btn_padding_x     = (int) ( $attributes['btnPaddingX'] ?? 32 );
+$btn_padding_y     = (int) ( $attributes['btnPaddingY'] ?? 16 );
+$btn_border_radius = (int) ( $attributes['btnBorderRadius'] ?? 999 );
+$btn_border_width  = (int) ( $attributes['btnBorderWidth'] ?? 1 );
+$btn_border_color  = esc_attr( $attributes['btnBorderColor'] ?? '#D8B355' );
+$btn_bg_color      = esc_attr( $attributes['btnBgColor'] ?? '#D8B355' );
+$btn_text_color    = esc_attr( $attributes['btnTextColor'] ?? '#1D1D1B' );
+$btn_margin_top    = (int) ( $attributes['btnMarginTop'] ?? 0 );
+
+$card_image_height   = (int) ( $attributes['cardImageHeight'] ?? 220 );
+$card_body_padding   = (int) ( $attributes['cardBodyPadding'] ?? 24 );
+$card_border_radius  = (int) ( $attributes['cardBorderRadius'] ?? 24 );
+
 // Build query args — only add taxonomy filter if a term is selected.
 $helper_args = [];
 if ( $filter_term_slug && $filter_taxonomy ) {
@@ -41,9 +93,70 @@ if ( empty( $grouped ) ) {
     return;
 }
 
+// Build inline styles.
+$inline_styles = '
+:root {
+    --zen-exp-heading-icon-size: ' . $heading_icon_size . 'px;
+    --zen-exp-heading-icon-gap: ' . $heading_icon_gap . 'px;
+    --zen-exp-heading-font-size: ' . $heading_font_size . 'px;
+    --zen-exp-heading-font-weight: ' . $heading_font_weight . ';
+    --zen-exp-heading-letter-spacing: ' . $heading_letter_spacing . 'px;
+    --zen-exp-heading-text-transform: ' . $heading_text_transform . ';
+    --zen-exp-heading-color: ' . $heading_color . ';
+
+    --zen-exp-desc-font-size: ' . $desc_font_size . 'px;
+    --zen-exp-desc-font-weight: ' . $desc_font_weight . ';
+    --zen-exp-desc-line-height: ' . $desc_line_height . ';
+    --zen-exp-desc-color: ' . $desc_color . ';
+    --zen-exp-desc-max-width: ' . $desc_max_width . 'px;
+
+    --zen-exp-accordion-border-width: ' . $accordion_border_width . 'px;
+    --zen-exp-accordion-border-color: ' . $accordion_border_color . ';
+    --zen-exp-accordion-border-radius: ' . $accordion_border_radius . 'px;
+    --zen-exp-accordion-padding-x: ' . $accordion_padding_x . 'px;
+    --zen-exp-accordion-padding-y: ' . $accordion_padding_y . 'px;
+    --zen-exp-accordion-title-font-size: ' . $accordion_title_font_size . 'px;
+    --zen-exp-accordion-title-font-weight: ' . $accordion_title_font_weight . ';
+    --zen-exp-accordion-title-color: ' . $accordion_title_color . ';
+    --zen-exp-accordion-icon-size: ' . $accordion_icon_size . 'px;
+    --zen-exp-accordion-icon-weight: ' . $accordion_icon_weight . ';
+    --zen-exp-accordion-gap: ' . $accordion_gap . 'px;
+
+    --zen-exp-zencoin-placement: ' . $zencoin_placement . ';
+    --zen-exp-zencoin-label-font-size: ' . $zencoin_label_font_size . 'px;
+    --zen-exp-zencoin-label-font-weight: ' . $zencoin_label_font_weight . ';
+    --zen-exp-zencoin-label-color: ' . $zencoin_label_color . ';
+    --zen-exp-zencoin-badge-size: ' . $zencoin_badge_size . 'px;
+    --zen-exp-zencoin-badge-font-size: ' . $zencoin_badge_font_size . 'px;
+    --zen-exp-zencoin-badge-bg-color: ' . $zencoin_badge_bg_color . ';
+    --zen-exp-zencoin-badge-text-color: ' . $zencoin_badge_text_color . ';
+    --zen-exp-zencoin-gap: ' . $zencoin_gap . 'px;
+
+    --zen-exp-btn-font-size: ' . $btn_font_size . 'px;
+    --zen-exp-btn-font-weight: ' . $btn_font_weight . ';
+    --zen-exp-btn-padding-x: ' . $btn_padding_x . 'px;
+    --zen-exp-btn-padding-y: ' . $btn_padding_y . 'px;
+    --zen-exp-btn-border-radius: ' . $btn_border_radius . 'px;
+    --zen-exp-btn-border-width: ' . $btn_border_width . 'px;
+    --zen-exp-btn-border-color: ' . $btn_border_color . ';
+    --zen-exp-btn-bg-color: ' . $btn_bg_color . ';
+    --zen-exp-btn-text-color: ' . $btn_text_color . ';
+    --zen-exp-btn-margin-top: ' . $btn_margin_top . 'px;
+
+    --zen-exp-card-image-height: ' . $card_image_height . 'px;
+    --zen-exp-card-body-padding: ' . $card_body_padding . 'px;
+    --zen-exp-card-border-radius: ' . $card_border_radius . 'px;
+}
+';
+
 
 ?>
 <div class="zen-experience-space-block">
+
+    <?php
+    // Output inline CSS variables.
+    echo '<style>' . $inline_styles . '</style>';
+    ?>
 
     <?php foreach ( $grouped as $primary_slug => $primary_group ) :
         $primary_term = $primary_group['term'];
@@ -96,6 +209,7 @@ if ( empty( $grouped ) ) {
                             $link      = get_permalink( $product->ID );
                             $title     = get_the_title( $product );
                             $thumb_url = get_the_post_thumbnail_url( $product->ID, 'large' );
+                            $zencoin_placement_class = 'zen-zencoins--' . $zencoin_placement;
                         ?>
                         <article class="zen-class-card">
                             <div class="zen-class-card__image-wrap">
@@ -105,8 +219,8 @@ if ( empty( $grouped ) ) {
                                     <div class="zen-class-card__image zen-class-card__image--placeholder"></div>
                                 <?php endif; ?>
                                 <?php if ( $show_zencoins && $meta['zen_coins'] ) : ?>
-                                <div class="zen-class-card__zencoins">
-                                    <span class="zen-zencoins-label"><?php esc_html_e( 'Zencoins:', 'zenctuary' ); ?></span>
+                                <div class="zen-class-card__zencoins <?php echo esc_attr( $zencoin_placement_class ); ?>">
+                                    <span class="zen-zencoins-label"><?php esc_html_e( 'ZENCOINS:', 'zenctuary' ); ?></span>
                                     <span class="zen-zencoins-badge"><?php echo (int) $meta['zen_coins']; ?></span>
                                 </div>
                                 <?php endif; ?>
@@ -146,6 +260,7 @@ if ( empty( $grouped ) ) {
                 $link      = get_permalink( $product->ID );
                 $title     = get_the_title( $product );
                 $thumb_url = get_the_post_thumbnail_url( $product->ID, 'large' );
+                $zencoin_placement_class = 'zen-zencoins--' . $zencoin_placement;
             ?>
             <article class="zen-class-card">
                 <div class="zen-class-card__image-wrap">
@@ -155,8 +270,8 @@ if ( empty( $grouped ) ) {
                         <div class="zen-class-card__image zen-class-card__image--placeholder"></div>
                     <?php endif; ?>
                     <?php if ( $show_zencoins && $meta['zen_coins'] ) : ?>
-                    <div class="zen-class-card__zencoins">
-                        <span class="zen-zencoins-label"><?php esc_html_e( 'Zencoins:', 'zenctuary' ); ?></span>
+                    <div class="zen-class-card__zencoins <?php echo esc_attr( $zencoin_placement_class ); ?>">
+                        <span class="zen-zencoins-label"><?php esc_html_e( 'ZENCOINS:', 'zenctuary' ); ?></span>
                         <span class="zen-zencoins-badge"><?php echo (int) $meta['zen_coins']; ?></span>
                     </div>
                     <?php endif; ?>

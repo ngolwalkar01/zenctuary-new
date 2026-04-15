@@ -2,7 +2,7 @@
   "$schema": "https://schemas.wp.org/trunk/block.json",
   "apiVersion": 3,
   "name": "zenctuary/experience-space",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "title": "Experience Space",
   "category": "design",
   "icon": "groups",
@@ -39,7 +39,58 @@
     "bookButtonLabel": {
       "type": "string",
       "default": "Book now →"
-    }
+    },
+
+    "headingIconSize":        { "type": "number", "default": 48 },
+    "headingIconGap":         { "type": "number", "default": 16 },
+    "headingFontSize":        { "type": "number", "default": 36 },
+    "headingFontWeight":      { "type": "string", "default": "700" },
+    "headingLetterSpacing":   { "type": "number", "default": 0.05 },
+    "headingTextTransform":   { "type": "string", "default": "uppercase" },
+    "headingColor":           { "type": "string", "default": "#D8B355" },
+
+    "descFontSize":           { "type": "number", "default": 16 },
+    "descFontWeight":         { "type": "string", "default": "400" },
+    "descLineHeight":         { "type": "number", "default": 1.6 },
+    "descColor":              { "type": "string", "default": "#F6F2EA" },
+    "descMaxWidth":           { "type": "number", "default": 900 },
+
+    "accordionBorderWidth":   { "type": "number", "default": 1 },
+    "accordionBorderColor":   { "type": "string", "default": "#3d3c3c" },
+    "accordionBorderRadius":  { "type": "number", "default": 24 },
+    "accordionPaddingX":      { "type": "number", "default": 32 },
+    "accordionPaddingY":      { "type": "number", "default": 24 },
+    "accordionTitleFontSize": { "type": "number", "default": 20 },
+    "accordionTitleFontWeight": { "type": "string", "default": "700" },
+    "accordionTitleColor":    { "type": "string", "default": "#F6F2EA" },
+    "accordionIconSize":      { "type": "number", "default": 28 },
+    "accordionIconWeight":    { "type": "string", "default": "300" },
+    "accordionGap":           { "type": "number", "default": 8 },
+
+    "zencoinPlacement":       { "type": "string", "default": "bottom-right" },
+    "zencoinLabelFontSize":   { "type": "number", "default": 11 },
+    "zencoinLabelFontWeight": { "type": "string", "default": "700" },
+    "zencoinLabelColor":      { "type": "string", "default": "#D8B355" },
+    "zencoinBadgeSize":       { "type": "number", "default": 32 },
+    "zencoinBadgeFontSize":   { "type": "number", "default": 13 },
+    "zencoinBadgeBgColor":    { "type": "string", "default": "#D8B355" },
+    "zencoinBadgeTextColor":  { "type": "string", "default": "#3F3E3E" },
+    "zencoinGap":             { "type": "number", "default": 8 },
+
+    "btnFontSize":            { "type": "number", "default": 16 },
+    "btnFontWeight":          { "type": "string", "default": "700" },
+    "btnPaddingX":            { "type": "number", "default": 32 },
+    "btnPaddingY":            { "type": "number", "default": 16 },
+    "btnBorderRadius":        { "type": "number", "default": 999 },
+    "btnBorderWidth":         { "type": "number", "default": 1 },
+    "btnBorderColor":         { "type": "string", "default": "#D8B355" },
+    "btnBgColor":             { "type": "string", "default": "#D8B355" },
+    "btnTextColor":           { "type": "string", "default": "#1D1D1B" },
+    "btnMarginTop":           { "type": "number", "default": 0 },
+
+    "cardImageHeight":        { "type": "number", "default": 220 },
+    "cardBodyPadding":        { "type": "number", "default": 24 },
+    "cardBorderRadius":       { "type": "number", "default": 24 }
   },
   "supports": {
     "html": false,
