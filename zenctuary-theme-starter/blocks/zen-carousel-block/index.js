@@ -27,6 +27,7 @@ const BG_PRESET_COLORS = [
     { name: 'Transparent', color: 'rgba(0,0,0,0)' },
     ...PRESET_COLORS,
 ];
+const TEACHER_VISIBLE_DESKTOP = 3;
 
 // ─── Card Type Options ───
 const CARD_TYPE_OPTIONS = [
@@ -170,14 +171,36 @@ function normalizeCards( cards, count ) {
     return nextCards.map( ( card ) => Object.assign( defaultCard(), card || {} ) );
 }
 
-function clampText( value, limit ) {
-    if ( ! value || ! limit || value.length <= limit ) return value;
-    return value.slice( 0, limit ).trimEnd() + '...';
+function getEffectiveVisibleSettings( attributes ) {
+    return {
+        desktop: attributes.cardType === 'teacher' ? TEACHER_VISIBLE_DESKTOP : attributes.visibleDesktop,
+        tablet: attributes.visibleTablet,
+        mobile: attributes.visibleMobile,
+    };
 }
 
 function normalizeRichTextLineBreaks( value ) {
     if ( value === null || value === undefined ) return '';
     return String( value ).replace( /\r\n|\r|\n/g, '<br>' );
+}
+
+function getStructuredRichTextLines( value, limit ) {
+    const displayValue = getRichTextDisplayValue( value, limit );
+    if ( ! displayValue ) return [];
+
+    return displayValue
+        .replace( /<\/p>\s*<p>/gi, '<br>' )
+        .replace( /<p[^>]*>/gi, '' )
+        .replace( /<\/p>/gi, '<br>' )
+        .replace( /<ul[^>]*>|<\/ul>|<ol[^>]*>|<\/ol>/gi, '' )
+        .replace( /<li[^>]*>/gi, '' )
+        .replace( /<\/li>/gi, '<br>' )
+        .replace( /(?:<br\s*\/?>\s*){2,}/gi, '<br>' )
+        .replace( /^(?:<br\s*\/?>\s*)+|(?:\s*<br\s*\/?>)+$/gi, '' )
+        .split( /<br\s*\/?>/i )
+        .map( ( item ) => item.trim() )
+        .map( ( item ) => item.replace( /^\s*(?:[\u2022*+-]|\d+[.)])\s+/, '' ) )
+        .filter( Boolean );
 }
 
 function clampLineBreakRichText( value, limit ) {
@@ -378,8 +401,29 @@ function renderButton( card, attributes, editable, onTextChange, onUrlChange ) {
 // ─── Card Body Renderer (type-aware) ───
 function renderCardBody( { card, attributes, editable, updateCard } ) {
     const { cardType } = attributes;
-    const course = clampText( card.courseName, card.courseLimit );
     const overlayStyle = { background: card.overlayColor, opacity: card.overlayOpacity };
+
+    function renderContentText( value, limit, className = 'zen-carousel__content' ) {
+        if ( ! value ) return null;
+        const lines = getStructuredRichTextLines( value, limit );
+
+        if ( cardType === 'teacher' && lines.length > 1 ) {
+            return (
+                <ul className="zen-carousel__content-list">
+                    { lines.map( ( item, index ) => (
+                        <RichText.Content
+                            key={ index }
+                            tagName="li"
+                            className="zen-carousel__content-list-item"
+                            value={ item }
+                        />
+                    ) ) }
+                </ul>
+            );
+        }
+
+        return <RichText.Content tagName="p" className={ className } value={ getRichTextDisplayValue( value, limit ) } />;
+    }
 
     function renderBackground() {
         if ( card.mediaType === 'color' ) return null;
@@ -425,7 +469,7 @@ function renderCardBody( { card, attributes, editable, updateCard } ) {
                     <div className="zen-carousel__testimonial-body">
                         { editable
                             ? <RichText tagName="p" className="zen-carousel__content" value={ card.content } onChange={ ( v ) => updateCard( { content: v } ) } placeholder={ __( 'Write testimonial text...', 'zenctuary' ) } />
-                            : <p className="zen-carousel__content">{ getRichTextDisplayValue( card.content, card.contentLimit ) }</p>
+                            : <RichText.Content tagName="p" className="zen-carousel__content" value={ getRichTextDisplayValue( card.content, card.contentLimit ) } />
                         }
                     </div>
                     { editable
@@ -445,17 +489,17 @@ function renderCardBody( { card, attributes, editable, updateCard } ) {
         <>
             { renderBackground() }
             <div className="zen-carousel__card-overlay" style={ overlayStyle } />
-            <div className="zen-carousel__card-inner" style={ innerStyle }>
+                <div className="zen-carousel__card-inner" style={ innerStyle }>
                 { editable
                     ? <RichText tagName="h3" className="zen-carousel__title" value={ card.title } onChange={ ( v ) => updateCard( { title: v } ) } placeholder={ __( 'Card title', 'zenctuary' ) } />
-                    : <h3 className="zen-carousel__title">{ getRichTextDisplayValue( card.title, card.titleLimit ) }</h3>
+                    : <RichText.Content tagName="h3" className="zen-carousel__title" value={ getRichTextDisplayValue( card.title, card.titleLimit ) } />
                 }
                 <div className="zen-carousel__footer">
                     { cardType === 'experience' ? (
                         <>
                             { editable
                                 ? <RichText tagName="p" className="zen-carousel__content" value={ card.content } onChange={ ( v ) => updateCard( { content: v } ) } placeholder={ __( 'Supporting text...', 'zenctuary' ) } />
-                                : <p className="zen-carousel__content">{ getRichTextDisplayValue( card.content, card.contentLimit ) }</p>
+                                : renderContentText( card.content, card.contentLimit, 'zen-carousel__content' )
                             }
                             <div className="zen-carousel__dots" aria-hidden="true">
                                 <span /><span /><span />
@@ -463,8 +507,8 @@ function renderCardBody( { card, attributes, editable, updateCard } ) {
                         </>
                     ) : (
                         editable
-                            ? <RichText tagName="p" className="zen-carousel__course" value={ card.courseName } onChange={ ( v ) => updateCard( { courseName: v } ) } placeholder={ __( 'Specialty / Practice', 'zenctuary' ) } />
-                            : <p className="zen-carousel__course">{ course }</p>
+                            ? <RichText tagName="p" className="zen-carousel__course" value={ card.courseName } onChange={ ( v ) => updateCard( { courseName: v } ) } placeholder={ __( 'Specialties / Practices (one per line)', 'zenctuary' ) } />
+                            : renderContentText( card.courseName, card.courseLimit, 'zen-carousel__course' )
                     ) }
                     { renderButton(
                         card,
@@ -485,11 +529,13 @@ function renderCardBody( { card, attributes, editable, updateCard } ) {
 // ─── Save Component ───
 function Save( { attributes } ) {
     const cards = normalizeCards( attributes.cards, Math.max( 1, ( attributes.cards || [] ).length ) );
+    const visibleSettings = getEffectiveVisibleSettings( attributes );
     const blockProps = useBlockProps.save( {
         style: getCarouselStyle( attributes ),
-        'data-visible-desktop': attributes.visibleDesktop,
-        'data-visible-tablet': attributes.visibleTablet,
-        'data-visible-mobile': attributes.visibleMobile,
+        'data-visible-desktop': visibleSettings.desktop,
+        'data-visible-tablet': visibleSettings.tablet,
+        'data-visible-mobile': visibleSettings.mobile,
+        'data-card-type': attributes.cardType,
     } );
     const headerStyle = {
         fontSize: attributes.headerFontSize,
@@ -541,6 +587,7 @@ function Save( { attributes } ) {
 
 // ─── Style Helpers ───
 function getCarouselStyle( attributes ) {
+    const visibleSettings = getEffectiveVisibleSettings( attributes );
     return {
         '--zen-carousel-height': attributes.carouselHeight + 'px',
         '--zen-carousel-card-height': attributes.cardHeight + 'px',
@@ -550,9 +597,9 @@ function getCarouselStyle( attributes ) {
         borderColor: attributes.carouselBorderColor,
         borderStyle: attributes.carouselBorderStyle,
         borderRadius: attributes.carouselBorderRadius + 'px',
-        '--zen-visible-desktop': String( attributes.visibleDesktop ),
-        '--zen-visible-tablet': String( attributes.visibleTablet ),
-        '--zen-visible-mobile': String( attributes.visibleMobile ),
+        '--zen-visible-desktop': String( visibleSettings.desktop ),
+        '--zen-visible-tablet': String( visibleSettings.tablet ),
+        '--zen-visible-mobile': String( visibleSettings.mobile ),
         '--zen-arrow-size': attributes.arrowSize + 'px',
         '--zen-arrow-border-width': attributes.arrowBorderWidth + 'px',
         '--zen-arrow-border-color': attributes.arrowBorderColor,
@@ -621,6 +668,7 @@ export default function Edit( { attributes, setAttributes } ) {
     const slideRefs = useRef( [] );
 
     const cards = useMemo( () => normalizeCards( attributes.cards, Math.max( 1, ( attributes.cards || [] ).length ) ), [ attributes.cards ] );
+    const visibleSettings = useMemo( () => getEffectiveVisibleSettings( attributes ), [ attributes.cardType, attributes.visibleDesktop, attributes.visibleTablet, attributes.visibleMobile ] );
     const maxIndex = Math.max( 0, snapOffsets.length - 1 );
     const selectedCard = cards[ selectedCardIndex ] || cards[ 0 ];
 
@@ -636,7 +684,7 @@ export default function Edit( { attributes, setAttributes } ) {
         const nextOffsets = getSnapOffsets( viewportRef.current, slideRefs.current.filter( Boolean ) );
         setSnapOffsets( nextOffsets );
         setCurrentSlide( ( prev ) => Math.max( 0, Math.min( prev, nextOffsets.length - 1 ) ) );
-    }, [ cards.length, viewportWidth, attributes.slideGap, attributes.visibleDesktop, attributes.visibleTablet, attributes.visibleMobile ] );
+    }, [ cards.length, viewportWidth, attributes.slideGap, visibleSettings.desktop, visibleSettings.tablet, visibleSettings.mobile ] );
 
     // Clear video error on card switch
     useEffect( () => { setVideoValidationError( '' ); }, [ selectedCardIndex ] );
@@ -668,9 +716,10 @@ export default function Edit( { attributes, setAttributes } ) {
     const blockProps = useBlockProps( {
         className: 'is-editor-preview',
         style: getCarouselStyle( attributes ),
-        'data-visible-desktop': attributes.visibleDesktop,
-        'data-visible-tablet': attributes.visibleTablet,
-        'data-visible-mobile': attributes.visibleMobile,
+        'data-visible-desktop': visibleSettings.desktop,
+        'data-visible-tablet': visibleSettings.tablet,
+        'data-visible-mobile': visibleSettings.mobile,
+        'data-card-type': attributes.cardType,
     } );
 
     const headerStyle = {
@@ -710,7 +759,16 @@ export default function Edit( { attributes, setAttributes } ) {
                     <RangeControl label={ __( 'Card Height (px)', 'zenctuary' ) } value={ attributes.cardHeight } onChange={ ( v ) => setAttributes( { cardHeight: v } ) } min={ 240 } max={ 800 } />
                     <RangeControl label={ __( 'Gap Between Cards', 'zenctuary' ) } value={ attributes.slideGap } onChange={ ( v ) => setAttributes( { slideGap: v } ) } min={ 0 } max={ 80 } />
                     <RangeControl label={ __( 'Slide Speed (ms)', 'zenctuary' ) } value={ attributes.slideSpeed } onChange={ ( v ) => setAttributes( { slideSpeed: v } ) } min={ 100 } max={ 2000 } />
-                    <RangeControl label={ __( 'Visible Cards Desktop', 'zenctuary' ) } value={ attributes.visibleDesktop } onChange={ ( v ) => setAttributes( { visibleDesktop: v } ) } min={ 1 } max={ 4 } step={ 0.1 } />
+                    <RangeControl
+                        label={ __( 'Visible Cards Desktop', 'zenctuary' ) }
+                        value={ visibleSettings.desktop }
+                        onChange={ ( v ) => setAttributes( { visibleDesktop: v } ) }
+                        min={ 1 }
+                        max={ 4 }
+                        step={ 0.1 }
+                        disabled={ attributes.cardType === 'teacher' }
+                        help={ attributes.cardType === 'teacher' ? __( 'Teacher / Collective is fixed to 3 full cards on desktop.', 'zenctuary' ) : undefined }
+                    />
                     <RangeControl label={ __( 'Visible Cards Tablet', 'zenctuary' ) } value={ attributes.visibleTablet } onChange={ ( v ) => setAttributes( { visibleTablet: v } ) } min={ 1 } max={ 3 } step={ 0.1 } />
                     <RangeControl label={ __( 'Visible Cards Mobile', 'zenctuary' ) } value={ attributes.visibleMobile } onChange={ ( v ) => setAttributes( { visibleMobile: v } ) } min={ 1 } max={ 2 } step={ 0.1 } />
                     <SelectControl
@@ -847,9 +905,10 @@ export default function Edit( { attributes, setAttributes } ) {
                         <TextControl label={ __( 'Overlay Color', 'zenctuary' ) } value={ selectedCard.overlayColor } onChange={ ( v ) => updateCard( selectedCardIndex, { overlayColor: v } ) } />
                         <RangeControl label={ __( 'Overlay Opacity', 'zenctuary' ) } value={ selectedCard.overlayOpacity } onChange={ ( v ) => updateCard( selectedCardIndex, { overlayOpacity: v } ) } min={ 0 } max={ 1 } step={ 0.05 } />
                         <RangeControl label={ __( 'Title Limit', 'zenctuary' ) } value={ selectedCard.titleLimit } onChange={ ( v ) => updateCard( selectedCardIndex, { titleLimit: v } ) } min={ 10 } max={ 120 } />
-                        <RangeControl label={ __( 'Content Limit', 'zenctuary' ) } value={ selectedCard.contentLimit } onChange={ ( v ) => updateCard( selectedCardIndex, { contentLimit: v } ) } min={ 20 } max={ 240 } />
-                        { attributes.cardType === 'teacher' && (
-                            <RangeControl label={ __( 'Specialty Limit', 'zenctuary' ) } value={ selectedCard.courseLimit } onChange={ ( v ) => updateCard( selectedCardIndex, { courseLimit: v } ) } min={ 10 } max={ 120 } />
+                        { attributes.cardType === 'teacher' ? (
+                            <RangeControl label={ __( 'Specialty Limit', 'zenctuary' ) } value={ selectedCard.courseLimit } onChange={ ( v ) => updateCard( selectedCardIndex, { courseLimit: v } ) } min={ 10 } max={ 240 } />
+                        ) : (
+                            <RangeControl label={ __( 'Content Limit', 'zenctuary' ) } value={ selectedCard.contentLimit } onChange={ ( v ) => updateCard( selectedCardIndex, { contentLimit: v } ) } min={ 20 } max={ 240 } />
                         ) }
                         { attributes.cardType === 'testimonial' && (
                             <RangeControl label={ __( 'Rating', 'zenctuary' ) } value={ selectedCard.rating } onChange={ ( v ) => updateCard( selectedCardIndex, { rating: v } ) } min={ 0 } max={ attributes.starCount } step={ 0.5 } />

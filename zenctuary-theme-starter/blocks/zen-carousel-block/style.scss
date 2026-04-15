@@ -154,6 +154,14 @@
         }
     }
 
+    @media (min-width: 1024px) {
+        &[data-card-type="teacher"] {
+            .zen-carousel__slide {
+                flex: 0 0 calc((100% - (var(--zen-carousel-gap) * 2)) / 3);
+            }
+        }
+    }
+
     /* ── Cards (shared) ── */
     .zen-carousel__card {
         position: relative;
@@ -232,6 +240,20 @@
         color: inherit;
         font-size: 16px;
         line-height: 1.5;
+    }
+
+    .zen-carousel__content-list {
+        margin: 0;
+        padding-left: 1.2em;
+        display: grid;
+        gap: 8px;
+        color: inherit;
+        font-size: 16px;
+        line-height: 1.5;
+    }
+
+    .zen-carousel__content-list-item {
+        margin: 0;
     }
 
     .zen-carousel__footer {
