@@ -43,11 +43,20 @@ $padding_style = 'padding:' . $section_padding['top'] . ' ' . $section_padding['
 $margin_style  = 'margin:' . $section_margin['top'] . ' ' . $section_margin['right'] . ' ' . $section_margin['bottom'] . ' ' . $section_margin['left'] . ';';
 $bg_style      = 'background-color:' . $bg_color . ';';
 
-$hover_padding_style = $hover_padding['top'] . ' ' . $hover_padding['right'] . ' ' . $hover_padding['bottom'] . ' ' . $hover_padding['left'];
+$hover_vars = sprintf(
+	'--zen-nav-hover-bg:%s; --zen-nav-hover-text:%s; --zen-nav-hover-radius:%dpx; --zen-nav-hover-pad-top:%s; --zen-nav-hover-pad-right:%s; --zen-nav-hover-pad-bottom:%s; --zen-nav-hover-pad-left:%s;',
+	esc_attr( $hover_bg_color ),
+	esc_attr( $hover_text_color ),
+	intval( $hover_radius ),
+	esc_attr( $hover_padding['top'] ),
+	esc_attr( $hover_padding['right'] ),
+	esc_attr( $hover_padding['bottom'] ),
+	esc_attr( $hover_padding['left'] )
+);
 
 $wrapper_attrs = get_block_wrapper_attributes( [
 	'class'         => 'zen-navigation',
-	'style'         => esc_attr( $padding_style . ' ' . $margin_style . ' ' . $bg_style ),
+	'style'         => esc_attr( $padding_style . ' ' . $margin_style . ' ' . $bg_style . ' ' . $hover_vars ),
 	'data-mobile-layout' => esc_attr( $mobile_layout ),
 ] );
 ?>
@@ -59,13 +68,11 @@ $wrapper_attrs = get_block_wrapper_attributes( [
 			$anchor = isset( $item['anchor'] ) ? $item['anchor'] : '#';
 
 			$item_style = sprintf(
-				'color:%s; font-size:%dpx; font-weight:%s; letter-spacing:%dpx; text-transform:uppercase; padding:%s; border-radius:%dpx; transition:all 0.3s ease;',
+				'color:%s; font-size:%dpx; font-weight:%s; letter-spacing:%dpx; text-transform:uppercase; transition:all 0.3s ease;',
 				esc_attr( $text_color ),
 				intval( $font_size ),
 				esc_attr( $font_weight ),
-				intval( $letter_spacing ),
-				esc_attr( $hover_padding_style ),
-				intval( $hover_radius )
+				intval( $letter_spacing )
 			);
 			?>
 			<a
@@ -78,14 +85,3 @@ $wrapper_attrs = get_block_wrapper_attributes( [
 		<?php endforeach; ?>
 	</div>
 </nav>
-
-<style>
-	.zen-navigation__item:hover,
-	.zen-navigation__item:focus {
-		background-color: <?php echo esc_attr( $hover_bg_color ); ?> !important;
-		color: <?php echo esc_attr( $hover_text_color ); ?> !important;
-		border-radius: <?php echo esc_attr( $hover_radius ); ?>px !important;
-		padding: <?php echo esc_attr( $hover_padding_style ); ?> !important;
-		text-decoration: none;
-	}
-</style>

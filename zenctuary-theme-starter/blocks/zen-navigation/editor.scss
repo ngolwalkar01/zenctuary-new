@@ -18,10 +18,19 @@
 	cursor: pointer;
 	transition: all 0.3s ease;
 	outline: none;
+	padding: 0;
+	border-radius: 0;
 
 	&:hover,
 	&:focus {
 		text-decoration: none;
+		background-color: var(--zen-nav-hover-bg, #f5f5f5);
+		color: var(--zen-nav-hover-text, #000000);
+		border-radius: var(--zen-nav-hover-radius, 8px);
+		padding-top: var(--zen-nav-hover-pad-top, 12px);
+		padding-right: var(--zen-nav-hover-pad-right, 24px);
+		padding-bottom: var(--zen-nav-hover-pad-bottom, 12px);
+		padding-left: var(--zen-nav-hover-pad-left, 24px);
 	}
 }
 

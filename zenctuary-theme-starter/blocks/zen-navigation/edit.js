@@ -137,6 +137,13 @@ export default function Edit( { attributes, setAttributes } ) {
 			...spacingStyle( sectionPadding, 'padding' ),
 			...spacingStyle( sectionMargin, 'margin' ),
 			backgroundColor: backgroundColor || 'transparent',
+			'--zen-nav-hover-bg': hoverBgColor || DEFAULT_HOVER_BG_COLOR,
+			'--zen-nav-hover-text': hoverTextColor || DEFAULT_HOVER_TEXT_COLOR,
+			'--zen-nav-hover-radius': `${ hoverBorderRadius }px`,
+			'--zen-nav-hover-pad-top': hoverPadding?.top || '12px',
+			'--zen-nav-hover-pad-right': hoverPadding?.right || '24px',
+			'--zen-nav-hover-pad-bottom': hoverPadding?.bottom || '12px',
+			'--zen-nav-hover-pad-left': hoverPadding?.left || '24px',
 		},
 	} );
 
@@ -292,24 +299,6 @@ export default function Edit( { attributes, setAttributes } ) {
 								textDecoration: 'none',
 								display: 'inline-block',
 								textAlign: 'center',
-							} }
-							onMouseEnter={ ( e ) => {
-								e.currentTarget.style.backgroundColor = hoverBgColor || DEFAULT_HOVER_BG_COLOR;
-								e.currentTarget.style.color = hoverTextColor || DEFAULT_HOVER_TEXT_COLOR;
-								e.currentTarget.style.borderRadius = `${ hoverBorderRadius }px`;
-								e.currentTarget.style.paddingTop = hoverPadding?.top || '12px';
-								e.currentTarget.style.paddingRight = hoverPadding?.right || '24px';
-								e.currentTarget.style.paddingBottom = hoverPadding?.bottom || '12px';
-								e.currentTarget.style.paddingLeft = hoverPadding?.left || '24px';
-							} }
-							onMouseLeave={ ( e ) => {
-								e.currentTarget.style.backgroundColor = 'transparent';
-								e.currentTarget.style.color = textColor || DEFAULT_TEXT_COLOR;
-								e.currentTarget.style.borderRadius = '0px';
-								e.currentTarget.style.paddingTop = '0px';
-								e.currentTarget.style.paddingRight = '0px';
-								e.currentTarget.style.paddingBottom = '0px';
-								e.currentTarget.style.paddingLeft = '0px';
 							} }
 							onClick={ ( e ) => handleSmoothScroll( e, item.anchor ) }
 						>

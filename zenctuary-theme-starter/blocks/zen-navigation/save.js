@@ -33,6 +33,13 @@ export default function save( { attributes } ) {
 			...spacingStyle( sectionPadding, 'padding' ),
 			...spacingStyle( sectionMargin, 'margin' ),
 			backgroundColor: backgroundColor || 'transparent',
+			'--zen-nav-hover-bg': hoverBgColor || '#f5f5f5',
+			'--zen-nav-hover-text': hoverTextColor || '#000000',
+			'--zen-nav-hover-radius': `${ hoverBorderRadius }px`,
+			'--zen-nav-hover-pad-top': hoverPadding?.top || '12px',
+			'--zen-nav-hover-pad-right': hoverPadding?.right || '24px',
+			'--zen-nav-hover-pad-bottom': hoverPadding?.bottom || '12px',
+			'--zen-nav-hover-pad-left': hoverPadding?.left || '24px',
 		},
 	} );
 
@@ -51,22 +58,8 @@ export default function save( { attributes } ) {
 						fontWeight: fontWeight || '500',
 						letterSpacing: `${ letterSpacing || 1 }px`,
 						textTransform: 'uppercase',
-						paddingTop: hoverPadding?.top || '12px',
-						paddingRight: hoverPadding?.right || '24px',
-						paddingBottom: hoverPadding?.bottom || '12px',
-						paddingLeft: hoverPadding?.left || '24px',
-						borderRadius: `${ hoverBorderRadius }px`,
 						transition: 'all 0.3s ease',
 					};
-
-					const hoverStyle = `
-						.zen-navigation__item:hover,
-						.zen-navigation__item:focus {
-							background-color: ${ hoverBgColor || '#f5f5f5' };
-							color: ${ hoverTextColor || '#000000' };
-							border-radius: ${ hoverBorderRadius }px;
-						}
-					`;
 
 					return (
 						<a
@@ -76,7 +69,6 @@ export default function save( { attributes } ) {
 							style={ itemStyle }
 						>
 							<span dangerouslySetInnerHTML={ { __html: item.label || '' } } />
-							<style>{ hoverStyle }</style>
 						</a>
 					);
 				} ) }
