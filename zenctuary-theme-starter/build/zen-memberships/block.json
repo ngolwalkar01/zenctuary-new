@@ -294,7 +294,15 @@
     },
     "zencoinsRowMargin": {
       "type": "string",
-      "default": "0px 20px 0px 20px"
+      "default": "0px"
+    },
+    "zencoinsRowBgColor": {
+      "type": "string",
+      "default": "transparent"
+    },
+    "zencoinsRowPadding": {
+      "type": "string",
+      "default": "10px 20px"
     },
     "zencoinsLabelIconGap": {
       "type": "string",
