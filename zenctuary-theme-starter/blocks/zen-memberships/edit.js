@@ -9,7 +9,8 @@ export default function Edit({ attributes, setAttributes }) {
     paragraph, paragraphColor, paragraphFontSize, paragraphFontWeight, paragraphPadding, paragraphMargin, paragraphAlignment,
     btnMonthlyText, btnYearlyText,
     btnNormalBgColor, btnNormalTextColor, btnNormalFontSize, btnNormalFontWeight, btnNormalPadding, btnNormalMargin, btnNormalBorderRadius, btnNormalBorderColor, btnNormalBorderWidth,
-    btnActiveBgColor, btnActiveTextColor, btnActiveFontSize, btnActiveFontWeight, btnActiveBorderRadius, btnActiveBorderColor
+    btnActiveBgColor, btnActiveTextColor, btnActiveFontSize, btnActiveFontWeight, btnActiveBorderRadius, btnActiveBorderColor,
+    cardWidth, cardHeight, cardBgColor, cardBorderColor, cardBorderWidth, cardBorderRadius
   } = attributes;
 
   const [selectedPlan, setSelectedPlan] = useState('monthly');
@@ -61,6 +62,14 @@ export default function Edit({ attributes, setAttributes }) {
           <TextControl label="Font Weight" value={btnActiveFontWeight} onChange={(val) => setAttributes({ btnActiveFontWeight: val })} />
           <TextControl label="Border Radius" value={btnActiveBorderRadius} onChange={(val) => setAttributes({ btnActiveBorderRadius: val })} />
           <TextControl label="Border Color" value={btnActiveBorderColor} onChange={(val) => setAttributes({ btnActiveBorderColor: val })} />
+        </PanelBody>
+        <PanelBody title={__('Card Settings', 'zenctuary')} initialOpen={false}>
+          <TextControl label="Card Width" value={cardWidth} onChange={(val) => setAttributes({ cardWidth: val })} />
+          <TextControl label="Card Height" value={cardHeight} onChange={(val) => setAttributes({ cardHeight: val })} />
+          <TextControl label="Background Color" value={cardBgColor} onChange={(val) => setAttributes({ cardBgColor: val })} />
+          <TextControl label="Border Color" value={cardBorderColor} onChange={(val) => setAttributes({ cardBorderColor: val })} />
+          <TextControl label="Border Width" value={cardBorderWidth} onChange={(val) => setAttributes({ cardBorderWidth: val })} />
+          <TextControl label="Border Radius" value={cardBorderRadius} onChange={(val) => setAttributes({ cardBorderRadius: val })} />
         </PanelBody>
       </InspectorControls>
 
@@ -139,14 +148,34 @@ export default function Edit({ attributes, setAttributes }) {
       <div className="zen-memberships-placeholders">
         {selectedPlan === 'monthly' && (
           <div className="zen-memberships-placeholder monthly-placeholder">
-            <h3>[ Monthly Plans Container ]</h3>
-            <p>Cards go here...</p>
+            <div className="zen-memberships-cards-wrapper">
+              {[1, 2, 3].map((card) => (
+                <div key={card} className="zen-memberships-card" style={{
+                  width: cardWidth,
+                  height: cardHeight,
+                  backgroundColor: cardBgColor,
+                  borderColor: cardBorderColor,
+                  borderWidth: cardBorderWidth,
+                  borderRadius: cardBorderRadius
+                }}></div>
+              ))}
+            </div>
           </div>
         )}
         {selectedPlan === 'yearly' && (
           <div className="zen-memberships-placeholder yearly-placeholder">
-            <h3>[ Yearly Plans Container ]</h3>
-            <p>Cards go here...</p>
+            <div className="zen-memberships-cards-wrapper">
+              {[1, 2, 3].map((card) => (
+                <div key={card} className="zen-memberships-card" style={{
+                  width: cardWidth,
+                  height: cardHeight,
+                  backgroundColor: cardBgColor,
+                  borderColor: cardBorderColor,
+                  borderWidth: cardBorderWidth,
+                  borderRadius: cardBorderRadius
+                }}></div>
+              ))}
+            </div>
           </div>
         )}
       </div>

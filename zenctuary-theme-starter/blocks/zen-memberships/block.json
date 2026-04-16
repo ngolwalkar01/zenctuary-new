@@ -46,7 +46,13 @@
     "btnActiveFontSize": { "type": "string", "default": "16px" },
     "btnActiveFontWeight": { "type": "string", "default": "600" },
     "btnActiveBorderRadius": { "type": "string", "default": "25px" },
-    "btnActiveBorderColor": { "type": "string", "default": "transparent" }
+    "btnActiveBorderColor": { "type": "string", "default": "transparent" },
+    "cardWidth": { "type": "string", "default": "300px" },
+    "cardHeight": { "type": "string", "default": "400px" },
+    "cardBgColor": { "type": "string", "default": "transparent" },
+    "cardBorderColor": { "type": "string", "default": "#d8b354" },
+    "cardBorderWidth": { "type": "string", "default": "1px" },
+    "cardBorderRadius": { "type": "string", "default": "15px" }
   },
   "textdomain": "zenctuary",
   "editorScript": "file:./index.js",

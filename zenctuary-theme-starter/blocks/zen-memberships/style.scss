@@ -66,6 +66,21 @@
       font-size: 14px;
     }
   }
+
+  .zen-memberships-cards-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 30px;
+    width: 100%;
+  }
+
+  .zen-memberships-card {
+    box-sizing: border-box;
+    border-style: solid;
+    /* other styles are inline via block settings */
+  }
 }
 
 /* Responsive adjust if necessary */

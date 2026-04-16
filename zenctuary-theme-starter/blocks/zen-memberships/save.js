@@ -6,7 +6,8 @@ export default function save({ attributes }) {
     paragraph, paragraphColor, paragraphFontSize, paragraphFontWeight, paragraphPadding, paragraphMargin, paragraphAlignment,
     btnMonthlyText, btnYearlyText,
     btnNormalBgColor, btnNormalTextColor, btnNormalFontSize, btnNormalFontWeight, btnNormalPadding, btnNormalMargin, btnNormalBorderRadius, btnNormalBorderColor, btnNormalBorderWidth,
-    btnActiveBgColor, btnActiveTextColor, btnActiveFontSize, btnActiveFontWeight, btnActiveBorderRadius, btnActiveBorderColor
+    btnActiveBgColor, btnActiveTextColor, btnActiveFontSize, btnActiveFontWeight, btnActiveBorderRadius, btnActiveBorderColor,
+    cardWidth, cardHeight, cardBgColor, cardBorderColor, cardBorderWidth, cardBorderRadius
   } = attributes;
 
   // Enforce id="memberships" if standard anchor is not set, 
@@ -102,12 +103,32 @@ export default function save({ attributes }) {
 
       <div className="zen-memberships-placeholders">
         <div className="zen-memberships-placeholder monthly-placeholder active" id="zen-memberships-monthly-container">
-          <h3>[ Monthly Plans Container ]</h3>
-          <p>Cards go here...</p>
+          <div className="zen-memberships-cards-wrapper">
+            {[1, 2, 3].map((card) => (
+              <div key={card} className="zen-memberships-card" style={{
+                width: cardWidth,
+                height: cardHeight,
+                backgroundColor: cardBgColor,
+                borderColor: cardBorderColor,
+                borderWidth: cardBorderWidth,
+                borderRadius: cardBorderRadius
+              }}></div>
+            ))}
+          </div>
         </div>
-        <div className="zen-memberships-placeholder yearly-placeholder" id="zen-memberships-yearly-container" style={{display: 'none'}}>
-          <h3>[ Yearly Plans Container ]</h3>
-          <p>Cards go here...</p>
+        <div className="zen-memberships-placeholder yearly-placeholder" id="zen-memberships-yearly-container" style={{ display: 'none' }}>
+          <div className="zen-memberships-cards-wrapper">
+            {[1, 2, 3].map((card) => (
+              <div key={card} className="zen-memberships-card" style={{
+                width: cardWidth,
+                height: cardHeight,
+                backgroundColor: cardBgColor,
+                borderColor: cardBorderColor,
+                borderWidth: cardBorderWidth,
+                borderRadius: cardBorderRadius
+              }}></div>
+            ))}
+          </div>
         </div>
       </div>
     </div>
