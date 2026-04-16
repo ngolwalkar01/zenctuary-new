@@ -194,7 +194,12 @@ export default function save({ attributes }) {
                         backgroundColor: card.zenCoinBgColor || zenCoinBgColor,
                         borderColor: card.zenCoinBorderColor || zenCoinBorderColor
                       }}>
-                        <div className="zen-coin-inner" style={{ backgroundColor: card.zenCoinInnerColor || zenCoinInnerColor }}>
+                        <div className="zen-coin-inner" style={{ 
+                          backgroundColor: card.zenCoinInnerColor || zenCoinInnerColor,
+                          borderStyle: 'solid',
+                          borderColor: card.zenCoinInnerBorderColor || zenCoinInnerBorderColor || 'transparent',
+                          borderWidth: card.zenCoinInnerBorderWidth || zenCoinInnerBorderWidth || '0px'
+                        }}>
                           <RichText.Content
                             tagName="span"
                             className="zen-coin-value"
@@ -305,7 +310,12 @@ export default function save({ attributes }) {
                         backgroundColor: card.zenCoinBgColor || zenCoinBgColor,
                         borderColor: card.zenCoinBorderColor || zenCoinBorderColor
                       }}>
-                        <div className="zen-coin-inner" style={{ backgroundColor: card.zenCoinInnerColor || zenCoinInnerColor }}>
+                        <div className="zen-coin-inner" style={{ 
+                          backgroundColor: card.zenCoinInnerColor || zenCoinInnerColor,
+                          borderStyle: 'solid',
+                          borderColor: card.zenCoinInnerBorderColor || zenCoinInnerBorderColor || 'transparent',
+                          borderWidth: card.zenCoinInnerBorderWidth || zenCoinInnerBorderWidth || '0px'
+                        }}>
                           <RichText.Content
                             tagName="span"
                             className="zen-coin-value"

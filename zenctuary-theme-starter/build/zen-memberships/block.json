@@ -336,6 +336,14 @@
       "type": "string",
       "default": "700"
     },
+    "zenCoinInnerBorderColor": {
+      "type": "string",
+      "default": "#3f3d3d"
+    },
+    "zenCoinInnerBorderWidth": {
+      "type": "string",
+      "default": "1px"
+    },
     "monthlyCards": {
       "type": "array",
       "default": [
@@ -352,6 +360,8 @@
           "zenCoinBgColor": "#d8b354",
           "zenCoinBorderColor": "#3f3d3d",
           "zenCoinInnerColor": "#3f3d3d",
+          "zenCoinInnerBorderColor": "#3f3d3d",
+          "zenCoinInnerBorderWidth": "1px",
           "zenCoinValueColor": "#ffffff",
           "zenCoinValueFontSize": "12px",
           "zenCoinValueFontWeight": "700"
@@ -369,6 +379,8 @@
           "zenCoinBgColor": "#d8b354",
           "zenCoinBorderColor": "#3f3d3d",
           "zenCoinInnerColor": "#3f3d3d",
+          "zenCoinInnerBorderColor": "#3f3d3d",
+          "zenCoinInnerBorderWidth": "1px",
           "zenCoinValueColor": "#ffffff",
           "zenCoinValueFontSize": "12px",
           "zenCoinValueFontWeight": "700"
@@ -386,6 +398,8 @@
           "zenCoinBgColor": "#d8b354",
           "zenCoinBorderColor": "#3f3d3d",
           "zenCoinInnerColor": "#3f3d3d",
+          "zenCoinInnerBorderColor": "#3f3d3d",
+          "zenCoinInnerBorderWidth": "1px",
           "zenCoinValueColor": "#ffffff",
           "zenCoinValueFontSize": "12px",
           "zenCoinValueFontWeight": "700"
@@ -408,6 +422,8 @@
           "zenCoinBgColor": "#d8b354",
           "zenCoinBorderColor": "#3f3d3d",
           "zenCoinInnerColor": "#3f3d3d",
+          "zenCoinInnerBorderColor": "#3f3d3d",
+          "zenCoinInnerBorderWidth": "1px",
           "zenCoinValueColor": "#ffffff",
           "zenCoinValueFontSize": "12px",
           "zenCoinValueFontWeight": "700"
@@ -425,6 +441,8 @@
           "zenCoinBgColor": "#d8b354",
           "zenCoinBorderColor": "#3f3d3d",
           "zenCoinInnerColor": "#3f3d3d",
+          "zenCoinInnerBorderColor": "#3f3d3d",
+          "zenCoinInnerBorderWidth": "1px",
           "zenCoinValueColor": "#ffffff",
           "zenCoinValueFontSize": "12px",
           "zenCoinValueFontWeight": "700"
@@ -442,6 +460,8 @@
           "zenCoinBgColor": "#d8b354",
           "zenCoinBorderColor": "#3f3d3d",
           "zenCoinInnerColor": "#3f3d3d",
+          "zenCoinInnerBorderColor": "#3f3d3d",
+          "zenCoinInnerBorderWidth": "1px",
           "zenCoinValueColor": "#ffffff",
           "zenCoinValueFontSize": "12px",
           "zenCoinValueFontWeight": "700"

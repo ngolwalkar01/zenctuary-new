@@ -22,6 +22,7 @@ export default function Edit({ attributes, setAttributes }) {
     zencoinsRowMargin, zencoinsRowBgColor, zencoinsRowPadding, zencoinsLabelIconGap,
     zenCoinIconSize, zenCoinBgColor, zenCoinBorderColor, zenCoinInnerColor,
     zenCoinValueColor, zenCoinValueFontSize, zenCoinValueFontWeight,
+    zenCoinInnerBorderColor, zenCoinInnerBorderWidth,
     monthlyCards, yearlyCards
   } = attributes;
 
@@ -44,6 +45,8 @@ export default function Edit({ attributes, setAttributes }) {
       zenCoinBgColor: zenCoinBgColor,
       zenCoinBorderColor: zenCoinBorderColor,
       zenCoinInnerColor: zenCoinInnerColor,
+      zenCoinInnerBorderColor: zenCoinInnerBorderColor,
+      zenCoinInnerBorderWidth: zenCoinInnerBorderWidth,
       zenCoinValueColor: zenCoinValueColor,
       zenCoinValueFontSize: zenCoinValueFontSize,
       zenCoinValueFontWeight: zenCoinValueFontWeight
@@ -190,6 +193,8 @@ export default function Edit({ attributes, setAttributes }) {
                     <TextControl label="Background Color" value={card.zenCoinBgColor} onChange={(val) => updateCard(card.id, activeCard.planType, 'zenCoinBgColor', val)} />
                     <TextControl label="Border Color" value={card.zenCoinBorderColor} onChange={(val) => updateCard(card.id, activeCard.planType, 'zenCoinBorderColor', val)} />
                     <TextControl label="Inner Circle Color" value={card.zenCoinInnerColor} onChange={(val) => updateCard(card.id, activeCard.planType, 'zenCoinInnerColor', val)} />
+                    <TextControl label="Inner Circle Border Color" value={card.zenCoinInnerBorderColor} onChange={(val) => updateCard(card.id, activeCard.planType, 'zenCoinInnerBorderColor', val)} />
+                    <TextControl label="Inner Circle Border Width" value={card.zenCoinInnerBorderWidth} onChange={(val) => updateCard(card.id, activeCard.planType, 'zenCoinInnerBorderWidth', val)} />
                     <TextControl label="Value Color" value={card.zenCoinValueColor} onChange={(val) => updateCard(card.id, activeCard.planType, 'zenCoinValueColor', val)} />
                     <TextControl label="Value Font Size" value={card.zenCoinValueFontSize} onChange={(val) => updateCard(card.id, activeCard.planType, 'zenCoinValueFontSize', val)} />
                     <TextControl label="Value Font Weight" value={card.zenCoinValueFontWeight} onChange={(val) => updateCard(card.id, activeCard.planType, 'zenCoinValueFontWeight', val)} />
@@ -384,7 +389,12 @@ export default function Edit({ attributes, setAttributes }) {
                           backgroundColor: card.zenCoinBgColor || zenCoinBgColor,
                           borderColor: card.zenCoinBorderColor || zenCoinBorderColor
                         }}>
-                          <div className="zen-coin-inner" style={{ backgroundColor: card.zenCoinInnerColor || zenCoinInnerColor }}>
+                          <div className="zen-coin-inner" style={{ 
+                            backgroundColor: card.zenCoinInnerColor || zenCoinInnerColor,
+                            borderStyle: 'solid',
+                            borderColor: card.zenCoinInnerBorderColor || zenCoinInnerBorderColor || 'transparent',
+                            borderWidth: card.zenCoinInnerBorderWidth || zenCoinInnerBorderWidth || '0px'
+                          }}>
                             <RichText
                               tagName="span"
                               className="zen-coin-value"
@@ -535,7 +545,12 @@ export default function Edit({ attributes, setAttributes }) {
                           backgroundColor: card.zenCoinBgColor || zenCoinBgColor,
                           borderColor: card.zenCoinBorderColor || zenCoinBorderColor
                         }}>
-                          <div className="zen-coin-inner" style={{ backgroundColor: card.zenCoinInnerColor || zenCoinInnerColor }}>
+                          <div className="zen-coin-inner" style={{ 
+                            backgroundColor: card.zenCoinInnerColor || zenCoinInnerColor,
+                            borderStyle: 'solid',
+                            borderColor: card.zenCoinInnerBorderColor || zenCoinInnerBorderColor || 'transparent',
+                            borderWidth: card.zenCoinInnerBorderWidth || zenCoinInnerBorderWidth || '0px'
+                          }}>
                             <RichText
                               tagName="span"
                               className="zen-coin-value"
