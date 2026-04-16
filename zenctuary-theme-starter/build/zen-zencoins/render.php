@@ -40,6 +40,14 @@ if ( ! function_exists( 'zen_what_zencoins_merge_spacing' ) ) {
 	}
 }
 
+if ( ! function_exists( 'zen_what_zencoins_with_bottom_gap' ) ) {
+	function zen_what_zencoins_with_bottom_gap( $value, int $bottom ): array {
+		$spacing = is_array( $value ) ? wp_parse_args( $value, [ 'top' => '0px', 'right' => '0px', 'bottom' => '0px', 'left' => '0px' ] ) : [ 'top' => '0px', 'right' => '0px', 'bottom' => '0px', 'left' => '0px' ];
+		$spacing['bottom'] = absint( $bottom ) . 'px';
+		return $spacing;
+	}
+}
+
 if ( ! function_exists( 'zen_what_zencoins_coin' ) ) {
 	function zen_what_zencoins_coin( $value = '', int $size = 52, string $extra_class = '' ): string {
 		$has_value = $value !== null && $value !== '';
@@ -129,7 +137,7 @@ $rows = is_array( $attributes['rows'] ?? null ) ? $attributes['rows'] : [];
 $wrapper_attributes = get_block_wrapper_attributes(
 	[
 		'class' => 'zen-what-zencoins',
-		'style' => zen_what_zencoins_spacing( $attributes['sectionPadding'] ?? [], 'padding' ) . '--zen-what-zencoins-column-gap:' . absint( $attributes['columnGap'] ?? 120 ) . 'px;',
+		'style' => 'background-color:' . esc_attr( $attributes['sectionBackgroundColor'] ?? '#3f3d3d' ) . ';' . zen_what_zencoins_spacing( $attributes['sectionPadding'] ?? [], 'padding' ) . '--zen-what-zencoins-column-gap:' . absint( $attributes['columnGap'] ?? 120 ) . 'px;',
 	]
 );
 $arrow_position = sanitize_key( $attributes['arrowPosition'] ?? 'right' );
@@ -172,18 +180,18 @@ $button_style = sprintf(
 			</a>
 		</div>
 		<div class="zen-what-zencoins__right" style="<?php echo esc_attr( zen_what_zencoins_spacing( $attributes['rightSectionPadding'] ?? [], 'padding' ) . zen_what_zencoins_spacing( $attributes['rightSectionMargin'] ?? [], 'margin' ) ); ?>">
-			<div class="zen-what-zencoins__panel" style="border-color:<?php echo esc_attr( $attributes['panelBorderColor'] ?? '#f1eee7' ); ?>;border-width:<?php echo absint( $attributes['panelBorderWidth'] ?? 2 ); ?>px;border-radius:<?php echo absint( $attributes['panelBorderRadius'] ?? 22 ); ?>px;">
-				<div class="zen-what-zencoins__conversion" style="font-size:<?php echo absint( $attributes['conversionFontSize'] ?? 18 ); ?>px;font-weight:<?php echo esc_attr( $attributes['conversionFontWeight'] ?? '800' ); ?>;<?php echo esc_attr( zen_what_zencoins_spacing( $attributes['conversionRowMargin'] ?? [ 'bottom' => '24px' ], 'margin' ) ); ?>">
+			<div class="zen-what-zencoins__panel" style="border-color:<?php echo esc_attr( $attributes['panelBorderColor'] ?? '#f1eee7' ); ?>;border-width:<?php echo absint( $attributes['panelBorderWidth'] ?? 2 ); ?>px;border-radius:<?php echo absint( $attributes['panelBorderRadius'] ?? 22 ); ?>px;<?php echo esc_attr( zen_what_zencoins_spacing( $attributes['panelPadding'] ?? [ 'top' => '34px', 'right' => '29px', 'bottom' => '34px', 'left' => '29px' ], 'padding' ) ); ?>">
+				<div class="zen-what-zencoins__conversion" style="font-size:<?php echo absint( $attributes['conversionFontSize'] ?? 18 ); ?>px;font-weight:<?php echo esc_attr( $attributes['conversionFontWeight'] ?? '800' ); ?>;<?php echo esc_attr( zen_what_zencoins_spacing( zen_what_zencoins_with_bottom_gap( $attributes['conversionRowMargin'] ?? [ 'bottom' => '24px' ], absint( $attributes['rightBoxRowGap'] ?? 26 ) ), 'margin' ) ); ?>">
 					<span class="zen-what-zencoins__conversion-accent" style="color:<?php echo esc_attr( $attributes['conversionAccentColor'] ?? '#d8b354' ); ?>;"><?php echo zen_what_zencoins_coin( $attributes['conversionCoinValue'] ?? '1', absint( $attributes['conversionCoinSize'] ?? 56 ) ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?><?php echo esc_html( $attributes['conversionLabel'] ?? 'ZENCOIN =' ); ?></span>
 					<span style="color:<?php echo esc_attr( $attributes['conversionValueColor'] ?? '#f1eee7' ); ?>;"><?php echo esc_html( $attributes['conversionValue'] ?? '5 EURO' ); ?></span>
 				</div>
-				<span class="zen-what-zencoins__separator" style="width:<?php echo absint( $attributes['separatorWidth'] ?? 100 ); ?>%;border-top-color:<?php echo esc_attr( $attributes['separatorColor'] ?? '#949494' ); ?>;border-top-width:<?php echo absint( $attributes['separatorThickness'] ?? 3 ); ?>px;<?php echo esc_attr( zen_what_zencoins_spacing( $attributes['separatorRowMargin'] ?? [ 'bottom' => '30px' ], 'margin' ) ); ?>"></span>
+				<span class="zen-what-zencoins__separator" style="width:<?php echo absint( $attributes['separatorWidth'] ?? 100 ); ?>%;border-top-color:<?php echo esc_attr( $attributes['separatorColor'] ?? '#949494' ); ?>;border-top-width:<?php echo absint( $attributes['separatorThickness'] ?? 3 ); ?>px;<?php echo esc_attr( zen_what_zencoins_spacing( zen_what_zencoins_with_bottom_gap( $attributes['separatorRowMargin'] ?? [ 'bottom' => '30px' ], absint( $attributes['rightBoxRowGap'] ?? 26 ) ), 'margin' ) ); ?>"></span>
 				<div class="zen-what-zencoins__rows">
 					<?php foreach ( $rows as $index => $row ) : ?>
 						<?php if ( ( $row['type'] ?? 'taxonomy' ) === 'separator' ) : ?>
-							<div class="zen-what-zencoins__row-control" style="<?php echo esc_attr( zen_what_zencoins_spacing( $attributes['separatorRowMargin'] ?? [ 'bottom' => '30px' ], 'margin' ) ); ?>"><span class="zen-what-zencoins__separator" style="width:<?php echo absint( $row['width'] ?? 100 ); ?>%;border-top-color:<?php echo esc_attr( $row['color'] ?? '#949494' ); ?>;border-top-width:<?php echo absint( $row['thickness'] ?? 3 ); ?>px;"></span></div>
+							<div class="zen-what-zencoins__row-control" style="<?php echo esc_attr( zen_what_zencoins_spacing( zen_what_zencoins_with_bottom_gap( $attributes['separatorRowMargin'] ?? [ 'bottom' => '30px' ], absint( $attributes['rightBoxRowGap'] ?? 26 ) ), 'margin' ) ); ?>"><span class="zen-what-zencoins__separator" style="width:<?php echo absint( $row['width'] ?? 100 ); ?>%;border-top-color:<?php echo esc_attr( $row['color'] ?? '#949494' ); ?>;border-top-width:<?php echo absint( $row['thickness'] ?? 3 ); ?>px;"></span></div>
 						<?php elseif ( ( $row['type'] ?? '' ) === 'paragraph' ) : ?>
-							<p class="zen-what-zencoins__right-paragraph" style="color:<?php echo esc_attr( $row['color'] ?? '#b9b9b9' ); ?>;font-size:<?php echo absint( $row['fontSize'] ?? 17 ); ?>px;font-weight:<?php echo esc_attr( $row['fontWeight'] ?? '400' ); ?>;<?php echo esc_attr( zen_what_zencoins_spacing( zen_what_zencoins_merge_spacing( $attributes['paragraphRowMargin'] ?? [ 'bottom' => '26px' ], $row['margin'] ?? [] ), 'margin' ) . zen_what_zencoins_spacing( $row['padding'] ?? [], 'padding' ) ); ?>"><?php echo wp_kses_post( $row['text'] ?? '' ); ?></p>
+							<p class="zen-what-zencoins__right-paragraph" style="color:<?php echo esc_attr( $row['color'] ?? '#b9b9b9' ); ?>;font-size:<?php echo absint( $row['fontSize'] ?? 17 ); ?>px;font-weight:<?php echo esc_attr( $row['fontWeight'] ?? '400' ); ?>;<?php echo esc_attr( zen_what_zencoins_spacing( zen_what_zencoins_with_bottom_gap( zen_what_zencoins_merge_spacing( $attributes['paragraphRowMargin'] ?? [ 'bottom' => '26px' ], $row['margin'] ?? [] ), absint( $attributes['rightBoxRowGap'] ?? 26 ) ), 'margin' ) . zen_what_zencoins_spacing( $row['padding'] ?? [], 'padding' ) ); ?>"><?php echo wp_kses_post( $row['text'] ?? '' ); ?></p>
 						<?php else : ?>
 							<?php
 							$term_ids = is_array( $row['termIds'] ?? null ) ? array_values( array_filter( array_map( 'absint', $row['termIds'] ) ) ) : [];
@@ -199,7 +207,7 @@ $button_style = sprintf(
 							}
 							$fallback = $index > 2 ? [ 6, 8 ] : [ 5 ];
 							?>
-							<div class="zen-what-zencoins__data-row" style="<?php echo esc_attr( zen_what_zencoins_spacing( $attributes['taxonomyRowMargin'] ?? [ 'bottom' => '26px' ], 'margin' ) ); ?>">
+							<div class="zen-what-zencoins__data-row" style="<?php echo esc_attr( zen_what_zencoins_spacing( zen_what_zencoins_with_bottom_gap( $attributes['taxonomyRowMargin'] ?? [ 'bottom' => '26px' ], absint( $attributes['rightBoxRowGap'] ?? 26 ) ), 'margin' ) ); ?>">
 								<div class="zen-what-zencoins__term-label" style="color:<?php echo esc_attr( $row['labelColor'] ?? '#f1eee7' ); ?>;font-size:<?php echo absint( $row['labelFontSize'] ?? 18 ); ?>px;font-weight:<?php echo esc_attr( $row['labelFontWeight'] ?? '800' ); ?>;"><?php echo esc_html( strtoupper( implode( ' + ', array_slice( $term_names, 0, 2 ) ) ) ); ?></div>
 								<div class="zen-what-zencoins__price" style="font-size:<?php echo absint( $row['priceFontSize'] ?? 18 ); ?>px;font-weight:<?php echo esc_attr( $row['priceFontWeight'] ?? '800' ); ?>;"><span style="color:<?php echo esc_attr( $row['priceLabelColor'] ?? '#d8b354' ); ?>;"><?php esc_html_e( 'ZENCOINS:', 'zenctuary' ); ?></span><?php echo zen_what_zencoins_price_range( $term_ids, absint( $row['coinSize'] ?? 50 ), $fallback ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></div>
 							</div>

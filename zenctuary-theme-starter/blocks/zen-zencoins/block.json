@@ -10,6 +10,7 @@
 	"keywords": [ "zenctuary", "zencoins", "pricing", "coins" ],
 	"attributes": {
 		"heading": { "type": "string", "default": "WHAT ARE ZENCOINS?" },
+		"sectionBackgroundColor": { "type": "string", "default": "#3f3d3d" },
 		"headingFontSize": { "type": "number", "default": 36 },
 		"headingColor": { "type": "string", "default": "#d8b354" },
 		"headingFontWeight": { "type": "string", "default": "800" },
@@ -62,6 +63,8 @@
 		"leftSectionMargin": { "type": "object", "default": { "top": "0px", "right": "0px", "bottom": "0px", "left": "0px" } },
 		"rightSectionPadding": { "type": "object", "default": { "top": "0px", "right": "0px", "bottom": "0px", "left": "0px" } },
 		"rightSectionMargin": { "type": "object", "default": { "top": "0px", "right": "0px", "bottom": "0px", "left": "0px" } },
+		"panelPadding": { "type": "object", "default": { "top": "34px", "right": "29px", "bottom": "34px", "left": "29px" } },
+		"rightBoxRowGap": { "type": "number", "default": 26 },
 		"leftHeadingRowMargin": { "type": "object", "default": { "top": "0px", "right": "0px", "bottom": "34px", "left": "0px" } },
 		"leftParagraphMargin": { "type": "object", "default": { "top": "0px", "right": "0px", "bottom": "36px", "left": "0px" } },
 		"leftButtonMargin": { "type": "object", "default": { "top": "0px", "right": "0px", "bottom": "0px", "left": "0px" } },

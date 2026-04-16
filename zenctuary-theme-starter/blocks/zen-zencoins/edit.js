@@ -32,6 +32,7 @@ const mergeSpacing = ( ...values ) => values.reduce( ( merged, value ) => {
 		} )
 	);
 }, DEFAULT_SPACING );
+const withBottomGap = ( value = {}, bottom = 26 ) => ( { ...norm( value ), bottom: `${ bottom }px` } );
 const spacingStyle = ( value = {}, prop ) => {
 	const s = norm( value );
 	return { [ `${ prop }Top` ]: s.top, [ `${ prop }Right` ]: s.right, [ `${ prop }Bottom` ]: s.bottom, [ `${ prop }Left` ]: s.left };
@@ -120,7 +121,7 @@ export default function Edit( { attributes, setAttributes } ) {
 
 	const blockProps = useBlockProps( {
 		className: 'zen-what-zencoins',
-		style: { ...spacingStyle( attributes.sectionPadding, 'padding' ), '--zen-what-zencoins-column-gap': `${ attributes.columnGap }px` },
+		style: { backgroundColor: attributes.sectionBackgroundColor || '#3f3d3d', ...spacingStyle( attributes.sectionPadding, 'padding' ), '--zen-what-zencoins-column-gap': `${ attributes.columnGap }px` },
 	} );
 	const buttonWidthStyle = attributes.buttonWidthMode === 'full'
 		? { width: '100%' }
@@ -132,14 +133,14 @@ export default function Edit( { attributes, setAttributes } ) {
 
 	const renderRow = ( row, index ) => {
 		if ( row.type === 'separator' ) {
-			return <div className="zen-what-zencoins__row-control" key={ row.id || index } onClick={ () => setSelectedRowIndex( index ) } style={ spacingStyle( attributes.separatorRowMargin, 'margin' ) }><span className="zen-what-zencoins__separator" style={ { width: `${ row.width || 100 }%`, borderTopColor: row.color, borderTopWidth: `${ row.thickness || 1 }px` } } /></div>;
+			return <div className="zen-what-zencoins__row-control" key={ row.id || index } onClick={ () => setSelectedRowIndex( index ) } style={ spacingStyle( withBottomGap( attributes.separatorRowMargin, attributes.rightBoxRowGap || 26 ), 'margin' ) }><span className="zen-what-zencoins__separator" style={ { width: `${ row.width || 100 }%`, borderTopColor: row.color, borderTopWidth: `${ row.thickness || 1 }px` } } /></div>;
 		}
 		if ( row.type === 'paragraph' ) {
-			return <RichText key={ row.id || index } tagName="p" className="zen-what-zencoins__right-paragraph" value={ row.text } onChange={ ( text ) => setRow( index, { text } ) } onFocus={ () => setSelectedRowIndex( index ) } placeholder="Description..." style={ { color: row.color, fontSize: `${ row.fontSize }px`, fontWeight: row.fontWeight, ...spacingStyle( mergeSpacing( attributes.paragraphRowMargin, row.margin ), 'margin' ), ...spacingStyle( row.padding, 'padding' ) } } allowedFormats={ [ 'core/bold', 'core/italic', 'core/link' ] } />;
+			return <RichText key={ row.id || index } tagName="p" className="zen-what-zencoins__right-paragraph" value={ row.text } onChange={ ( text ) => setRow( index, { text } ) } onFocus={ () => setSelectedRowIndex( index ) } placeholder="Description..." style={ { color: row.color, fontSize: `${ row.fontSize }px`, fontWeight: row.fontWeight, ...spacingStyle( withBottomGap( mergeSpacing( attributes.paragraphRowMargin, row.margin ), attributes.rightBoxRowGap || 26 ), 'margin' ), ...spacingStyle( row.padding, 'padding' ) } } allowedFormats={ [ 'core/bold', 'core/italic', 'core/link' ] } />;
 		}
 		const names = row.termNames?.length ? row.termNames : ( row.termIds || [] ).map( ( id ) => termNames[ String( id ) ] ).filter( Boolean );
 		return (
-			<div className="zen-what-zencoins__data-row" key={ row.id || index } onClick={ () => setSelectedRowIndex( index ) } style={ spacingStyle( attributes.taxonomyRowMargin, 'margin' ) }>
+			<div className="zen-what-zencoins__data-row" key={ row.id || index } onClick={ () => setSelectedRowIndex( index ) } style={ spacingStyle( withBottomGap( attributes.taxonomyRowMargin, attributes.rightBoxRowGap || 26 ), 'margin' ) }>
 				<div className="zen-what-zencoins__term-label" style={ { color: row.labelColor, fontSize: `${ row.labelFontSize }px`, fontWeight: row.labelFontWeight } }>{ ( names.length ? names.join( ' + ' ) : 'Select experience category' ).toUpperCase() }</div>
 				<div className="zen-what-zencoins__price" style={ { fontSize: `${ row.priceFontSize }px`, fontWeight: row.priceFontWeight } }><span style={ { color: row.priceLabelColor } }>ZENCOINS:</span><CoinStack coins={ renderCoins( row ) } size={ row.coinSize || 50 } /></div>
 			</div>
@@ -150,6 +151,8 @@ export default function Edit( { attributes, setAttributes } ) {
 		<>
 			<InspectorControls>
 				<PanelBody title="Section Spacing" initialOpen>
+					<p className="components-base-control__label">Section background color</p>
+					<ColorPalette value={ attributes.sectionBackgroundColor } onChange={ ( sectionBackgroundColor ) => setAttributes( { sectionBackgroundColor: sectionBackgroundColor || '#3f3d3d' } ) } />
 					<SpacingControls label="Section padding" value={ attributes.sectionPadding } onChange={ ( sectionPadding ) => setAttributes( { sectionPadding } ) } />
 					<SpacingControls label="Left section padding" value={ attributes.leftSectionPadding } onChange={ ( leftSectionPadding ) => setAttributes( { leftSectionPadding } ) } />
 					<SpacingControls label="Left section margin" value={ attributes.leftSectionMargin } onChange={ ( leftSectionMargin ) => setAttributes( { leftSectionMargin } ) } />
@@ -163,6 +166,8 @@ export default function Edit( { attributes, setAttributes } ) {
 					<SpacingControls label="Button margin" value={ attributes.leftButtonMargin } onChange={ ( leftButtonMargin ) => setAttributes( { leftButtonMargin } ) } />
 				</PanelBody>
 				<PanelBody title="Right Row Spacing" initialOpen={ false }>
+					<SpacingControls label="Panel box padding" value={ attributes.panelPadding } onChange={ ( panelPadding ) => setAttributes( { panelPadding } ) } />
+					<RangeControl label="Right box row gap" value={ attributes.rightBoxRowGap } onChange={ ( rightBoxRowGap ) => setAttributes( { rightBoxRowGap } ) } min={ 0 } max={ 80 } />
 					<SpacingControls label="Conversion row margin" value={ attributes.conversionRowMargin } onChange={ ( conversionRowMargin ) => setAttributes( { conversionRowMargin } ) } />
 					<SpacingControls label="Taxonomy row margin" value={ attributes.taxonomyRowMargin } onChange={ ( taxonomyRowMargin ) => setAttributes( { taxonomyRowMargin } ) } />
 					<SpacingControls label="Paragraph row margin" value={ attributes.paragraphRowMargin } onChange={ ( paragraphRowMargin ) => setAttributes( { paragraphRowMargin } ) } />
@@ -251,12 +256,12 @@ export default function Edit( { attributes, setAttributes } ) {
 						</a>
 					</div>
 					<div className="zen-what-zencoins__right" style={ { ...spacingStyle( attributes.rightSectionPadding, 'padding' ), ...spacingStyle( attributes.rightSectionMargin, 'margin' ) } }>
-						<div className="zen-what-zencoins__panel" style={ { borderColor: attributes.panelBorderColor, borderWidth: `${ attributes.panelBorderWidth }px`, borderRadius: `${ attributes.panelBorderRadius }px` } }>
-							<div className="zen-what-zencoins__conversion" style={ { fontSize: `${ attributes.conversionFontSize }px`, fontWeight: attributes.conversionFontWeight, ...spacingStyle( attributes.conversionRowMargin, 'margin' ) } }>
+						<div className="zen-what-zencoins__panel" style={ { borderColor: attributes.panelBorderColor, borderWidth: `${ attributes.panelBorderWidth }px`, borderRadius: `${ attributes.panelBorderRadius }px`, ...spacingStyle( attributes.panelPadding, 'padding' ) } }>
+							<div className="zen-what-zencoins__conversion" style={ { fontSize: `${ attributes.conversionFontSize }px`, fontWeight: attributes.conversionFontWeight, ...spacingStyle( withBottomGap( attributes.conversionRowMargin, attributes.rightBoxRowGap || 26 ), 'margin' ) } }>
 								<span className="zen-what-zencoins__conversion-accent" style={ { color: attributes.conversionAccentColor } }><Coin value={ attributes.conversionCoinValue } size={ attributes.conversionCoinSize } />{ attributes.conversionLabel }</span>
 								<span style={ { color: attributes.conversionValueColor } }>{ attributes.conversionValue }</span>
 							</div>
-							<span className="zen-what-zencoins__separator" style={ { width: `${ attributes.separatorWidth }%`, borderTopColor: attributes.separatorColor, borderTopWidth: `${ attributes.separatorThickness }px`, ...spacingStyle( attributes.separatorRowMargin, 'margin' ) } } />
+							<span className="zen-what-zencoins__separator" style={ { width: `${ attributes.separatorWidth }%`, borderTopColor: attributes.separatorColor, borderTopWidth: `${ attributes.separatorThickness }px`, ...spacingStyle( withBottomGap( attributes.separatorRowMargin, attributes.rightBoxRowGap || 26 ), 'margin' ) } } />
 							<div className="zen-what-zencoins__rows">{ rows.map( renderRow ) }</div>
 						</div>
 					</div>

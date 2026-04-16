@@ -18,6 +18,10 @@
       "type": "string",
       "default": "WHAT ARE ZENCOINS?"
     },
+    "sectionBackgroundColor": {
+      "type": "string",
+      "default": "#3f3d3d"
+    },
     "headingFontSize": {
       "type": "number",
       "default": 36
@@ -308,6 +312,19 @@
         "bottom": "0px",
         "left": "0px"
       }
+    },
+    "panelPadding": {
+      "type": "object",
+      "default": {
+        "top": "34px",
+        "right": "29px",
+        "bottom": "34px",
+        "left": "29px"
+      }
+    },
+    "rightBoxRowGap": {
+      "type": "number",
+      "default": 26
     },
     "leftHeadingRowMargin": {
       "type": "object",
