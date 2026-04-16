@@ -1,0 +1,25 @@
+.wp-block-zenctuary-zen-memberships {
+  padding: 40px 20px;
+  background-color: transparent;
+  text-align: center;
+  font-family: Arial, sans-serif;
+  width: 100%;
+}
+
+.zen-memberships-heading {
+  margin: 0 0 20px 0;
+  text-transform: uppercase;
+}
+
+.zen-memberships-paragraph {
+  max-width: 800px;
+  margin: 0 auto 40px auto;
+  line-height: 1.6;
+}
+
+/* Responsive adjust if necessary */
+@media (max-width: 768px) {
+  .wp-block-zenctuary-zen-memberships {
+    padding: 30px 15px;
+  }
+}
