@@ -204,6 +204,7 @@ export default function Edit( { attributes, setAttributes } ) {
 					<RangeControl label="Border width" value={ attributes.panelBorderWidth } onChange={ ( panelBorderWidth ) => setAttributes( { panelBorderWidth } ) } min={ 0 } max={ 10 } />
 					<RangeControl label="Border radius" value={ attributes.panelBorderRadius } onChange={ ( panelBorderRadius ) => setAttributes( { panelBorderRadius } ) } min={ 0 } max={ 60 } />
 					<p className="components-base-control__label">Border color</p><ColorPalette value={ attributes.panelBorderColor } onChange={ ( panelBorderColor ) => setAttributes( { panelBorderColor: panelBorderColor || '#f1eee7' } ) } />
+					<p className="components-base-control__label">Panel background color</p><ColorPalette value={ attributes.panelBackgroundColor } onChange={ ( panelBackgroundColor ) => setAttributes( { panelBackgroundColor: panelBackgroundColor || 'transparent' } ) } />
 					<TextControl label="Conversion coin value" value={ attributes.conversionCoinValue } onChange={ ( conversionCoinValue ) => setAttributes( { conversionCoinValue } ) } />
 					<RangeControl label="Conversion coin size" value={ attributes.conversionCoinSize } onChange={ ( conversionCoinSize ) => setAttributes( { conversionCoinSize } ) } min={ 28 } max={ 100 } />
 					<TextControl label="Conversion label" value={ attributes.conversionLabel } onChange={ ( conversionLabel ) => setAttributes( { conversionLabel } ) } />
@@ -256,7 +257,7 @@ export default function Edit( { attributes, setAttributes } ) {
 						</a>
 					</div>
 					<div className="zen-what-zencoins__right" style={ { ...spacingStyle( attributes.rightSectionPadding, 'padding' ), ...spacingStyle( attributes.rightSectionMargin, 'margin' ) } }>
-						<div className="zen-what-zencoins__panel" style={ { borderColor: attributes.panelBorderColor, borderWidth: `${ attributes.panelBorderWidth }px`, borderRadius: `${ attributes.panelBorderRadius }px`, ...spacingStyle( attributes.panelPadding, 'padding' ) } }>
+						<div className="zen-what-zencoins__panel" style={ { borderColor: attributes.panelBorderColor, backgroundColor: attributes.panelBackgroundColor || 'transparent', borderWidth: `${ attributes.panelBorderWidth }px`, borderRadius: `${ attributes.panelBorderRadius }px`, ...spacingStyle( attributes.panelPadding, 'padding' ) } }>
 							<div className="zen-what-zencoins__conversion" style={ { fontSize: `${ attributes.conversionFontSize }px`, fontWeight: attributes.conversionFontWeight, ...spacingStyle( withBottomGap( attributes.conversionRowMargin, attributes.rightBoxRowGap || 26 ), 'margin' ) } }>
 								<span className="zen-what-zencoins__conversion-accent" style={ { color: attributes.conversionAccentColor } }><Coin value={ attributes.conversionCoinValue } size={ attributes.conversionCoinSize } />{ attributes.conversionLabel }</span>
 								<span style={ { color: attributes.conversionValueColor } }>{ attributes.conversionValue }</span>

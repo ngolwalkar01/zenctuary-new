@@ -133,6 +133,10 @@
       "type": "string",
       "default": "#f1eee7"
     },
+    "panelBackgroundColor": {
+      "type": "string",
+      "default": "transparent"
+    },
     "panelBorderWidth": {
       "type": "number",
       "default": 2

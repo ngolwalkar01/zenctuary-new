@@ -35,6 +35,7 @@
 		"showArrow": { "type": "boolean", "default": true },
 		"arrowPosition": { "type": "string", "default": "right" },
 		"panelBorderColor": { "type": "string", "default": "#f1eee7" },
+		"panelBackgroundColor": { "type": "string", "default": "transparent" },
 		"panelBorderWidth": { "type": "number", "default": 2 },
 		"panelBorderRadius": { "type": "number", "default": 22 },
 		"conversionCoinValue": { "type": "string", "default": "1" },
