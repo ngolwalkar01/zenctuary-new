@@ -11,6 +11,9 @@ export default function save({ attributes }) {
     cardTopBgColor, cardBottomBgColor, cardImageWidth, cardImageHeight, cardImageSpacing,
     cardHeadingColor, cardHeadingFontSize, cardHeadingFontWeight, cardHeadingFontStyle, cardHeadingLetterSpacing, cardHeadingMargin,
     cardSeparatorColor, cardSeparatorThickness, cardSeparatorLength,
+    cardPriceColor, cardPriceFontSize, cardPriceFontWeight, cardPriceMargin,
+    cardDurationColor, cardDurationFontSize, cardDurationFontWeight, cardDurationMargin,
+    cardPriceRowGap, cardPriceRowMargin,
     monthlyCards, yearlyCards
   } = attributes;
 
@@ -142,7 +145,32 @@ export default function save({ attributes }) {
                   />
                   <div className="zen-memberships-card-separator" style={{ backgroundColor: cardSeparatorColor, height: cardSeparatorThickness, width: cardSeparatorLength }}></div>
                 </div>
-                <div className="zen-memberships-card-bottom" style={{ backgroundColor: cardBottomBgColor }}></div>
+                <div className="zen-memberships-card-bottom" style={{ backgroundColor: cardBottomBgColor }}>
+                  <div className="zen-memberships-price-row" style={{ gap: cardPriceRowGap, margin: cardPriceRowMargin }}>
+                    <RichText.Content
+                      tagName="span"
+                      className="zen-memberships-price"
+                      value={card.priceText}
+                      style={{
+                        color: cardPriceColor,
+                        fontSize: cardPriceFontSize,
+                        fontWeight: cardPriceFontWeight,
+                        margin: cardPriceMargin
+                      }}
+                    />
+                    <RichText.Content
+                      tagName="span"
+                      className="zen-memberships-duration"
+                      value={card.durationText}
+                      style={{
+                        color: cardDurationColor,
+                        fontSize: cardDurationFontSize,
+                        fontWeight: cardDurationFontWeight,
+                        margin: cardDurationMargin
+                      }}
+                    />
+                  </div>
+                </div>
               </div>
             ))}
           </div>
@@ -183,7 +211,32 @@ export default function save({ attributes }) {
                   />
                   <div className="zen-memberships-card-separator" style={{ backgroundColor: cardSeparatorColor, height: cardSeparatorThickness, width: cardSeparatorLength }}></div>
                 </div>
-                <div className="zen-memberships-card-bottom" style={{ backgroundColor: cardBottomBgColor }}></div>
+                <div className="zen-memberships-card-bottom" style={{ backgroundColor: cardBottomBgColor }}>
+                  <div className="zen-memberships-price-row" style={{ gap: cardPriceRowGap, margin: cardPriceRowMargin }}>
+                    <RichText.Content
+                      tagName="span"
+                      className="zen-memberships-price"
+                      value={card.priceText}
+                      style={{
+                        color: cardPriceColor,
+                        fontSize: cardPriceFontSize,
+                        fontWeight: cardPriceFontWeight,
+                        margin: cardPriceMargin
+                      }}
+                    />
+                    <RichText.Content
+                      tagName="span"
+                      className="zen-memberships-duration"
+                      value={card.durationText}
+                      style={{
+                        color: cardDurationColor,
+                        fontSize: cardDurationFontSize,
+                        fontWeight: cardDurationFontWeight,
+                        margin: cardDurationMargin
+                      }}
+                    />
+                  </div>
+                </div>
               </div>
             ))}
           </div>

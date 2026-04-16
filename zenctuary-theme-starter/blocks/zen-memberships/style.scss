@@ -98,6 +98,28 @@
     width: 100%;
     flex: 1;
     box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .zen-memberships-price-row {
+    display: flex;
+    flex-direction: row;
+    align-items: baseline;
+    justify-content: center;
+    flex-wrap: nowrap;
+    white-space: nowrap;
+  }
+
+  .zen-memberships-price {
+    line-height: 1;
+    display: inline-block;
+  }
+
+  .zen-memberships-duration {
+    display: inline-block;
+    align-self: flex-end;
   }
 
   .zen-memberships-card-image-wrapper {

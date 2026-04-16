@@ -14,6 +14,9 @@ export default function Edit({ attributes, setAttributes }) {
     cardTopBgColor, cardBottomBgColor, cardImageWidth, cardImageHeight, cardImageSpacing,
     cardHeadingColor, cardHeadingFontSize, cardHeadingFontWeight, cardHeadingFontStyle, cardHeadingLetterSpacing, cardHeadingMargin,
     cardSeparatorColor, cardSeparatorThickness, cardSeparatorLength,
+    cardPriceColor, cardPriceFontSize, cardPriceFontWeight, cardPriceMargin,
+    cardDurationColor, cardDurationFontSize, cardDurationFontWeight, cardDurationMargin,
+    cardPriceRowGap, cardPriceRowMargin,
     monthlyCards, yearlyCards
   } = attributes;
 
@@ -121,6 +124,20 @@ export default function Edit({ attributes, setAttributes }) {
           <TextControl label="Line Color" value={cardSeparatorColor} onChange={(val) => setAttributes({ cardSeparatorColor: val })} />
           <TextControl label="Thickness (px)" value={cardSeparatorThickness} onChange={(val) => setAttributes({ cardSeparatorThickness: val })} />
           <TextControl label="Length (Width % or px)" value={cardSeparatorLength} onChange={(val) => setAttributes({ cardSeparatorLength: val })} />
+        </PanelBody>
+        <PanelBody title={__('Card Price Settings', 'zenctuary')} initialOpen={false}>
+          <TextControl label="Price Color" value={cardPriceColor} onChange={(val) => setAttributes({ cardPriceColor: val })} />
+          <TextControl label="Price Font Size" value={cardPriceFontSize} onChange={(val) => setAttributes({ cardPriceFontSize: val })} />
+          <TextControl label="Price Font Weight" value={cardPriceFontWeight} onChange={(val) => setAttributes({ cardPriceFontWeight: val })} />
+          <TextControl label="Price Margin" value={cardPriceMargin} onChange={(val) => setAttributes({ cardPriceMargin: val })} />
+        </PanelBody>
+        <PanelBody title={__('Card Duration Settings', 'zenctuary')} initialOpen={false}>
+          <TextControl label="Duration Color" value={cardDurationColor} onChange={(val) => setAttributes({ cardDurationColor: val })} />
+          <TextControl label="Duration Font Size" value={cardDurationFontSize} onChange={(val) => setAttributes({ cardDurationFontSize: val })} />
+          <TextControl label="Duration Font Weight" value={cardDurationFontWeight} onChange={(val) => setAttributes({ cardDurationFontWeight: val })} />
+          <TextControl label="Duration Margin" value={cardDurationMargin} onChange={(val) => setAttributes({ cardDurationMargin: val })} />
+          <TextControl label="Gap between Price & Duration" value={cardPriceRowGap} onChange={(val) => setAttributes({ cardPriceRowGap: val })} />
+          <TextControl label="Price Row Margin" value={cardPriceRowMargin} onChange={(val) => setAttributes({ cardPriceRowMargin: val })} />
         </PanelBody>
       </InspectorControls>
 
@@ -250,7 +267,36 @@ export default function Edit({ attributes, setAttributes }) {
                     />
                     <div className="zen-memberships-card-separator" style={{ backgroundColor: cardSeparatorColor, height: cardSeparatorThickness, width: cardSeparatorLength }}></div>
                   </div>
-                  <div className="zen-memberships-card-bottom" style={{ backgroundColor: cardBottomBgColor }}></div>
+                  <div className="zen-memberships-card-bottom" style={{ backgroundColor: cardBottomBgColor }}>
+                    <div className="zen-memberships-price-row" style={{ gap: cardPriceRowGap, margin: cardPriceRowMargin }}>
+                      <RichText
+                        tagName="span"
+                        className="zen-memberships-price"
+                        value={card.priceText}
+                        onChange={(val) => updateCard(card.id, 'monthly', 'priceText', val)}
+                        placeholder="90€"
+                        style={{
+                          color: cardPriceColor,
+                          fontSize: cardPriceFontSize,
+                          fontWeight: cardPriceFontWeight,
+                          margin: cardPriceMargin
+                        }}
+                      />
+                      <RichText
+                        tagName="span"
+                        className="zen-memberships-duration"
+                        value={card.durationText}
+                        onChange={(val) => updateCard(card.id, 'monthly', 'durationText', val)}
+                        placeholder="/month"
+                        style={{
+                          color: cardDurationColor,
+                          fontSize: cardDurationFontSize,
+                          fontWeight: cardDurationFontWeight,
+                          margin: cardDurationMargin
+                        }}
+                      />
+                    </div>
+                  </div>
                   
                   <button className="zen-memberships-remove-card" onClick={() => removeCard(card.id, 'monthly')} title="Remove Card">×</button>
                 </div>
@@ -314,7 +360,36 @@ export default function Edit({ attributes, setAttributes }) {
                     />
                     <div className="zen-memberships-card-separator" style={{ backgroundColor: cardSeparatorColor, height: cardSeparatorThickness, width: cardSeparatorLength }}></div>
                   </div>
-                  <div className="zen-memberships-card-bottom" style={{ backgroundColor: cardBottomBgColor }}></div>
+                  <div className="zen-memberships-card-bottom" style={{ backgroundColor: cardBottomBgColor }}>
+                    <div className="zen-memberships-price-row" style={{ gap: cardPriceRowGap, margin: cardPriceRowMargin }}>
+                      <RichText
+                        tagName="span"
+                        className="zen-memberships-price"
+                        value={card.priceText}
+                        onChange={(val) => updateCard(card.id, 'yearly', 'priceText', val)}
+                        placeholder="900€"
+                        style={{
+                          color: cardPriceColor,
+                          fontSize: cardPriceFontSize,
+                          fontWeight: cardPriceFontWeight,
+                          margin: cardPriceMargin
+                        }}
+                      />
+                      <RichText
+                        tagName="span"
+                        className="zen-memberships-duration"
+                        value={card.durationText}
+                        onChange={(val) => updateCard(card.id, 'yearly', 'durationText', val)}
+                        placeholder="/year"
+                        style={{
+                          color: cardDurationColor,
+                          fontSize: cardDurationFontSize,
+                          fontWeight: cardDurationFontWeight,
+                          margin: cardDurationMargin
+                        }}
+                      />
+                    </div>
+                  </div>
                   
                   <button className="zen-memberships-remove-card" onClick={() => removeCard(card.id, 'yearly')} title="Remove Card">×</button>
                 </div>
