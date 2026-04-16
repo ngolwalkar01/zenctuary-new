@@ -12,6 +12,7 @@ import {
 	ColorPalette,
 	PanelBody,
 	RangeControl,
+	SelectControl,
 	TextControl,
 	ToggleControl,
 	__experimentalUnitControl as UnitControl,
@@ -93,6 +94,14 @@ function getSlidesPerView( cardsPerView, edgePeekPercent ) {
 	return Math.max( 1, Number( cardsPerView ) || 1 ) + ( Math.max( 0, Number( edgePeekPercent ) || 0 ) / 100 );
 }
 
+function arrowIcon() {
+	return (
+		<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+			<path d="M3.5 12H18.5M18.5 12L13.5 7M18.5 12L13.5 17" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round" />
+		</svg>
+	);
+}
+
 export default function Edit( { attributes, setAttributes } ) {
 	const [ selectedCardIndex, setSelectedCardIndex ] = useState( 0 );
 	const cards = useMemo( () => normalizeCards( attributes.cards ), [ attributes.cards ] );
@@ -151,6 +160,35 @@ export default function Edit( { attributes, setAttributes } ) {
 			'--premium-edge-peek-gap': `${ attributes.gap || 24 }px`,
 			'--premium-edge-peek-card-radius': `${ attributes.cardBorderRadius || 20 }px`,
 			'--premium-edge-peek-card-padding': `${ attributes.cardContentPadding || 24 }px`,
+			'--premium-edge-peek-heading-max-width': `${ attributes.headingMaxWidth || 760 }px`,
+			'--premium-edge-peek-heading-size': attributes.headingFontSize || 'clamp(2rem, 4vw, 3.75rem)',
+			'--premium-edge-peek-heading-weight': attributes.headingFontWeight || '700',
+			'--premium-edge-peek-heading-line-height': attributes.headingLineHeight || '0.98',
+			'--premium-edge-peek-heading-color': attributes.headingColor || '#171717',
+			'--premium-edge-peek-card-title-size': attributes.cardTitleFontSize || 'clamp(1.5rem, 2.4vw, 2rem)',
+			'--premium-edge-peek-card-title-weight': attributes.cardTitleFontWeight || '700',
+			'--premium-edge-peek-card-title-line-height': attributes.cardTitleLineHeight || '1.04',
+			'--premium-edge-peek-card-title-color': attributes.cardTitleColor || '#ffffff',
+			'--premium-edge-peek-card-body-size': attributes.cardBodyFontSize || '1rem',
+			'--premium-edge-peek-card-body-weight': attributes.cardBodyFontWeight || '400',
+			'--premium-edge-peek-card-body-line-height': attributes.cardBodyLineHeight || '1.5',
+			'--premium-edge-peek-card-body-color': attributes.cardBodyColor || '#ffffff',
+			'--premium-edge-peek-dots-size': attributes.dotsFontSize || '1.35rem',
+			'--premium-edge-peek-dots-spacing': attributes.dotsLetterSpacing || '0.22em',
+			'--premium-edge-peek-dots-color': attributes.dotsColor || 'rgba(255, 255, 255, 0.86)',
+			'--premium-edge-peek-button-size': attributes.buttonFontSize || '0.95rem',
+			'--premium-edge-peek-button-weight': attributes.buttonFontWeight || '600',
+			'--premium-edge-peek-button-line-height': attributes.buttonLineHeight || '1.2',
+			'--premium-edge-peek-button-color': attributes.buttonTextColor || '#ffffff',
+			'--premium-edge-peek-button-bg': attributes.buttonBackgroundColor || 'rgba(255, 255, 255, 0.16)',
+			'--premium-edge-peek-button-border-color': attributes.buttonBorderColor || 'rgba(255, 255, 255, 0.38)',
+			'--premium-edge-peek-button-border-width': `${ attributes.buttonBorderWidth || 1 }px`,
+			'--premium-edge-peek-button-radius': attributes.buttonBorderRadius || '999px',
+			'--premium-edge-peek-button-width': attributes.buttonWidth || 'fit-content',
+			'--premium-edge-peek-button-pad-top': attributes.buttonPadding?.top || '13px',
+			'--premium-edge-peek-button-pad-right': attributes.buttonPadding?.right || '20px',
+			'--premium-edge-peek-button-pad-bottom': attributes.buttonPadding?.bottom || '13px',
+			'--premium-edge-peek-button-pad-left': attributes.buttonPadding?.left || '20px',
 			'--premium-edge-peek-preview-slides': String( desktopSlides ),
 			'--premium-edge-peek-desktop-cards': String( attributes.desktopCards || 3 ),
 			'--premium-edge-peek-tablet-cards': String( attributes.tabletCards || 2 ),
@@ -178,6 +216,16 @@ export default function Edit( { attributes, setAttributes } ) {
 					<TextControl label={ __( 'Custom Background Color', 'zenctuary' ) } value={ attributes.backgroundColor } onChange={ ( value ) => setAttributes( { backgroundColor: value || '#f4efe7' } ) } />
 				</PanelBody>
 
+				<PanelBody title={ __( 'Main Title', 'zenctuary' ) } initialOpen={ false }>
+					<RangeControl label={ __( 'Title Width', 'zenctuary' ) } value={ attributes.headingMaxWidth } onChange={ ( value ) => setAttributes( { headingMaxWidth: value } ) } min={ 240 } max={ 1200 } step={ 10 } />
+					<TextControl label={ __( 'Title Font Size', 'zenctuary' ) } value={ attributes.headingFontSize } onChange={ ( value ) => setAttributes( { headingFontSize: value || 'clamp(2rem, 4vw, 3.75rem)' } ) } />
+					<TextControl label={ __( 'Title Weight', 'zenctuary' ) } value={ attributes.headingFontWeight } onChange={ ( value ) => setAttributes( { headingFontWeight: value || '700' } ) } />
+					<TextControl label={ __( 'Title Line Height', 'zenctuary' ) } value={ attributes.headingLineHeight } onChange={ ( value ) => setAttributes( { headingLineHeight: value || '0.98' } ) } />
+					<p className="components-base-control__label">{ __( 'Title Color', 'zenctuary' ) }</p>
+					<ColorPalette colors={ PRESET_COLORS } value={ attributes.headingColor } onChange={ ( value ) => setAttributes( { headingColor: value || '#171717' } ) } />
+					<TextControl label={ __( 'Custom Title Color', 'zenctuary' ) } value={ attributes.headingColor } onChange={ ( value ) => setAttributes( { headingColor: value || '#171717' } ) } />
+				</PanelBody>
+
 				<PanelBody title={ __( 'Carousel Settings', 'zenctuary' ) } initialOpen={ false }>
 					<RangeControl label={ __( 'Gap Between Cards', 'zenctuary' ) } value={ attributes.gap } onChange={ ( value ) => setAttributes( { gap: value } ) } min={ 0 } max={ 60 } />
 					<RangeControl label={ __( 'Desktop Full Cards', 'zenctuary' ) } value={ attributes.desktopCards } onChange={ ( value ) => setAttributes( { desktopCards: value } ) } min={ 1 } max={ 4 } />
@@ -202,6 +250,43 @@ export default function Edit( { attributes, setAttributes } ) {
 				<PanelBody title={ __( 'Card Style', 'zenctuary' ) } initialOpen={ false }>
 					<RangeControl label={ __( 'Card Border Radius', 'zenctuary' ) } value={ attributes.cardBorderRadius } onChange={ ( value ) => setAttributes( { cardBorderRadius: value } ) } min={ 0 } max={ 40 } />
 					<RangeControl label={ __( 'Card Content Padding', 'zenctuary' ) } value={ attributes.cardContentPadding } onChange={ ( value ) => setAttributes( { cardContentPadding: value } ) } min={ 12 } max={ 40 } />
+				</PanelBody>
+
+				<PanelBody title={ __( 'Card Typography', 'zenctuary' ) } initialOpen={ false }>
+					<TextControl label={ __( 'Card Title Size', 'zenctuary' ) } value={ attributes.cardTitleFontSize } onChange={ ( value ) => setAttributes( { cardTitleFontSize: value || 'clamp(1.5rem, 2.4vw, 2rem)' } ) } />
+					<TextControl label={ __( 'Card Title Weight', 'zenctuary' ) } value={ attributes.cardTitleFontWeight } onChange={ ( value ) => setAttributes( { cardTitleFontWeight: value || '700' } ) } />
+					<TextControl label={ __( 'Card Title Line Height', 'zenctuary' ) } value={ attributes.cardTitleLineHeight } onChange={ ( value ) => setAttributes( { cardTitleLineHeight: value || '1.04' } ) } />
+					<TextControl label={ __( 'Card Title Color', 'zenctuary' ) } value={ attributes.cardTitleColor } onChange={ ( value ) => setAttributes( { cardTitleColor: value || '#ffffff' } ) } />
+					<TextControl label={ __( 'Body Text Size', 'zenctuary' ) } value={ attributes.cardBodyFontSize } onChange={ ( value ) => setAttributes( { cardBodyFontSize: value || '1rem' } ) } />
+					<TextControl label={ __( 'Body Text Weight', 'zenctuary' ) } value={ attributes.cardBodyFontWeight } onChange={ ( value ) => setAttributes( { cardBodyFontWeight: value || '400' } ) } />
+					<TextControl label={ __( 'Body Text Line Height', 'zenctuary' ) } value={ attributes.cardBodyLineHeight } onChange={ ( value ) => setAttributes( { cardBodyLineHeight: value || '1.5' } ) } />
+					<TextControl label={ __( 'Body Text Color', 'zenctuary' ) } value={ attributes.cardBodyColor } onChange={ ( value ) => setAttributes( { cardBodyColor: value || '#ffffff' } ) } />
+					<TextControl label={ __( 'Dots Size', 'zenctuary' ) } value={ attributes.dotsFontSize } onChange={ ( value ) => setAttributes( { dotsFontSize: value || '1.35rem' } ) } />
+					<TextControl label={ __( 'Dots Letter Spacing', 'zenctuary' ) } value={ attributes.dotsLetterSpacing } onChange={ ( value ) => setAttributes( { dotsLetterSpacing: value || '0.22em' } ) } />
+					<TextControl label={ __( 'Dots Color', 'zenctuary' ) } value={ attributes.dotsColor } onChange={ ( value ) => setAttributes( { dotsColor: value || 'rgba(255, 255, 255, 0.86)' } ) } />
+				</PanelBody>
+
+				<PanelBody title={ __( 'Button Style', 'zenctuary' ) } initialOpen={ false }>
+					<TextControl label={ __( 'Button Font Size', 'zenctuary' ) } value={ attributes.buttonFontSize } onChange={ ( value ) => setAttributes( { buttonFontSize: value || '0.95rem' } ) } />
+					<TextControl label={ __( 'Button Font Weight', 'zenctuary' ) } value={ attributes.buttonFontWeight } onChange={ ( value ) => setAttributes( { buttonFontWeight: value || '600' } ) } />
+					<TextControl label={ __( 'Button Line Height', 'zenctuary' ) } value={ attributes.buttonLineHeight } onChange={ ( value ) => setAttributes( { buttonLineHeight: value || '1.2' } ) } />
+					<TextControl label={ __( 'Button Width', 'zenctuary' ) } value={ attributes.buttonWidth } onChange={ ( value ) => setAttributes( { buttonWidth: value || 'fit-content' } ) } help={ __( 'Examples: fit-content, 100%, 280px', 'zenctuary' ) } />
+					<TextControl label={ __( 'Button Text Color', 'zenctuary' ) } value={ attributes.buttonTextColor } onChange={ ( value ) => setAttributes( { buttonTextColor: value || '#ffffff' } ) } />
+					<TextControl label={ __( 'Button Background', 'zenctuary' ) } value={ attributes.buttonBackgroundColor } onChange={ ( value ) => setAttributes( { buttonBackgroundColor: value || 'rgba(255, 255, 255, 0.16)' } ) } />
+					<TextControl label={ __( 'Button Border Color', 'zenctuary' ) } value={ attributes.buttonBorderColor } onChange={ ( value ) => setAttributes( { buttonBorderColor: value || 'rgba(255, 255, 255, 0.38)' } ) } />
+					<RangeControl label={ __( 'Button Border Width', 'zenctuary' ) } value={ attributes.buttonBorderWidth } onChange={ ( value ) => setAttributes( { buttonBorderWidth: value } ) } min={ 0 } max={ 8 } />
+					<TextControl label={ __( 'Button Radius', 'zenctuary' ) } value={ attributes.buttonBorderRadius } onChange={ ( value ) => setAttributes( { buttonBorderRadius: value || '999px' } ) } />
+					<SpacingControls label={ __( 'Button Padding', 'zenctuary' ) } value={ attributes.buttonPadding } onChange={ ( value ) => setAttributes( { buttonPadding: value } ) } />
+					<ToggleControl label={ __( 'Show Button Icon', 'zenctuary' ) } checked={ attributes.buttonShowIcon } onChange={ ( value ) => setAttributes( { buttonShowIcon: value } ) } />
+					<SelectControl
+						label={ __( 'Button Icon Position', 'zenctuary' ) }
+						value={ attributes.buttonIconPosition }
+						options={ [
+							{ label: __( 'Left', 'zenctuary' ), value: 'left' },
+							{ label: __( 'Right', 'zenctuary' ), value: 'right' },
+						] }
+						onChange={ ( value ) => setAttributes( { buttonIconPosition: value } ) }
+					/>
 				</PanelBody>
 
 				<PanelBody title={ __( 'Cards', 'zenctuary' ) } initialOpen={ false }>
@@ -271,12 +356,19 @@ export default function Edit( { attributes, setAttributes } ) {
 									} }>
 										<div className="premium-edge-peek-carousel__overlay" style={ { backgroundColor: card.overlayColor, opacity: card.overlayOpacity } } />
 										<div className="premium-edge-peek-carousel__card-content">
-											<RichText tagName="h3" className="premium-edge-peek-carousel__card-title" value={ card.title } onChange={ ( value ) => updateCard( index, { title: value } ) } placeholder={ __( 'Card title', 'zenctuary' ) } />
-											<ul className="premium-edge-peek-carousel__card-items">
-												{ card.items.filter( Boolean ).map( ( item, itemIndex ) => <li key={ itemIndex }>{ item }</li> ) }
-											</ul>
-											{ card.showDots && <div className="premium-edge-peek-carousel__dots" aria-hidden="true">{ card.dotsText || '...' }</div> }
-											<div className="premium-edge-peek-carousel__button">{ card.buttonText || __( 'Learn More', 'zenctuary' ) }</div>
+											<div className="premium-edge-peek-carousel__card-top">
+												<RichText tagName="h3" className="premium-edge-peek-carousel__card-title" value={ card.title } onChange={ ( value ) => updateCard( index, { title: value } ) } placeholder={ __( 'Card title', 'zenctuary' ) } />
+											</div>
+											<div className="premium-edge-peek-carousel__card-bottom">
+												<ul className="premium-edge-peek-carousel__card-items">
+													{ card.items.filter( Boolean ).map( ( item, itemIndex ) => <li key={ itemIndex }>{ item }</li> ) }
+												</ul>
+												{ card.showDots && <div className="premium-edge-peek-carousel__dots" aria-hidden="true">{ card.dotsText || '...' }</div> }
+												<div className={ `premium-edge-peek-carousel__button premium-edge-peek-carousel__button--icon-${ attributes.buttonIconPosition || 'right' }` }>
+													{ attributes.buttonShowIcon && <span className="premium-edge-peek-carousel__button-icon" aria-hidden="true">{ arrowIcon() }</span> }
+													<span>{ card.buttonText || __( 'Learn More', 'zenctuary' ) }</span>
+												</div>
+											</div>
 										</div>
 									</article>
 								</div>

@@ -31,6 +31,26 @@
       "type": "string",
       "default": "#f4efe7"
     },
+    "headingMaxWidth": {
+      "type": "number",
+      "default": 760
+    },
+    "headingFontSize": {
+      "type": "string",
+      "default": "clamp(2rem, 4vw, 3.75rem)"
+    },
+    "headingFontWeight": {
+      "type": "string",
+      "default": "700"
+    },
+    "headingLineHeight": {
+      "type": "string",
+      "default": "0.98"
+    },
+    "headingColor": {
+      "type": "string",
+      "default": "#171717"
+    },
     "sectionPadding": {
       "type": "object",
       "default": {
@@ -119,6 +139,103 @@
     "cardContentPadding": {
       "type": "number",
       "default": 24
+    },
+    "cardTitleFontSize": {
+      "type": "string",
+      "default": "clamp(1.5rem, 2.4vw, 2rem)"
+    },
+    "cardTitleFontWeight": {
+      "type": "string",
+      "default": "700"
+    },
+    "cardTitleLineHeight": {
+      "type": "string",
+      "default": "1.04"
+    },
+    "cardTitleColor": {
+      "type": "string",
+      "default": "#ffffff"
+    },
+    "cardBodyFontSize": {
+      "type": "string",
+      "default": "1rem"
+    },
+    "cardBodyFontWeight": {
+      "type": "string",
+      "default": "400"
+    },
+    "cardBodyLineHeight": {
+      "type": "string",
+      "default": "1.5"
+    },
+    "cardBodyColor": {
+      "type": "string",
+      "default": "#ffffff"
+    },
+    "dotsFontSize": {
+      "type": "string",
+      "default": "1.35rem"
+    },
+    "dotsLetterSpacing": {
+      "type": "string",
+      "default": "0.22em"
+    },
+    "dotsColor": {
+      "type": "string",
+      "default": "rgba(255, 255, 255, 0.86)"
+    },
+    "buttonFontSize": {
+      "type": "string",
+      "default": "0.95rem"
+    },
+    "buttonFontWeight": {
+      "type": "string",
+      "default": "600"
+    },
+    "buttonLineHeight": {
+      "type": "string",
+      "default": "1.2"
+    },
+    "buttonTextColor": {
+      "type": "string",
+      "default": "#ffffff"
+    },
+    "buttonBackgroundColor": {
+      "type": "string",
+      "default": "rgba(255, 255, 255, 0.16)"
+    },
+    "buttonBorderColor": {
+      "type": "string",
+      "default": "rgba(255, 255, 255, 0.38)"
+    },
+    "buttonBorderWidth": {
+      "type": "number",
+      "default": 1
+    },
+    "buttonBorderRadius": {
+      "type": "string",
+      "default": "999px"
+    },
+    "buttonWidth": {
+      "type": "string",
+      "default": "fit-content"
+    },
+    "buttonPadding": {
+      "type": "object",
+      "default": {
+        "top": "13px",
+        "right": "20px",
+        "bottom": "13px",
+        "left": "20px"
+      }
+    },
+    "buttonShowIcon": {
+      "type": "boolean",
+      "default": true
+    },
+    "buttonIconPosition": {
+      "type": "string",
+      "default": "right"
     },
     "cards": {
       "type": "array",

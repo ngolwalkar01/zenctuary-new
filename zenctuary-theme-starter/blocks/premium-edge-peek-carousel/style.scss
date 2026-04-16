@@ -52,16 +52,16 @@
     }
 
     .premium-edge-peek-carousel__copy {
-        max-width: 760px;
+        max-width: var(--premium-edge-peek-heading-max-width);
     }
 
     .premium-edge-peek-carousel__heading {
         margin: 0;
-        color: #171717;
+        color: var(--premium-edge-peek-heading-color);
         font-family: var(--wp--preset--font-family--montserrat, "Montserrat", sans-serif);
-        font-size: clamp(2rem, 4vw, 3.75rem);
-        font-weight: 700;
-        line-height: 0.98;
+        font-size: var(--premium-edge-peek-heading-size);
+        font-weight: var(--premium-edge-peek-heading-weight);
+        line-height: var(--premium-edge-peek-heading-line-height);
         letter-spacing: -0.03em;
     }
 
@@ -155,20 +155,30 @@
         height: 100%;
         display: flex;
         flex-direction: column;
-        justify-content: flex-end;
-        align-items: flex-start;
-        gap: 14px;
+        justify-content: space-between;
         padding: var(--premium-edge-peek-card-padding);
-        color: #ffffff;
+        color: var(--premium-edge-peek-card-body-color);
+    }
+
+    .premium-edge-peek-carousel__card-top,
+    .premium-edge-peek-carousel__card-bottom {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .premium-edge-peek-carousel__card-bottom {
+        gap: 14px;
     }
 
     .premium-edge-peek-carousel__card-title {
         margin: 0;
         font-family: var(--wp--preset--font-family--montserrat, "Montserrat", sans-serif);
-        font-size: clamp(1.5rem, 2.4vw, 2rem);
-        font-weight: 700;
-        line-height: 1.04;
+        font-size: var(--premium-edge-peek-card-title-size);
+        font-weight: var(--premium-edge-peek-card-title-weight);
+        line-height: var(--premium-edge-peek-card-title-line-height);
         letter-spacing: -0.02em;
+        color: var(--premium-edge-peek-card-title-color);
     }
 
     .premium-edge-peek-carousel__card-items {
@@ -177,15 +187,17 @@
         list-style: none;
         display: grid;
         gap: 6px;
-        font-size: 1rem;
-        line-height: 1.5;
+        font-size: var(--premium-edge-peek-card-body-size);
+        line-height: var(--premium-edge-peek-card-body-line-height);
+        font-weight: var(--premium-edge-peek-card-body-weight);
+        color: var(--premium-edge-peek-card-body-color);
     }
 
     .premium-edge-peek-carousel__dots {
         margin-top: 2px;
-        color: rgba(255, 255, 255, 0.86);
-        font-size: 1.35rem;
-        letter-spacing: 0.22em;
+        color: var(--premium-edge-peek-dots-color);
+        font-size: var(--premium-edge-peek-dots-size);
+        letter-spacing: var(--premium-edge-peek-dots-spacing);
         line-height: 1;
     }
 
@@ -193,16 +205,20 @@
         display: inline-flex;
         align-items: center;
         justify-content: center;
+        gap: 12px;
         margin-top: 2px;
-        padding: 13px 20px;
-        border-radius: 999px;
-        background: rgba(255, 255, 255, 0.16);
-        border: 1px solid rgba(255, 255, 255, 0.38);
+        width: var(--premium-edge-peek-button-width);
+        max-width: 100%;
+        padding: var(--premium-edge-peek-button-pad-top) var(--premium-edge-peek-button-pad-right) var(--premium-edge-peek-button-pad-bottom) var(--premium-edge-peek-button-pad-left);
+        border-radius: var(--premium-edge-peek-button-radius);
+        background: var(--premium-edge-peek-button-bg);
+        border: var(--premium-edge-peek-button-border-width) solid var(--premium-edge-peek-button-border-color);
         backdrop-filter: blur(10px);
-        color: #ffffff;
+        color: var(--premium-edge-peek-button-color);
         text-decoration: none;
-        font-size: 0.95rem;
-        font-weight: 600;
+        font-size: var(--premium-edge-peek-button-size);
+        font-weight: var(--premium-edge-peek-button-weight);
+        line-height: var(--premium-edge-peek-button-line-height);
         transition: background-color 0.25s ease, border-color 0.25s ease, transform 0.25s ease;
 
         &:hover,
@@ -210,6 +226,28 @@
             background: rgba(255, 255, 255, 0.24);
             border-color: rgba(255, 255, 255, 0.6);
             transform: translateY(-1px);
+        }
+    }
+
+    .premium-edge-peek-carousel__button--icon-left {
+        flex-direction: row;
+    }
+
+    .premium-edge-peek-carousel__button--icon-right {
+        flex-direction: row-reverse;
+    }
+
+    .premium-edge-peek-carousel__button-icon {
+        width: 18px;
+        height: 18px;
+        flex: 0 0 18px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+
+        svg {
+            width: 100%;
+            height: 100%;
         }
     }
 
