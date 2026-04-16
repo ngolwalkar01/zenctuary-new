@@ -26,6 +26,7 @@ export default function Edit({ attributes, setAttributes }) {
   } = attributes;
 
   const [selectedPlan, setSelectedPlan] = useState('monthly');
+  const [activeCard, setActiveCard] = useState(null); // { id, planType }
 
   // Let the wrapper take the anchor value from supports but we don't need to manually define ID here 
   // since Gutenberg's anchor support adds it to blockProps automatically.
@@ -38,12 +39,26 @@ export default function Edit({ attributes, setAttributes }) {
   });
 
   const addCard = () => {
+    const defaultIcon = {
+      zenCoinIconSize: zenCoinIconSize,
+      zenCoinBgColor: zenCoinBgColor,
+      zenCoinBorderColor: zenCoinBorderColor,
+      zenCoinInnerColor: zenCoinInnerColor,
+      zenCoinValueColor: zenCoinValueColor,
+      zenCoinValueFontSize: zenCoinValueFontSize,
+      zenCoinValueFontWeight: zenCoinValueFontWeight
+    };
+
     if (selectedPlan === 'monthly') {
-      const newCards = [...monthlyCards, { id: 'm' + Date.now().toString() }];
+      const newCard = { id: 'm' + Date.now().toString(), ...defaultIcon };
+      const newCards = [...monthlyCards, newCard];
       setAttributes({ monthlyCards: newCards });
+      setActiveCard({ id: newCard.id, planType: 'monthly' });
     } else {
-      const newCards = [...yearlyCards, { id: 'y' + Date.now().toString() }];
+      const newCard = { id: 'y' + Date.now().toString(), ...defaultIcon };
+      const newCards = [...yearlyCards, newCard];
       setAttributes({ yearlyCards: newCards });
+      setActiveCard({ id: newCard.id, planType: 'yearly' });
     }
   };
 
@@ -161,13 +176,28 @@ export default function Edit({ attributes, setAttributes }) {
           <TextControl label="Right Text Margin" value={zencoinsRightMargin} onChange={(val) => setAttributes({ zencoinsRightMargin: val })} />
         </PanelBody>
         <PanelBody title={__('Zen Coin Icon Settings', 'zenctuary')} initialOpen={false}>
-          <TextControl label="Icon Size" value={zenCoinIconSize} onChange={(val) => setAttributes({ zenCoinIconSize: val })} />
-          <TextControl label="Background Color" value={zenCoinBgColor} onChange={(val) => setAttributes({ zenCoinBgColor: val })} />
-          <TextControl label="Border Color" value={zenCoinBorderColor} onChange={(val) => setAttributes({ zenCoinBorderColor: val })} />
-          <TextControl label="Inner Circle Color" value={zenCoinInnerColor} onChange={(val) => setAttributes({ zenCoinInnerColor: val })} />
-          <TextControl label="Value Color" value={zenCoinValueColor} onChange={(val) => setAttributes({ zenCoinValueColor: val })} />
-          <TextControl label="Value Font Size" value={zenCoinValueFontSize} onChange={(val) => setAttributes({ zenCoinValueFontSize: val })} />
-          <TextControl label="Value Font Weight" value={zenCoinValueFontWeight} onChange={(val) => setAttributes({ zenCoinValueFontWeight: val })} />
+          {!activeCard ? (
+            <p>{__('Select a card to edit its Zen Coin icon settings.', 'zenctuary')}</p>
+          ) : (
+            <>
+              {(() => {
+                const card = (activeCard.planType === 'monthly' ? monthlyCards : yearlyCards).find(c => c.id === activeCard.id);
+                if (!card) return <p>{__('Selected card not found.', 'zenctuary')}</p>;
+                return (
+                  <>
+                    <p style={{ fontWeight: 'bold', marginBottom: '10px' }}>{__('Editing Icon for:', 'zenctuary')} {card.headingText || card.id}</p>
+                    <TextControl label="Icon Size" value={card.zenCoinIconSize} onChange={(val) => updateCard(card.id, activeCard.planType, 'zenCoinIconSize', val)} />
+                    <TextControl label="Background Color" value={card.zenCoinBgColor} onChange={(val) => updateCard(card.id, activeCard.planType, 'zenCoinBgColor', val)} />
+                    <TextControl label="Border Color" value={card.zenCoinBorderColor} onChange={(val) => updateCard(card.id, activeCard.planType, 'zenCoinBorderColor', val)} />
+                    <TextControl label="Inner Circle Color" value={card.zenCoinInnerColor} onChange={(val) => updateCard(card.id, activeCard.planType, 'zenCoinInnerColor', val)} />
+                    <TextControl label="Value Color" value={card.zenCoinValueColor} onChange={(val) => updateCard(card.id, activeCard.planType, 'zenCoinValueColor', val)} />
+                    <TextControl label="Value Font Size" value={card.zenCoinValueFontSize} onChange={(val) => updateCard(card.id, activeCard.planType, 'zenCoinValueFontSize', val)} />
+                    <TextControl label="Value Font Weight" value={card.zenCoinValueFontWeight} onChange={(val) => updateCard(card.id, activeCard.planType, 'zenCoinValueFontWeight', val)} />
+                  </>
+                );
+              })()}
+            </>
+          )}
         </PanelBody>
       </InspectorControls>
 
@@ -248,18 +278,25 @@ export default function Edit({ attributes, setAttributes }) {
           <div className="zen-memberships-placeholder monthly-placeholder">
             <div className="zen-memberships-cards-wrapper">
               {monthlyCards.map((card) => (
-                <div key={card.id} className="zen-memberships-card" style={{
-                  position: 'relative',
-                  width: cardWidth,
-                  height: cardHeight,
-                  backgroundColor: cardBgColor,
-                  borderColor: cardBorderColor,
-                  borderWidth: cardBorderWidth,
-                  borderRadius: cardBorderRadius,
-                  display: 'flex',
-                  flexDirection: 'column',
-                  overflow: 'hidden'
-                }}>
+                <div 
+                  key={card.id} 
+                  className={`zen-memberships-card ${activeCard?.id === card.id ? 'is-selected' : ''}`} 
+                  onClick={() => setActiveCard({ id: card.id, planType: 'monthly' })}
+                  style={{
+                    position: 'relative',
+                    width: cardWidth,
+                    height: cardHeight,
+                    backgroundColor: cardBgColor,
+                    borderColor: activeCard?.id === card.id ? '#007cba' : cardBorderColor,
+                    borderWidth: activeCard?.id === card.id ? '2px' : cardBorderWidth,
+                    borderRadius: cardBorderRadius,
+                    display: 'flex',
+                    flexDirection: 'column',
+                    overflow: 'hidden',
+                    boxShadow: activeCard?.id === card.id ? '0 0 10px rgba(0,124,186,0.3)' : 'none',
+                    cursor: 'pointer'
+                  }}
+                >
                   <div className="zen-memberships-card-top" style={{ backgroundColor: cardTopBgColor }}>
                     <div className="zen-memberships-card-image-wrapper" style={{ marginBottom: cardImageSpacing }}>
                       <MediaUploadCheck>
@@ -342,12 +379,12 @@ export default function Edit({ attributes, setAttributes }) {
                           }}
                         />
                         <div className="zen-coin-icon" style={{
-                          width: zenCoinIconSize,
-                          height: zenCoinIconSize,
-                          backgroundColor: zenCoinBgColor,
-                          borderColor: zenCoinBorderColor
+                          width: card.zenCoinIconSize || zenCoinIconSize,
+                          height: card.zenCoinIconSize || zenCoinIconSize,
+                          backgroundColor: card.zenCoinBgColor || zenCoinBgColor,
+                          borderColor: card.zenCoinBorderColor || zenCoinBorderColor
                         }}>
-                          <div className="zen-coin-inner" style={{ backgroundColor: zenCoinInnerColor }}>
+                          <div className="zen-coin-inner" style={{ backgroundColor: card.zenCoinInnerColor || zenCoinInnerColor }}>
                             <RichText
                               tagName="span"
                               className="zen-coin-value"
@@ -355,9 +392,9 @@ export default function Edit({ attributes, setAttributes }) {
                               onChange={(val) => updateCard(card.id, 'monthly', 'zencoinValue', val)}
                               placeholder="30"
                               style={{
-                                color: zenCoinValueColor,
-                                fontSize: zenCoinValueFontSize,
-                                fontWeight: zenCoinValueFontWeight
+                                color: card.zenCoinValueColor || zenCoinValueColor,
+                                fontSize: card.zenCoinValueFontSize || zenCoinValueFontSize,
+                                fontWeight: card.zenCoinValueFontWeight || zenCoinValueFontWeight
                               }}
                             />
                           </div>
@@ -392,18 +429,25 @@ export default function Edit({ attributes, setAttributes }) {
           <div className="zen-memberships-placeholder yearly-placeholder">
             <div className="zen-memberships-cards-wrapper">
               {yearlyCards.map((card) => (
-                <div key={card.id} className="zen-memberships-card" style={{
-                  position: 'relative',
-                  width: cardWidth,
-                  height: cardHeight,
-                  backgroundColor: cardBgColor,
-                  borderColor: cardBorderColor,
-                  borderWidth: cardBorderWidth,
-                  borderRadius: cardBorderRadius,
-                  display: 'flex',
-                  flexDirection: 'column',
-                  overflow: 'hidden'
-                }}>
+                <div 
+                  key={card.id} 
+                  className={`zen-memberships-card ${activeCard?.id === card.id ? 'is-selected' : ''}`} 
+                  onClick={() => setActiveCard({ id: card.id, planType: 'yearly' })}
+                  style={{
+                    position: 'relative',
+                    width: cardWidth,
+                    height: cardHeight,
+                    backgroundColor: cardBgColor,
+                    borderColor: activeCard?.id === card.id ? '#007cba' : cardBorderColor,
+                    borderWidth: activeCard?.id === card.id ? '2px' : cardBorderWidth,
+                    borderRadius: cardBorderRadius,
+                    display: 'flex',
+                    flexDirection: 'column',
+                    overflow: 'hidden',
+                    boxShadow: activeCard?.id === card.id ? '0 0 10px rgba(0,124,186,0.3)' : 'none',
+                    cursor: 'pointer'
+                  }}
+                >
                   <div className="zen-memberships-card-top" style={{ backgroundColor: cardTopBgColor }}>
                     <div className="zen-memberships-card-image-wrapper" style={{ marginBottom: cardImageSpacing }}>
                       <MediaUploadCheck>
@@ -486,12 +530,12 @@ export default function Edit({ attributes, setAttributes }) {
                           }}
                         />
                         <div className="zen-coin-icon" style={{
-                          width: zenCoinIconSize,
-                          height: zenCoinIconSize,
-                          backgroundColor: zenCoinBgColor,
-                          borderColor: zenCoinBorderColor
+                          width: card.zenCoinIconSize || zenCoinIconSize,
+                          height: card.zenCoinIconSize || zenCoinIconSize,
+                          backgroundColor: card.zenCoinBgColor || zenCoinBgColor,
+                          borderColor: card.zenCoinBorderColor || zenCoinBorderColor
                         }}>
-                          <div className="zen-coin-inner" style={{ backgroundColor: zenCoinInnerColor }}>
+                          <div className="zen-coin-inner" style={{ backgroundColor: card.zenCoinInnerColor || zenCoinInnerColor }}>
                             <RichText
                               tagName="span"
                               className="zen-coin-value"
@@ -499,9 +543,9 @@ export default function Edit({ attributes, setAttributes }) {
                               onChange={(val) => updateCard(card.id, 'yearly', 'zencoinValue', val)}
                               placeholder="50"
                               style={{
-                                color: zenCoinValueColor,
-                                fontSize: zenCoinValueFontSize,
-                                fontWeight: zenCoinValueFontWeight
+                                color: card.zenCoinValueColor || zenCoinValueColor,
+                                fontSize: card.zenCoinValueFontSize || zenCoinValueFontSize,
+                                fontWeight: card.zenCoinValueFontWeight || zenCoinValueFontWeight
                               }}
                             />
                           </div>

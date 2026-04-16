@@ -347,7 +347,14 @@
           "durationText": "/month",
           "zencoinsLabel": "ZENCOINS:",
           "zencoinValue": "30",
-          "zencoinsRight": "≈ 3 €/ Zencoin"
+          "zencoinsRight": "≈ 3 €/ Zencoin",
+          "zenCoinIconSize": "36px",
+          "zenCoinBgColor": "#d8b354",
+          "zenCoinBorderColor": "#3f3d3d",
+          "zenCoinInnerColor": "#3f3d3d",
+          "zenCoinValueColor": "#ffffff",
+          "zenCoinValueFontSize": "12px",
+          "zenCoinValueFontWeight": "700"
         },
         {
           "id": "m2",
@@ -357,7 +364,14 @@
           "durationText": "/month",
           "zencoinsLabel": "ZENCOINS:",
           "zencoinValue": "30",
-          "zencoinsRight": "≈ 3 €/ Zencoin"
+          "zencoinsRight": "≈ 3 €/ Zencoin",
+          "zenCoinIconSize": "36px",
+          "zenCoinBgColor": "#d8b354",
+          "zenCoinBorderColor": "#3f3d3d",
+          "zenCoinInnerColor": "#3f3d3d",
+          "zenCoinValueColor": "#ffffff",
+          "zenCoinValueFontSize": "12px",
+          "zenCoinValueFontWeight": "700"
         },
         {
           "id": "m3",
@@ -367,7 +381,14 @@
           "durationText": "/month",
           "zencoinsLabel": "ZENCOINS:",
           "zencoinValue": "30",
-          "zencoinsRight": "≈ 3 €/ Zencoin"
+          "zencoinsRight": "≈ 3 €/ Zencoin",
+          "zenCoinIconSize": "36px",
+          "zenCoinBgColor": "#d8b354",
+          "zenCoinBorderColor": "#3f3d3d",
+          "zenCoinInnerColor": "#3f3d3d",
+          "zenCoinValueColor": "#ffffff",
+          "zenCoinValueFontSize": "12px",
+          "zenCoinValueFontWeight": "700"
         }
       ]
     },
@@ -382,7 +403,14 @@
           "durationText": "/year",
           "zencoinsLabel": "ZENCOINS:",
           "zencoinValue": "50",
-          "zencoinsRight": "≈ 3 €/ Zencoin"
+          "zencoinsRight": "≈ 3 €/ Zencoin",
+          "zenCoinIconSize": "36px",
+          "zenCoinBgColor": "#d8b354",
+          "zenCoinBorderColor": "#3f3d3d",
+          "zenCoinInnerColor": "#3f3d3d",
+          "zenCoinValueColor": "#ffffff",
+          "zenCoinValueFontSize": "12px",
+          "zenCoinValueFontWeight": "700"
         },
         {
           "id": "y2",
@@ -392,7 +420,14 @@
           "durationText": "/year",
           "zencoinsLabel": "ZENCOINS:",
           "zencoinValue": "50",
-          "zencoinsRight": "≈ 3 €/ Zencoin"
+          "zencoinsRight": "≈ 3 €/ Zencoin",
+          "zenCoinIconSize": "36px",
+          "zenCoinBgColor": "#d8b354",
+          "zenCoinBorderColor": "#3f3d3d",
+          "zenCoinInnerColor": "#3f3d3d",
+          "zenCoinValueColor": "#ffffff",
+          "zenCoinValueFontSize": "12px",
+          "zenCoinValueFontWeight": "700"
         },
         {
           "id": "y3",
@@ -402,7 +437,14 @@
           "durationText": "/year",
           "zencoinsLabel": "ZENCOINS:",
           "zencoinValue": "50",
-          "zencoinsRight": "≈ 3 €/ Zencoin"
+          "zencoinsRight": "≈ 3 €/ Zencoin",
+          "zenCoinIconSize": "36px",
+          "zenCoinBgColor": "#d8b354",
+          "zenCoinBorderColor": "#3f3d3d",
+          "zenCoinInnerColor": "#3f3d3d",
+          "zenCoinValueColor": "#ffffff",
+          "zenCoinValueFontSize": "12px",
+          "zenCoinValueFontWeight": "700"
         }
       ]
     }
