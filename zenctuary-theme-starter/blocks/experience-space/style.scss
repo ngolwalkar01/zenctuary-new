@@ -4,6 +4,11 @@
  */
 
 .zen-experience-space-block {
+    .zen-space-section {
+        width: 100%;
+        min-width: 0;
+    }
+
     /* ── Space Header ── */
     .zen-space-header {
         display: flex;
@@ -122,6 +127,7 @@
         grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
         gap: 24px;
         padding: 24px 0;
+        min-width: 0;
     }
 
     /* ── Individual Card ── */
@@ -131,6 +137,8 @@
         overflow: hidden;
         display: flex;
         flex-direction: column;
+        width: 100%;
+        min-width: 0;
 
         .zen-class-card__image-wrap {
             position: relative;
@@ -292,14 +300,87 @@
 /* ── Responsive Adjustments ── */
 @media (max-width: 768px) {
     .zen-experience-space-block {
+        .zen-space-section {
+            width: 100%;
+        }
+
         .zen-class-cards-grid {
             grid-template-columns: 1fr;
+            gap: 16px;
+            padding: 16px 0 0;
         }
 
         .zen-space-header {
-            flex-direction: column;
-            align-items: flex-start;
+            flex-direction: row;
+            align-items: center;
             gap: 12px;
+
+            .zen-space-icon {
+                width: min(var(--zen-exp-heading-icon-size, 48px), 42px);
+                height: min(var(--zen-exp-heading-icon-size, 48px), 42px);
+                flex: 0 0 auto;
+            }
+
+            .zen-space-title {
+                font-size: clamp(28px, 8vw, var(--zen-exp-heading-font-size, 36px));
+                line-height: 1.05;
+            }
+        }
+
+        .zen-space-description {
+            max-width: 100%;
+        }
+
+        .zen-accordion-wrapper {
+            .zen-accordion-item {
+                .zen-accordion-header {
+                    padding: 18px 16px;
+                }
+
+                .zen-accordion-panel {
+                    padding: 0 10px 12px;
+                }
+            }
+        }
+
+        .zen-class-card {
+            border-radius: min(var(--zen-exp-card-border-radius, 24px), 18px);
+
+            .zen-class-card__image-wrap {
+                height: clamp(180px, 58vw, var(--zen-exp-card-image-height, 220px));
+            }
+
+            .zen-class-card__body {
+                padding: 16px;
+
+                .zen-class-card__title {
+                    font-size: clamp(22px, 5.8vw, var(--zen-exp-card-title-font-size, 20px));
+                }
+
+                .zen-class-card__desc {
+                    font-size: clamp(13px, 3.4vw, var(--zen-exp-card-desc-font-size, 14px));
+                }
+
+                .zen-class-card__btn {
+                    width: 100%;
+                }
+            }
+        }
+    }
+}
+
+@media (max-width: 480px) {
+    .zen-experience-space-block {
+        .zen-accordion-wrapper {
+            .zen-accordion-item {
+                .zen-accordion-header {
+                    padding: 16px 14px;
+                }
+
+                .zen-accordion-panel {
+                    padding: 0 8px 10px;
+                }
+            }
         }
     }
 }
