@@ -1,6 +1,6 @@
 import { __ } from '@wordpress/i18n';
-import { useBlockProps, InspectorControls, RichText } from '@wordpress/block-editor';
-import { PanelBody, TextControl, SelectControl } from '@wordpress/components';
+import { useBlockProps, InspectorControls, RichText, MediaUpload, MediaUploadCheck } from '@wordpress/block-editor';
+import { PanelBody, TextControl, SelectControl, Button } from '@wordpress/components';
 import { useState } from '@wordpress/element';
 
 export default function Edit({ attributes, setAttributes }) {
@@ -11,6 +11,9 @@ export default function Edit({ attributes, setAttributes }) {
     btnNormalBgColor, btnNormalTextColor, btnNormalFontSize, btnNormalFontWeight, btnNormalPadding, btnNormalMargin, btnNormalBorderRadius, btnNormalBorderColor, btnNormalBorderWidth,
     btnActiveBgColor, btnActiveTextColor, btnActiveFontSize, btnActiveFontWeight, btnActiveBorderRadius, btnActiveBorderColor,
     cardWidth, cardHeight, cardBgColor, cardBorderColor, cardBorderWidth, cardBorderRadius,
+    cardTopBgColor, cardBottomBgColor, cardImageWidth, cardImageHeight, cardImageSpacing,
+    cardHeadingColor, cardHeadingFontSize, cardHeadingFontWeight, cardHeadingFontStyle, cardHeadingLetterSpacing, cardHeadingMargin,
+    cardSeparatorColor, cardSeparatorThickness, cardSeparatorLength,
     monthlyCards, yearlyCards
   } = attributes;
 
@@ -41,6 +44,14 @@ export default function Edit({ attributes, setAttributes }) {
       setAttributes({ monthlyCards: monthlyCards.filter(c => c.id !== id) });
     } else {
       setAttributes({ yearlyCards: yearlyCards.filter(c => c.id !== id) });
+    }
+  };
+
+  const updateCard = (id, planType, field, value) => {
+    if (planType === 'monthly') {
+      setAttributes({ monthlyCards: monthlyCards.map(c => c.id === id ? { ...c, [field]: value } : c) });
+    } else {
+      setAttributes({ yearlyCards: yearlyCards.map(c => c.id === id ? { ...c, [field]: value } : c) });
     }
   };
 
@@ -90,6 +101,26 @@ export default function Edit({ attributes, setAttributes }) {
           <TextControl label="Border Color" value={cardBorderColor} onChange={(val) => setAttributes({ cardBorderColor: val })} />
           <TextControl label="Border Width" value={cardBorderWidth} onChange={(val) => setAttributes({ cardBorderWidth: val })} />
           <TextControl label="Border Radius" value={cardBorderRadius} onChange={(val) => setAttributes({ cardBorderRadius: val })} />
+          <TextControl label="Top Section Background" value={cardTopBgColor} onChange={(val) => setAttributes({ cardTopBgColor: val })} />
+          <TextControl label="Bottom Section Background" value={cardBottomBgColor} onChange={(val) => setAttributes({ cardBottomBgColor: val })} />
+        </PanelBody>
+        <PanelBody title={__('Card Image / Logo Settings', 'zenctuary')} initialOpen={false}>
+          <TextControl label="Image Width" value={cardImageWidth} onChange={(val) => setAttributes({ cardImageWidth: val })} />
+          <TextControl label="Image Height" value={cardImageHeight} onChange={(val) => setAttributes({ cardImageHeight: val })} />
+          <TextControl label="Image Spacing (Margin Bottom)" value={cardImageSpacing} onChange={(val) => setAttributes({ cardImageSpacing: val })} />
+        </PanelBody>
+        <PanelBody title={__('Card Heading Settings', 'zenctuary')} initialOpen={false}>
+          <TextControl label="Color" value={cardHeadingColor} onChange={(val) => setAttributes({ cardHeadingColor: val })} />
+          <TextControl label="Font Size" value={cardHeadingFontSize} onChange={(val) => setAttributes({ cardHeadingFontSize: val })} />
+          <TextControl label="Font Weight" value={cardHeadingFontWeight} onChange={(val) => setAttributes({ cardHeadingFontWeight: val })} />
+          <SelectControl label="Font Style" value={cardHeadingFontStyle} options={[{ label: 'Normal', value: 'normal' }, { label: 'Italic', value: 'italic' }]} onChange={(val) => setAttributes({ cardHeadingFontStyle: val })} />
+          <TextControl label="Letter Spacing" value={cardHeadingLetterSpacing} onChange={(val) => setAttributes({ cardHeadingLetterSpacing: val })} />
+          <TextControl label="Margin" value={cardHeadingMargin} onChange={(val) => setAttributes({ cardHeadingMargin: val })} />
+        </PanelBody>
+        <PanelBody title={__('Card Separator Settings', 'zenctuary')} initialOpen={false}>
+          <TextControl label="Line Color" value={cardSeparatorColor} onChange={(val) => setAttributes({ cardSeparatorColor: val })} />
+          <TextControl label="Thickness (px)" value={cardSeparatorThickness} onChange={(val) => setAttributes({ cardSeparatorThickness: val })} />
+          <TextControl label="Length (Width % or px)" value={cardSeparatorLength} onChange={(val) => setAttributes({ cardSeparatorLength: val })} />
         </PanelBody>
       </InspectorControls>
 
@@ -177,8 +208,50 @@ export default function Edit({ attributes, setAttributes }) {
                   backgroundColor: cardBgColor,
                   borderColor: cardBorderColor,
                   borderWidth: cardBorderWidth,
-                  borderRadius: cardBorderRadius
+                  borderRadius: cardBorderRadius,
+                  display: 'flex',
+                  flexDirection: 'column',
+                  overflow: 'hidden'
                 }}>
+                  <div className="zen-memberships-card-top" style={{ backgroundColor: cardTopBgColor }}>
+                    <div className="zen-memberships-card-image-wrapper" style={{ marginBottom: cardImageSpacing }}>
+                      <MediaUploadCheck>
+                        <MediaUpload
+                          onSelect={(media) => updateCard(card.id, 'monthly', 'imageUrl', media.url)}
+                          allowedTypes={['image']}
+                          value={card.imageUrl}
+                          render={({ open }) => (
+                            card.imageUrl ? (
+                              <div style={{ position: 'relative', display: 'inline-block' }}>
+                                <img src={card.imageUrl} alt="" style={{ width: cardImageWidth, height: cardImageHeight, objectFit: 'contain' }} onClick={open} />
+                                <Button isDestructive isSmall onClick={() => updateCard(card.id, 'monthly', 'imageUrl', '')} style={{ position: 'absolute', top: -10, right: -10, borderRadius: '50%' }}>X</Button>
+                              </div>
+                            ) : (
+                              <Button variant="secondary" onClick={open}>Add Logo</Button>
+                            )
+                          )}
+                        />
+                      </MediaUploadCheck>
+                    </div>
+                    <RichText
+                      tagName="h2"
+                      value={card.headingText}
+                      onChange={(val) => updateCard(card.id, 'monthly', 'headingText', val)}
+                      placeholder="Enter heading..."
+                      style={{
+                        color: cardHeadingColor,
+                        fontSize: cardHeadingFontSize,
+                        fontWeight: cardHeadingFontWeight,
+                        fontStyle: cardHeadingFontStyle,
+                        letterSpacing: cardHeadingLetterSpacing,
+                        margin: cardHeadingMargin,
+                        textAlign: 'center'
+                      }}
+                    />
+                    <div className="zen-memberships-card-separator" style={{ backgroundColor: cardSeparatorColor, height: cardSeparatorThickness, width: cardSeparatorLength }}></div>
+                  </div>
+                  <div className="zen-memberships-card-bottom" style={{ backgroundColor: cardBottomBgColor }}></div>
+                  
                   <button className="zen-memberships-remove-card" onClick={() => removeCard(card.id, 'monthly')} title="Remove Card">×</button>
                 </div>
               ))}
@@ -199,8 +272,50 @@ export default function Edit({ attributes, setAttributes }) {
                   backgroundColor: cardBgColor,
                   borderColor: cardBorderColor,
                   borderWidth: cardBorderWidth,
-                  borderRadius: cardBorderRadius
+                  borderRadius: cardBorderRadius,
+                  display: 'flex',
+                  flexDirection: 'column',
+                  overflow: 'hidden'
                 }}>
+                  <div className="zen-memberships-card-top" style={{ backgroundColor: cardTopBgColor }}>
+                    <div className="zen-memberships-card-image-wrapper" style={{ marginBottom: cardImageSpacing }}>
+                      <MediaUploadCheck>
+                        <MediaUpload
+                          onSelect={(media) => updateCard(card.id, 'yearly', 'imageUrl', media.url)}
+                          allowedTypes={['image']}
+                          value={card.imageUrl}
+                          render={({ open }) => (
+                            card.imageUrl ? (
+                              <div style={{ position: 'relative', display: 'inline-block' }}>
+                                <img src={card.imageUrl} alt="" style={{ width: cardImageWidth, height: cardImageHeight, objectFit: 'contain' }} onClick={open} />
+                                <Button isDestructive isSmall onClick={() => updateCard(card.id, 'yearly', 'imageUrl', '')} style={{ position: 'absolute', top: -10, right: -10, borderRadius: '50%' }}>X</Button>
+                              </div>
+                            ) : (
+                              <Button variant="secondary" onClick={open}>Add Logo</Button>
+                            )
+                          )}
+                        />
+                      </MediaUploadCheck>
+                    </div>
+                    <RichText
+                      tagName="h2"
+                      value={card.headingText}
+                      onChange={(val) => updateCard(card.id, 'yearly', 'headingText', val)}
+                      placeholder="Enter heading..."
+                      style={{
+                        color: cardHeadingColor,
+                        fontSize: cardHeadingFontSize,
+                        fontWeight: cardHeadingFontWeight,
+                        fontStyle: cardHeadingFontStyle,
+                        letterSpacing: cardHeadingLetterSpacing,
+                        margin: cardHeadingMargin,
+                        textAlign: 'center'
+                      }}
+                    />
+                    <div className="zen-memberships-card-separator" style={{ backgroundColor: cardSeparatorColor, height: cardSeparatorThickness, width: cardSeparatorLength }}></div>
+                  </div>
+                  <div className="zen-memberships-card-bottom" style={{ backgroundColor: cardBottomBgColor }}></div>
+                  
                   <button className="zen-memberships-remove-card" onClick={() => removeCard(card.id, 'yearly')} title="Remove Card">×</button>
                 </div>
               ))}

@@ -82,6 +82,38 @@
     /* other styles are inline via block settings */
   }
 
+  .zen-memberships-card-top {
+    width: 100%;
+    min-height: 20%;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 30px 15px;
+    box-sizing: border-box;
+  }
+
+  .zen-memberships-card-bottom {
+    width: 100%;
+    flex: 1;
+    box-sizing: border-box;
+  }
+
+  .zen-memberships-card-image-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+  }
+
+  .zen-memberships-card-separator {
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+
   .zen-memberships-remove-card {
     position: absolute;
     top: -10px;

@@ -164,17 +164,79 @@
       "type": "string",
       "default": "15px"
     },
+    "cardTopBgColor": {
+      "type": "string",
+      "default": "#3f3d3d"
+    },
+    "cardBottomBgColor": {
+      "type": "string",
+      "default": "#f4f0e6"
+    },
+    "cardImageWidth": {
+      "type": "string",
+      "default": "150px"
+    },
+    "cardImageHeight": {
+      "type": "string",
+      "default": "auto"
+    },
+    "cardImageSpacing": {
+      "type": "string",
+      "default": "15px"
+    },
+    "cardHeadingColor": {
+      "type": "string",
+      "default": "#d8b354"
+    },
+    "cardHeadingFontSize": {
+      "type": "string",
+      "default": "20px"
+    },
+    "cardHeadingFontWeight": {
+      "type": "string",
+      "default": "600"
+    },
+    "cardHeadingFontStyle": {
+      "type": "string",
+      "default": "normal"
+    },
+    "cardHeadingLetterSpacing": {
+      "type": "string",
+      "default": "1px"
+    },
+    "cardHeadingMargin": {
+      "type": "string",
+      "default": "0px 0px 15px 0px"
+    },
+    "cardSeparatorColor": {
+      "type": "string",
+      "default": "#d8b354"
+    },
+    "cardSeparatorThickness": {
+      "type": "string",
+      "default": "2px"
+    },
+    "cardSeparatorLength": {
+      "type": "string",
+      "default": "80%"
+    },
     "monthlyCards": {
       "type": "array",
       "default": [
         {
-          "id": "m1"
+          "id": "m1",
+          "imageUrl": "",
+          "headingText": "Zenctuary APPRENTICE"
         },
         {
-          "id": "m2"
+          "id": "m2",
+          "imageUrl": "",
+          "headingText": "Zenctuary APPRENTICE"
         },
         {
-          "id": "m3"
+          "id": "m3",
+          "imageUrl": "",
+          "headingText": "Zenctuary APPRENTICE"
         }
       ]
     },
@@ -182,13 +244,19 @@
       "type": "array",
       "default": [
         {
-          "id": "y1"
+          "id": "y1",
+          "imageUrl": "",
+          "headingText": "Zenctuary APPRENTICE"
         },
         {
-          "id": "y2"
+          "id": "y2",
+          "imageUrl": "",
+          "headingText": "Zenctuary APPRENTICE"
         },
         {
-          "id": "y3"
+          "id": "y3",
+          "imageUrl": "",
+          "headingText": "Zenctuary APPRENTICE"
         }
       ]
     }

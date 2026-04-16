@@ -8,6 +8,9 @@ export default function save({ attributes }) {
     btnNormalBgColor, btnNormalTextColor, btnNormalFontSize, btnNormalFontWeight, btnNormalPadding, btnNormalMargin, btnNormalBorderRadius, btnNormalBorderColor, btnNormalBorderWidth,
     btnActiveBgColor, btnActiveTextColor, btnActiveFontSize, btnActiveFontWeight, btnActiveBorderRadius, btnActiveBorderColor,
     cardWidth, cardHeight, cardBgColor, cardBorderColor, cardBorderWidth, cardBorderRadius,
+    cardTopBgColor, cardBottomBgColor, cardImageWidth, cardImageHeight, cardImageSpacing,
+    cardHeadingColor, cardHeadingFontSize, cardHeadingFontWeight, cardHeadingFontStyle, cardHeadingLetterSpacing, cardHeadingMargin,
+    cardSeparatorColor, cardSeparatorThickness, cardSeparatorLength,
     monthlyCards, yearlyCards
   } = attributes;
 
@@ -113,8 +116,34 @@ export default function save({ attributes }) {
                 backgroundColor: cardBgColor,
                 borderColor: cardBorderColor,
                 borderWidth: cardBorderWidth,
-                borderRadius: cardBorderRadius
-              }}></div>
+                borderRadius: cardBorderRadius,
+                display: 'flex',
+                flexDirection: 'column',
+                overflow: 'hidden'
+              }}>
+                <div className="zen-memberships-card-top" style={{ backgroundColor: cardTopBgColor }}>
+                  <div className="zen-memberships-card-image-wrapper" style={{ marginBottom: cardImageSpacing }}>
+                    {card.imageUrl && (
+                      <img src={card.imageUrl} alt="" style={{ width: cardImageWidth, height: cardImageHeight, objectFit: 'contain' }} />
+                    )}
+                  </div>
+                  <RichText.Content
+                    tagName="h2"
+                    value={card.headingText}
+                    style={{
+                      color: cardHeadingColor,
+                      fontSize: cardHeadingFontSize,
+                      fontWeight: cardHeadingFontWeight,
+                      fontStyle: cardHeadingFontStyle,
+                      letterSpacing: cardHeadingLetterSpacing,
+                      margin: cardHeadingMargin,
+                      textAlign: 'center'
+                    }}
+                  />
+                  <div className="zen-memberships-card-separator" style={{ backgroundColor: cardSeparatorColor, height: cardSeparatorThickness, width: cardSeparatorLength }}></div>
+                </div>
+                <div className="zen-memberships-card-bottom" style={{ backgroundColor: cardBottomBgColor }}></div>
+              </div>
             ))}
           </div>
         </div>
@@ -128,8 +157,34 @@ export default function save({ attributes }) {
                 backgroundColor: cardBgColor,
                 borderColor: cardBorderColor,
                 borderWidth: cardBorderWidth,
-                borderRadius: cardBorderRadius
-              }}></div>
+                borderRadius: cardBorderRadius,
+                display: 'flex',
+                flexDirection: 'column',
+                overflow: 'hidden'
+              }}>
+                <div className="zen-memberships-card-top" style={{ backgroundColor: cardTopBgColor }}>
+                  <div className="zen-memberships-card-image-wrapper" style={{ marginBottom: cardImageSpacing }}>
+                    {card.imageUrl && (
+                      <img src={card.imageUrl} alt="" style={{ width: cardImageWidth, height: cardImageHeight, objectFit: 'contain' }} />
+                    )}
+                  </div>
+                  <RichText.Content
+                    tagName="h2"
+                    value={card.headingText}
+                    style={{
+                      color: cardHeadingColor,
+                      fontSize: cardHeadingFontSize,
+                      fontWeight: cardHeadingFontWeight,
+                      fontStyle: cardHeadingFontStyle,
+                      letterSpacing: cardHeadingLetterSpacing,
+                      margin: cardHeadingMargin,
+                      textAlign: 'center'
+                    }}
+                  />
+                  <div className="zen-memberships-card-separator" style={{ backgroundColor: cardSeparatorColor, height: cardSeparatorThickness, width: cardSeparatorLength }}></div>
+                </div>
+                <div className="zen-memberships-card-bottom" style={{ backgroundColor: cardBottomBgColor }}></div>
+              </div>
             ))}
           </div>
         </div>
