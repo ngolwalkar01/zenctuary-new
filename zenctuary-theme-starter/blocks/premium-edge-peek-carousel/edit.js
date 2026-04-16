@@ -31,6 +31,7 @@ function createDefaultCard() {
 	return {
 		imageId: 0,
 		imageUrl: '',
+		showOverlay: true,
 		overlayColor: '#1f1d1a',
 		overlayOpacity: 0.48,
 		title: __( 'New Card', 'zenctuary' ),
@@ -86,6 +87,7 @@ function normalizeCards( cards ) {
 	return nextCards.map( ( card ) => ( {
 		...createDefaultCard(),
 		...card,
+		showOverlay: card?.showOverlay !== false,
 		items: Array.isArray( card?.items ) && card.items.length ? card.items : [ __( 'List item', 'zenctuary' ) ],
 	} ) );
 }
@@ -173,6 +175,7 @@ export default function Edit( { attributes, setAttributes } ) {
 			'--premium-edge-peek-card-body-weight': attributes.cardBodyFontWeight || '400',
 			'--premium-edge-peek-card-body-line-height': attributes.cardBodyLineHeight || '1.5',
 			'--premium-edge-peek-card-body-color': attributes.cardBodyColor || '#ffffff',
+			'--premium-edge-peek-card-text-transform': attributes.cardTextUppercase ? 'uppercase' : 'none',
 			'--premium-edge-peek-dots-size': attributes.dotsFontSize || '1.35rem',
 			'--premium-edge-peek-dots-spacing': attributes.dotsLetterSpacing || '0.22em',
 			'--premium-edge-peek-dots-color': attributes.dotsColor || 'rgba(255, 255, 255, 0.86)',
@@ -261,6 +264,7 @@ export default function Edit( { attributes, setAttributes } ) {
 					<TextControl label={ __( 'Body Text Weight', 'zenctuary' ) } value={ attributes.cardBodyFontWeight } onChange={ ( value ) => setAttributes( { cardBodyFontWeight: value || '400' } ) } />
 					<TextControl label={ __( 'Body Text Line Height', 'zenctuary' ) } value={ attributes.cardBodyLineHeight } onChange={ ( value ) => setAttributes( { cardBodyLineHeight: value || '1.5' } ) } />
 					<TextControl label={ __( 'Body Text Color', 'zenctuary' ) } value={ attributes.cardBodyColor } onChange={ ( value ) => setAttributes( { cardBodyColor: value || '#ffffff' } ) } />
+					<ToggleControl label={ __( 'Uppercase Card Text', 'zenctuary' ) } checked={ attributes.cardTextUppercase } onChange={ ( value ) => setAttributes( { cardTextUppercase: value } ) } help={ __( 'Applies to the card title, list text, and dots. Button text is unaffected.', 'zenctuary' ) } />
 					<TextControl label={ __( 'Dots Size', 'zenctuary' ) } value={ attributes.dotsFontSize } onChange={ ( value ) => setAttributes( { dotsFontSize: value || '1.35rem' } ) } />
 					<TextControl label={ __( 'Dots Letter Spacing', 'zenctuary' ) } value={ attributes.dotsLetterSpacing } onChange={ ( value ) => setAttributes( { dotsLetterSpacing: value || '0.22em' } ) } />
 					<TextControl label={ __( 'Dots Color', 'zenctuary' ) } value={ attributes.dotsColor } onChange={ ( value ) => setAttributes( { dotsColor: value || 'rgba(255, 255, 255, 0.86)' } ) } />
@@ -312,10 +316,15 @@ export default function Edit( { attributes, setAttributes } ) {
 							</div>
 						) }
 						<TextControl label={ __( 'Title', 'zenctuary' ) } value={ selectedCard.title } onChange={ ( value ) => updateCard( selectedCardIndex, { title: value } ) } />
+						<ToggleControl label={ __( 'Show Image Overlay', 'zenctuary' ) } checked={ selectedCard.showOverlay !== false } onChange={ ( value ) => updateCard( selectedCardIndex, { showOverlay: value } ) } />
 						<p className="components-base-control__label">{ __( 'Overlay Color', 'zenctuary' ) }</p>
-						<ColorPalette colors={ PRESET_COLORS } value={ selectedCard.overlayColor } onChange={ ( value ) => updateCard( selectedCardIndex, { overlayColor: value || '#1f1d1a' } ) } />
-						<TextControl label={ __( 'Custom Overlay Color', 'zenctuary' ) } value={ selectedCard.overlayColor } onChange={ ( value ) => updateCard( selectedCardIndex, { overlayColor: value || '#1f1d1a' } ) } />
-						<RangeControl label={ __( 'Overlay Opacity', 'zenctuary' ) } value={ selectedCard.overlayOpacity } onChange={ ( value ) => updateCard( selectedCardIndex, { overlayOpacity: value } ) } min={ 0 } max={ 1 } step={ 0.05 } />
+						{ selectedCard.showOverlay !== false && (
+							<>
+								<ColorPalette colors={ PRESET_COLORS } value={ selectedCard.overlayColor } onChange={ ( value ) => updateCard( selectedCardIndex, { overlayColor: value || '#1f1d1a' } ) } />
+								<TextControl label={ __( 'Custom Overlay Color', 'zenctuary' ) } value={ selectedCard.overlayColor } onChange={ ( value ) => updateCard( selectedCardIndex, { overlayColor: value || '#1f1d1a' } ) } />
+								<RangeControl label={ __( 'Overlay Opacity', 'zenctuary' ) } value={ selectedCard.overlayOpacity } onChange={ ( value ) => updateCard( selectedCardIndex, { overlayOpacity: value } ) } min={ 0 } max={ 1 } step={ 0.05 } />
+							</>
+						) }
 						<BaseControl label={ __( 'List Items', 'zenctuary' ) }>
 							{ selectedCard.items.map( ( item, itemIndex ) => (
 								<div key={ itemIndex } style={ { marginBottom: '12px' } }>
@@ -351,10 +360,10 @@ export default function Edit( { attributes, setAttributes } ) {
 							{ cards.map( ( card, index ) => (
 								<div key={ index } className={ `premium-edge-peek-carousel__preview-slide${ index === selectedCardIndex ? ' is-selected' : '' }` } onClick={ () => setSelectedCardIndex( index ) } onKeyDown={ () => {} } role="button" tabIndex={ 0 }>
 									<article className="premium-edge-peek-carousel__card" style={ {
-										backgroundImage: card.imageUrl ? `linear-gradient(180deg, rgba(0, 0, 0, 0.08) 0%, rgba(0, 0, 0, 0.68) 100%), url("${ card.imageUrl }")` : undefined,
+										backgroundImage: card.imageUrl ? `url("${ card.imageUrl }")` : undefined,
 										backgroundColor: ! card.imageUrl ? '#c8bfb2' : undefined,
 									} }>
-										<div className="premium-edge-peek-carousel__overlay" style={ { backgroundColor: card.overlayColor, opacity: card.overlayOpacity } } />
+										{ card.showOverlay !== false && <div className="premium-edge-peek-carousel__overlay" style={ { backgroundColor: card.overlayColor, opacity: card.overlayOpacity } } /> }
 										<div className="premium-edge-peek-carousel__card-content">
 											<div className="premium-edge-peek-carousel__card-top">
 												<RichText tagName="h3" className="premium-edge-peek-carousel__card-title" value={ card.title } onChange={ ( value ) => updateCard( index, { title: value } ) } placeholder={ __( 'Card title', 'zenctuary' ) } />

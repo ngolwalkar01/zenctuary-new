@@ -172,6 +172,10 @@
       "type": "string",
       "default": "#ffffff"
     },
+    "cardTextUppercase": {
+      "type": "boolean",
+      "default": true
+    },
     "dotsFontSize": {
       "type": "string",
       "default": "1.35rem"
@@ -243,6 +247,7 @@
         {
           "imageId": 0,
           "imageUrl": "",
+          "showOverlay": true,
           "overlayColor": "#1f1d1a",
           "overlayOpacity": 0.48,
           "title": "Classes",
@@ -260,6 +265,7 @@
         {
           "imageId": 0,
           "imageUrl": "",
+          "showOverlay": true,
           "overlayColor": "#16181d",
           "overlayOpacity": 0.46,
           "title": "Retreats",
@@ -277,6 +283,7 @@
         {
           "imageId": 0,
           "imageUrl": "",
+          "showOverlay": true,
           "overlayColor": "#221c19",
           "overlayOpacity": 0.45,
           "title": "Memberships",
@@ -294,6 +301,7 @@
         {
           "imageId": 0,
           "imageUrl": "",
+          "showOverlay": true,
           "overlayColor": "#13161a",
           "overlayOpacity": 0.5,
           "title": "Events",

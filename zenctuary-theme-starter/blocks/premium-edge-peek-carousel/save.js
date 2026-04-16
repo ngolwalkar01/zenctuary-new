@@ -20,6 +20,7 @@ function normalizeCards( cards ) {
 	return cards.map( ( card ) => ( {
 		imageId: card?.imageId || 0,
 		imageUrl: card?.imageUrl || '',
+		showOverlay: card?.showOverlay !== false,
 		overlayColor: card?.overlayColor || '#1f1d1a',
 		overlayOpacity: typeof card?.overlayOpacity === 'number' ? card.overlayOpacity : 0.48,
 		title: card?.title || '',
@@ -64,6 +65,7 @@ export default function save( { attributes } ) {
 			'--premium-edge-peek-card-body-weight': attributes.cardBodyFontWeight || '400',
 			'--premium-edge-peek-card-body-line-height': attributes.cardBodyLineHeight || '1.5',
 			'--premium-edge-peek-card-body-color': attributes.cardBodyColor || '#ffffff',
+			'--premium-edge-peek-card-text-transform': attributes.cardTextUppercase ? 'uppercase' : 'none',
 			'--premium-edge-peek-dots-size': attributes.dotsFontSize || '1.35rem',
 			'--premium-edge-peek-dots-spacing': attributes.dotsLetterSpacing || '0.22em',
 			'--premium-edge-peek-dots-color': attributes.dotsColor || 'rgba(255, 255, 255, 0.86)',
@@ -126,10 +128,10 @@ export default function save( { attributes } ) {
 							{ cards.map( ( card, index ) => (
 								<div key={ index } className="swiper-slide premium-edge-peek-carousel__slide">
 									<article className="premium-edge-peek-carousel__card" style={ {
-										backgroundImage: card.imageUrl ? `linear-gradient(180deg, rgba(0, 0, 0, 0.08) 0%, rgba(0, 0, 0, 0.68) 100%), url("${ card.imageUrl }")` : undefined,
+										backgroundImage: card.imageUrl ? `url("${ card.imageUrl }")` : undefined,
 										backgroundColor: ! card.imageUrl ? '#c8bfb2' : undefined,
 									} }>
-										<div className="premium-edge-peek-carousel__overlay" style={ { backgroundColor: card.overlayColor, opacity: card.overlayOpacity } } />
+										{ card.showOverlay !== false && <div className="premium-edge-peek-carousel__overlay" style={ { backgroundColor: card.overlayColor, opacity: card.overlayOpacity } } /> }
 										<div className="premium-edge-peek-carousel__card-content">
 											<div className="premium-edge-peek-carousel__card-top">
 												{ card.title && <RichText.Content tagName="h3" className="premium-edge-peek-carousel__card-title" value={ card.title } /> }

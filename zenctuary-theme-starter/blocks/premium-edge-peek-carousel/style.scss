@@ -20,6 +20,7 @@
     --premium-edge-peek-card-width-desktop: calc(((100vw - var(--premium-edge-peek-left-start-desktop) - (var(--premium-edge-peek-gap) * var(--premium-edge-peek-desktop-cards))) / (var(--premium-edge-peek-desktop-cards) + (var(--premium-edge-peek-desktop-peek) / 100))) * (var(--premium-edge-peek-card-scale-desktop) / 100));
     position: relative;
     width: 100%;
+    border: 0;
     overflow-x: clip;
     overflow-y: visible;
     box-sizing: border-box;
@@ -179,6 +180,7 @@
         line-height: var(--premium-edge-peek-card-title-line-height);
         letter-spacing: -0.02em;
         color: var(--premium-edge-peek-card-title-color);
+        text-transform: var(--premium-edge-peek-card-text-transform, none);
     }
 
     .premium-edge-peek-carousel__card-items {
@@ -191,6 +193,7 @@
         line-height: var(--premium-edge-peek-card-body-line-height);
         font-weight: var(--premium-edge-peek-card-body-weight);
         color: var(--premium-edge-peek-card-body-color);
+        text-transform: var(--premium-edge-peek-card-text-transform, none);
     }
 
     .premium-edge-peek-carousel__dots {
@@ -199,6 +202,7 @@
         font-size: var(--premium-edge-peek-dots-size);
         letter-spacing: var(--premium-edge-peek-dots-spacing);
         line-height: 1;
+        text-transform: var(--premium-edge-peek-card-text-transform, none);
     }
 
     .premium-edge-peek-carousel__button {
