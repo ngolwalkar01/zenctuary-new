@@ -1,0 +1,186 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "zenctuary/premium-edge-peek-carousel",
+  "version": "1.0.0",
+  "title": "Premium Edge Peek Carousel",
+  "category": "design",
+  "icon": "images-alt2",
+  "description": "A premium editorial card carousel with 3 full cards and a partial edge-peek card.",
+  "keywords": [
+    "carousel",
+    "swiper",
+    "cards",
+    "slider",
+    "editorial"
+  ],
+  "attributes": {
+    "heading": {
+      "type": "string",
+      "default": "Explore What Moves You"
+    },
+    "subheading": {
+      "type": "string",
+      "default": "Curated classes and rituals designed to keep the strip in motion."
+    },
+    "contentMaxWidth": {
+      "type": "number",
+      "default": 1320
+    },
+    "backgroundColor": {
+      "type": "string",
+      "default": "#f4efe7"
+    },
+    "sectionPadding": {
+      "type": "object",
+      "default": {
+        "top": "72px",
+        "right": "24px",
+        "bottom": "72px",
+        "left": "24px"
+      }
+    },
+    "gap": {
+      "type": "number",
+      "default": 24
+    },
+    "desktopCards": {
+      "type": "number",
+      "default": 3
+    },
+    "tabletCards": {
+      "type": "number",
+      "default": 2
+    },
+    "mobileCards": {
+      "type": "number",
+      "default": 1
+    },
+    "edgePeekDesktop": {
+      "type": "number",
+      "default": 20
+    },
+    "edgePeekTablet": {
+      "type": "number",
+      "default": 20
+    },
+    "edgePeekMobile": {
+      "type": "number",
+      "default": 20
+    },
+    "loop": {
+      "type": "boolean",
+      "default": false
+    },
+    "autoplay": {
+      "type": "boolean",
+      "default": false
+    },
+    "autoplayDelay": {
+      "type": "number",
+      "default": 4000
+    },
+    "transitionSpeed": {
+      "type": "number",
+      "default": 450
+    },
+    "showPagination": {
+      "type": "boolean",
+      "default": true
+    },
+    "cardBorderRadius": {
+      "type": "number",
+      "default": 20
+    },
+    "cardContentPadding": {
+      "type": "number",
+      "default": 24
+    },
+    "cards": {
+      "type": "array",
+      "default": [
+        {
+          "imageId": 0,
+          "imageUrl": "",
+          "overlayColor": "#1f1d1a",
+          "overlayOpacity": 0.48,
+          "title": "Classes",
+          "items": [
+            "Yoga",
+            "Breathwork",
+            "Meditation"
+          ],
+          "showDots": true,
+          "dotsText": "...",
+          "buttonText": "View Classes",
+          "buttonUrl": "#",
+          "openInNewTab": false
+        },
+        {
+          "imageId": 0,
+          "imageUrl": "",
+          "overlayColor": "#16181d",
+          "overlayOpacity": 0.46,
+          "title": "Retreats",
+          "items": [
+            "Weekend Immersions",
+            "Sound Journeys",
+            "Reset Rituals"
+          ],
+          "showDots": true,
+          "dotsText": "...",
+          "buttonText": "See Retreats",
+          "buttonUrl": "#",
+          "openInNewTab": false
+        },
+        {
+          "imageId": 0,
+          "imageUrl": "",
+          "overlayColor": "#221c19",
+          "overlayOpacity": 0.45,
+          "title": "Memberships",
+          "items": [
+            "Studio Access",
+            "Recovery Suites",
+            "Private Sessions"
+          ],
+          "showDots": true,
+          "dotsText": "...",
+          "buttonText": "Explore Memberships",
+          "buttonUrl": "#",
+          "openInNewTab": false
+        },
+        {
+          "imageId": 0,
+          "imageUrl": "",
+          "overlayColor": "#13161a",
+          "overlayOpacity": 0.5,
+          "title": "Events",
+          "items": [
+            "Sunrise Gatherings",
+            "Teacher Talks",
+            "Community Nights"
+          ],
+          "showDots": true,
+          "dotsText": "...",
+          "buttonText": "Browse Events",
+          "buttonUrl": "#",
+          "openInNewTab": false
+        }
+      ]
+    }
+  },
+  "supports": {
+    "html": false,
+    "anchor": true,
+    "align": [
+      "wide",
+      "full"
+    ]
+  },
+  "textdomain": "zenctuary",
+  "editorScript": "file:./index.js",
+  "viewScript": "file:./view.js",
+  "style": "file:./style-index.css",
+  "editorStyle": "file:./style-index.css"
+}
