@@ -34,6 +34,8 @@ $desc_font_weight    = esc_attr( $attributes['descFontWeight'] ?? '400' );
 $desc_line_height    = (float) ( $attributes['descLineHeight'] ?? 1.6 );
 $desc_color          = esc_attr( $attributes['descColor'] ?? '#F6F2EA' );
 $desc_max_width      = (int) ( $attributes['descMaxWidth'] ?? 900 );
+$header_bottom_spacing = (int) ( $attributes['headerBottomSpacing'] ?? 24 );
+$description_bottom_spacing = (int) ( $attributes['descriptionBottomSpacing'] ?? 40 );
 
 $accordion_border_width   = (int) ( $attributes['accordionBorderWidth'] ?? 1 );
 $accordion_border_color   = esc_attr( $attributes['accordionBorderColor'] ?? '#3d3c3c' );
@@ -92,6 +94,24 @@ $btn_margin_top    = (int) ( $attributes['btnMarginTop'] ?? 0 );
 $card_image_height   = (int) ( $attributes['cardImageHeight'] ?? 220 );
 $card_body_padding   = (int) ( $attributes['cardBodyPadding'] ?? 24 );
 $card_border_radius  = (int) ( $attributes['cardBorderRadius'] ?? 24 );
+$card_title_font_size = (int) ( $attributes['cardTitleFontSize'] ?? 20 );
+$card_title_font_weight = esc_attr( $attributes['cardTitleFontWeight'] ?? '700' );
+$card_title_color = esc_attr( $attributes['cardTitleColor'] ?? '#3F3E3E' );
+$card_title_bottom_spacing = (int) ( $attributes['cardTitleBottomSpacing'] ?? 16 );
+$difficulty_font_size = (int) ( $attributes['difficultyFontSize'] ?? 14 );
+$difficulty_font_weight = esc_attr( $attributes['difficultyFontWeight'] ?? '500' );
+$difficulty_text_color = esc_attr( $attributes['difficultyTextColor'] ?? '#3F3E3E' );
+$difficulty_bottom_spacing = (int) ( $attributes['difficultyBottomSpacing'] ?? 16 );
+$difficulty_icon_size = (int) ( $attributes['difficultyIconSize'] ?? 20 );
+$difficulty_tick_size = (int) ( $attributes['difficultyTickSize'] ?? 12 );
+$difficulty_icon_bg_color = esc_attr( $attributes['difficultyIconBgColor'] ?? '#D8B355' );
+$difficulty_tick_color = esc_attr( $attributes['difficultyTickColor'] ?? '#3F3E3E' );
+$difficulty_gap = (int) ( $attributes['difficultyGap'] ?? 8 );
+$card_desc_font_size = (int) ( $attributes['cardDescFontSize'] ?? 14 );
+$card_desc_font_weight = esc_attr( $attributes['cardDescFontWeight'] ?? '400' );
+$card_desc_line_height = (float) ( $attributes['cardDescLineHeight'] ?? 1.6 );
+$card_desc_color = esc_attr( $attributes['cardDescColor'] ?? '#3F3E3E' );
+$card_desc_bottom_spacing = (int) ( $attributes['cardDescBottomSpacing'] ?? 16 );
 
 // Build query args — only add taxonomy filter if a term is selected.
 $helper_args = [];
@@ -130,6 +150,8 @@ $inline_styles = '
     --zen-exp-desc-line-height: ' . $desc_line_height . ';
     --zen-exp-desc-color: ' . $desc_color . ';
     --zen-exp-desc-max-width: ' . $desc_max_width . 'px;
+    --zen-exp-header-bottom-spacing: ' . $header_bottom_spacing . 'px;
+    --zen-exp-description-bottom-spacing: ' . $description_bottom_spacing . 'px;
 
     --zen-exp-accordion-border-width: ' . $accordion_border_width . 'px;
     --zen-exp-accordion-border-color: ' . $accordion_border_color . ';
@@ -168,6 +190,24 @@ $inline_styles = '
     --zen-exp-card-image-height: ' . $card_image_height . 'px;
     --zen-exp-card-body-padding: ' . $card_body_padding . 'px;
     --zen-exp-card-border-radius: ' . $card_border_radius . 'px;
+    --zen-exp-card-title-font-size: ' . $card_title_font_size . 'px;
+    --zen-exp-card-title-font-weight: ' . $card_title_font_weight . ';
+    --zen-exp-card-title-color: ' . $card_title_color . ';
+    --zen-exp-card-title-bottom-spacing: ' . $card_title_bottom_spacing . 'px;
+    --zen-exp-difficulty-font-size: ' . $difficulty_font_size . 'px;
+    --zen-exp-difficulty-font-weight: ' . $difficulty_font_weight . ';
+    --zen-exp-difficulty-text-color: ' . $difficulty_text_color . ';
+    --zen-exp-difficulty-bottom-spacing: ' . $difficulty_bottom_spacing . 'px;
+    --zen-exp-difficulty-icon-size: ' . $difficulty_icon_size . 'px;
+    --zen-exp-difficulty-tick-size: ' . $difficulty_tick_size . 'px;
+    --zen-exp-difficulty-icon-bg-color: ' . $difficulty_icon_bg_color . ';
+    --zen-exp-difficulty-tick-color: ' . $difficulty_tick_color . ';
+    --zen-exp-difficulty-gap: ' . $difficulty_gap . 'px;
+    --zen-exp-card-desc-font-size: ' . $card_desc_font_size . 'px;
+    --zen-exp-card-desc-font-weight: ' . $card_desc_font_weight . ';
+    --zen-exp-card-desc-line-height: ' . $card_desc_line_height . ';
+    --zen-exp-card-desc-color: ' . $card_desc_color . ';
+    --zen-exp-card-desc-bottom-spacing: ' . $card_desc_bottom_spacing . 'px;
 }
 ';
 
@@ -252,7 +292,9 @@ $inline_styles = '
                                 <h3 class="zen-class-card__title"><?php echo esc_html( strtoupper( $title ) ); ?></h3>
                                 <?php if ( $show_difficulty && ! empty( $meta['difficulty_level'] ) ) : ?>
                                 <div class="zen-class-card__difficulty">
-                                    <svg class="zen-difficulty-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 2C6.48 2 2 6.48 2 12C2 17.52 6.48 22 12 22C17.52 22 22 17.52 22 12C22 6.48 17.52 2 12 2ZM9.29 16.29L5.7 12.7C5.31 12.31 5.31 11.68 5.7 11.29C6.09 10.9 6.72 10.9 7.11 11.29L10 14.17L16.88 7.29C17.27 6.9 17.9 6.9 18.29 7.29C18.68 7.68 18.68 8.31 18.29 8.7L10.7 16.29C10.32 16.68 9.68 16.68 9.29 16.29Z" fill="currentColor"/></svg>
+                                    <span class="zen-difficulty-icon" aria-hidden="true">
+                                        <svg class="zen-difficulty-icon__tick" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M9.55 16.15L5.75 12.35L7.15 10.95L9.55 13.35L16.85 6.05L18.25 7.45L9.55 16.15Z" fill="currentColor"/></svg>
+                                    </span>
                                     <span><?php echo esc_html( $meta['difficulty_level'] ); ?></span>
                                 </div>
                                 <?php endif; ?>
@@ -304,7 +346,9 @@ $inline_styles = '
                     <h3 class="zen-class-card__title"><?php echo esc_html( strtoupper( $title ) ); ?></h3>
                     <?php if ( $show_difficulty && ! empty( $meta['difficulty_level'] ) ) : ?>
                     <div class="zen-class-card__difficulty">
-                        <svg class="zen-difficulty-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 2C6.48 2 2 6.48 2 12C2 17.52 6.48 22 12 22C17.52 22 22 17.52 22 12C22 6.48 17.52 2 12 2ZM9.29 16.29L5.7 12.7C5.31 12.31 5.31 11.68 5.7 11.29C6.09 10.9 6.72 10.9 7.11 11.29L10 14.17L16.88 7.29C17.27 6.9 17.9 6.9 18.29 7.29C18.68 7.68 18.68 8.31 18.29 8.7L10.7 16.29C10.32 16.68 9.68 16.68 9.29 16.29Z" fill="currentColor"/></svg>
+                        <span class="zen-difficulty-icon" aria-hidden="true">
+                            <svg class="zen-difficulty-icon__tick" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M9.55 16.15L5.75 12.35L7.15 10.95L9.55 13.35L16.85 6.05L18.25 7.45L9.55 16.15Z" fill="currentColor"/></svg>
+                        </span>
                         <span><?php echo esc_html( $meta['difficulty_level'] ); ?></span>
                     </div>
                     <?php endif; ?>

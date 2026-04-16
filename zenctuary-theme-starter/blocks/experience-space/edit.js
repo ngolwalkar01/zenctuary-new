@@ -52,6 +52,8 @@ export default function Edit( { attributes, setAttributes } ) {
         descLineHeight,
         descColor,
         descMaxWidth,
+        headerBottomSpacing,
+        descriptionBottomSpacing,
 
         accordionBorderWidth,
         accordionBorderColor,
@@ -89,6 +91,24 @@ export default function Edit( { attributes, setAttributes } ) {
         cardImageHeight,
         cardBodyPadding,
         cardBorderRadius,
+        cardTitleFontSize,
+        cardTitleFontWeight,
+        cardTitleColor,
+        cardTitleBottomSpacing,
+        difficultyFontSize,
+        difficultyFontWeight,
+        difficultyTextColor,
+        difficultyBottomSpacing,
+        difficultyIconSize,
+        difficultyTickSize,
+        difficultyIconBgColor,
+        difficultyTickColor,
+        difficultyGap,
+        cardDescFontSize,
+        cardDescFontWeight,
+        cardDescLineHeight,
+        cardDescColor,
+        cardDescBottomSpacing,
     } = attributes;
 
     const blockProps = useBlockProps();
@@ -279,6 +299,20 @@ export default function Edit( { attributes, setAttributes } ) {
                     <ColorPalette
                         value={ descColor }
                         onChange={ ( val ) => setAttributes( { descColor: val || '#F6F2EA' } ) }
+                    />
+                    <RangeControl
+                        label={ __( 'Spacing Under Heading (px)', 'zenctuary' ) }
+                        value={ headerBottomSpacing }
+                        onChange={ ( val ) => setAttributes( { headerBottomSpacing: val } ) }
+                        min={ 0 }
+                        max={ 100 }
+                    />
+                    <RangeControl
+                        label={ __( 'Spacing Under Description (px)', 'zenctuary' ) }
+                        value={ descriptionBottomSpacing }
+                        onChange={ ( val ) => setAttributes( { descriptionBottomSpacing: val } ) }
+                        min={ 0 }
+                        max={ 120 }
                     />
                 </PanelBody>
 
@@ -505,6 +539,126 @@ export default function Edit( { attributes, setAttributes } ) {
                         onChange={ ( val ) => setAttributes( { cardBorderRadius: val } ) }
                         min={ 0 }
                         max={ 60 }
+                    />
+                </PanelBody>
+
+                <PanelBody title={ __( 'Card Typography & Spacing', 'zenctuary' ) } initialOpen={ false }>
+                    <RangeControl
+                        label={ __( 'Title Font Size (px)', 'zenctuary' ) }
+                        value={ cardTitleFontSize }
+                        onChange={ ( val ) => setAttributes( { cardTitleFontSize: val } ) }
+                        min={ 12 }
+                        max={ 40 }
+                    />
+                    <SelectControl
+                        label={ __( 'Title Font Weight', 'zenctuary' ) }
+                        value={ cardTitleFontWeight }
+                        options={ WEIGHTS }
+                        onChange={ ( val ) => setAttributes( { cardTitleFontWeight: val } ) }
+                    />
+                    <p className="components-base-control__label">{ __( 'Title Color', 'zenctuary' ) }</p>
+                    <ColorPalette
+                        value={ cardTitleColor }
+                        onChange={ ( val ) => setAttributes( { cardTitleColor: val || '#3F3E3E' } ) }
+                    />
+                    <RangeControl
+                        label={ __( 'Spacing Under Title (px)', 'zenctuary' ) }
+                        value={ cardTitleBottomSpacing }
+                        onChange={ ( val ) => setAttributes( { cardTitleBottomSpacing: val } ) }
+                        min={ 0 }
+                        max={ 60 }
+                    />
+                    <RangeControl
+                        label={ __( 'Difficulty Font Size (px)', 'zenctuary' ) }
+                        value={ difficultyFontSize }
+                        onChange={ ( val ) => setAttributes( { difficultyFontSize: val } ) }
+                        min={ 10 }
+                        max={ 32 }
+                    />
+                    <SelectControl
+                        label={ __( 'Difficulty Font Weight', 'zenctuary' ) }
+                        value={ difficultyFontWeight }
+                        options={ WEIGHTS }
+                        onChange={ ( val ) => setAttributes( { difficultyFontWeight: val } ) }
+                    />
+                    <p className="components-base-control__label">{ __( 'Difficulty Text Color', 'zenctuary' ) }</p>
+                    <ColorPalette
+                        value={ difficultyTextColor }
+                        onChange={ ( val ) => setAttributes( { difficultyTextColor: val || '#3F3E3E' } ) }
+                    />
+                    <RangeControl
+                        label={ __( 'Spacing Under Difficulty (px)', 'zenctuary' ) }
+                        value={ difficultyBottomSpacing }
+                        onChange={ ( val ) => setAttributes( { difficultyBottomSpacing: val } ) }
+                        min={ 0 }
+                        max={ 60 }
+                    />
+                    <RangeControl
+                        label={ __( 'Description Font Size (px)', 'zenctuary' ) }
+                        value={ cardDescFontSize }
+                        onChange={ ( val ) => setAttributes( { cardDescFontSize: val } ) }
+                        min={ 10 }
+                        max={ 28 }
+                    />
+                    <SelectControl
+                        label={ __( 'Description Font Weight', 'zenctuary' ) }
+                        value={ cardDescFontWeight }
+                        options={ WEIGHTS }
+                        onChange={ ( val ) => setAttributes( { cardDescFontWeight: val } ) }
+                    />
+                    <RangeControl
+                        label={ __( 'Description Line Height', 'zenctuary' ) }
+                        value={ cardDescLineHeight }
+                        onChange={ ( val ) => setAttributes( { cardDescLineHeight: val } ) }
+                        min={ 1 }
+                        max={ 3 }
+                        step={ 0.1 }
+                    />
+                    <p className="components-base-control__label">{ __( 'Description Color', 'zenctuary' ) }</p>
+                    <ColorPalette
+                        value={ cardDescColor }
+                        onChange={ ( val ) => setAttributes( { cardDescColor: val || '#3F3E3E' } ) }
+                    />
+                    <RangeControl
+                        label={ __( 'Spacing Under Description (px)', 'zenctuary' ) }
+                        value={ cardDescBottomSpacing }
+                        onChange={ ( val ) => setAttributes( { cardDescBottomSpacing: val } ) }
+                        min={ 0 }
+                        max={ 60 }
+                    />
+                </PanelBody>
+
+                <PanelBody title={ __( 'Difficulty Icon', 'zenctuary' ) } initialOpen={ false }>
+                    <RangeControl
+                        label={ __( 'Circle Size (px)', 'zenctuary' ) }
+                        value={ difficultyIconSize }
+                        onChange={ ( val ) => setAttributes( { difficultyIconSize: val } ) }
+                        min={ 12 }
+                        max={ 40 }
+                    />
+                    <RangeControl
+                        label={ __( 'Tick Size (px)', 'zenctuary' ) }
+                        value={ difficultyTickSize }
+                        onChange={ ( val ) => setAttributes( { difficultyTickSize: val } ) }
+                        min={ 8 }
+                        max={ 24 }
+                    />
+                    <RangeControl
+                        label={ __( 'Icon/Text Gap (px)', 'zenctuary' ) }
+                        value={ difficultyGap }
+                        onChange={ ( val ) => setAttributes( { difficultyGap: val } ) }
+                        min={ 0 }
+                        max={ 24 }
+                    />
+                    <p className="components-base-control__label">{ __( 'Circle Background Color', 'zenctuary' ) }</p>
+                    <ColorPalette
+                        value={ difficultyIconBgColor }
+                        onChange={ ( val ) => setAttributes( { difficultyIconBgColor: val || '#D8B355' } ) }
+                    />
+                    <p className="components-base-control__label">{ __( 'Tick Color', 'zenctuary' ) }</p>
+                    <ColorPalette
+                        value={ difficultyTickColor }
+                        onChange={ ( val ) => setAttributes( { difficultyTickColor: val || '#3F3E3E' } ) }
                     />
                 </PanelBody>
             </InspectorControls>

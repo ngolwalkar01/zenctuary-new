@@ -54,6 +54,8 @@
     "descLineHeight":         { "type": "number", "default": 1.6 },
     "descColor":              { "type": "string", "default": "#F6F2EA" },
     "descMaxWidth":           { "type": "number", "default": 900 },
+    "headerBottomSpacing":    { "type": "number", "default": 24 },
+    "descriptionBottomSpacing": { "type": "number", "default": 40 },
 
     "accordionBorderWidth":   { "type": "number", "default": 1 },
     "accordionBorderColor":   { "type": "string", "default": "#3d3c3c" },
@@ -90,7 +92,25 @@
 
     "cardImageHeight":        { "type": "number", "default": 220 },
     "cardBodyPadding":        { "type": "number", "default": 24 },
-    "cardBorderRadius":       { "type": "number", "default": 24 }
+    "cardBorderRadius":       { "type": "number", "default": 24 },
+    "cardTitleFontSize":      { "type": "number", "default": 20 },
+    "cardTitleFontWeight":    { "type": "string", "default": "700" },
+    "cardTitleColor":         { "type": "string", "default": "#3F3E3E" },
+    "cardTitleBottomSpacing": { "type": "number", "default": 16 },
+    "difficultyFontSize":     { "type": "number", "default": 14 },
+    "difficultyFontWeight":   { "type": "string", "default": "500" },
+    "difficultyTextColor":    { "type": "string", "default": "#3F3E3E" },
+    "difficultyBottomSpacing": { "type": "number", "default": 16 },
+    "difficultyIconSize":     { "type": "number", "default": 20 },
+    "difficultyTickSize":     { "type": "number", "default": 12 },
+    "difficultyIconBgColor":  { "type": "string", "default": "#D8B355" },
+    "difficultyTickColor":    { "type": "string", "default": "#3F3E3E" },
+    "difficultyGap":          { "type": "number", "default": 8 },
+    "cardDescFontSize":       { "type": "number", "default": 14 },
+    "cardDescFontWeight":     { "type": "string", "default": "400" },
+    "cardDescLineHeight":     { "type": "number", "default": 1.6 },
+    "cardDescColor":          { "type": "string", "default": "#3F3E3E" },
+    "cardDescBottomSpacing":  { "type": "number", "default": 16 }
   },
   "supports": {
     "html": false,

@@ -9,7 +9,7 @@
         display: flex;
         align-items: center;
         gap: var(--zen-exp-heading-icon-gap, 16px);
-        margin-bottom: 24px;
+        margin-bottom: var(--zen-exp-header-bottom-spacing, 24px);
 
         .zen-space-icon {
             width: var(--zen-exp-heading-icon-size, 48px);
@@ -34,7 +34,7 @@
         line-height: var(--zen-exp-desc-line-height, 1.6);
         color: var(--zen-exp-desc-color, #F6F2EA);
         max-width: var(--zen-exp-desc-max-width, 900px);
-        margin-bottom: 40px;
+        margin-bottom: var(--zen-exp-description-bottom-spacing, 40px);
     }
 
     /* ── Accordion Wrapper ── */
@@ -195,34 +195,47 @@
             flex: 1;
 
             .zen-class-card__title {
-                font-size: 20px;
-                font-weight: 700;
-                color: #3F3E3E;
+                font-size: var(--zen-exp-card-title-font-size, 20px);
+                font-weight: var(--zen-exp-card-title-font-weight, 700);
+                color: var(--zen-exp-card-title-color, #3F3E3E);
                 text-transform: uppercase;
-                margin: 0 0 16px 0;
+                margin: 0 0 var(--zen-exp-card-title-bottom-spacing, 16px) 0;
             }
 
             .zen-class-card__difficulty {
                 display: flex;
                 align-items: center;
-                gap: 8px;
-                margin-bottom: 16px;
-                color: #3F3E3E;
-                font-size: 14px;
-                font-weight: 500;
+                gap: var(--zen-exp-difficulty-gap, 8px);
+                margin-bottom: var(--zen-exp-difficulty-bottom-spacing, 16px);
+                color: var(--zen-exp-difficulty-text-color, #3F3E3E);
+                font-size: var(--zen-exp-difficulty-font-size, 14px);
+                font-weight: var(--zen-exp-difficulty-font-weight, 500);
 
                 .zen-difficulty-icon {
-                    width: 20px;
-                    height: 20px;
-                    color: #D8B355;
+                    width: var(--zen-exp-difficulty-icon-size, 20px);
+                    height: var(--zen-exp-difficulty-icon-size, 20px);
+                    min-width: var(--zen-exp-difficulty-icon-size, 20px);
+                    border-radius: 50%;
+                    background: var(--zen-exp-difficulty-icon-bg-color, #D8B355);
+                    display: inline-flex;
+                    align-items: center;
+                    justify-content: center;
+
+                    .zen-difficulty-icon__tick {
+                        width: var(--zen-exp-difficulty-tick-size, 12px);
+                        height: var(--zen-exp-difficulty-tick-size, 12px);
+                        color: var(--zen-exp-difficulty-tick-color, #3F3E3E);
+                        display: block;
+                    }
                 }
             }
 
             .zen-class-card__desc {
-                font-size: 14px;
-                line-height: 1.6;
-                color: #3F3E3E;
-                margin: 0 0 16px 0;
+                font-size: var(--zen-exp-card-desc-font-size, 14px);
+                font-weight: var(--zen-exp-card-desc-font-weight, 400);
+                line-height: var(--zen-exp-card-desc-line-height, 1.6);
+                color: var(--zen-exp-card-desc-color, #3F3E3E);
+                margin: 0 0 var(--zen-exp-card-desc-bottom-spacing, 16px) 0;
                 flex: 1;
             }
 
