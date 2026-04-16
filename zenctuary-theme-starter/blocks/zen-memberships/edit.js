@@ -10,7 +10,8 @@ export default function Edit({ attributes, setAttributes }) {
     btnMonthlyText, btnYearlyText,
     btnNormalBgColor, btnNormalTextColor, btnNormalFontSize, btnNormalFontWeight, btnNormalPadding, btnNormalMargin, btnNormalBorderRadius, btnNormalBorderColor, btnNormalBorderWidth,
     btnActiveBgColor, btnActiveTextColor, btnActiveFontSize, btnActiveFontWeight, btnActiveBorderRadius, btnActiveBorderColor,
-    cardWidth, cardHeight, cardBgColor, cardBorderColor, cardBorderWidth, cardBorderRadius
+    cardWidth, cardHeight, cardBgColor, cardBorderColor, cardBorderWidth, cardBorderRadius,
+    monthlyCards, yearlyCards
   } = attributes;
 
   const [selectedPlan, setSelectedPlan] = useState('monthly');
@@ -24,6 +25,25 @@ export default function Edit({ attributes, setAttributes }) {
   const blockProps = useBlockProps({
     className: 'wp-block-zenctuary-zen-memberships'
   });
+
+  const addCard = () => {
+    if (selectedPlan === 'monthly') {
+      const newCards = [...monthlyCards, { id: 'm' + Date.now().toString() }];
+      setAttributes({ monthlyCards: newCards });
+    } else {
+      const newCards = [...yearlyCards, { id: 'y' + Date.now().toString() }];
+      setAttributes({ yearlyCards: newCards });
+    }
+  };
+
+  const removeCard = (id, planType) => {
+    if (planType === 'monthly') {
+      setAttributes({ monthlyCards: monthlyCards.filter(c => c.id !== id) });
+    } else {
+      setAttributes({ yearlyCards: yearlyCards.filter(c => c.id !== id) });
+    }
+  };
+
 
   return (
     <div {...blockProps}>
@@ -149,32 +169,44 @@ export default function Edit({ attributes, setAttributes }) {
         {selectedPlan === 'monthly' && (
           <div className="zen-memberships-placeholder monthly-placeholder">
             <div className="zen-memberships-cards-wrapper">
-              {[1, 2, 3].map((card) => (
-                <div key={card} className="zen-memberships-card" style={{
+              {monthlyCards.map((card) => (
+                <div key={card.id} className="zen-memberships-card" style={{
+                  position: 'relative',
                   width: cardWidth,
                   height: cardHeight,
                   backgroundColor: cardBgColor,
                   borderColor: cardBorderColor,
                   borderWidth: cardBorderWidth,
                   borderRadius: cardBorderRadius
-                }}></div>
+                }}>
+                  <button className="zen-memberships-remove-card" onClick={() => removeCard(card.id, 'monthly')} title="Remove Card">×</button>
+                </div>
               ))}
+            </div>
+            <div className="zen-memberships-add-wrapper">
+              <button className="zen-memberships-add-card" onClick={addCard}>+ Add Card</button>
             </div>
           </div>
         )}
         {selectedPlan === 'yearly' && (
           <div className="zen-memberships-placeholder yearly-placeholder">
             <div className="zen-memberships-cards-wrapper">
-              {[1, 2, 3].map((card) => (
-                <div key={card} className="zen-memberships-card" style={{
+              {yearlyCards.map((card) => (
+                <div key={card.id} className="zen-memberships-card" style={{
+                  position: 'relative',
                   width: cardWidth,
                   height: cardHeight,
                   backgroundColor: cardBgColor,
                   borderColor: cardBorderColor,
                   borderWidth: cardBorderWidth,
                   borderRadius: cardBorderRadius
-                }}></div>
+                }}>
+                  <button className="zen-memberships-remove-card" onClick={() => removeCard(card.id, 'yearly')} title="Remove Card">×</button>
+                </div>
               ))}
+            </div>
+            <div className="zen-memberships-add-wrapper">
+              <button className="zen-memberships-add-card" onClick={addCard}>+ Add Card</button>
             </div>
           </div>
         )}

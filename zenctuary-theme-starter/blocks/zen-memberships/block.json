@@ -52,7 +52,15 @@
     "cardBgColor": { "type": "string", "default": "transparent" },
     "cardBorderColor": { "type": "string", "default": "#d8b354" },
     "cardBorderWidth": { "type": "string", "default": "1px" },
-    "cardBorderRadius": { "type": "string", "default": "15px" }
+    "cardBorderRadius": { "type": "string", "default": "15px" },
+    "monthlyCards": {
+      "type": "array",
+      "default": [ { "id": "m1" }, { "id": "m2" }, { "id": "m3" } ]
+    },
+    "yearlyCards": {
+      "type": "array",
+      "default": [ { "id": "y1" }, { "id": "y2" }, { "id": "y3" } ]
+    }
   },
   "textdomain": "zenctuary",
   "editorScript": "file:./index.js",

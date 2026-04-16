@@ -81,6 +81,51 @@
     border-style: solid;
     /* other styles are inline via block settings */
   }
+
+  .zen-memberships-remove-card {
+    position: absolute;
+    top: -10px;
+    right: -10px;
+    background-color: #ff4d4f;
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 25px;
+    height: 25px;
+    font-size: 14px;
+    font-weight: bold;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 10;
+    
+    &:hover {
+      background-color: #ff7875;
+    }
+  }
+
+  .zen-memberships-add-wrapper {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin-top: 30px;
+  }
+
+  .zen-memberships-add-card {
+    padding: 10px 25px;
+    background-color: rgba(255, 255, 255, 0.1);
+    border: 1px dashed #d8b354;
+    color: #d8b354;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: all 0.3s ease;
+
+    &:hover {
+      background-color: rgba(216, 179, 84, 0.2);
+    }
+  }
 }
 
 /* Responsive adjust if necessary */

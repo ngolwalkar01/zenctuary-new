@@ -7,7 +7,8 @@ export default function save({ attributes }) {
     btnMonthlyText, btnYearlyText,
     btnNormalBgColor, btnNormalTextColor, btnNormalFontSize, btnNormalFontWeight, btnNormalPadding, btnNormalMargin, btnNormalBorderRadius, btnNormalBorderColor, btnNormalBorderWidth,
     btnActiveBgColor, btnActiveTextColor, btnActiveFontSize, btnActiveFontWeight, btnActiveBorderRadius, btnActiveBorderColor,
-    cardWidth, cardHeight, cardBgColor, cardBorderColor, cardBorderWidth, cardBorderRadius
+    cardWidth, cardHeight, cardBgColor, cardBorderColor, cardBorderWidth, cardBorderRadius,
+    monthlyCards, yearlyCards
   } = attributes;
 
   // Enforce id="memberships" if standard anchor is not set, 
@@ -104,8 +105,9 @@ export default function save({ attributes }) {
       <div className="zen-memberships-placeholders">
         <div className="zen-memberships-placeholder monthly-placeholder active" id="zen-memberships-monthly-container">
           <div className="zen-memberships-cards-wrapper">
-            {[1, 2, 3].map((card) => (
-              <div key={card} className="zen-memberships-card" style={{
+            {monthlyCards.map((card) => (
+              <div key={card.id} className="zen-memberships-card" style={{
+                position: 'relative',
                 width: cardWidth,
                 height: cardHeight,
                 backgroundColor: cardBgColor,
@@ -118,8 +120,9 @@ export default function save({ attributes }) {
         </div>
         <div className="zen-memberships-placeholder yearly-placeholder" id="zen-memberships-yearly-container" style={{ display: 'none' }}>
           <div className="zen-memberships-cards-wrapper">
-            {[1, 2, 3].map((card) => (
-              <div key={card} className="zen-memberships-card" style={{
+            {yearlyCards.map((card) => (
+              <div key={card.id} className="zen-memberships-card" style={{
+                position: 'relative',
                 width: cardWidth,
                 height: cardHeight,
                 backgroundColor: cardBgColor,

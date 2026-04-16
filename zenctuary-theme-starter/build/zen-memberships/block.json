@@ -163,6 +163,34 @@
     "cardBorderRadius": {
       "type": "string",
       "default": "15px"
+    },
+    "monthlyCards": {
+      "type": "array",
+      "default": [
+        {
+          "id": "m1"
+        },
+        {
+          "id": "m2"
+        },
+        {
+          "id": "m3"
+        }
+      ]
+    },
+    "yearlyCards": {
+      "type": "array",
+      "default": [
+        {
+          "id": "y1"
+        },
+        {
+          "id": "y2"
+        },
+        {
+          "id": "y3"
+        }
+      ]
     }
   },
   "textdomain": "zenctuary",
