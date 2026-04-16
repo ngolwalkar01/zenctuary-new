@@ -20,6 +20,7 @@ function createDefaultCard() {
 		avatarImageUrl: '',
 		imageId: 0,
 		imageUrl: '',
+		videoId: 0,
 		rating: 5,
 		quote: '',
 		authorName: '',
@@ -83,6 +84,24 @@ function playIcon() {
 	return (
 		<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
 			<path d="M9 7.5V16.5L16 12L9 7.5Z" fill="currentColor" />
+		</svg>
+	);
+}
+
+function pauseIcon() {
+	return (
+		<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+			<path d="M8 7H10.75V17H8V7ZM13.25 7H16V17H13.25V7Z" fill="currentColor" />
+		</svg>
+	);
+}
+
+function muteIcon() {
+	return (
+		<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+			<path d="M5 10H8L12 6V18L8 14H5V10Z" fill="currentColor" />
+			<path d="M15 9.5C15.8333 10.1667 16.25 11 16.25 12C16.25 13 15.8333 13.8333 15 14.5" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" />
+			<path d="M17 7.5C18.5 8.66667 19.25 10.1667 19.25 12C19.25 13.8333 18.5 15.3333 17 16.5" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" />
 		</svg>
 	);
 }
@@ -180,6 +199,7 @@ export default function save( { attributes } ) {
 								<div key={ index } className="swiper-slide premium-testimonial-carousel__slide">
 									<article className={ `premium-testimonial-carousel__card premium-testimonial-carousel__card--${ card.cardType }` } style={ card.cardType === 'video' && card.imageUrl ? { backgroundImage: `url("${ card.imageUrl }")` } : undefined }>
 										<div className="premium-testimonial-carousel__card-layer" />
+										{ card.cardType === 'video' && card.videoUrl && <video className="premium-testimonial-carousel__video" src={ card.videoUrl } poster={ card.imageUrl || undefined } muted playsInline preload="metadata" /> }
 										<div className="premium-testimonial-carousel__card-content">
 											<div className="premium-testimonial-carousel__card-top-row">
 												<div className="premium-testimonial-carousel__avatar-shell">
@@ -196,16 +216,14 @@ export default function save( { attributes } ) {
 											) : (
 												<>
 													<div className="premium-testimonial-carousel__video-center">
-														{ card.videoUrl ? (
-															<a className="premium-testimonial-carousel__play-button" href={ card.videoUrl } target={ card.openInNewTab ? '_blank' : undefined } rel={ card.openInNewTab ? 'noopener noreferrer' : undefined } aria-label={ card.authorName ? `Play testimonial from ${ card.authorName }` : 'Play testimonial' }>
-																<span className="premium-testimonial-carousel__play-icon">{ playIcon() }</span>
-															</a>
-														) : (
-															<div className="premium-testimonial-carousel__play-button" aria-hidden="true">
-																<span className="premium-testimonial-carousel__play-icon">{ playIcon() }</span>
-															</div>
-														) }
+														<button type="button" className="premium-testimonial-carousel__play-button is-paused" aria-label={ card.authorName ? `Play testimonial from ${ card.authorName }` : 'Play testimonial' } data-action="play-pause">
+															<span className="premium-testimonial-carousel__play-icon premium-testimonial-carousel__play-icon--play">{ playIcon() }</span>
+															<span className="premium-testimonial-carousel__play-icon premium-testimonial-carousel__play-icon--pause">{ pauseIcon() }</span>
+														</button>
 													</div>
+													<button type="button" className="premium-testimonial-carousel__mute-button is-muted" aria-label={ card.authorName ? `Unmute testimonial from ${ card.authorName }` : 'Unmute testimonial' } data-action="mute-toggle">
+														<span className="premium-testimonial-carousel__mute-icon">{ muteIcon() }</span>
+													</button>
 													{ card.authorName && <p className="premium-testimonial-carousel__author premium-testimonial-carousel__author--video">{ card.authorName }</p> }
 												</>
 											) }

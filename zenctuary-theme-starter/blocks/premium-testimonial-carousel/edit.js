@@ -35,6 +35,7 @@ function createDefaultCard() {
 		avatarImageUrl: '',
 		imageId: 0,
 		imageUrl: '',
+		videoId: 0,
 		rating: 5,
 		quote: __( '"Add testimonial quote"', 'zenctuary' ),
 		authorName: __( 'Client Name', 'zenctuary' ),
@@ -137,6 +138,24 @@ function playIcon() {
 	return (
 		<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
 			<path d="M9 7.5V16.5L16 12L9 7.5Z" fill="currentColor" />
+		</svg>
+	);
+}
+
+function pauseIcon() {
+	return (
+		<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+			<path d="M8 7H10.75V17H8V7ZM13.25 7H16V17H13.25V7Z" fill="currentColor" />
+		</svg>
+	);
+}
+
+function muteIcon() {
+	return (
+		<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+			<path d="M5 10H8L12 6V18L8 14H5V10Z" fill="currentColor" />
+			<path d="M15 9.5C15.8333 10.1667 16.25 11 16.25 12C16.25 13 15.8333 13.8333 15 14.5" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" />
+			<path d="M17 7.5C18.5 8.66667 19.25 10.1667 19.25 12C19.25 13.8333 18.5 15.3333 17 16.5" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" />
 		</svg>
 	);
 }
@@ -368,15 +387,23 @@ export default function Edit( { attributes, setAttributes } ) {
 							<>
 								<MediaUploadCheck>
 									<MediaUpload
-										onSelect={ ( media ) => updateCard( selectedCardIndex, { imageId: media?.id || 0, imageUrl: media?.url || '' } ) }
+											onSelect={ ( media ) => updateCard( selectedCardIndex, { imageId: media?.id || 0, imageUrl: media?.url || '' } ) }
 										allowedTypes={ [ 'image' ] }
 										value={ selectedCard.imageId }
 										render={ ( { open } ) => <Button variant="secondary" onClick={ open }>{ selectedCard.imageUrl ? __( 'Replace Video Poster', 'zenctuary' ) : __( 'Choose Video Poster', 'zenctuary' ) }</Button> }
 									/>
 								</MediaUploadCheck>
 								{ selectedCard.imageUrl && <Button variant="link" isDestructive onClick={ () => updateCard( selectedCardIndex, { imageId: 0, imageUrl: '' } ) }>{ __( 'Remove Video Poster', 'zenctuary' ) }</Button> }
-								<TextControl label={ __( 'Video URL', 'zenctuary' ) } value={ selectedCard.videoUrl } onChange={ ( value ) => updateCard( selectedCardIndex, { videoUrl: value } ) } />
-								<ToggleControl label={ __( 'Open Video In New Tab', 'zenctuary' ) } checked={ selectedCard.openInNewTab } onChange={ ( value ) => updateCard( selectedCardIndex, { openInNewTab: value } ) } />
+								<MediaUploadCheck>
+									<MediaUpload
+										onSelect={ ( media ) => updateCard( selectedCardIndex, { videoId: media?.id || 0, videoUrl: media?.url || '' } ) }
+										allowedTypes={ [ 'video' ] }
+										value={ selectedCard.videoId }
+										render={ ( { open } ) => <Button variant="secondary" onClick={ open }>{ selectedCard.videoUrl ? __( 'Replace Testimonial Video', 'zenctuary' ) : __( 'Choose Testimonial Video', 'zenctuary' ) }</Button> }
+									/>
+								</MediaUploadCheck>
+								{ selectedCard.videoUrl && <Button variant="link" isDestructive onClick={ () => updateCard( selectedCardIndex, { videoId: 0, videoUrl: '' } ) }>{ __( 'Remove Testimonial Video', 'zenctuary' ) }</Button> }
+								<TextControl label={ __( 'Video URL', 'zenctuary' ) } value={ selectedCard.videoUrl } onChange={ ( value ) => updateCard( selectedCardIndex, { videoUrl: value } ) } help={ __( 'Use a direct video file URL if needed.', 'zenctuary' ) } />
 							</>
 						) }
 
@@ -405,6 +432,9 @@ export default function Edit( { attributes, setAttributes } ) {
 								<div key={ index } className={ `premium-testimonial-carousel__preview-slide${ index === selectedCardIndex ? ' is-selected' : '' }` } onClick={ () => setSelectedCardIndex( index ) } onKeyDown={ () => {} } role="button" tabIndex={ 0 }>
 									<article className={ `premium-testimonial-carousel__card premium-testimonial-carousel__card--${ card.cardType }` } style={ card.cardType === 'video' && card.imageUrl ? { backgroundImage: `url("${ card.imageUrl }")` } : undefined }>
 										<div className="premium-testimonial-carousel__card-layer" />
+										{ card.cardType === 'video' && card.videoUrl && (
+											<video className="premium-testimonial-carousel__video" src={ card.videoUrl } poster={ card.imageUrl || undefined } muted playsInline preload="metadata" />
+										) }
 										<div className="premium-testimonial-carousel__card-content">
 											<div className="premium-testimonial-carousel__card-top-row">
 												<div className="premium-testimonial-carousel__avatar-shell">
@@ -421,10 +451,14 @@ export default function Edit( { attributes, setAttributes } ) {
 											) : (
 												<>
 													<div className="premium-testimonial-carousel__video-center">
-														<div className="premium-testimonial-carousel__play-button" aria-hidden="true">
-															<span className="premium-testimonial-carousel__play-icon">{ playIcon() }</span>
-														</div>
+														<button type="button" className="premium-testimonial-carousel__play-button is-paused" aria-label={ __( 'Play testimonial video', 'zenctuary' ) } data-action="play-pause">
+															<span className="premium-testimonial-carousel__play-icon premium-testimonial-carousel__play-icon--play">{ playIcon() }</span>
+															<span className="premium-testimonial-carousel__play-icon premium-testimonial-carousel__play-icon--pause">{ pauseIcon() }</span>
+														</button>
 													</div>
+													<button type="button" className="premium-testimonial-carousel__mute-button is-muted" aria-label={ __( 'Unmute testimonial video', 'zenctuary' ) } data-action="mute-toggle">
+														<span className="premium-testimonial-carousel__mute-icon">{ muteIcon() }</span>
+													</button>
 													<p className="premium-testimonial-carousel__author premium-testimonial-carousel__author--video">{ card.authorName }</p>
 												</>
 											) }

@@ -10,6 +10,61 @@ function parseBoolean( value ) {
 	return value === 'true';
 }
 
+function syncVideoCardState( card, video, playButton, muteButton ) {
+	if ( playButton ) {
+		const isPaused = video.paused;
+		playButton.classList.toggle( 'is-paused', isPaused );
+		playButton.classList.toggle( 'is-playing', ! isPaused );
+		playButton.setAttribute( 'aria-label', isPaused ? 'Play testimonial video' : 'Pause testimonial video' );
+	}
+
+	if ( muteButton ) {
+		muteButton.classList.toggle( 'is-muted', video.muted );
+		muteButton.classList.toggle( 'is-unmuted', ! video.muted );
+		muteButton.setAttribute( 'aria-label', video.muted ? 'Unmute testimonial video' : 'Mute testimonial video' );
+	}
+
+	card.classList.toggle( 'is-video-playing', ! video.paused );
+	card.classList.toggle( 'is-video-muted', video.muted );
+}
+
+function bindInlineVideoControls( block ) {
+	block.querySelectorAll( '.premium-testimonial-carousel__card--video' ).forEach( ( card ) => {
+		const video = card.querySelector( '.premium-testimonial-carousel__video' );
+		const playButton = card.querySelector( '[data-action="play-pause"]' );
+		const muteButton = card.querySelector( '[data-action="mute-toggle"]' );
+
+		if ( ! video ) {
+			return;
+		}
+
+		video.controls = false;
+		video.muted = true;
+		video.loop = false;
+		video.playsInline = true;
+
+		syncVideoCardState( card, video, playButton, muteButton );
+
+		playButton?.addEventListener( 'click', () => {
+			if ( video.paused ) {
+				video.play().catch( () => {} );
+			} else {
+				video.pause();
+			}
+		} );
+
+		muteButton?.addEventListener( 'click', () => {
+			video.muted = ! video.muted;
+			syncVideoCardState( card, video, playButton, muteButton );
+		} );
+
+		video.addEventListener( 'play', () => syncVideoCardState( card, video, playButton, muteButton ) );
+		video.addEventListener( 'pause', () => syncVideoCardState( card, video, playButton, muteButton ) );
+		video.addEventListener( 'ended', () => syncVideoCardState( card, video, playButton, muteButton ) );
+		video.addEventListener( 'volumechange', () => syncVideoCardState( card, video, playButton, muteButton ) );
+	} );
+}
+
 function mountPremiumTestimonialCarousel( block ) {
 	if ( ! block || block.__premiumTestimonialSwiper ) {
 		return;
@@ -74,6 +129,7 @@ function mountPremiumTestimonialCarousel( block ) {
 
 	const swiper = new Swiper( swiperElement, swiperOptions );
 	block.__premiumTestimonialSwiper = swiper;
+	bindInlineVideoControls( block );
 }
 
 function initPremiumTestimonialCarousels() {
