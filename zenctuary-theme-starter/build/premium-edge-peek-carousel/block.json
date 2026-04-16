@@ -68,6 +68,18 @@
       "type": "number",
       "default": 20
     },
+    "leftStartOffsetDesktop": {
+      "type": "number",
+      "default": 80
+    },
+    "leftStartOffsetTablet": {
+      "type": "number",
+      "default": 48
+    },
+    "leftStartOffsetMobile": {
+      "type": "number",
+      "default": 20
+    },
     "loop": {
       "type": "boolean",
       "default": false

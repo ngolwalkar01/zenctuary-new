@@ -29,6 +29,7 @@ function mountPremiumEdgePeekCarousel( block ) {
 	const swiperOptions = {
 		modules,
 		slidesPerView: parseNumber( block.dataset.mobileSlides, 1.2 ),
+		slidesOffsetBefore: parseNumber( block.dataset.leftStartMobile, 20 ),
 		spaceBetween: parseNumber( block.dataset.gap, 24 ),
 		speed: parseNumber( block.dataset.speed, 450 ),
 		loop: parseBoolean( block.dataset.loop ),
@@ -41,10 +42,12 @@ function mountPremiumEdgePeekCarousel( block ) {
 		breakpoints: {
 			782: {
 				slidesPerView: parseNumber( block.dataset.tabletSlides, 2.2 ),
+				slidesOffsetBefore: parseNumber( block.dataset.leftStartTablet, 48 ),
 				spaceBetween: parseNumber( block.dataset.gap, 24 ),
 			},
 			1024: {
 				slidesPerView: parseNumber( block.dataset.desktopSlides, 3.2 ),
+				slidesOffsetBefore: parseNumber( block.dataset.leftStartDesktop, 80 ),
 				spaceBetween: parseNumber( block.dataset.gap, 24 ),
 			},
 		},

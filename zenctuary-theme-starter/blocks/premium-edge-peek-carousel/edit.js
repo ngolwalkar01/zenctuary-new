@@ -152,8 +152,9 @@ export default function Edit( { attributes, setAttributes } ) {
 			'--premium-edge-peek-card-radius': `${ attributes.cardBorderRadius || 20 }px`,
 			'--premium-edge-peek-card-padding': `${ attributes.cardContentPadding || 24 }px`,
 			'--premium-edge-peek-preview-slides': String( desktopSlides ),
-			'--premium-edge-peek-pad-left': attributes.sectionPadding?.left || '24px',
-			'--premium-edge-peek-pad-right': attributes.sectionPadding?.right || '24px',
+			'--premium-edge-peek-left-start-desktop': `${ attributes.leftStartOffsetDesktop || 80 }px`,
+			'--premium-edge-peek-left-start-tablet': `${ attributes.leftStartOffsetTablet || 48 }px`,
+			'--premium-edge-peek-left-start-mobile': `${ attributes.leftStartOffsetMobile || 20 }px`,
 		},
 	} );
 
@@ -172,10 +173,13 @@ export default function Edit( { attributes, setAttributes } ) {
 					<RangeControl label={ __( 'Gap Between Cards', 'zenctuary' ) } value={ attributes.gap } onChange={ ( value ) => setAttributes( { gap: value } ) } min={ 0 } max={ 60 } />
 					<RangeControl label={ __( 'Desktop Full Cards', 'zenctuary' ) } value={ attributes.desktopCards } onChange={ ( value ) => setAttributes( { desktopCards: value } ) } min={ 1 } max={ 4 } />
 					<RangeControl label={ __( 'Desktop Edge Peek (%)', 'zenctuary' ) } value={ attributes.edgePeekDesktop } onChange={ ( value ) => setAttributes( { edgePeekDesktop: value } ) } min={ 0 } max={ 45 } />
+					<RangeControl label={ __( 'Desktop Left Start Offset', 'zenctuary' ) } value={ attributes.leftStartOffsetDesktop } onChange={ ( value ) => setAttributes( { leftStartOffsetDesktop: value } ) } min={ 0 } max={ 240 } />
 					<RangeControl label={ __( 'Tablet Full Cards', 'zenctuary' ) } value={ attributes.tabletCards } onChange={ ( value ) => setAttributes( { tabletCards: value } ) } min={ 1 } max={ 3 } />
 					<RangeControl label={ __( 'Tablet Edge Peek (%)', 'zenctuary' ) } value={ attributes.edgePeekTablet } onChange={ ( value ) => setAttributes( { edgePeekTablet: value } ) } min={ 0 } max={ 45 } />
+					<RangeControl label={ __( 'Tablet Left Start Offset', 'zenctuary' ) } value={ attributes.leftStartOffsetTablet } onChange={ ( value ) => setAttributes( { leftStartOffsetTablet: value } ) } min={ 0 } max={ 180 } />
 					<RangeControl label={ __( 'Mobile Full Cards', 'zenctuary' ) } value={ attributes.mobileCards } onChange={ ( value ) => setAttributes( { mobileCards: value } ) } min={ 1 } max={ 2 } />
 					<RangeControl label={ __( 'Mobile Edge Peek (%)', 'zenctuary' ) } value={ attributes.edgePeekMobile } onChange={ ( value ) => setAttributes( { edgePeekMobile: value } ) } min={ 0 } max={ 45 } />
+					<RangeControl label={ __( 'Mobile Left Start Offset', 'zenctuary' ) } value={ attributes.leftStartOffsetMobile } onChange={ ( value ) => setAttributes( { leftStartOffsetMobile: value } ) } min={ 0 } max={ 120 } />
 					<RangeControl label={ __( 'Transition Speed (ms)', 'zenctuary' ) } value={ attributes.transitionSpeed } onChange={ ( value ) => setAttributes( { transitionSpeed: value } ) } min={ 300 } max={ 600 } />
 					<ToggleControl label={ __( 'Loop Slides', 'zenctuary' ) } checked={ attributes.loop } onChange={ ( value ) => setAttributes( { loop: value } ) } />
 					<ToggleControl label={ __( 'Autoplay', 'zenctuary' ) } checked={ attributes.autoplay } onChange={ ( value ) => setAttributes( { autoplay: value } ) } />
