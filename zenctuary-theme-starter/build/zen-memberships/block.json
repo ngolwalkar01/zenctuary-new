@@ -1,0 +1,72 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "zenctuary/zen-memberships",
+  "version": "0.1.0",
+  "title": "Zen Memberships Section",
+  "category": "design",
+  "icon": "groups",
+  "description": "Foundation block for Zen Memberships section.",
+  "supports": {
+    "html": false,
+    "anchor": true,
+    "align": [
+      "wide",
+      "full"
+    ]
+  },
+  "attributes": {
+    "heading": {
+      "type": "string",
+      "default": "MEMBERSHIPS"
+    },
+    "headingColor": {
+      "type": "string",
+      "default": "#d8b354"
+    },
+    "headingFontSize": {
+      "type": "string",
+      "default": "32px"
+    },
+    "headingFontWeight": {
+      "type": "string",
+      "default": "700"
+    },
+    "headingPadding": {
+      "type": "string",
+      "default": "0px"
+    },
+    "headingMargin": {
+      "type": "string",
+      "default": "0px 0px 20px 0px"
+    },
+    "paragraph": {
+      "type": "string",
+      "default": "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua."
+    },
+    "paragraphColor": {
+      "type": "string",
+      "default": "#f0f0f0"
+    },
+    "paragraphFontSize": {
+      "type": "string",
+      "default": "16px"
+    },
+    "paragraphFontWeight": {
+      "type": "string",
+      "default": "400"
+    },
+    "paragraphPadding": {
+      "type": "string",
+      "default": "0px 20px"
+    },
+    "paragraphMargin": {
+      "type": "string",
+      "default": "0px 0px 40px 0px"
+    }
+  },
+  "textdomain": "zenctuary",
+  "editorScript": "file:./index.js",
+  "editorStyle": "file:./editor.scss",
+  "style": "file:./style.scss"
+}
