@@ -1,11 +1,11 @@
 import { __ } from '@wordpress/i18n';
 import { useBlockProps, InspectorControls, RichText } from '@wordpress/block-editor';
-import { PanelBody, TextControl } from '@wordpress/components';
+import { PanelBody, TextControl, SelectControl } from '@wordpress/components';
 
 export default function Edit({ attributes, setAttributes }) {
   const {
-    heading, headingColor, headingFontSize, headingFontWeight, headingPadding, headingMargin,
-    paragraph, paragraphColor, paragraphFontSize, paragraphFontWeight, paragraphPadding, paragraphMargin
+    heading, headingColor, headingFontSize, headingFontWeight, headingPadding, headingMargin, headingAlignment,
+    paragraph, paragraphColor, paragraphFontSize, paragraphFontWeight, paragraphPadding, paragraphMargin, paragraphAlignment
   } = attributes;
 
   // Let the wrapper take the anchor value from supports but we don't need to manually define ID here 
@@ -27,6 +27,7 @@ export default function Edit({ attributes, setAttributes }) {
           <TextControl label="Font Weight" value={headingFontWeight} onChange={(val) => setAttributes({ headingFontWeight: val })} />
           <TextControl label="Padding" value={headingPadding} onChange={(val) => setAttributes({ headingPadding: val })} />
           <TextControl label="Margin" value={headingMargin} onChange={(val) => setAttributes({ headingMargin: val })} />
+          <SelectControl label="Alignment" value={headingAlignment} options={[{ label: 'Left', value: 'left' }, { label: 'Center', value: 'center' }, { label: 'Right', value: 'right' }]} onChange={(val) => setAttributes({ headingAlignment: val })} />
         </PanelBody>
         <PanelBody title={__('Paragraph Settings', 'zenctuary')} initialOpen={false}>
           <TextControl label="Color" value={paragraphColor} onChange={(val) => setAttributes({ paragraphColor: val })} />
@@ -34,6 +35,7 @@ export default function Edit({ attributes, setAttributes }) {
           <TextControl label="Font Weight" value={paragraphFontWeight} onChange={(val) => setAttributes({ paragraphFontWeight: val })} />
           <TextControl label="Padding" value={paragraphPadding} onChange={(val) => setAttributes({ paragraphPadding: val })} />
           <TextControl label="Margin" value={paragraphMargin} onChange={(val) => setAttributes({ paragraphMargin: val })} />
+          <SelectControl label="Alignment" value={paragraphAlignment} options={[{ label: 'Left', value: 'left' }, { label: 'Center', value: 'center' }, { label: 'Right', value: 'right' }]} onChange={(val) => setAttributes({ paragraphAlignment: val })} />
         </PanelBody>
       </InspectorControls>
 
@@ -47,7 +49,8 @@ export default function Edit({ attributes, setAttributes }) {
           fontSize: headingFontSize,
           fontWeight: headingFontWeight,
           padding: headingPadding,
-          margin: headingMargin
+          margin: headingMargin,
+          textAlign: headingAlignment
         }}
         placeholder={__('Enter Heading...', 'zenctuary')}
       />
@@ -61,7 +64,8 @@ export default function Edit({ attributes, setAttributes }) {
           fontSize: paragraphFontSize,
           fontWeight: paragraphFontWeight,
           padding: paragraphPadding,
-          margin: paragraphMargin
+          margin: paragraphMargin,
+          textAlign: paragraphAlignment
         }}
         placeholder={__('Enter paragraph text...', 'zenctuary')}
       />

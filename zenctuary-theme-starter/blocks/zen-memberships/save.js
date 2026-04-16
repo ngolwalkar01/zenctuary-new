@@ -2,8 +2,8 @@ import { useBlockProps, RichText } from '@wordpress/block-editor';
 
 export default function save({ attributes }) {
   const {
-    heading, headingColor, headingFontSize, headingFontWeight, headingPadding, headingMargin,
-    paragraph, paragraphColor, paragraphFontSize, paragraphFontWeight, paragraphPadding, paragraphMargin
+    heading, headingColor, headingFontSize, headingFontWeight, headingPadding, headingMargin, headingAlignment,
+    paragraph, paragraphColor, paragraphFontSize, paragraphFontWeight, paragraphPadding, paragraphMargin, paragraphAlignment
   } = attributes;
 
   // Enforce id="memberships" if standard anchor is not set, 
@@ -24,7 +24,8 @@ export default function save({ attributes }) {
           fontSize: headingFontSize,
           fontWeight: headingFontWeight,
           padding: headingPadding,
-          margin: headingMargin
+          margin: headingMargin,
+          textAlign: headingAlignment
         }}
       />
       <RichText.Content
@@ -36,7 +37,8 @@ export default function save({ attributes }) {
           fontSize: paragraphFontSize,
           fontWeight: paragraphFontWeight,
           padding: paragraphPadding,
-          margin: paragraphMargin
+          margin: paragraphMargin,
+          textAlign: paragraphAlignment
         }}
       />
     </div>
