@@ -152,9 +152,18 @@ export default function Edit( { attributes, setAttributes } ) {
 			'--premium-edge-peek-card-radius': `${ attributes.cardBorderRadius || 20 }px`,
 			'--premium-edge-peek-card-padding': `${ attributes.cardContentPadding || 24 }px`,
 			'--premium-edge-peek-preview-slides': String( desktopSlides ),
+			'--premium-edge-peek-desktop-cards': String( attributes.desktopCards || 3 ),
+			'--premium-edge-peek-tablet-cards': String( attributes.tabletCards || 2 ),
+			'--premium-edge-peek-mobile-cards': String( attributes.mobileCards || 1 ),
+			'--premium-edge-peek-desktop-peek': String( attributes.edgePeekDesktop || 20 ),
+			'--premium-edge-peek-tablet-peek': String( attributes.edgePeekTablet || 20 ),
+			'--premium-edge-peek-mobile-peek': String( attributes.edgePeekMobile || 20 ),
 			'--premium-edge-peek-left-start-desktop': `${ attributes.leftStartOffsetDesktop || 80 }px`,
 			'--premium-edge-peek-left-start-tablet': `${ attributes.leftStartOffsetTablet || 48 }px`,
 			'--premium-edge-peek-left-start-mobile': `${ attributes.leftStartOffsetMobile || 20 }px`,
+			'--premium-edge-peek-card-scale-desktop': String( attributes.cardWidthScaleDesktop || 100 ),
+			'--premium-edge-peek-card-scale-tablet': String( attributes.cardWidthScaleTablet || 100 ),
+			'--premium-edge-peek-card-scale-mobile': String( attributes.cardWidthScaleMobile || 100 ),
 		},
 	} );
 
@@ -174,12 +183,15 @@ export default function Edit( { attributes, setAttributes } ) {
 					<RangeControl label={ __( 'Desktop Full Cards', 'zenctuary' ) } value={ attributes.desktopCards } onChange={ ( value ) => setAttributes( { desktopCards: value } ) } min={ 1 } max={ 4 } />
 					<RangeControl label={ __( 'Desktop Edge Peek (%)', 'zenctuary' ) } value={ attributes.edgePeekDesktop } onChange={ ( value ) => setAttributes( { edgePeekDesktop: value } ) } min={ 0 } max={ 45 } />
 					<RangeControl label={ __( 'Desktop Left Start Offset', 'zenctuary' ) } value={ attributes.leftStartOffsetDesktop } onChange={ ( value ) => setAttributes( { leftStartOffsetDesktop: value } ) } min={ 0 } max={ 240 } />
+					<RangeControl label={ __( 'Desktop Card Width (%)', 'zenctuary' ) } value={ attributes.cardWidthScaleDesktop } onChange={ ( value ) => setAttributes( { cardWidthScaleDesktop: value } ) } min={ 60 } max={ 100 } />
 					<RangeControl label={ __( 'Tablet Full Cards', 'zenctuary' ) } value={ attributes.tabletCards } onChange={ ( value ) => setAttributes( { tabletCards: value } ) } min={ 1 } max={ 3 } />
 					<RangeControl label={ __( 'Tablet Edge Peek (%)', 'zenctuary' ) } value={ attributes.edgePeekTablet } onChange={ ( value ) => setAttributes( { edgePeekTablet: value } ) } min={ 0 } max={ 45 } />
 					<RangeControl label={ __( 'Tablet Left Start Offset', 'zenctuary' ) } value={ attributes.leftStartOffsetTablet } onChange={ ( value ) => setAttributes( { leftStartOffsetTablet: value } ) } min={ 0 } max={ 180 } />
+					<RangeControl label={ __( 'Tablet Card Width (%)', 'zenctuary' ) } value={ attributes.cardWidthScaleTablet } onChange={ ( value ) => setAttributes( { cardWidthScaleTablet: value } ) } min={ 60 } max={ 100 } />
 					<RangeControl label={ __( 'Mobile Full Cards', 'zenctuary' ) } value={ attributes.mobileCards } onChange={ ( value ) => setAttributes( { mobileCards: value } ) } min={ 1 } max={ 2 } />
 					<RangeControl label={ __( 'Mobile Edge Peek (%)', 'zenctuary' ) } value={ attributes.edgePeekMobile } onChange={ ( value ) => setAttributes( { edgePeekMobile: value } ) } min={ 0 } max={ 45 } />
 					<RangeControl label={ __( 'Mobile Left Start Offset', 'zenctuary' ) } value={ attributes.leftStartOffsetMobile } onChange={ ( value ) => setAttributes( { leftStartOffsetMobile: value } ) } min={ 0 } max={ 120 } />
+					<RangeControl label={ __( 'Mobile Card Width (%)', 'zenctuary' ) } value={ attributes.cardWidthScaleMobile } onChange={ ( value ) => setAttributes( { cardWidthScaleMobile: value } ) } min={ 60 } max={ 100 } />
 					<RangeControl label={ __( 'Transition Speed (ms)', 'zenctuary' ) } value={ attributes.transitionSpeed } onChange={ ( value ) => setAttributes( { transitionSpeed: value } ) } min={ 300 } max={ 600 } />
 					<ToggleControl label={ __( 'Loop Slides', 'zenctuary' ) } checked={ attributes.loop } onChange={ ( value ) => setAttributes( { loop: value } ) } />
 					<ToggleControl label={ __( 'Autoplay', 'zenctuary' ) } checked={ attributes.autoplay } onChange={ ( value ) => setAttributes( { autoplay: value } ) } />

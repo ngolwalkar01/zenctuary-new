@@ -80,6 +80,18 @@
       "type": "number",
       "default": 20
     },
+    "cardWidthScaleDesktop": {
+      "type": "number",
+      "default": 100
+    },
+    "cardWidthScaleTablet": {
+      "type": "number",
+      "default": 100
+    },
+    "cardWidthScaleMobile": {
+      "type": "number",
+      "default": 100
+    },
     "loop": {
       "type": "boolean",
       "default": false
