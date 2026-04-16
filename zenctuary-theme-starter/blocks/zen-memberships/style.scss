@@ -3,69 +3,69 @@
   background-color: transparent;
   font-family: Arial, sans-serif;
   width: 100%;
-}
 
-.zen-memberships-heading {
-  margin: 0 0 20px 0;
-  text-transform: uppercase;
-}
+  .zen-memberships-heading {
+    margin: 0 0 20px 0;
+    text-transform: uppercase;
+  }
 
-.zen-memberships-paragraph {
-  max-width: 800px;
-  margin: 0 auto 40px auto;
-  line-height: 1.6;
-}
+  .zen-memberships-paragraph {
+    max-width: 800px;
+    margin: 0 auto 40px auto;
+    line-height: 1.6;
+  }
 
-.zen-memberships-tabs-wrapper {
-  width: 100% !important;
-  display: flex !important;
-  justify-content: center !important;
-  align-items: center !important;
-  text-align: center !important;
-}
+  .zen-memberships-tabs-wrapper {
+    width: 100%;
+    text-align: center !important;
+    display: block;
+  }
 
-.zen-memberships-tabs-row {
-  width: 100% !important;
-  display: flex !important;
-  justify-content: center !important;
-  align-items: center !important;
-  text-align: center !important;
-  gap: 15px;
-  margin-bottom: 40px;
-  flex-wrap: wrap;
-}
+  .zen-memberships-tabs-row {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 40px;
+    flex-wrap: wrap;
+  }
 
-.zen-memberships-tab-btn {
-  cursor: pointer;
-  border-style: solid;
-  transition: all 0.3s ease;
-  outline: none;
-}
-.zen-memberships-tab-btn:hover {
-  opacity: 0.9;
-}
+  .zen-memberships-tab-btn {
+    cursor: pointer;
+    border-style: solid;
+    transition: all 0.3s ease;
+    outline: none;
 
-.zen-memberships-placeholders {
-  margin-top: 40px;
-  text-align: center !important;
-  width: 100% !important;
-}
+    &:hover {
+      opacity: 0.9;
+    }
+  }
 
-.zen-memberships-placeholder {
-  border: 1px dashed #666;
-  padding: 40px;
-  border-radius: 10px;
-  background-color: rgba(255, 255, 255, 0.05); /* Slight visibility */
-}
-.zen-memberships-placeholder h3 {
-  margin: 0 0 10px 0;
-  color: #fff;
-  font-size: 18px;
-}
-.zen-memberships-placeholder p {
-  margin: 0;
-  color: #ccc;
-  font-size: 14px;
+  .zen-memberships-placeholders {
+    margin-top: 40px;
+    text-align: center !important;
+    width: 100%;
+    display: block;
+  }
+
+  .zen-memberships-placeholder {
+    border: 1px dashed #666;
+    padding: 40px;
+    border-radius: 10px;
+    background-color: rgba(255, 255, 255, 0.05); /* Slight visibility */
+
+    h3 {
+      margin: 0 0 10px 0;
+      color: #fff;
+      font-size: 18px;
+    }
+
+    p {
+      margin: 0;
+      color: #ccc;
+      font-size: 14px;
+    }
+  }
 }
 
 /* Responsive adjust if necessary */
@@ -74,4 +74,3 @@
     padding: 30px 15px;
   }
 }
-
