@@ -18,6 +18,11 @@
         overflow: visible;
     }
 
+    .premium-edge-peek-carousel__stage {
+        width: 100%;
+        overflow: hidden;
+    }
+
     .premium-edge-peek-carousel__header {
         display: flex;
         align-items: flex-start;
@@ -82,14 +87,14 @@
         }
     }
 
-    .premium-edge-peek-carousel__stage,
-    .premium-edge-peek-carousel__swiper,
-    .swiper {
+    .premium-edge-peek-carousel__swiper {
+        width: 100%;
         overflow: visible;
+        padding-bottom: 18px;
     }
 
-    .premium-edge-peek-carousel__swiper {
-        padding-bottom: 18px;
+    .swiper {
+        width: 100%;
     }
 
     .swiper-wrapper {
@@ -216,7 +221,7 @@
         .premium-edge-peek-carousel__preview-track {
             display: flex;
             gap: var(--premium-edge-peek-gap);
-            overflow: visible;
+            width: 100%;
         }
 
         .premium-edge-peek-carousel__preview-slide {
