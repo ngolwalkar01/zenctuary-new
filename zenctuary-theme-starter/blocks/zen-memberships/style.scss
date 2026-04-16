@@ -17,17 +17,19 @@
 }
 
 .zen-memberships-tabs-wrapper {
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
+  width: 100% !important;
+  display: flex !important;
+  justify-content: center !important;
+  align-items: center !important;
+  text-align: center !important;
 }
 
 .zen-memberships-tabs-row {
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  width: 100% !important;
+  display: flex !important;
+  justify-content: center !important;
+  align-items: center !important;
+  text-align: center !important;
   gap: 15px;
   margin-bottom: 40px;
   flex-wrap: wrap;
@@ -45,7 +47,8 @@
 
 .zen-memberships-placeholders {
   margin-top: 40px;
-  text-align: center;
+  text-align: center !important;
+  width: 100% !important;
 }
 
 .zen-memberships-placeholder {
