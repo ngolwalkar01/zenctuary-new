@@ -43,6 +43,8 @@ export default function save( { attributes } ) {
 			'--premium-edge-peek-gap': `${ attributes.gap || 24 }px`,
 			'--premium-edge-peek-card-radius': `${ attributes.cardBorderRadius || 20 }px`,
 			'--premium-edge-peek-card-padding': `${ attributes.cardContentPadding || 24 }px`,
+			'--premium-edge-peek-pad-left': attributes.sectionPadding?.left || '24px',
+			'--premium-edge-peek-pad-right': attributes.sectionPadding?.right || '24px',
 		},
 		'data-desktop-slides': String( getSlidesPerView( attributes.desktopCards, attributes.edgePeekDesktop ) ),
 		'data-tablet-slides': String( getSlidesPerView( attributes.tabletCards, attributes.edgePeekTablet ) ),

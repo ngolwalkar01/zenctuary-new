@@ -19,8 +19,13 @@
     }
 
     .premium-edge-peek-carousel__stage {
-        width: 100%;
+        width: 100vw;
+        margin-left: calc(50% - 50vw);
+        margin-right: calc(50% - 50vw);
+        padding-left: max(16px, var(--premium-edge-peek-pad-left));
+        padding-right: max(16px, var(--premium-edge-peek-pad-right));
         overflow: hidden;
+        box-sizing: border-box;
     }
 
     .premium-edge-peek-carousel__header {
@@ -214,6 +219,12 @@
     }
 
     &.is-editor-preview {
+        .premium-edge-peek-carousel__stage--preview {
+            width: calc(100% + max(16px, var(--premium-edge-peek-pad-left)) + max(16px, var(--premium-edge-peek-pad-right)));
+            margin-left: calc(-1 * max(16px, var(--premium-edge-peek-pad-left)));
+            overflow: hidden;
+        }
+
         .premium-edge-peek-carousel__nav--preview .premium-edge-peek-carousel__arrow {
             pointer-events: none;
         }

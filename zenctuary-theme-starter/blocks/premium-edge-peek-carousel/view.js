@@ -25,8 +25,9 @@ function mountPremiumEdgePeekCarousel( block ) {
 	}
 
 	const showPagination = parseBoolean( block.dataset.showPagination );
-	const swiper = new Swiper( swiperElement, {
-		modules: [ Navigation, Pagination, Autoplay ],
+	const modules = [ Navigation ];
+	const swiperOptions = {
+		modules,
 		slidesPerView: parseNumber( block.dataset.mobileSlides, 1.2 ),
 		spaceBetween: parseNumber( block.dataset.gap, 24 ),
 		speed: parseNumber( block.dataset.speed, 450 ),
@@ -37,15 +38,6 @@ function mountPremiumEdgePeekCarousel( block ) {
 			nextEl: nextButton,
 			prevEl: prevButton,
 		} : undefined,
-		pagination: showPagination && pagination ? {
-			el: pagination,
-			clickable: true,
-		} : undefined,
-		autoplay: parseBoolean( block.dataset.autoplay ) ? {
-			delay: parseNumber( block.dataset.autoplayDelay, 4000 ),
-			disableOnInteraction: false,
-			pauseOnMouseEnter: true,
-		} : false,
 		breakpoints: {
 			782: {
 				slidesPerView: parseNumber( block.dataset.tabletSlides, 2.2 ),
@@ -56,7 +48,26 @@ function mountPremiumEdgePeekCarousel( block ) {
 				spaceBetween: parseNumber( block.dataset.gap, 24 ),
 			},
 		},
-	} );
+	};
+
+	if ( showPagination && pagination ) {
+		modules.push( Pagination );
+		swiperOptions.pagination = {
+			el: pagination,
+			clickable: true,
+		};
+	}
+
+	if ( parseBoolean( block.dataset.autoplay ) ) {
+		modules.push( Autoplay );
+		swiperOptions.autoplay = {
+			delay: parseNumber( block.dataset.autoplayDelay, 4000 ),
+			disableOnInteraction: false,
+			pauseOnMouseEnter: true,
+		};
+	}
+
+	const swiper = new Swiper( swiperElement, swiperOptions );
 
 	block.__premiumEdgePeekSwiper = swiper;
 }
