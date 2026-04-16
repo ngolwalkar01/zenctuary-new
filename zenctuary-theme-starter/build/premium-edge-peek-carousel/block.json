@@ -181,6 +181,12 @@
   "textdomain": "zenctuary",
   "editorScript": "file:./index.js",
   "viewScript": "file:./view.js",
-  "style": "file:./style-index.css",
-  "editorStyle": "file:./style-index.css"
+  "style": [
+    "file:./index.css",
+    "file:./style-index.css"
+  ],
+  "editorStyle": [
+    "file:./index.css",
+    "file:./style-index.css"
+  ]
 }

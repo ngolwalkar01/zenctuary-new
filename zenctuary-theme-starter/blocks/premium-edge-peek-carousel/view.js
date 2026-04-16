@@ -11,6 +11,10 @@ function parseBoolean( value ) {
 }
 
 function mountPremiumEdgePeekCarousel( block ) {
+	if ( ! block || block.__premiumEdgePeekSwiper ) {
+		return;
+	}
+
 	const swiperElement = block.querySelector( '.premium-edge-peek-carousel__swiper' );
 	const nextButton = block.querySelector( '.premium-edge-peek-carousel__arrow--next' );
 	const prevButton = block.querySelector( '.premium-edge-peek-carousel__arrow--prev' );
@@ -57,6 +61,12 @@ function mountPremiumEdgePeekCarousel( block ) {
 	block.__premiumEdgePeekSwiper = swiper;
 }
 
-document.addEventListener( 'DOMContentLoaded', function () {
+function initPremiumEdgePeekCarousels() {
 	document.querySelectorAll( '.wp-block-zenctuary-premium-edge-peek-carousel' ).forEach( mountPremiumEdgePeekCarousel );
-} );
+}
+
+if ( document.readyState === 'loading' ) {
+	document.addEventListener( 'DOMContentLoaded', initPremiumEdgePeekCarousels );
+} else {
+	initPremiumEdgePeekCarousels();
+}
