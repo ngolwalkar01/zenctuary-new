@@ -1305,4 +1305,14 @@ input[type="checkbox"] {
     padding: 32px !important;
   }
 
+  .zen-experience-space-block {
+    display: flex;
+    flex-direction: column;
+    gap: 80px;
+    padding-top: var(--zen-space-180);
+    padding-bottom: var(--zen-space-180);
+    padding-left: var(--zen-space-25);
+    padding-right: var(--zen-space-25);
+}
+
 }
