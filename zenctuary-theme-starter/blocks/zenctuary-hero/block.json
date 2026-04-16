@@ -39,6 +39,8 @@
     "iconSize": { "type": "number", "default": 80 },
 
     "gapCenterElements": { "type": "number", "default": 32 },
+    "centerHorizontalGap": { "type": "number", "default": 32 },
+    "centerVerticalGap": { "type": "number", "default": 24 },
 
     "logoAnim": { "type": "string", "default": "fade" },
     "logoAnimDur": { "type": "number", "default": 1.2 },

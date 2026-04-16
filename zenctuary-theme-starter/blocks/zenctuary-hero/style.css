@@ -61,6 +61,17 @@
     gap: var(--zh-gap-center, 32px);
 }
 
+.zenctuary-hero__title-icon-text-row {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--zh-center-gap-x, 32px);
+    margin-top: var(--zh-center-gap-y, 24px);
+    width: 100%;
+    max-width: 1080px;
+    flex-wrap: nowrap;
+}
+
 .zenctuary-hero__logo-wrapper img {
     height: auto;
     width: 100%;
@@ -72,6 +83,12 @@
     font-weight: var(--zh-tagline-fw, 400);
     color: var(--zh-tagline-c, #F6F2EA);
     margin: 0;
+}
+
+.zenctuary-hero__tagline-wrapper--side {
+    max-width: 720px;
+    text-align: left;
+    line-height: 1.2;
 }
 
 .zenctuary-hero__title {
@@ -284,9 +301,28 @@
         max-width: 80% !important;
         margin: 0 auto;
     }
+
+    .zenctuary-hero__title-icon-text-row {
+        gap: clamp(16px, 4vw, var(--zh-center-gap-x, 32px));
+    }
 }
 
 @media (max-width: 768px) {
+    .zenctuary-hero__inner {
+        padding: 0 20px;
+    }
+
+    .zenctuary-hero__title-icon-text-row {
+        flex-direction: column;
+        gap: 16px;
+        margin-top: max(16px, calc(var(--zh-center-gap-y, 24px) * 0.75));
+    }
+
+    .zenctuary-hero__tagline-wrapper--side {
+        text-align: center;
+        max-width: 100%;
+    }
+
     .zenctuary-hero__contact-wrapper {
         bottom: 20px;
         right: 20px;

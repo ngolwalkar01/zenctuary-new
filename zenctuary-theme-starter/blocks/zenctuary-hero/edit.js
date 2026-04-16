@@ -69,6 +69,7 @@ export default function Edit( { attributes, setAttributes } ) {
         titleText = 'SCHEDULE', titleFontSize = 64, titleFontWeight = '400', titleTextTransform = 'uppercase', titleColor = '#F6F2EA',
         iconUrl = '', iconId = 0, iconAlt = '', iconSize = 80,
         gapCenterElements = 32,
+        centerHorizontalGap = 32, centerVerticalGap = 24,
         logoAnim = 'fade', logoAnimDur = 1.2, logoAnimDel = 0.2,
         taglineAnim = 'slide-up', taglineAnimDur = 1.0, taglineAnimDel = 0.4,
         titleAnim = 'zoom-in', titleAnimDur = 1.2, titleAnimDel = 0.2,
@@ -135,11 +136,18 @@ export default function Edit( { attributes, setAttributes } ) {
                         options={[
                             { label: 'Logo + Tagline', value: 'logo-tagline' },
                             { label: 'Text Only', value: 'text-only' },
-                            { label: 'Icon + Text', value: 'icon-text' }
+                            { label: 'Icon + Text', value: 'icon-text' },
+                            { label: 'Title + Icon + Text', value: 'title-icon-text' }
                         ]}
                         onChange={ v => setAttributes({ centerMode: v }) }
                     />
                     <RangeControl label="Gap Between Elements" value={ gapCenterElements } min={0} max={120} step={4} onChange={ v => setAttributes({ gapCenterElements: v }) } />
+                    { centerMode === 'title-icon-text' && (
+                        <>
+                            <RangeControl label="Horizontal Gap (Icon / Text)" value={ centerHorizontalGap } min={0} max={160} step={4} onChange={ v => setAttributes({ centerHorizontalGap: v }) } />
+                            <RangeControl label="Vertical Gap (Title / Row)" value={ centerVerticalGap } min={0} max={160} step={4} onChange={ v => setAttributes({ centerVerticalGap: v }) } />
+                        </>
+                    ) }
 
                     <Divider />
 
@@ -166,7 +174,7 @@ export default function Edit( { attributes, setAttributes } ) {
                         </>
                     )}
 
-                    { (centerMode === 'text-only' || centerMode === 'icon-text') && (
+                    { (centerMode === 'text-only' || centerMode === 'icon-text' || centerMode === 'title-icon-text') && (
                         <>
                             <h3 style={{ fontSize:'12px',textTransform:'uppercase',color:'#888',margin:'0 0 8px' }}>Title</h3>
                             <TextareaControl label="Text" value={ titleText } onChange={ v => setAttributes({ titleText: v }) } />
@@ -177,7 +185,7 @@ export default function Edit( { attributes, setAttributes } ) {
                         </>
                     )}
 
-                    { centerMode === 'icon-text' && (
+                    { (centerMode === 'icon-text' || centerMode === 'title-icon-text') && (
                         <>
                             <h3 style={{ fontSize:'12px',textTransform:'uppercase',color:'#888',margin:'16px 0 8px' }}>Icon</h3>
                             { iconUrl ? (
@@ -191,6 +199,16 @@ export default function Edit( { attributes, setAttributes } ) {
                                 </MediaUploadCheck>
                             )}
                             <RangeControl label="Size" value={ iconSize } min={24} max={200} step={4} onChange={ v => setAttributes({ iconSize: v }) } />
+                        </>
+                    )}
+
+                    { centerMode === 'title-icon-text' && (
+                        <>
+                            <h3 style={{ fontSize:'12px',textTransform:'uppercase',color:'#888',margin:'16px 0 8px' }}>Supporting Text</h3>
+                            <TextareaControl label="Text" value={ taglineText } onChange={ v => setAttributes({ taglineText: v }) } />
+                            <RangeControl label="Font Size" value={ taglineFontSize } min={12} max={48} step={1} onChange={ v => setAttributes({ taglineFontSize: v }) } />
+                            <SelectControl label="Font Weight" value={ taglineFontWeight } options={[{label:'400',value:'400'},{label:'500',value:'500'},{label:'600',value:'600'}]} onChange={ v => setAttributes({ taglineFontWeight: v }) } />
+                            <ColorRow label="Color" value={ taglineColor } onChange={ v => setAttributes({ taglineColor: v }) } />
                         </>
                     )}
 
@@ -229,6 +247,24 @@ export default function Edit( { attributes, setAttributes } ) {
                             <SelectControl label="Type" value={titleAnim} options={ANIMATION_OPTIONS} onChange={v=>setAttributes({titleAnim:v})} />
                             <RangeControl label="Duration (s)" value={titleAnimDur} min={0.1} max={3} step={0.1} onChange={v=>setAttributes({titleAnimDur:v})} />
                             <RangeControl label="Delay (s)" value={titleAnimDel} min={0} max={2} step={0.1} onChange={v=>setAttributes({titleAnimDel:v})} />
+                        </>
+                    )}
+                    { centerMode === 'title-icon-text' && (
+                        <>
+                            <h3 style={{ fontSize:'12px',textTransform:'uppercase',color:'#888',margin:'0 0 8px' }}>Title</h3>
+                            <SelectControl label="Type" value={titleAnim} options={ANIMATION_OPTIONS} onChange={v=>setAttributes({titleAnim:v})} />
+                            <RangeControl label="Duration (s)" value={titleAnimDur} min={0.1} max={3} step={0.1} onChange={v=>setAttributes({titleAnimDur:v})} />
+                            <RangeControl label="Delay (s)" value={titleAnimDel} min={0} max={2} step={0.1} onChange={v=>setAttributes({titleAnimDel:v})} />
+                            <Divider />
+                            <h3 style={{ fontSize:'12px',textTransform:'uppercase',color:'#888',margin:'0 0 8px' }}>Icon</h3>
+                            <SelectControl label="Type" value={iconAnim} options={ANIMATION_OPTIONS} onChange={v=>setAttributes({iconAnim:v})} />
+                            <RangeControl label="Duration (s)" value={iconAnimDur} min={0.1} max={3} step={0.1} onChange={v=>setAttributes({iconAnimDur:v})} />
+                            <RangeControl label="Delay (s)" value={iconAnimDel} min={0} max={2} step={0.1} onChange={v=>setAttributes({iconAnimDel:v})} />
+                            <Divider />
+                            <h3 style={{ fontSize:'12px',textTransform:'uppercase',color:'#888',margin:'0 0 8px' }}>Supporting Text</h3>
+                            <SelectControl label="Type" value={taglineAnim} options={ANIMATION_OPTIONS} onChange={v=>setAttributes({taglineAnim:v})} />
+                            <RangeControl label="Duration (s)" value={taglineAnimDur} min={0.1} max={3} step={0.1} onChange={v=>setAttributes({taglineAnimDur:v})} />
+                            <RangeControl label="Delay (s)" value={taglineAnimDel} min={0} max={2} step={0.1} onChange={v=>setAttributes({taglineAnimDel:v})} />
                         </>
                     )}
                 </PanelBody>
@@ -354,6 +390,24 @@ export default function Edit( { attributes, setAttributes } ) {
                             <h1 style={{ margin: 0, fontSize: `${titleFontSize}px`, fontWeight: titleFontWeight, textTransform: titleTextTransform, color: titleColor, lineHeight: 1.1 }}>
                                 { titleText }
                             </h1>
+                        </>
+                    )}
+
+                    { centerMode === 'title-icon-text' && (
+                        <>
+                            <h1 style={{ margin: 0, fontSize: `${titleFontSize}px`, fontWeight: titleFontWeight, textTransform: titleTextTransform, color: titleColor, lineHeight: 1.1 }}>
+                                { titleText }
+                            </h1>
+                            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: `${centerHorizontalGap}px`, marginTop: `${centerVerticalGap}px`, flexWrap: 'wrap' }}>
+                                { iconUrl ? (
+                                    <img src={iconUrl} style={{ width: `${iconSize}px`, height: `${iconSize}px`, objectFit: 'contain', flex: '0 0 auto' }} alt="hero icon" />
+                                ) : (
+                                    <div className="zh-editor-placeholder" style={{ width: `${iconSize}px`, height: `${iconSize}px` }}>Icon</div>
+                                )}
+                                <p style={{ margin: 0, fontSize: `${taglineFontSize}px`, fontWeight: taglineFontWeight, color: taglineColor, lineHeight: 1.2, maxWidth: '720px', textAlign: 'left' }}>
+                                    { taglineText }
+                                </p>
+                            </div>
                         </>
                     )}
 

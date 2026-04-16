@@ -105,6 +105,14 @@
       "type": "number",
       "default": 32
     },
+    "centerHorizontalGap": {
+      "type": "number",
+      "default": 32
+    },
+    "centerVerticalGap": {
+      "type": "number",
+      "default": 24
+    },
     "logoAnim": {
       "type": "string",
       "default": "fade"

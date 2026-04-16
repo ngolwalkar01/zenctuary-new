@@ -34,6 +34,8 @@ $vars = [
     '--zh-bg-overlay-op:'  . $bg_overlay_op,
 
     '--zh-gap-center:'     . absint( $attributes['gapCenterElements'] ?? 32 ) . 'px',
+    '--zh-center-gap-x:'   . absint( $attributes['centerHorizontalGap'] ?? 32 ) . 'px',
+    '--zh-center-gap-y:'   . absint( $attributes['centerVerticalGap'] ?? 24 ) . 'px',
 
     '--zh-tagline-fs:'     . absint( $attributes['taglineFontSize'] ?? 20 ) . 'px',
     '--zh-tagline-fw:'     . esc_attr( $attributes['taglineFontWeight'] ?? '400' ),
@@ -123,6 +125,20 @@ if ( ! function_exists( 'zh_format_link' ) ) {
                 <h1 class="zenctuary-hero__title" <?php echo zh_anim_attrs($attributes['titleAnim'] ?? 'slide-up', $attributes['titleAnimDur'] ?? 1.2, $attributes['titleAnimDel'] ?? 0.3); ?>>
                     <?php echo esc_html($attributes['titleText'] ?? ''); ?>
                 </h1>
+            <?php elseif ( $mode === 'title-icon-text' ) : ?>
+                <h1 class="zenctuary-hero__title" <?php echo zh_anim_attrs($attributes['titleAnim'] ?? 'zoom-in', $attributes['titleAnimDur'] ?? 1.2, $attributes['titleAnimDel'] ?? 0.2); ?>>
+                    <?php echo esc_html($attributes['titleText'] ?? ''); ?>
+                </h1>
+                <div class="zenctuary-hero__title-icon-text-row">
+                    <div class="zenctuary-hero__icon-wrapper" <?php echo zh_anim_attrs($attributes['iconAnim'] ?? 'fade', $attributes['iconAnimDur'] ?? 1.0, $attributes['iconAnimDel'] ?? 0.1); ?>>
+                        <?php if ( !empty($attributes['iconUrl']) ) : ?>
+                            <img src="<?php echo esc_url($attributes['iconUrl']); ?>" alt="<?php echo esc_attr($attributes['iconAlt'] ?? ''); ?>" style="width: <?php echo absint($attributes['iconSize'] ?? 80); ?>px; height: <?php echo absint($attributes['iconSize'] ?? 80); ?>px;" />
+                        <?php endif; ?>
+                    </div>
+                    <div class="zenctuary-hero__tagline-wrapper zenctuary-hero__tagline-wrapper--side" <?php echo zh_anim_attrs($attributes['taglineAnim'] ?? 'slide-up', $attributes['taglineAnimDur'] ?? 1.0, $attributes['taglineAnimDel'] ?? 0.4); ?>>
+                        <?php echo esc_html($attributes['taglineText'] ?? ''); ?>
+                    </div>
+                </div>
             <?php endif; ?>
 
         </div>
