@@ -283,7 +283,10 @@ $inline_styles = '
                                 <div class="zen-class-card__zencoins">
                                     <div class="zen-class-card__zencoins-inner">
                                         <span class="zen-zencoins-label"><?php esc_html_e( 'ZENCOINS:', 'zenctuary' ); ?></span>
-                                        <span class="zen-zencoins-badge"><?php echo (int) $meta['zen_coins']; ?></span>
+                                        <span class="zen-zencoins-badge" aria-hidden="true">
+                                            <span class="zen-zencoins-badge__ring"></span>
+                                            <span class="zen-zencoins-badge__value"><?php echo (int) $meta['zen_coins']; ?></span>
+                                        </span>
                                     </div>
                                 </div>
                                 <?php endif; ?>
@@ -337,7 +340,10 @@ $inline_styles = '
                     <div class="zen-class-card__zencoins">
                         <div class="zen-class-card__zencoins-inner">
                             <span class="zen-zencoins-label"><?php esc_html_e( 'ZENCOINS:', 'zenctuary' ); ?></span>
-                            <span class="zen-zencoins-badge"><?php echo (int) $meta['zen_coins']; ?></span>
+                            <span class="zen-zencoins-badge" aria-hidden="true">
+                                <span class="zen-zencoins-badge__ring"></span>
+                                <span class="zen-zencoins-badge__value"><?php echo (int) $meta['zen_coins']; ?></span>
+                            </span>
                         </div>
                     </div>
                     <?php endif; ?>

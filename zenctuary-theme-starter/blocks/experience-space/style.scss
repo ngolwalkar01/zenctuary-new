@@ -173,17 +173,33 @@
                 }
 
                 .zen-zencoins-badge {
+                    position: relative;
                     width: var(--zen-exp-zencoin-badge-size, 32px);
                     height: var(--zen-exp-zencoin-badge-size, 32px);
                     border-radius: 50%;
                     background: var(--zen-exp-zencoin-badge-bg-color, #D8B355);
                     color: var(--zen-exp-zencoin-badge-text-color, #3F3E3E);
                     font-size: var(--zen-exp-zencoin-badge-font-size, 13px);
-                    font-weight: 700;
-                    display: flex;
+                    font-weight: 500;
+                    display: inline-flex;
                     align-items: center;
                     justify-content: center;
-                    border: 2px solid rgba(0, 0, 0, 0.2);
+                    border: 2px solid var(--zen-exp-zencoin-badge-text-color, #3F3E3E);
+
+                    .zen-zencoins-badge__ring {
+                        position: absolute;
+                        inset: 6px;
+                        border: 2px solid var(--zen-exp-zencoin-badge-text-color, #3F3E3E);
+                        border-radius: 50%;
+                        pointer-events: none;
+                    }
+
+                    .zen-zencoins-badge__value {
+                        position: relative;
+                        z-index: 1;
+                        color: var(--zen-exp-zencoin-badge-text-color, #3F3E3E);
+                        line-height: 1;
+                    }
                 }
             }
         }
