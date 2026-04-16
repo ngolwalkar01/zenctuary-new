@@ -41,6 +41,36 @@ function arrowIcon() {
 	);
 }
 
+function navigationIcon( iconSet = 'line-arrow', direction = 'next' ) {
+	const isNext = direction === 'next';
+
+	if ( iconSet === 'dashicons-arrow-alt2' ) {
+		return <span className={ `premium-edge-peek-carousel__arrow-icon dashicons ${ isNext ? 'dashicons-arrow-right-alt2' : 'dashicons-arrow-left-alt2' }` } aria-hidden="true" />;
+	}
+
+	if ( iconSet === 'dashicons-controls' ) {
+		return <span className={ `premium-edge-peek-carousel__arrow-icon dashicons ${ isNext ? 'dashicons-controls-forward' : 'dashicons-controls-back' }` } aria-hidden="true" />;
+	}
+
+	if ( iconSet === 'chevron' ) {
+		return (
+			<svg className="premium-edge-peek-carousel__arrow-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+				<path d={ isNext ? 'M9 5L16 12L9 19' : 'M15 5L8 12L15 19' } stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+			</svg>
+		);
+	}
+
+	if ( iconSet === 'caret' ) {
+		return (
+			<svg className="premium-edge-peek-carousel__arrow-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+				<path d={ isNext ? 'M10 7L15 12L10 17' : 'M14 7L9 12L14 17' } stroke="currentColor" strokeWidth="2.25" strokeLinecap="round" strokeLinejoin="round" />
+			</svg>
+		);
+	}
+
+	return <span className="premium-edge-peek-carousel__arrow-icon" aria-hidden="true">{ isNext ? '\u2192' : '\u2190' }</span>;
+}
+
 export default function save( { attributes } ) {
 	const cards = normalizeCards( attributes.cards );
 	const blockProps = useBlockProps.save( {
@@ -82,6 +112,15 @@ export default function save( { attributes } ) {
 			'--premium-edge-peek-button-pad-right': attributes.buttonPadding?.right || '20px',
 			'--premium-edge-peek-button-pad-bottom': attributes.buttonPadding?.bottom || '13px',
 			'--premium-edge-peek-button-pad-left': attributes.buttonPadding?.left || '20px',
+			'--premium-edge-peek-nav-size': `${ attributes.navButtonSize || 54 }px`,
+			'--premium-edge-peek-nav-icon-size': `${ attributes.navIconSize || 20 }px`,
+			'--premium-edge-peek-nav-border-width': `${ attributes.navBorderWidth || 1 }px`,
+			'--premium-edge-peek-nav-radius': attributes.navBorderRadius || '999px',
+			'--premium-edge-peek-nav-border-color': attributes.navBorderColor || 'rgba(23, 23, 23, 0.16)',
+			'--premium-edge-peek-nav-bg': attributes.navBackgroundColor || 'rgba(255, 255, 255, 0.78)',
+			'--premium-edge-peek-nav-icon-color': attributes.navIconColor || '#171717',
+			'--premium-edge-peek-nav-hover-bg': attributes.navHoverBackgroundColor || '#171717',
+			'--premium-edge-peek-nav-hover-icon-color': attributes.navHoverIconColor || '#f4efe7',
 			'--premium-edge-peek-desktop-cards': String( attributes.desktopCards || 3 ),
 			'--premium-edge-peek-tablet-cards': String( attributes.tabletCards || 2 ),
 			'--premium-edge-peek-mobile-cards': String( attributes.mobileCards || 1 ),
@@ -118,8 +157,8 @@ export default function save( { attributes } ) {
 						{ attributes.subheading && <RichText.Content tagName="p" className="premium-edge-peek-carousel__subheading" value={ attributes.subheading } /> }
 					</div>
 					<div className="premium-edge-peek-carousel__nav">
-						<button type="button" className="premium-edge-peek-carousel__arrow premium-edge-peek-carousel__arrow--prev" aria-label="Previous slide"><span aria-hidden="true">&#8592;</span></button>
-						<button type="button" className="premium-edge-peek-carousel__arrow premium-edge-peek-carousel__arrow--next" aria-label="Next slide"><span aria-hidden="true">&#8594;</span></button>
+						<button type="button" className="premium-edge-peek-carousel__arrow premium-edge-peek-carousel__arrow--prev" aria-label="Previous slide">{ navigationIcon( attributes.navIconSet, 'prev' ) }</button>
+						<button type="button" className="premium-edge-peek-carousel__arrow premium-edge-peek-carousel__arrow--next" aria-label="Next slide">{ navigationIcon( attributes.navIconSet, 'next' ) }</button>
 					</div>
 				</div>
 				<div className="premium-edge-peek-carousel__stage">

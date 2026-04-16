@@ -104,6 +104,36 @@ function arrowIcon() {
 	);
 }
 
+function navigationIcon( iconSet = 'line-arrow', direction = 'next' ) {
+	const isNext = direction === 'next';
+
+	if ( iconSet === 'dashicons-arrow-alt2' ) {
+		return <span className={ `premium-edge-peek-carousel__arrow-icon dashicons ${ isNext ? 'dashicons-arrow-right-alt2' : 'dashicons-arrow-left-alt2' }` } aria-hidden="true" />;
+	}
+
+	if ( iconSet === 'dashicons-controls' ) {
+		return <span className={ `premium-edge-peek-carousel__arrow-icon dashicons ${ isNext ? 'dashicons-controls-forward' : 'dashicons-controls-back' }` } aria-hidden="true" />;
+	}
+
+	if ( iconSet === 'chevron' ) {
+		return (
+			<svg className="premium-edge-peek-carousel__arrow-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+				<path d={ isNext ? 'M9 5L16 12L9 19' : 'M15 5L8 12L15 19' } stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+			</svg>
+		);
+	}
+
+	if ( iconSet === 'caret' ) {
+		return (
+			<svg className="premium-edge-peek-carousel__arrow-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+				<path d={ isNext ? 'M10 7L15 12L10 17' : 'M14 7L9 12L14 17' } stroke="currentColor" strokeWidth="2.25" strokeLinecap="round" strokeLinejoin="round" />
+			</svg>
+		);
+	}
+
+	return <span className="premium-edge-peek-carousel__arrow-icon" aria-hidden="true">{ isNext ? '\u2192' : '\u2190' }</span>;
+}
+
 export default function Edit( { attributes, setAttributes } ) {
 	const [ selectedCardIndex, setSelectedCardIndex ] = useState( 0 );
 	const cards = useMemo( () => normalizeCards( attributes.cards ), [ attributes.cards ] );
@@ -192,6 +222,15 @@ export default function Edit( { attributes, setAttributes } ) {
 			'--premium-edge-peek-button-pad-right': attributes.buttonPadding?.right || '20px',
 			'--premium-edge-peek-button-pad-bottom': attributes.buttonPadding?.bottom || '13px',
 			'--premium-edge-peek-button-pad-left': attributes.buttonPadding?.left || '20px',
+			'--premium-edge-peek-nav-size': `${ attributes.navButtonSize || 54 }px`,
+			'--premium-edge-peek-nav-icon-size': `${ attributes.navIconSize || 20 }px`,
+			'--premium-edge-peek-nav-border-width': `${ attributes.navBorderWidth || 1 }px`,
+			'--premium-edge-peek-nav-radius': attributes.navBorderRadius || '999px',
+			'--premium-edge-peek-nav-border-color': attributes.navBorderColor || 'rgba(23, 23, 23, 0.16)',
+			'--premium-edge-peek-nav-bg': attributes.navBackgroundColor || 'rgba(255, 255, 255, 0.78)',
+			'--premium-edge-peek-nav-icon-color': attributes.navIconColor || '#171717',
+			'--premium-edge-peek-nav-hover-bg': attributes.navHoverBackgroundColor || '#171717',
+			'--premium-edge-peek-nav-hover-icon-color': attributes.navHoverIconColor || '#f4efe7',
 			'--premium-edge-peek-preview-slides': String( desktopSlides ),
 			'--premium-edge-peek-desktop-cards': String( attributes.desktopCards || 3 ),
 			'--premium-edge-peek-tablet-cards': String( attributes.tabletCards || 2 ),
@@ -275,9 +314,15 @@ export default function Edit( { attributes, setAttributes } ) {
 					<TextControl label={ __( 'Button Font Weight', 'zenctuary' ) } value={ attributes.buttonFontWeight } onChange={ ( value ) => setAttributes( { buttonFontWeight: value || '600' } ) } />
 					<TextControl label={ __( 'Button Line Height', 'zenctuary' ) } value={ attributes.buttonLineHeight } onChange={ ( value ) => setAttributes( { buttonLineHeight: value || '1.2' } ) } />
 					<TextControl label={ __( 'Button Width', 'zenctuary' ) } value={ attributes.buttonWidth } onChange={ ( value ) => setAttributes( { buttonWidth: value || 'fit-content' } ) } help={ __( 'Examples: fit-content, 100%, 280px', 'zenctuary' ) } />
-					<TextControl label={ __( 'Button Text Color', 'zenctuary' ) } value={ attributes.buttonTextColor } onChange={ ( value ) => setAttributes( { buttonTextColor: value || '#ffffff' } ) } />
-					<TextControl label={ __( 'Button Background', 'zenctuary' ) } value={ attributes.buttonBackgroundColor } onChange={ ( value ) => setAttributes( { buttonBackgroundColor: value || 'rgba(255, 255, 255, 0.16)' } ) } />
-					<TextControl label={ __( 'Button Border Color', 'zenctuary' ) } value={ attributes.buttonBorderColor } onChange={ ( value ) => setAttributes( { buttonBorderColor: value || 'rgba(255, 255, 255, 0.38)' } ) } />
+					<p className="components-base-control__label">{ __( 'Button Text Color', 'zenctuary' ) }</p>
+					<ColorPalette colors={ PRESET_COLORS } value={ attributes.buttonTextColor } onChange={ ( value ) => setAttributes( { buttonTextColor: value || '#ffffff' } ) } />
+					<TextControl label={ __( 'Custom Button Text Color', 'zenctuary' ) } value={ attributes.buttonTextColor } onChange={ ( value ) => setAttributes( { buttonTextColor: value || '#ffffff' } ) } />
+					<p className="components-base-control__label">{ __( 'Button Background', 'zenctuary' ) }</p>
+					<ColorPalette colors={ PRESET_COLORS } value={ attributes.buttonBackgroundColor } onChange={ ( value ) => setAttributes( { buttonBackgroundColor: value || 'rgba(255, 255, 255, 0.16)' } ) } />
+					<TextControl label={ __( 'Custom Button Background', 'zenctuary' ) } value={ attributes.buttonBackgroundColor } onChange={ ( value ) => setAttributes( { buttonBackgroundColor: value || 'rgba(255, 255, 255, 0.16)' } ) } />
+					<p className="components-base-control__label">{ __( 'Button Border Color', 'zenctuary' ) }</p>
+					<ColorPalette colors={ PRESET_COLORS } value={ attributes.buttonBorderColor } onChange={ ( value ) => setAttributes( { buttonBorderColor: value || 'rgba(255, 255, 255, 0.38)' } ) } />
+					<TextControl label={ __( 'Custom Button Border Color', 'zenctuary' ) } value={ attributes.buttonBorderColor } onChange={ ( value ) => setAttributes( { buttonBorderColor: value || 'rgba(255, 255, 255, 0.38)' } ) } />
 					<RangeControl label={ __( 'Button Border Width', 'zenctuary' ) } value={ attributes.buttonBorderWidth } onChange={ ( value ) => setAttributes( { buttonBorderWidth: value } ) } min={ 0 } max={ 8 } />
 					<TextControl label={ __( 'Button Radius', 'zenctuary' ) } value={ attributes.buttonBorderRadius } onChange={ ( value ) => setAttributes( { buttonBorderRadius: value || '999px' } ) } />
 					<SpacingControls label={ __( 'Button Padding', 'zenctuary' ) } value={ attributes.buttonPadding } onChange={ ( value ) => setAttributes( { buttonPadding: value } ) } />
@@ -290,6 +335,41 @@ export default function Edit( { attributes, setAttributes } ) {
 							{ label: __( 'Right', 'zenctuary' ), value: 'right' },
 						] }
 						onChange={ ( value ) => setAttributes( { buttonIconPosition: value } ) }
+					/>
+				</PanelBody>
+
+				<PanelBody title={ __( 'Navigation Style', 'zenctuary' ) } initialOpen={ false }>
+					<RangeControl label={ __( 'Navigation Button Size', 'zenctuary' ) } value={ attributes.navButtonSize } onChange={ ( value ) => setAttributes( { navButtonSize: value } ) } min={ 32 } max={ 96 } />
+					<RangeControl label={ __( 'Navigation Icon Size', 'zenctuary' ) } value={ attributes.navIconSize } onChange={ ( value ) => setAttributes( { navIconSize: value } ) } min={ 12 } max={ 40 } />
+					<RangeControl label={ __( 'Navigation Border Width', 'zenctuary' ) } value={ attributes.navBorderWidth } onChange={ ( value ) => setAttributes( { navBorderWidth: value } ) } min={ 0 } max={ 8 } />
+					<TextControl label={ __( 'Navigation Radius', 'zenctuary' ) } value={ attributes.navBorderRadius } onChange={ ( value ) => setAttributes( { navBorderRadius: value || '999px' } ) } help={ __( 'Use 999px for a circle.', 'zenctuary' ) } />
+					<p className="components-base-control__label">{ __( 'Navigation Border Color', 'zenctuary' ) }</p>
+					<ColorPalette colors={ PRESET_COLORS } value={ attributes.navBorderColor } onChange={ ( value ) => setAttributes( { navBorderColor: value || 'rgba(23, 23, 23, 0.16)' } ) } />
+					<TextControl label={ __( 'Custom Navigation Border Color', 'zenctuary' ) } value={ attributes.navBorderColor } onChange={ ( value ) => setAttributes( { navBorderColor: value || 'rgba(23, 23, 23, 0.16)' } ) } />
+					<p className="components-base-control__label">{ __( 'Navigation Background', 'zenctuary' ) }</p>
+					<ColorPalette colors={ PRESET_COLORS } value={ attributes.navBackgroundColor } onChange={ ( value ) => setAttributes( { navBackgroundColor: value || 'rgba(255, 255, 255, 0.78)' } ) } />
+					<TextControl label={ __( 'Custom Navigation Background', 'zenctuary' ) } value={ attributes.navBackgroundColor } onChange={ ( value ) => setAttributes( { navBackgroundColor: value || 'rgba(255, 255, 255, 0.78)' } ) } />
+					<p className="components-base-control__label">{ __( 'Navigation Icon Color', 'zenctuary' ) }</p>
+					<ColorPalette colors={ PRESET_COLORS } value={ attributes.navIconColor } onChange={ ( value ) => setAttributes( { navIconColor: value || '#171717' } ) } />
+					<TextControl label={ __( 'Custom Navigation Icon Color', 'zenctuary' ) } value={ attributes.navIconColor } onChange={ ( value ) => setAttributes( { navIconColor: value || '#171717' } ) } />
+					<p className="components-base-control__label">{ __( 'Navigation Hover Background', 'zenctuary' ) }</p>
+					<ColorPalette colors={ PRESET_COLORS } value={ attributes.navHoverBackgroundColor } onChange={ ( value ) => setAttributes( { navHoverBackgroundColor: value || '#171717' } ) } />
+					<TextControl label={ __( 'Custom Navigation Hover Background', 'zenctuary' ) } value={ attributes.navHoverBackgroundColor } onChange={ ( value ) => setAttributes( { navHoverBackgroundColor: value || '#171717' } ) } />
+					<p className="components-base-control__label">{ __( 'Navigation Hover Icon Color', 'zenctuary' ) }</p>
+					<ColorPalette colors={ PRESET_COLORS } value={ attributes.navHoverIconColor } onChange={ ( value ) => setAttributes( { navHoverIconColor: value || '#f4efe7' } ) } />
+					<TextControl label={ __( 'Custom Navigation Hover Icon Color', 'zenctuary' ) } value={ attributes.navHoverIconColor } onChange={ ( value ) => setAttributes( { navHoverIconColor: value || '#f4efe7' } ) } />
+					<SelectControl
+						label={ __( 'Navigation Icon Set', 'zenctuary' ) }
+						value={ attributes.navIconSet }
+						help={ __( 'Dashicon options use WordPress core Dashicons and need no new dependency.', 'zenctuary' ) }
+						options={ [
+							{ label: __( 'Line Arrow', 'zenctuary' ), value: 'line-arrow' },
+							{ label: __( 'Chevron', 'zenctuary' ), value: 'chevron' },
+							{ label: __( 'Caret', 'zenctuary' ), value: 'caret' },
+							{ label: __( 'Dashicons Arrow Alt 2', 'zenctuary' ), value: 'dashicons-arrow-alt2' },
+							{ label: __( 'Dashicons Controls', 'zenctuary' ), value: 'dashicons-controls' },
+						] }
+						onChange={ ( value ) => setAttributes( { navIconSet: value } ) }
 					/>
 				</PanelBody>
 
@@ -351,8 +431,8 @@ export default function Edit( { attributes, setAttributes } ) {
 							<RichText tagName="p" className="premium-edge-peek-carousel__subheading" value={ attributes.subheading } onChange={ ( value ) => setAttributes( { subheading: value } ) } placeholder={ __( 'Add subheading', 'zenctuary' ) } />
 						</div>
 						<div className="premium-edge-peek-carousel__nav premium-edge-peek-carousel__nav--preview">
-							<button type="button" className="premium-edge-peek-carousel__arrow" aria-label={ __( 'Previous', 'zenctuary' ) }><span aria-hidden="true">&#8592;</span></button>
-							<button type="button" className="premium-edge-peek-carousel__arrow" aria-label={ __( 'Next', 'zenctuary' ) }><span aria-hidden="true">&#8594;</span></button>
+							<button type="button" className="premium-edge-peek-carousel__arrow" aria-label={ __( 'Previous', 'zenctuary' ) }>{ navigationIcon( attributes.navIconSet, 'prev' ) }</button>
+							<button type="button" className="premium-edge-peek-carousel__arrow" aria-label={ __( 'Next', 'zenctuary' ) }>{ navigationIcon( attributes.navIconSet, 'next' ) }</button>
 						</div>
 					</div>
 					<div className="premium-edge-peek-carousel__stage premium-edge-peek-carousel__stage--preview">

@@ -241,6 +241,46 @@
       "type": "string",
       "default": "right"
     },
+    "navButtonSize": {
+      "type": "number",
+      "default": 54
+    },
+    "navIconSize": {
+      "type": "number",
+      "default": 20
+    },
+    "navBorderWidth": {
+      "type": "number",
+      "default": 1
+    },
+    "navBorderRadius": {
+      "type": "string",
+      "default": "999px"
+    },
+    "navBorderColor": {
+      "type": "string",
+      "default": "rgba(23, 23, 23, 0.16)"
+    },
+    "navBackgroundColor": {
+      "type": "string",
+      "default": "rgba(255, 255, 255, 0.78)"
+    },
+    "navIconColor": {
+      "type": "string",
+      "default": "#171717"
+    },
+    "navHoverBackgroundColor": {
+      "type": "string",
+      "default": "#171717"
+    },
+    "navHoverIconColor": {
+      "type": "string",
+      "default": "#f4efe7"
+    },
+    "navIconSet": {
+      "type": "string",
+      "default": "line-arrow"
+    },
     "cards": {
       "type": "array",
       "default": [
