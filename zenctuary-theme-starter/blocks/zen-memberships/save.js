@@ -19,6 +19,7 @@ export default function save({ attributes }) {
     zencoinsRowMargin, zencoinsRowBgColor, zencoinsRowPadding, zencoinsLabelIconGap,
     zenCoinIconSize, zenCoinBgColor, zenCoinBorderColor, zenCoinInnerColor,
     zenCoinValueColor, zenCoinValueFontSize, zenCoinValueFontWeight,
+    zenCoinInnerBorderColor, zenCoinInnerBorderWidth,
     monthlyCards, yearlyCards
   } = attributes;
 
