@@ -338,6 +338,39 @@
         .premium-tabs-carousel__header {
             flex-direction: column;
         }
+
+        .premium-tabs-carousel__nav {
+            width: 100%;
+            justify-content: flex-end;
+        }
+
+        .premium-tabs-carousel__slide {
+            width: calc((100% - var(--premium-tabs-gap)) / 2);
+            flex-basis: calc((100% - var(--premium-tabs-gap)) / 2);
+        }
+    }
+
+    @media (max-width: 639px) {
+        .premium-tabs-carousel__inner {
+            width: 100%;
+        }
+
+        .premium-tabs-carousel__tabs {
+            gap: 10px;
+        }
+
+        .premium-tabs-carousel__tab {
+            padding: 10px 14px;
+        }
+
+        .premium-tabs-carousel__slide {
+            width: 100%;
+            flex-basis: 100%;
+        }
+
+        .premium-tabs-carousel__card-content {
+            padding: clamp(16px, 4vw, var(--premium-tabs-card-padding));
+        }
     }
 
 }

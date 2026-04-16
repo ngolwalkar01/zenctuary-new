@@ -40,8 +40,8 @@ function createSwiper( block ) {
 			prevEl: prevButton,
 		} : undefined,
 		breakpoints: {
-			0: { slidesPerView: 3, spaceBetween: parseNumber( block.dataset.gap, 24 ) },
-			782: { slidesPerView: 3, spaceBetween: parseNumber( block.dataset.gap, 24 ) },
+			0: { slidesPerView: 1, spaceBetween: parseNumber( block.dataset.gap, 24 ) },
+			640: { slidesPerView: 2, spaceBetween: parseNumber( block.dataset.gap, 24 ) },
 			1024: { slidesPerView: 3, spaceBetween: parseNumber( block.dataset.gap, 24 ) },
 		},
 	};

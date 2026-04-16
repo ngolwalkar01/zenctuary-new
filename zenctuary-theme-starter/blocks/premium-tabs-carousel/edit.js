@@ -368,6 +368,15 @@ export default function Edit( { attributes, setAttributes } ) {
 					<TextControl label={ __( 'Button Font Weight', 'zenctuary' ) } value={ attributes.buttonFontWeight } onChange={ ( value ) => setAttributes( { buttonFontWeight: value } ) } />
 					<TextControl label={ __( 'Button Line Height', 'zenctuary' ) } value={ attributes.buttonLineHeight } onChange={ ( value ) => setAttributes( { buttonLineHeight: value } ) } />
 					<TextControl label={ __( 'Button Width', 'zenctuary' ) } value={ attributes.buttonWidth } onChange={ ( value ) => setAttributes( { buttonWidth: value } ) } />
+					<p className="components-base-control__label">{ __( 'Button Text Color', 'zenctuary' ) }</p>
+					<ColorPalette colors={ PRESET_COLORS } value={ attributes.buttonTextColor } onChange={ ( value ) => setAttributes( { buttonTextColor: value || '#ffffff' } ) } />
+					<TextControl label={ __( 'Custom Button Text Color', 'zenctuary' ) } value={ attributes.buttonTextColor } onChange={ ( value ) => setAttributes( { buttonTextColor: value || '#ffffff' } ) } />
+					<p className="components-base-control__label">{ __( 'Button Background Color', 'zenctuary' ) }</p>
+					<ColorPalette colors={ PRESET_COLORS } value={ attributes.buttonBackgroundColor } onChange={ ( value ) => setAttributes( { buttonBackgroundColor: value || 'rgba(255, 255, 255, 0.16)' } ) } />
+					<TextControl label={ __( 'Custom Button Background Color', 'zenctuary' ) } value={ attributes.buttonBackgroundColor } onChange={ ( value ) => setAttributes( { buttonBackgroundColor: value || 'rgba(255, 255, 255, 0.16)' } ) } />
+					<p className="components-base-control__label">{ __( 'Button Border Color', 'zenctuary' ) }</p>
+					<ColorPalette colors={ PRESET_COLORS } value={ attributes.buttonBorderColor } onChange={ ( value ) => setAttributes( { buttonBorderColor: value || 'rgba(255, 255, 255, 0.38)' } ) } />
+					<TextControl label={ __( 'Custom Button Border Color', 'zenctuary' ) } value={ attributes.buttonBorderColor } onChange={ ( value ) => setAttributes( { buttonBorderColor: value || 'rgba(255, 255, 255, 0.38)' } ) } />
 					<SpacingControls label={ __( 'Button Padding', 'zenctuary' ) } value={ attributes.buttonPadding } onChange={ ( value ) => setAttributes( { buttonPadding: value } ) } />
 					<RangeControl label={ __( 'Button Border Width', 'zenctuary' ) } value={ attributes.buttonBorderWidth } onChange={ ( value ) => setAttributes( { buttonBorderWidth: value } ) } min={ 0 } max={ 10 } step={ 1 } />
 					<TextControl label={ __( 'Button Border Radius', 'zenctuary' ) } value={ attributes.buttonBorderRadius } onChange={ ( value ) => setAttributes( { buttonBorderRadius: value } ) } />
@@ -380,6 +389,15 @@ export default function Edit( { attributes, setAttributes } ) {
 					<RangeControl label={ __( 'Icon Size', 'zenctuary' ) } value={ attributes.navIconSize } onChange={ ( value ) => setAttributes( { navIconSize: value } ) } min={ 12 } max={ 40 } step={ 1 } />
 					<RangeControl label={ __( 'Border Width', 'zenctuary' ) } value={ attributes.navBorderWidth } onChange={ ( value ) => setAttributes( { navBorderWidth: value } ) } min={ 0 } max={ 8 } step={ 1 } />
 					<TextControl label={ __( 'Border Radius', 'zenctuary' ) } value={ attributes.navBorderRadius } onChange={ ( value ) => setAttributes( { navBorderRadius: value } ) } />
+					<p className="components-base-control__label">{ __( 'Navigation Border Color', 'zenctuary' ) }</p>
+					<ColorPalette colors={ PRESET_COLORS } value={ attributes.navBorderColor } onChange={ ( value ) => setAttributes( { navBorderColor: value || 'rgba(23, 23, 23, 0.16)' } ) } />
+					<TextControl label={ __( 'Custom Navigation Border Color', 'zenctuary' ) } value={ attributes.navBorderColor } onChange={ ( value ) => setAttributes( { navBorderColor: value || 'rgba(23, 23, 23, 0.16)' } ) } />
+					<p className="components-base-control__label">{ __( 'Navigation Background Color', 'zenctuary' ) }</p>
+					<ColorPalette colors={ PRESET_COLORS } value={ attributes.navBackgroundColor } onChange={ ( value ) => setAttributes( { navBackgroundColor: value || 'rgba(255, 255, 255, 0.78)' } ) } />
+					<TextControl label={ __( 'Custom Navigation Background Color', 'zenctuary' ) } value={ attributes.navBackgroundColor } onChange={ ( value ) => setAttributes( { navBackgroundColor: value || 'rgba(255, 255, 255, 0.78)' } ) } />
+					<p className="components-base-control__label">{ __( 'Navigation Icon Color', 'zenctuary' ) }</p>
+					<ColorPalette colors={ PRESET_COLORS } value={ attributes.navIconColor } onChange={ ( value ) => setAttributes( { navIconColor: value || '#171717' } ) } />
+					<TextControl label={ __( 'Custom Navigation Icon Color', 'zenctuary' ) } value={ attributes.navIconColor } onChange={ ( value ) => setAttributes( { navIconColor: value || '#171717' } ) } />
 					<SelectControl label={ __( 'Icon Set', 'zenctuary' ) } value={ attributes.navIconSet } options={ [ { label: __( 'Line Arrow', 'zenctuary' ), value: 'line-arrow' }, { label: __( 'Chevron', 'zenctuary' ), value: 'chevron' }, { label: __( 'Caret', 'zenctuary' ), value: 'caret' }, { label: __( 'Dashicons Arrow Alt2', 'zenctuary' ), value: 'dashicons-arrow-alt2' }, { label: __( 'Dashicons Controls', 'zenctuary' ), value: 'dashicons-controls' } ] } onChange={ ( value ) => setAttributes( { navIconSet: value } ) } />
 				</PanelBody>
 
