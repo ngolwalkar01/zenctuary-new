@@ -122,6 +122,59 @@
     align-self: flex-end;
   }
 
+  .zen-memberships-zencoins-row {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    box-sizing: border-box;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .zen-memberships-zencoins-left {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    flex-wrap: nowrap;
+  }
+
+  .zen-memberships-zencoins-label {
+    white-space: nowrap;
+  }
+
+  .zen-memberships-zencoins-right {
+    white-space: nowrap;
+    text-align: right;
+  }
+
+  .zen-coin-icon {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    border-style: solid;
+    border-width: 2px;
+    box-sizing: border-box;
+    flex-shrink: 0;
+  }
+
+  .zen-coin-inner {
+    width: 75%;
+    height: 75%;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .zen-coin-value {
+    display: block;
+    text-align: center;
+    line-height: 1;
+  }
+
   .zen-memberships-card-image-wrapper {
     display: flex;
     justify-content: center;

@@ -67,20 +67,47 @@
     "cardSeparatorColor": { "type": "string", "default": "#d8b354" },
     "cardSeparatorThickness": { "type": "string", "default": "2px" },
     "cardSeparatorLength": { "type": "string", "default": "80%" },
+    "cardPriceColor": { "type": "string", "default": "#3f3d3d" },
+    "cardPriceFontSize": { "type": "string", "default": "48px" },
+    "cardPriceFontWeight": { "type": "string", "default": "800" },
+    "cardPriceMargin": { "type": "string", "default": "0px" },
+    "cardDurationColor": { "type": "string", "default": "#3f3d3d" },
+    "cardDurationFontSize": { "type": "string", "default": "16px" },
+    "cardDurationFontWeight": { "type": "string", "default": "400" },
+    "cardDurationMargin": { "type": "string", "default": "0px" },
+    "cardPriceRowGap": { "type": "string", "default": "5px" },
+    "cardPriceRowMargin": { "type": "string", "default": "40px 0px 20px 0px" },
+    "zencoinsLabelColor": { "type": "string", "default": "#3f3d3d" },
+    "zencoinsLabelFontSize": { "type": "string", "default": "13px" },
+    "zencoinsLabelFontWeight": { "type": "string", "default": "700" },
+    "zencoinsLabelMargin": { "type": "string", "default": "0px" },
+    "zencoinsRightColor": { "type": "string", "default": "#3f3d3d" },
+    "zencoinsRightFontSize": { "type": "string", "default": "13px" },
+    "zencoinsRightFontWeight": { "type": "string", "default": "400" },
+    "zencoinsRightMargin": { "type": "string", "default": "0px" },
+    "zencoinsRowMargin": { "type": "string", "default": "0px 20px 0px 20px" },
+    "zencoinsLabelIconGap": { "type": "string", "default": "8px" },
+    "zenCoinIconSize": { "type": "string", "default": "36px" },
+    "zenCoinBgColor": { "type": "string", "default": "#d8b354" },
+    "zenCoinBorderColor": { "type": "string", "default": "#3f3d3d" },
+    "zenCoinInnerColor": { "type": "string", "default": "#3f3d3d" },
+    "zenCoinValueColor": { "type": "string", "default": "#ffffff" },
+    "zenCoinValueFontSize": { "type": "string", "default": "12px" },
+    "zenCoinValueFontWeight": { "type": "string", "default": "700" },
     "monthlyCards": {
       "type": "array",
-      "default": [ 
-        { "id": "m1", "imageUrl": "", "headingText": "Zenctuary APPRENTICE" }, 
-        { "id": "m2", "imageUrl": "", "headingText": "Zenctuary APPRENTICE" }, 
-        { "id": "m3", "imageUrl": "", "headingText": "Zenctuary APPRENTICE" } 
+      "default": [
+        { "id": "m1", "imageUrl": "", "headingText": "Zenctuary APPRENTICE", "priceText": "90\u20ac", "durationText": "/month", "zencoinsLabel": "ZENCOINS:", "zencoinValue": "30", "zencoinsRight": "\u2248 3 \u20ac/ Zencoin" },
+        { "id": "m2", "imageUrl": "", "headingText": "Zenctuary APPRENTICE", "priceText": "90\u20ac", "durationText": "/month", "zencoinsLabel": "ZENCOINS:", "zencoinValue": "30", "zencoinsRight": "\u2248 3 \u20ac/ Zencoin" },
+        { "id": "m3", "imageUrl": "", "headingText": "Zenctuary APPRENTICE", "priceText": "90\u20ac", "durationText": "/month", "zencoinsLabel": "ZENCOINS:", "zencoinValue": "30", "zencoinsRight": "\u2248 3 \u20ac/ Zencoin" }
       ]
     },
     "yearlyCards": {
       "type": "array",
-      "default": [ 
-        { "id": "y1", "imageUrl": "", "headingText": "Zenctuary APPRENTICE" }, 
-        { "id": "y2", "imageUrl": "", "headingText": "Zenctuary APPRENTICE" }, 
-        { "id": "y3", "imageUrl": "", "headingText": "Zenctuary APPRENTICE" } 
+      "default": [
+        { "id": "y1", "imageUrl": "", "headingText": "Zenctuary APPRENTICE", "priceText": "900\u20ac", "durationText": "/year", "zencoinsLabel": "ZENCOINS:", "zencoinValue": "50", "zencoinsRight": "\u2248 3 \u20ac/ Zencoin" },
+        { "id": "y2", "imageUrl": "", "headingText": "Zenctuary APPRENTICE", "priceText": "900\u20ac", "durationText": "/year", "zencoinsLabel": "ZENCOINS:", "zencoinValue": "50", "zencoinsRight": "\u2248 3 \u20ac/ Zencoin" },
+        { "id": "y3", "imageUrl": "", "headingText": "Zenctuary APPRENTICE", "priceText": "900\u20ac", "durationText": "/year", "zencoinsLabel": "ZENCOINS:", "zencoinValue": "50", "zencoinsRight": "\u2248 3 \u20ac/ Zencoin" }
       ]
     }
   },

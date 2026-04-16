@@ -17,6 +17,11 @@ export default function Edit({ attributes, setAttributes }) {
     cardPriceColor, cardPriceFontSize, cardPriceFontWeight, cardPriceMargin,
     cardDurationColor, cardDurationFontSize, cardDurationFontWeight, cardDurationMargin,
     cardPriceRowGap, cardPriceRowMargin,
+    zencoinsLabelColor, zencoinsLabelFontSize, zencoinsLabelFontWeight, zencoinsLabelMargin,
+    zencoinsRightColor, zencoinsRightFontSize, zencoinsRightFontWeight, zencoinsRightMargin,
+    zencoinsRowMargin, zencoinsLabelIconGap,
+    zenCoinIconSize, zenCoinBgColor, zenCoinBorderColor, zenCoinInnerColor,
+    zenCoinValueColor, zenCoinValueFontSize, zenCoinValueFontWeight,
     monthlyCards, yearlyCards
   } = attributes;
 
@@ -138,6 +143,29 @@ export default function Edit({ attributes, setAttributes }) {
           <TextControl label="Duration Margin" value={cardDurationMargin} onChange={(val) => setAttributes({ cardDurationMargin: val })} />
           <TextControl label="Gap between Price & Duration" value={cardPriceRowGap} onChange={(val) => setAttributes({ cardPriceRowGap: val })} />
           <TextControl label="Price Row Margin" value={cardPriceRowMargin} onChange={(val) => setAttributes({ cardPriceRowMargin: val })} />
+        </PanelBody>
+        <PanelBody title={__('Zencoins Label Settings', 'zenctuary')} initialOpen={false}>
+          <TextControl label="Label Color" value={zencoinsLabelColor} onChange={(val) => setAttributes({ zencoinsLabelColor: val })} />
+          <TextControl label="Label Font Size" value={zencoinsLabelFontSize} onChange={(val) => setAttributes({ zencoinsLabelFontSize: val })} />
+          <TextControl label="Label Font Weight" value={zencoinsLabelFontWeight} onChange={(val) => setAttributes({ zencoinsLabelFontWeight: val })} />
+          <TextControl label="Label Margin" value={zencoinsLabelMargin} onChange={(val) => setAttributes({ zencoinsLabelMargin: val })} />
+          <TextControl label="Gap between Label & Icon" value={zencoinsLabelIconGap} onChange={(val) => setAttributes({ zencoinsLabelIconGap: val })} />
+          <TextControl label="Row Margin" value={zencoinsRowMargin} onChange={(val) => setAttributes({ zencoinsRowMargin: val })} />
+        </PanelBody>
+        <PanelBody title={__('Zencoins Right Text Settings', 'zenctuary')} initialOpen={false}>
+          <TextControl label="Right Text Color" value={zencoinsRightColor} onChange={(val) => setAttributes({ zencoinsRightColor: val })} />
+          <TextControl label="Right Text Font Size" value={zencoinsRightFontSize} onChange={(val) => setAttributes({ zencoinsRightFontSize: val })} />
+          <TextControl label="Right Text Font Weight" value={zencoinsRightFontWeight} onChange={(val) => setAttributes({ zencoinsRightFontWeight: val })} />
+          <TextControl label="Right Text Margin" value={zencoinsRightMargin} onChange={(val) => setAttributes({ zencoinsRightMargin: val })} />
+        </PanelBody>
+        <PanelBody title={__('Zen Coin Icon Settings', 'zenctuary')} initialOpen={false}>
+          <TextControl label="Icon Size" value={zenCoinIconSize} onChange={(val) => setAttributes({ zenCoinIconSize: val })} />
+          <TextControl label="Background Color" value={zenCoinBgColor} onChange={(val) => setAttributes({ zenCoinBgColor: val })} />
+          <TextControl label="Border Color" value={zenCoinBorderColor} onChange={(val) => setAttributes({ zenCoinBorderColor: val })} />
+          <TextControl label="Inner Circle Color" value={zenCoinInnerColor} onChange={(val) => setAttributes({ zenCoinInnerColor: val })} />
+          <TextControl label="Value Color" value={zenCoinValueColor} onChange={(val) => setAttributes({ zenCoinValueColor: val })} />
+          <TextControl label="Value Font Size" value={zenCoinValueFontSize} onChange={(val) => setAttributes({ zenCoinValueFontSize: val })} />
+          <TextControl label="Value Font Weight" value={zenCoinValueFontWeight} onChange={(val) => setAttributes({ zenCoinValueFontWeight: val })} />
         </PanelBody>
       </InspectorControls>
 
@@ -297,6 +325,57 @@ export default function Edit({ attributes, setAttributes }) {
                       />
                     </div>
                   </div>
+                  <div className="zen-memberships-zencoins-row" style={{ margin: zencoinsRowMargin }}>
+                    <div className="zen-memberships-zencoins-left" style={{ gap: zencoinsLabelIconGap }}>
+                      <RichText
+                        tagName="span"
+                        className="zen-memberships-zencoins-label"
+                        value={card.zencoinsLabel}
+                        onChange={(val) => updateCard(card.id, 'monthly', 'zencoinsLabel', val)}
+                        placeholder="ZENCOINS:"
+                        style={{
+                          color: zencoinsLabelColor,
+                          fontSize: zencoinsLabelFontSize,
+                          fontWeight: zencoinsLabelFontWeight,
+                          margin: zencoinsLabelMargin
+                        }}
+                      />
+                      <div className="zen-coin-icon" style={{
+                        width: zenCoinIconSize,
+                        height: zenCoinIconSize,
+                        backgroundColor: zenCoinBgColor,
+                        borderColor: zenCoinBorderColor
+                      }}>
+                        <div className="zen-coin-inner" style={{ backgroundColor: zenCoinInnerColor }}>
+                          <RichText
+                            tagName="span"
+                            className="zen-coin-value"
+                            value={card.zencoinValue}
+                            onChange={(val) => updateCard(card.id, 'monthly', 'zencoinValue', val)}
+                            placeholder="30"
+                            style={{
+                              color: zenCoinValueColor,
+                              fontSize: zenCoinValueFontSize,
+                              fontWeight: zenCoinValueFontWeight
+                            }}
+                          />
+                        </div>
+                      </div>
+                    </div>
+                    <RichText
+                      tagName="span"
+                      className="zen-memberships-zencoins-right"
+                      value={card.zencoinsRight}
+                      onChange={(val) => updateCard(card.id, 'monthly', 'zencoinsRight', val)}
+                      placeholder="≈ 3 €/ Zencoin"
+                      style={{
+                        color: zencoinsRightColor,
+                        fontSize: zencoinsRightFontSize,
+                        fontWeight: zencoinsRightFontWeight,
+                        margin: zencoinsRightMargin
+                      }}
+                    />
+                  </div>
                   
                   <button className="zen-memberships-remove-card" onClick={() => removeCard(card.id, 'monthly')} title="Remove Card">×</button>
                 </div>
@@ -389,6 +468,57 @@ export default function Edit({ attributes, setAttributes }) {
                         }}
                       />
                     </div>
+                  </div>
+                  <div className="zen-memberships-zencoins-row" style={{ margin: zencoinsRowMargin }}>
+                    <div className="zen-memberships-zencoins-left" style={{ gap: zencoinsLabelIconGap }}>
+                      <RichText
+                        tagName="span"
+                        className="zen-memberships-zencoins-label"
+                        value={card.zencoinsLabel}
+                        onChange={(val) => updateCard(card.id, 'yearly', 'zencoinsLabel', val)}
+                        placeholder="ZENCOINS:"
+                        style={{
+                          color: zencoinsLabelColor,
+                          fontSize: zencoinsLabelFontSize,
+                          fontWeight: zencoinsLabelFontWeight,
+                          margin: zencoinsLabelMargin
+                        }}
+                      />
+                      <div className="zen-coin-icon" style={{
+                        width: zenCoinIconSize,
+                        height: zenCoinIconSize,
+                        backgroundColor: zenCoinBgColor,
+                        borderColor: zenCoinBorderColor
+                      }}>
+                        <div className="zen-coin-inner" style={{ backgroundColor: zenCoinInnerColor }}>
+                          <RichText
+                            tagName="span"
+                            className="zen-coin-value"
+                            value={card.zencoinValue}
+                            onChange={(val) => updateCard(card.id, 'yearly', 'zencoinValue', val)}
+                            placeholder="50"
+                            style={{
+                              color: zenCoinValueColor,
+                              fontSize: zenCoinValueFontSize,
+                              fontWeight: zenCoinValueFontWeight
+                            }}
+                          />
+                        </div>
+                      </div>
+                    </div>
+                    <RichText
+                      tagName="span"
+                      className="zen-memberships-zencoins-right"
+                      value={card.zencoinsRight}
+                      onChange={(val) => updateCard(card.id, 'yearly', 'zencoinsRight', val)}
+                      placeholder="≈ 3 €/ Zencoin"
+                      style={{
+                        color: zencoinsRightColor,
+                        fontSize: zencoinsRightFontSize,
+                        fontWeight: zencoinsRightFontWeight,
+                        margin: zencoinsRightMargin
+                      }}
+                    />
                   </div>
                   
                   <button className="zen-memberships-remove-card" onClick={() => removeCard(card.id, 'yearly')} title="Remove Card">×</button>

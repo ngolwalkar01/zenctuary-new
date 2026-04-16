@@ -14,6 +14,11 @@ export default function save({ attributes }) {
     cardPriceColor, cardPriceFontSize, cardPriceFontWeight, cardPriceMargin,
     cardDurationColor, cardDurationFontSize, cardDurationFontWeight, cardDurationMargin,
     cardPriceRowGap, cardPriceRowMargin,
+    zencoinsLabelColor, zencoinsLabelFontSize, zencoinsLabelFontWeight, zencoinsLabelMargin,
+    zencoinsRightColor, zencoinsRightFontSize, zencoinsRightFontWeight, zencoinsRightMargin,
+    zencoinsRowMargin, zencoinsLabelIconGap,
+    zenCoinIconSize, zenCoinBgColor, zenCoinBorderColor, zenCoinInnerColor,
+    zenCoinValueColor, zenCoinValueFontSize, zenCoinValueFontWeight,
     monthlyCards, yearlyCards
   } = attributes;
 
@@ -171,6 +176,51 @@ export default function save({ attributes }) {
                     />
                   </div>
                 </div>
+                <div className="zen-memberships-zencoins-row" style={{ margin: zencoinsRowMargin }}>
+                  <div className="zen-memberships-zencoins-left" style={{ gap: zencoinsLabelIconGap }}>
+                    <RichText.Content
+                      tagName="span"
+                      className="zen-memberships-zencoins-label"
+                      value={card.zencoinsLabel}
+                      style={{
+                        color: zencoinsLabelColor,
+                        fontSize: zencoinsLabelFontSize,
+                        fontWeight: zencoinsLabelFontWeight,
+                        margin: zencoinsLabelMargin
+                      }}
+                    />
+                    <div className="zen-coin-icon" style={{
+                      width: zenCoinIconSize,
+                      height: zenCoinIconSize,
+                      backgroundColor: zenCoinBgColor,
+                      borderColor: zenCoinBorderColor
+                    }}>
+                      <div className="zen-coin-inner" style={{ backgroundColor: zenCoinInnerColor }}>
+                        <RichText.Content
+                          tagName="span"
+                          className="zen-coin-value"
+                          value={card.zencoinValue}
+                          style={{
+                            color: zenCoinValueColor,
+                            fontSize: zenCoinValueFontSize,
+                            fontWeight: zenCoinValueFontWeight
+                          }}
+                        />
+                      </div>
+                    </div>
+                  </div>
+                  <RichText.Content
+                    tagName="span"
+                    className="zen-memberships-zencoins-right"
+                    value={card.zencoinsRight}
+                    style={{
+                      color: zencoinsRightColor,
+                      fontSize: zencoinsRightFontSize,
+                      fontWeight: zencoinsRightFontWeight,
+                      margin: zencoinsRightMargin
+                    }}
+                  />
+                </div>
               </div>
             ))}
           </div>
@@ -236,6 +286,51 @@ export default function save({ attributes }) {
                       }}
                     />
                   </div>
+                </div>
+                <div className="zen-memberships-zencoins-row" style={{ margin: zencoinsRowMargin }}>
+                  <div className="zen-memberships-zencoins-left" style={{ gap: zencoinsLabelIconGap }}>
+                    <RichText.Content
+                      tagName="span"
+                      className="zen-memberships-zencoins-label"
+                      value={card.zencoinsLabel}
+                      style={{
+                        color: zencoinsLabelColor,
+                        fontSize: zencoinsLabelFontSize,
+                        fontWeight: zencoinsLabelFontWeight,
+                        margin: zencoinsLabelMargin
+                      }}
+                    />
+                    <div className="zen-coin-icon" style={{
+                      width: zenCoinIconSize,
+                      height: zenCoinIconSize,
+                      backgroundColor: zenCoinBgColor,
+                      borderColor: zenCoinBorderColor
+                    }}>
+                      <div className="zen-coin-inner" style={{ backgroundColor: zenCoinInnerColor }}>
+                        <RichText.Content
+                          tagName="span"
+                          className="zen-coin-value"
+                          value={card.zencoinValue}
+                          style={{
+                            color: zenCoinValueColor,
+                            fontSize: zenCoinValueFontSize,
+                            fontWeight: zenCoinValueFontWeight
+                          }}
+                        />
+                      </div>
+                    </div>
+                  </div>
+                  <RichText.Content
+                    tagName="span"
+                    className="zen-memberships-zencoins-right"
+                    value={card.zencoinsRight}
+                    style={{
+                      color: zencoinsRightColor,
+                      fontSize: zencoinsRightFontSize,
+                      fontWeight: zencoinsRightFontWeight,
+                      margin: zencoinsRightMargin
+                    }}
+                  />
                 </div>
               </div>
             ))}
