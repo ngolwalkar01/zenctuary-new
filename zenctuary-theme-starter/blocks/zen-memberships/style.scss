@@ -16,9 +16,51 @@
   line-height: 1.6;
 }
 
+.zen-memberships-tabs-row {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 15px;
+  margin-bottom: 40px;
+  flex-wrap: wrap;
+}
+
+.zen-memberships-tab-btn {
+  cursor: pointer;
+  border-style: solid;
+  transition: all 0.3s ease;
+  outline: none;
+}
+.zen-memberships-tab-btn:hover {
+  opacity: 0.9;
+}
+
+.zen-memberships-placeholders {
+  margin-top: 40px;
+  text-align: center;
+}
+
+.zen-memberships-placeholder {
+  border: 1px dashed #666;
+  padding: 40px;
+  border-radius: 10px;
+  background-color: rgba(255, 255, 255, 0.05); /* Slight visibility */
+}
+.zen-memberships-placeholder h3 {
+  margin: 0 0 10px 0;
+  color: #fff;
+  font-size: 18px;
+}
+.zen-memberships-placeholder p {
+  margin: 0;
+  color: #ccc;
+  font-size: 14px;
+}
+
 /* Responsive adjust if necessary */
 @media (max-width: 768px) {
   .wp-block-zenctuary-zen-memberships {
     padding: 30px 15px;
   }
 }
+

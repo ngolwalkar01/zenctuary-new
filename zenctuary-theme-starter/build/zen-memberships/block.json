@@ -71,10 +71,79 @@
     "paragraphAlignment": {
       "type": "string",
       "default": "center"
+    },
+    "btnMonthlyText": {
+      "type": "string",
+      "default": "Monthly"
+    },
+    "btnYearlyText": {
+      "type": "string",
+      "default": "Yearly"
+    },
+    "btnNormalBgColor": {
+      "type": "string",
+      "default": "transparent"
+    },
+    "btnNormalTextColor": {
+      "type": "string",
+      "default": "#ffffff"
+    },
+    "btnNormalFontSize": {
+      "type": "string",
+      "default": "16px"
+    },
+    "btnNormalFontWeight": {
+      "type": "string",
+      "default": "600"
+    },
+    "btnNormalPadding": {
+      "type": "string",
+      "default": "10px 30px"
+    },
+    "btnNormalMargin": {
+      "type": "string",
+      "default": "0px"
+    },
+    "btnNormalBorderRadius": {
+      "type": "string",
+      "default": "25px"
+    },
+    "btnNormalBorderColor": {
+      "type": "string",
+      "default": "#ffffff"
+    },
+    "btnNormalBorderWidth": {
+      "type": "string",
+      "default": "1px"
+    },
+    "btnActiveBgColor": {
+      "type": "string",
+      "default": "#d8b354"
+    },
+    "btnActiveTextColor": {
+      "type": "string",
+      "default": "#3f3d3d"
+    },
+    "btnActiveFontSize": {
+      "type": "string",
+      "default": "16px"
+    },
+    "btnActiveFontWeight": {
+      "type": "string",
+      "default": "600"
+    },
+    "btnActiveBorderRadius": {
+      "type": "string",
+      "default": "25px"
+    },
+    "btnActiveBorderColor": {
+      "type": "string",
+      "default": "transparent"
     }
   },
   "textdomain": "zenctuary",
   "editorScript": "file:./index.js",
   "editorStyle": "file:./editor.scss",
-  "style": "file:./style.scss"
+  "style": "file:./style.scss",
+  "viewScript": "file:./view.js"
 }

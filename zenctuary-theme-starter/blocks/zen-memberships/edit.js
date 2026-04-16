@@ -1,12 +1,18 @@
 import { __ } from '@wordpress/i18n';
 import { useBlockProps, InspectorControls, RichText } from '@wordpress/block-editor';
 import { PanelBody, TextControl, SelectControl } from '@wordpress/components';
+import { useState } from '@wordpress/element';
 
 export default function Edit({ attributes, setAttributes }) {
   const {
     heading, headingColor, headingFontSize, headingFontWeight, headingPadding, headingMargin, headingAlignment,
-    paragraph, paragraphColor, paragraphFontSize, paragraphFontWeight, paragraphPadding, paragraphMargin, paragraphAlignment
+    paragraph, paragraphColor, paragraphFontSize, paragraphFontWeight, paragraphPadding, paragraphMargin, paragraphAlignment,
+    btnMonthlyText, btnYearlyText,
+    btnNormalBgColor, btnNormalTextColor, btnNormalFontSize, btnNormalFontWeight, btnNormalPadding, btnNormalMargin, btnNormalBorderRadius, btnNormalBorderColor, btnNormalBorderWidth,
+    btnActiveBgColor, btnActiveTextColor, btnActiveFontSize, btnActiveFontWeight, btnActiveBorderRadius, btnActiveBorderColor
   } = attributes;
+
+  const [selectedPlan, setSelectedPlan] = useState('monthly');
 
   // Let the wrapper take the anchor value from supports but we don't need to manually define ID here 
   // since Gutenberg's anchor support adds it to blockProps automatically.
@@ -36,6 +42,25 @@ export default function Edit({ attributes, setAttributes }) {
           <TextControl label="Padding" value={paragraphPadding} onChange={(val) => setAttributes({ paragraphPadding: val })} />
           <TextControl label="Margin" value={paragraphMargin} onChange={(val) => setAttributes({ paragraphMargin: val })} />
           <SelectControl label="Alignment" value={paragraphAlignment} options={[{ label: 'Left', value: 'left' }, { label: 'Center', value: 'center' }, { label: 'Right', value: 'right' }]} onChange={(val) => setAttributes({ paragraphAlignment: val })} />
+        </PanelBody>
+        <PanelBody title={__('Filter Buttons - Normal State', 'zenctuary')} initialOpen={false}>
+          <TextControl label="Background Color" value={btnNormalBgColor} onChange={(val) => setAttributes({ btnNormalBgColor: val })} />
+          <TextControl label="Text Color" value={btnNormalTextColor} onChange={(val) => setAttributes({ btnNormalTextColor: val })} />
+          <TextControl label="Font Size" value={btnNormalFontSize} onChange={(val) => setAttributes({ btnNormalFontSize: val })} />
+          <TextControl label="Font Weight" value={btnNormalFontWeight} onChange={(val) => setAttributes({ btnNormalFontWeight: val })} />
+          <TextControl label="Padding" value={btnNormalPadding} onChange={(val) => setAttributes({ btnNormalPadding: val })} />
+          <TextControl label="Margin" value={btnNormalMargin} onChange={(val) => setAttributes({ btnNormalMargin: val })} />
+          <TextControl label="Border Radius" value={btnNormalBorderRadius} onChange={(val) => setAttributes({ btnNormalBorderRadius: val })} />
+          <TextControl label="Border Color" value={btnNormalBorderColor} onChange={(val) => setAttributes({ btnNormalBorderColor: val })} />
+          <TextControl label="Border Width" value={btnNormalBorderWidth} onChange={(val) => setAttributes({ btnNormalBorderWidth: val })} />
+        </PanelBody>
+        <PanelBody title={__('Filter Buttons - Active State', 'zenctuary')} initialOpen={false}>
+          <TextControl label="Background Color" value={btnActiveBgColor} onChange={(val) => setAttributes({ btnActiveBgColor: val })} />
+          <TextControl label="Text Color" value={btnActiveTextColor} onChange={(val) => setAttributes({ btnActiveTextColor: val })} />
+          <TextControl label="Font Size" value={btnActiveFontSize} onChange={(val) => setAttributes({ btnActiveFontSize: val })} />
+          <TextControl label="Font Weight" value={btnActiveFontWeight} onChange={(val) => setAttributes({ btnActiveFontWeight: val })} />
+          <TextControl label="Border Radius" value={btnActiveBorderRadius} onChange={(val) => setAttributes({ btnActiveBorderRadius: val })} />
+          <TextControl label="Border Color" value={btnActiveBorderColor} onChange={(val) => setAttributes({ btnActiveBorderColor: val })} />
         </PanelBody>
       </InspectorControls>
 
@@ -69,6 +94,60 @@ export default function Edit({ attributes, setAttributes }) {
         }}
         placeholder={__('Enter paragraph text...', 'zenctuary')}
       />
+
+      <div className="zen-memberships-tabs-row">
+        <button
+          className={`zen-memberships-tab-btn ${selectedPlan === 'monthly' ? 'active' : ''}`}
+          onClick={() => setSelectedPlan('monthly')}
+          style={selectedPlan === 'monthly' ? {
+            backgroundColor: btnActiveBgColor, color: btnActiveTextColor, fontSize: btnActiveFontSize, fontWeight: btnActiveFontWeight,
+            borderRadius: btnActiveBorderRadius, borderColor: btnActiveBorderColor, borderWidth: btnNormalBorderWidth, padding: btnNormalPadding, margin: btnNormalMargin
+          } : {
+            backgroundColor: btnNormalBgColor, color: btnNormalTextColor, fontSize: btnNormalFontSize, fontWeight: btnNormalFontWeight,
+            borderRadius: btnNormalBorderRadius, borderColor: btnNormalBorderColor, borderWidth: btnNormalBorderWidth, padding: btnNormalPadding, margin: btnNormalMargin
+          }}
+        >
+          <RichText
+            tagName="span"
+            value={btnMonthlyText}
+            onChange={(val) => setAttributes({ btnMonthlyText: val })}
+            placeholder="Monthly"
+          />
+        </button>
+        <button
+          className={`zen-memberships-tab-btn ${selectedPlan === 'yearly' ? 'active' : ''}`}
+          onClick={() => setSelectedPlan('yearly')}
+          style={selectedPlan === 'yearly' ? {
+            backgroundColor: btnActiveBgColor, color: btnActiveTextColor, fontSize: btnActiveFontSize, fontWeight: btnActiveFontWeight,
+            borderRadius: btnActiveBorderRadius, borderColor: btnActiveBorderColor, borderWidth: btnNormalBorderWidth, padding: btnNormalPadding, margin: btnNormalMargin
+          } : {
+            backgroundColor: btnNormalBgColor, color: btnNormalTextColor, fontSize: btnNormalFontSize, fontWeight: btnNormalFontWeight,
+            borderRadius: btnNormalBorderRadius, borderColor: btnNormalBorderColor, borderWidth: btnNormalBorderWidth, padding: btnNormalPadding, margin: btnNormalMargin
+          }}
+        >
+          <RichText
+            tagName="span"
+            value={btnYearlyText}
+            onChange={(val) => setAttributes({ btnYearlyText: val })}
+            placeholder="Yearly"
+          />
+        </button>
+      </div>
+
+      <div className="zen-memberships-placeholders">
+        {selectedPlan === 'monthly' && (
+          <div className="zen-memberships-placeholder monthly-placeholder">
+            <h3>[ Monthly Plans Container ]</h3>
+            <p>Cards go here...</p>
+          </div>
+        )}
+        {selectedPlan === 'yearly' && (
+          <div className="zen-memberships-placeholder yearly-placeholder">
+            <h3>[ Yearly Plans Container ]</h3>
+            <p>Cards go here...</p>
+          </div>
+        )}
+      </div>
     </div>
   );
 }
