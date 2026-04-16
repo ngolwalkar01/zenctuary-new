@@ -45,57 +45,59 @@ export default function save({ attributes }) {
         }}
       />
 
-      <div className="zen-memberships-tabs-row">
-        <button
-          className="zen-memberships-tab-btn active zen-tab-monthly"
-          data-target="monthly"
-          data-active-bg={btnActiveBgColor}
-          data-active-text={btnActiveTextColor}
-          data-active-font-size={btnActiveFontSize}
-          data-active-font-weight={btnActiveFontWeight}
-          data-active-border-radius={btnActiveBorderRadius}
-          data-active-border-color={btnActiveBorderColor}
-          data-inactive-bg={btnNormalBgColor}
-          data-inactive-text={btnNormalTextColor}
-          data-inactive-font-size={btnNormalFontSize}
-          data-inactive-font-weight={btnNormalFontWeight}
-          data-inactive-border-radius={btnNormalBorderRadius}
-          data-inactive-border-color={btnNormalBorderColor}
-          data-border-width={btnNormalBorderWidth}
-          data-padding={btnNormalPadding}
-          data-margin={btnNormalMargin}
-          style={{
-            backgroundColor: btnActiveBgColor, color: btnActiveTextColor, fontSize: btnActiveFontSize, fontWeight: btnActiveFontWeight,
-            borderRadius: btnActiveBorderRadius, borderColor: btnActiveBorderColor, borderWidth: btnNormalBorderWidth, padding: btnNormalPadding, margin: btnNormalMargin
-          }}
-        >
-          <RichText.Content value={btnMonthlyText} />
-        </button>
-        <button
-          className="zen-memberships-tab-btn zen-tab-yearly"
-          data-target="yearly"
-          data-active-bg={btnActiveBgColor}
-          data-active-text={btnActiveTextColor}
-          data-active-font-size={btnActiveFontSize}
-          data-active-font-weight={btnActiveFontWeight}
-          data-active-border-radius={btnActiveBorderRadius}
-          data-active-border-color={btnActiveBorderColor}
-          data-inactive-bg={btnNormalBgColor}
-          data-inactive-text={btnNormalTextColor}
-          data-inactive-font-size={btnNormalFontSize}
-          data-inactive-font-weight={btnNormalFontWeight}
-          data-inactive-border-radius={btnNormalBorderRadius}
-          data-inactive-border-color={btnNormalBorderColor}
-          data-border-width={btnNormalBorderWidth}
-          data-padding={btnNormalPadding}
-          data-margin={btnNormalMargin}
-          style={{
-            backgroundColor: btnNormalBgColor, color: btnNormalTextColor, fontSize: btnNormalFontSize, fontWeight: btnNormalFontWeight,
-            borderRadius: btnNormalBorderRadius, borderColor: btnNormalBorderColor, borderWidth: btnNormalBorderWidth, padding: btnNormalPadding, margin: btnNormalMargin
-          }}
-        >
-          <RichText.Content value={btnYearlyText} />
-        </button>
+      <div className="zen-memberships-tabs-wrapper">
+        <div className="zen-memberships-tabs-row">
+          <button
+            className="zen-memberships-tab-btn active zen-tab-monthly"
+            data-target="monthly"
+            data-active-bg={btnActiveBgColor}
+            data-active-text={btnActiveTextColor}
+            data-active-font-size={btnActiveFontSize}
+            data-active-font-weight={btnActiveFontWeight}
+            data-active-border-radius={btnActiveBorderRadius}
+            data-active-border-color={btnActiveBorderColor}
+            data-inactive-bg={btnNormalBgColor}
+            data-inactive-text={btnNormalTextColor}
+            data-inactive-font-size={btnNormalFontSize}
+            data-inactive-font-weight={btnNormalFontWeight}
+            data-inactive-border-radius={btnNormalBorderRadius}
+            data-inactive-border-color={btnNormalBorderColor}
+            data-border-width={btnNormalBorderWidth}
+            data-padding={btnNormalPadding}
+            data-margin={btnNormalMargin}
+            style={{
+              backgroundColor: btnActiveBgColor, color: btnActiveTextColor, fontSize: btnActiveFontSize, fontWeight: btnActiveFontWeight,
+              borderRadius: btnActiveBorderRadius, borderColor: btnActiveBorderColor, borderWidth: btnNormalBorderWidth, padding: btnNormalPadding, margin: btnNormalMargin
+            }}
+          >
+            <RichText.Content value={btnMonthlyText} />
+          </button>
+          <button
+            className="zen-memberships-tab-btn zen-tab-yearly"
+            data-target="yearly"
+            data-active-bg={btnActiveBgColor}
+            data-active-text={btnActiveTextColor}
+            data-active-font-size={btnActiveFontSize}
+            data-active-font-weight={btnActiveFontWeight}
+            data-active-border-radius={btnActiveBorderRadius}
+            data-active-border-color={btnActiveBorderColor}
+            data-inactive-bg={btnNormalBgColor}
+            data-inactive-text={btnNormalTextColor}
+            data-inactive-font-size={btnNormalFontSize}
+            data-inactive-font-weight={btnNormalFontWeight}
+            data-inactive-border-radius={btnNormalBorderRadius}
+            data-inactive-border-color={btnNormalBorderColor}
+            data-border-width={btnNormalBorderWidth}
+            data-padding={btnNormalPadding}
+            data-margin={btnNormalMargin}
+            style={{
+              backgroundColor: btnNormalBgColor, color: btnNormalTextColor, fontSize: btnNormalFontSize, fontWeight: btnNormalFontWeight,
+              borderRadius: btnNormalBorderRadius, borderColor: btnNormalBorderColor, borderWidth: btnNormalBorderWidth, padding: btnNormalPadding, margin: btnNormalMargin
+            }}
+          >
+            <RichText.Content value={btnYearlyText} />
+          </button>
+        </div>
       </div>
 
       <div className="zen-memberships-placeholders">

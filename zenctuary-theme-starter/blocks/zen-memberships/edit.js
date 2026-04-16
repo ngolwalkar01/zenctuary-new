@@ -95,43 +95,45 @@ export default function Edit({ attributes, setAttributes }) {
         placeholder={__('Enter paragraph text...', 'zenctuary')}
       />
 
-      <div className="zen-memberships-tabs-row">
-        <button
-          className={`zen-memberships-tab-btn ${selectedPlan === 'monthly' ? 'active' : ''}`}
-          onClick={() => setSelectedPlan('monthly')}
-          style={selectedPlan === 'monthly' ? {
-            backgroundColor: btnActiveBgColor, color: btnActiveTextColor, fontSize: btnActiveFontSize, fontWeight: btnActiveFontWeight,
-            borderRadius: btnActiveBorderRadius, borderColor: btnActiveBorderColor, borderWidth: btnNormalBorderWidth, padding: btnNormalPadding, margin: btnNormalMargin
-          } : {
-            backgroundColor: btnNormalBgColor, color: btnNormalTextColor, fontSize: btnNormalFontSize, fontWeight: btnNormalFontWeight,
-            borderRadius: btnNormalBorderRadius, borderColor: btnNormalBorderColor, borderWidth: btnNormalBorderWidth, padding: btnNormalPadding, margin: btnNormalMargin
-          }}
-        >
-          <RichText
-            tagName="span"
-            value={btnMonthlyText}
-            onChange={(val) => setAttributes({ btnMonthlyText: val })}
-            placeholder="Monthly"
-          />
-        </button>
-        <button
-          className={`zen-memberships-tab-btn ${selectedPlan === 'yearly' ? 'active' : ''}`}
-          onClick={() => setSelectedPlan('yearly')}
-          style={selectedPlan === 'yearly' ? {
-            backgroundColor: btnActiveBgColor, color: btnActiveTextColor, fontSize: btnActiveFontSize, fontWeight: btnActiveFontWeight,
-            borderRadius: btnActiveBorderRadius, borderColor: btnActiveBorderColor, borderWidth: btnNormalBorderWidth, padding: btnNormalPadding, margin: btnNormalMargin
-          } : {
-            backgroundColor: btnNormalBgColor, color: btnNormalTextColor, fontSize: btnNormalFontSize, fontWeight: btnNormalFontWeight,
-            borderRadius: btnNormalBorderRadius, borderColor: btnNormalBorderColor, borderWidth: btnNormalBorderWidth, padding: btnNormalPadding, margin: btnNormalMargin
-          }}
-        >
-          <RichText
-            tagName="span"
-            value={btnYearlyText}
-            onChange={(val) => setAttributes({ btnYearlyText: val })}
-            placeholder="Yearly"
-          />
-        </button>
+      <div className="zen-memberships-tabs-wrapper">
+        <div className="zen-memberships-tabs-row">
+          <button
+            className={`zen-memberships-tab-btn ${selectedPlan === 'monthly' ? 'active' : ''}`}
+            onClick={() => setSelectedPlan('monthly')}
+            style={selectedPlan === 'monthly' ? {
+              backgroundColor: btnActiveBgColor, color: btnActiveTextColor, fontSize: btnActiveFontSize, fontWeight: btnActiveFontWeight,
+              borderRadius: btnActiveBorderRadius, borderColor: btnActiveBorderColor, borderWidth: btnNormalBorderWidth, padding: btnNormalPadding, margin: btnNormalMargin
+            } : {
+              backgroundColor: btnNormalBgColor, color: btnNormalTextColor, fontSize: btnNormalFontSize, fontWeight: btnNormalFontWeight,
+              borderRadius: btnNormalBorderRadius, borderColor: btnNormalBorderColor, borderWidth: btnNormalBorderWidth, padding: btnNormalPadding, margin: btnNormalMargin
+            }}
+          >
+            <RichText
+              tagName="span"
+              value={btnMonthlyText}
+              onChange={(val) => setAttributes({ btnMonthlyText: val })}
+              placeholder="Monthly"
+            />
+          </button>
+          <button
+            className={`zen-memberships-tab-btn ${selectedPlan === 'yearly' ? 'active' : ''}`}
+            onClick={() => setSelectedPlan('yearly')}
+            style={selectedPlan === 'yearly' ? {
+              backgroundColor: btnActiveBgColor, color: btnActiveTextColor, fontSize: btnActiveFontSize, fontWeight: btnActiveFontWeight,
+              borderRadius: btnActiveBorderRadius, borderColor: btnActiveBorderColor, borderWidth: btnNormalBorderWidth, padding: btnNormalPadding, margin: btnNormalMargin
+            } : {
+              backgroundColor: btnNormalBgColor, color: btnNormalTextColor, fontSize: btnNormalFontSize, fontWeight: btnNormalFontWeight,
+              borderRadius: btnNormalBorderRadius, borderColor: btnNormalBorderColor, borderWidth: btnNormalBorderWidth, padding: btnNormalPadding, margin: btnNormalMargin
+            }}
+          >
+            <RichText
+              tagName="span"
+              value={btnYearlyText}
+              onChange={(val) => setAttributes({ btnYearlyText: val })}
+              placeholder="Yearly"
+            />
+          </button>
+        </div>
       </div>
 
       <div className="zen-memberships-placeholders">
