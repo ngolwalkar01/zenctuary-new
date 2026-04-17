@@ -316,8 +316,8 @@
             gap: 12px;
 
             .zen-space-icon {
-                width: min(var(--zen-exp-heading-icon-size, 48px), 42px);
-                height: min(var(--zen-exp-heading-icon-size, 48px), 42px);
+                width: var(--zen-exp-heading-icon-size, 42px);
+                height: var(--zen-exp-heading-icon-size, 42px);
                 flex: 0 0 auto;
             }
 

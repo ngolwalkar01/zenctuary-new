@@ -1441,6 +1441,24 @@ input[type="checkbox"] {
 }
 
 @media (max-width: 767px) {
+
+  /**
+    Telex Dual Image plugin css
+  **/
+   .telex-dual-image-fade__pair {
+    flex-direction: column;
+  }
+
+  .telex-dual-image-fade__image-wrapper {
+    flex: 0 0 100%;
+    width: 100%;
+    line-height: 0;
+    overflow: hidden;
+  }
+  /**
+    Telex Dual Image plugin css
+  **/
+
   .zen-site-header .zen-container {
     gap: 10px;
   }
