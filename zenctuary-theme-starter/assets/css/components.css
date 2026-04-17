@@ -832,7 +832,7 @@ input[type="checkbox"] {
 
 .zen-faq-section .wp-block-group.is-layout-flow:not(.zen-overlap-right):not(.zen-faq-group) {
   padding-right: 15%;
-  padding-left: 15%;
+  padding-left: 10%;
   padding-top: 25%;
   padding-bottom: 25%;
 }
