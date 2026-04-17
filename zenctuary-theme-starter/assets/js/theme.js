@@ -14,7 +14,77 @@ document.addEventListener('DOMContentLoaded', () => {
     responsiveContent.appendChild(wrapper);
   };
 
+  const initMobileHeaderSubmenus = () => {
+    const header = document.querySelector('.zen-site-header');
+    const responsiveContainer = header?.querySelector('.wp-block-navigation__responsive-container');
+
+    if (!responsiveContainer) {
+      return;
+    }
+
+    const getDirectChild = (parent, className) =>
+      Array.from(parent.children).find((child) => child.classList.contains(className));
+
+    const syncSubmenuState = () => {
+      const mobileView = window.matchMedia('(max-width: 1024px)').matches;
+      const parentItems = responsiveContainer.querySelectorAll('.wp-block-navigation-item.has-child');
+
+      parentItems.forEach((item) => {
+        const toggle = getDirectChild(item, 'wp-block-navigation-submenu__toggle');
+        const submenu = getDirectChild(item, 'wp-block-navigation__submenu-container');
+
+        if (!toggle || !submenu) {
+          return;
+        }
+
+        if (!mobileView) {
+          item.classList.remove('is-submenu-open');
+          toggle.setAttribute('aria-expanded', 'false');
+          submenu.hidden = false;
+          return;
+        }
+
+        const isOpen = item.classList.contains('is-submenu-open');
+        toggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+        submenu.hidden = !isOpen;
+      });
+    };
+
+    const parentItems = responsiveContainer.querySelectorAll('.wp-block-navigation-item.has-child');
+
+    parentItems.forEach((item) => {
+      const toggle = getDirectChild(item, 'wp-block-navigation-submenu__toggle');
+      const submenu = getDirectChild(item, 'wp-block-navigation__submenu-container');
+
+      if (!toggle || !submenu || toggle.dataset.zenMobileBound === 'true') {
+        return;
+      }
+
+      item.classList.remove('is-submenu-open');
+      toggle.setAttribute('aria-expanded', 'false');
+      submenu.hidden = true;
+      toggle.dataset.zenMobileBound = 'true';
+
+      toggle.addEventListener('click', (event) => {
+        if (!window.matchMedia('(max-width: 1024px)').matches) {
+          return;
+        }
+
+        event.preventDefault();
+        event.stopPropagation();
+
+        const isOpen = item.classList.toggle('is-submenu-open');
+        toggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+        submenu.hidden = !isOpen;
+      });
+    });
+
+    syncSubmenuState();
+    window.addEventListener('resize', syncSubmenuState);
+  };
+
   ensureMobileHeaderAccount();
+  initMobileHeaderSubmenus();
 
   // Existing snippet (if any)
   document.querySelectorAll('.zen-faq__question').forEach((button) => {
