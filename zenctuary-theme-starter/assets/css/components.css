@@ -1455,6 +1455,11 @@ input[type="checkbox"] {
     line-height: 0;
     overflow: hidden;
   }
+
+  .zep-panel__hotspots--left,
+  .zep-panel__hotspots--right {
+    display: none !important;
+  }
   /**
     Telex Dual Image plugin css
   **/
