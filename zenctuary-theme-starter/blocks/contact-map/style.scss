@@ -1,0 +1,134 @@
+.wp-block-zenctuary-contact-map {
+  display: flex;
+  flex-wrap: wrap;
+  margin: 0 !important;
+  overflow: hidden;
+  position: relative;
+}
+
+.wp-block-zenctuary-contact-map .wp-block-image,
+.wp-block-zenctuary-contact-map .wp-block-image img,
+.wp-block-zenctuary-contact-map iframe {
+  display: block;
+  height: 680px;
+  object-fit: cover;
+  width: 100%;
+}
+
+.wp-block-zenctuary-contact-map .zen-contact-section__gallery,
+.wp-block-zenctuary-contact-map .zen-contact-section__map {
+  flex: 0 0 50%;
+  position: relative;
+  width: 50%;
+}
+
+.wp-block-zenctuary-contact-map .zen-contact-gallery {
+  height: 680px;
+  overflow: hidden;
+  position: relative;
+}
+
+.wp-block-zenctuary-contact-map .zen-contact-gallery__item {
+  inset: 0;
+  margin: 0 !important;
+  opacity: 0;
+  position: absolute;
+  transition: opacity 0.8s ease;
+}
+
+.wp-block-zenctuary-contact-map .zen-contact-gallery__item.is-active,
+.wp-block-zenctuary-contact-map .zen-contact-gallery__item:first-child {
+  opacity: 1;
+}
+
+.wp-block-zenctuary-contact-map .zen-contact-gallery__item img {
+  height: 100%;
+  width: 100%;
+}
+
+.wp-block-zenctuary-contact-map .zen-contact-overlay {
+  background: var(--wp--preset--color--primary-grey, #3F3E3E);
+  border: 1px solid rgba(246, 242, 234, 0.2);
+  border-radius: var(--zen-radius-card, 24px);
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+  color: var(--wp--preset--color--primary-beige, #F6F2EA);
+  left: 50%;
+  min-width: 440px;
+  padding: 48px 64px !important;
+  position: absolute;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 10;
+}
+
+.wp-block-zenctuary-contact-map .zen-contact-item {
+  align-items: center;
+  color: var(--wp--preset--color--primary-beige, #F6F2EA);
+  display: flex;
+  font-size: 14px;
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.wp-block-zenctuary-contact-map .zen-contact-item:last-child {
+  margin-bottom: 0;
+}
+
+.wp-block-zenctuary-contact-map .zen-contact-item svg {
+  color: var(--wp--preset--color--primary-gold, #d7b75f);
+  flex-shrink: 0;
+  height: 24px;
+  width: 24px;
+}
+
+.wp-block-zenctuary-contact-map .zen-contact-logo {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 8px;
+}
+
+.wp-block-zenctuary-contact-map .zen-contact-logo img {
+  height: auto;
+  max-height: 64px;
+  max-width: 220px;
+  object-fit: contain;
+  width: auto;
+}
+
+@media (max-width: 781px) {
+  .wp-block-zenctuary-contact-map {
+    flex-direction: column;
+  }
+
+  .wp-block-zenctuary-contact-map .zen-contact-section__gallery,
+  .wp-block-zenctuary-contact-map .zen-contact-section__map {
+    width: 100%;
+  }
+
+  .wp-block-zenctuary-contact-map .zen-contact-section__gallery {
+    order: 1;
+  }
+
+  .wp-block-zenctuary-contact-map .zen-contact-overlay {
+    left: auto;
+    margin: -40px auto 32px auto !important;
+    min-width: 0;
+    order: 2;
+    padding: 32px !important;
+    position: relative;
+    top: auto;
+    transform: none;
+    width: 90% !important;
+  }
+
+  .wp-block-zenctuary-contact-map .zen-contact-section__map {
+    order: 3;
+  }
+
+  .wp-block-zenctuary-contact-map .wp-block-image,
+  .wp-block-zenctuary-contact-map .wp-block-image img,
+  .wp-block-zenctuary-contact-map iframe,
+  .wp-block-zenctuary-contact-map .zen-contact-gallery {
+    height: 400px;
+  }
+}

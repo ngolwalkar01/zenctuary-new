@@ -40,47 +40,30 @@ export default function save({ attributes }) {
 
     return (
         <div {...blockProps}>
-            <div className="wp-block-columns alignfull zen-contact-section__media" style={{ gap: 0, margin: 0 }}>
-                <div className="wp-block-column zen-contact-section__map" style={{ flexBasis: '50%', margin: 0 }}>
-                    {mapEmbedUrl && (
-                        <iframe
-                            src={mapEmbedUrl}
-                            width="100%"
-                            height="680"
-                            style={{ border: 0, width: '100%', height: '680px', objectFit: 'cover', display: 'block' }}
-                            allowFullScreen=""
-                            loading="lazy"
-                            referrerPolicy="no-referrer-when-downgrade"
-                        ></iframe>
-                    )}
-                </div>
-
-                <div className="wp-block-column zen-contact-section__gallery" style={{ flexBasis: '50%', margin: 0 }}>
-                    <div className="zen-contact-gallery">
-                        {renderedGalleryImages.length ? (
-                            renderedGalleryImages.map((image, index) => (
-                                <figure
-                                    className="wp-block-image size-large zen-contact-gallery__item"
-                                    style={{ '--zen-gallery-delay': `${index * 4}s` }}
-                                    key={image.id || `${image.url}-${index}`}
-                                >
-                                    <img
-                                        src={image.url}
-                                        alt={image.alt || ''}
-                                        style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
-                                    />
-                                </figure>
-                            ))
-                        ) : (
-                            <figure className="wp-block-image size-large zen-contact-gallery__item zen-contact-gallery__item--placeholder" style={{ '--zen-gallery-delay': '0s' }}>
+            <div className="zen-contact-section__gallery">
+                <div className="zen-contact-gallery" data-gallery-interval="4000">
+                    {renderedGalleryImages.length ? (
+                        renderedGalleryImages.map((image, index) => (
+                            <figure
+                                className={`wp-block-image size-large zen-contact-gallery__item${index === 0 ? ' is-active' : ''}`}
+                                key={image.id || `${image.url}-${index}`}
+                            >
                                 <img
-                                    src="https://placehold.co/720x680/2b3420/fff?text=Zenctuary+Gallery"
-                                    alt="Zenctuary Gallery"
+                                    src={image.url}
+                                    alt={image.alt || ''}
                                     style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
                                 />
                             </figure>
-                        )}
-                    </div>
+                        ))
+                    ) : (
+                        <figure className="wp-block-image size-large zen-contact-gallery__item zen-contact-gallery__item--placeholder is-active">
+                            <img
+                                src="https://placehold.co/720x680/2b3420/fff?text=Zenctuary+Gallery"
+                                alt="Zenctuary Gallery"
+                                style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
+                            />
+                        </figure>
+                    )}
                 </div>
             </div>
 
@@ -120,6 +103,20 @@ export default function save({ attributes }) {
                         <RichText.Content tagName="span" value={phone} />
                     </div>
                 </div>
+            </div>
+
+            <div className="zen-contact-section__map">
+                {mapEmbedUrl && (
+                    <iframe
+                        src={mapEmbedUrl}
+                        width="100%"
+                        height="680"
+                        style={{ border: 0, width: '100%', height: '680px', objectFit: 'cover', display: 'block' }}
+                        allowFullScreen=""
+                        loading="lazy"
+                        referrerPolicy="no-referrer-when-downgrade"
+                    ></iframe>
+                )}
             </div>
         </div>
     );
