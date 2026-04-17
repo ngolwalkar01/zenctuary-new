@@ -38,17 +38,54 @@ window.zenctuaryAuth = (function() {
             }
         });
 
+        // Delegate clicks for view switching
+        modal.addEventListener('click', function(e) {
+            const switchBtn = e.target.closest('[data-zen-switch-view]');
+            if (switchBtn) {
+                e.preventDefault();
+                const targetView = switchBtn.dataset.zenSwitchView;
+                setState(targetView);
+            }
+        });
+
         console.log('Zenctuary Auth: Initialized');
     }
 
     /**
-     * Open the modal and switch to a specific view
-     * @param {string} view - login, signup, or account
+     * Set the current modal state (view)
+     * @param {string} state - login, signup, or account
      */
-    function openModal(view = 'login') {
+    function setState(state) {
+        if (!views) return;
+
+        let targetViewElement = null;
+
+        views.forEach(view => {
+            if (view.dataset.view === state) {
+                view.classList.add('is-active');
+                targetViewElement = view;
+            } else {
+                view.classList.remove('is-active');
+            }
+        });
+
+        // Accessibility: Focus the heading of the new view
+        if (targetViewElement) {
+            const heading = targetViewElement.querySelector('h2');
+            if (heading) {
+                heading.focus();
+            }
+        }
+    }
+
+    /**
+     * Open the modal and switch to a specific state
+     * @param {string} state - login, signup, or account
+     */
+    function openModal(state = 'login') {
         if (!modal) return;
 
-        switchView(view);
+        setState(state);
         modal.classList.add('is-active');
         document.body.classList.add('zen-modal-open');
         modal.setAttribute('aria-hidden', 'false');
@@ -65,20 +102,6 @@ window.zenctuaryAuth = (function() {
         modal.setAttribute('aria-hidden', 'true');
     }
 
-    /**
-     * Switch between auth views
-     * @param {string} viewName - login, signup, or account
-     */
-    function switchView(viewName) {
-        views.forEach(view => {
-            if (view.dataset.view === viewName) {
-                view.classList.add('is-active');
-            } else {
-                view.classList.remove('is-active');
-            }
-        });
-    }
-
     // Run init on DOMContentLoaded
     if (document.readyState === 'loading') {
         document.addEventListener('DOMContentLoaded', init);
@@ -90,7 +113,7 @@ window.zenctuaryAuth = (function() {
     return {
         openModal: openModal,
         closeModal: closeModal,
-        switchView: switchView
+        setState: setState
     };
 
 })();

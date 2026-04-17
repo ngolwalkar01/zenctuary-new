@@ -6,20 +6,31 @@
         <div class="zen-modal-content">
             <!-- Login View -->
             <div id="zen-view-login" class="zen-auth-view" data-view="login">
-                <h2>Login</h2>
+                <h2 tabindex="-1">Login</h2>
                 <p>Placeholder for login form.</p>
+                <div class="zen-modal-nav">
+                    <span>Don't have an account?</span>
+                    <button type="button" class="zen-link-gold" data-zen-switch-view="signup">Create one</button>
+                </div>
             </div>
 
             <!-- Signup View -->
             <div id="zen-view-signup" class="zen-auth-view" data-view="signup">
-                <h2>Sign Up</h2>
+                <h2 tabindex="-1">Sign Up</h2>
                 <p>Placeholder for signup form.</p>
+                <div class="zen-modal-nav">
+                    <span>Already have an account?</span>
+                    <button type="button" class="zen-link-gold" data-zen-switch-view="login">Sign in</button>
+                </div>
             </div>
 
             <!-- Account View -->
             <div id="zen-view-account" class="zen-auth-view" data-view="account">
-                <h2>My Account</h2>
+                <h2 tabindex="-1">My Account</h2>
                 <p>Placeholder for account details.</p>
+                <div class="zen-modal-nav">
+                    <button type="button" class="zen-link-gold" data-zen-switch-view="login">Switch to Login (Test)</button>
+                </div>
             </div>
         </div>
     </div>

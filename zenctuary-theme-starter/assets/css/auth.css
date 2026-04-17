@@ -93,3 +93,33 @@ body.zen-modal-open {
     overflow: hidden;
     padding-right: 15px; /* Prevent layout shift if scrollbar disappears */
 }
+
+/* Modal Navigation & Links */
+.zen-modal-nav {
+    margin-top: 24px;
+    font-size: 14px;
+    display: flex;
+    gap: 8px;
+    align-items: center;
+}
+
+.zen-link-gold {
+    background: none;
+    border: none;
+    padding: 0;
+    color: var(--wp--preset--color--primary-gold);
+    text-decoration: underline;
+    font-weight: 700;
+    cursor: pointer;
+    font-family: inherit;
+    font-size: inherit;
+}
+
+.zen-link-gold:hover {
+    color: var(--wp--preset--color--secondary-gold-light);
+}
+
+/* Accessible Headings */
+.zen-auth-view h2:focus {
+    outline: none;
+}
