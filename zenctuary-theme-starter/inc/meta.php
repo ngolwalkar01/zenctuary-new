@@ -365,3 +365,132 @@ function zenctuary_save_space_type_meta( int $term_id ): void {
     }
 }
 
+/**
+ * Register sticky news hover content post meta.
+ */
+add_action( 'init', 'zenctuary_register_news_hover_meta' );
+
+function zenctuary_register_news_hover_meta(): void {
+	$post_types = get_post_types(
+		[
+			'public'  => true,
+			'show_ui' => true,
+		],
+		'objects'
+	);
+
+	foreach ( $post_types as $post_type ) {
+		if ( empty( $post_type->show_in_rest ) || 'attachment' === $post_type->name ) {
+			continue;
+		}
+
+		register_post_meta(
+			$post_type->name,
+			'news_hover_content',
+			[
+				'type'              => 'string',
+				'single'            => true,
+				'show_in_rest'      => true,
+				'default'           => '',
+				'sanitize_callback' => 'wp_kses_post',
+				'auth_callback'     => static function() use ( $post_type ): bool {
+					return current_user_can( $post_type->cap->edit_posts );
+				},
+				'description'       => __( 'Hover content used by the Latest News Sticky Stack block.', 'zenctuary' ),
+			]
+		);
+	}
+}
+
+/**
+ * Add the hover content metabox to supported post types.
+ */
+add_action( 'add_meta_boxes', 'zenctuary_add_news_hover_metabox' );
+
+function zenctuary_add_news_hover_metabox(): void {
+	$post_types = get_post_types(
+		[
+			'public'  => true,
+			'show_ui' => true,
+		],
+		'objects'
+	);
+
+	foreach ( $post_types as $post_type ) {
+		if ( empty( $post_type->show_in_rest ) || 'attachment' === $post_type->name ) {
+			continue;
+		}
+
+		add_meta_box(
+			'zenctuary_news_hover_content',
+			__( 'Hover Content', 'zenctuary' ),
+			'zenctuary_render_news_hover_metabox',
+			$post_type->name,
+			'normal',
+			'default'
+		);
+	}
+}
+
+/**
+ * Render the hover content metabox UI.
+ *
+ * @param WP_Post $post Current post.
+ */
+function zenctuary_render_news_hover_metabox( WP_Post $post ): void {
+	wp_nonce_field( 'zenctuary_save_news_hover_meta', 'zenctuary_news_hover_nonce' );
+
+	$value = (string) get_post_meta( $post->ID, 'news_hover_content', true );
+	?>
+	<p>
+		<?php esc_html_e( 'This content is shown in the expanded hover panel of the Latest News Sticky Stack block. It is separate from the full post content.', 'zenctuary' ); ?>
+	</p>
+	<?php
+	wp_editor(
+		$value,
+		'zenctuary_news_hover_content_editor',
+		[
+			'textarea_name' => 'news_hover_content',
+			'textarea_rows' => 8,
+			'media_buttons' => false,
+			'teeny'         => true,
+			'quicktags'     => [
+				'buttons' => 'strong,em,ul,ol,li,link,close',
+			],
+		]
+	);
+}
+
+/**
+ * Save hover content post meta.
+ *
+ * @param int $post_id Current post ID.
+ */
+add_action( 'save_post', 'zenctuary_save_news_hover_metabox' );
+
+function zenctuary_save_news_hover_metabox( int $post_id ): void {
+	if ( ! isset( $_POST['zenctuary_news_hover_nonce'] ) ) {
+		return;
+	}
+
+	if ( ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['zenctuary_news_hover_nonce'] ) ), 'zenctuary_save_news_hover_meta' ) ) {
+		return;
+	}
+
+	if ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ) {
+		return;
+	}
+
+	$post_type = get_post_type( $post_id );
+	if ( ! $post_type || ! current_user_can( 'edit_post', $post_id ) ) {
+		return;
+	}
+
+	if ( isset( $_POST['news_hover_content'] ) ) {
+		update_post_meta(
+			$post_id,
+			'news_hover_content',
+			wp_kses_post( wp_unslash( $_POST['news_hover_content'] ) )
+		);
+	}
+}
