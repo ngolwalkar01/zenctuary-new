@@ -265,16 +265,17 @@
 
   &__card-inner {
     color: var(--lnss-section-text);
-    display: grid;
-    padding: var(--lnss-card-padding);
+    inset: 0;
+    position: absolute;
     z-index: 3;
   }
 
   &__resting-state,
   &__hover-state {
     display: flex;
-    height: 100%;
-    width: 100%;
+    inset: 0;
+    padding: var(--lnss-card-padding);
+    position: absolute;
     transition:
       opacity 240ms ease,
       visibility 240ms ease,
@@ -319,6 +320,7 @@
   &__hover-panel {
     display: flex;
     flex-direction: column;
+    min-height: 100%;
     width: 100%;
   }
 
@@ -537,7 +539,7 @@
     }
 
     &__card-inner {
-      padding: var(--lnss-card-padding-tablet);
+      inset: 0;
     }
 
     &__resting-title {
@@ -555,6 +557,11 @@
 
     &__hover-body {
       font-size: var(--lnss-hover-body-size-tablet);
+    }
+
+    &__resting-state,
+    &__hover-state {
+      padding: var(--lnss-card-padding-tablet);
     }
   }
 }
@@ -598,7 +605,7 @@
     }
 
     &__card-inner {
-      padding: var(--lnss-card-padding-mobile);
+      inset: 0;
     }
 
     &__resting-title {
@@ -630,6 +637,11 @@
 
     &__cta {
       width: 100%;
+    }
+
+    &__resting-state,
+    &__hover-state {
+      padding: var(--lnss-card-padding-mobile);
     }
   }
 }
