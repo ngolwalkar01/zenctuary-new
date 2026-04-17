@@ -7,6 +7,7 @@ window.zenctuaryAuth = (function() {
 
     // Private variables
     let modal, overlay, closeBtn, views;
+    let loginForm, registerForm;
 
     /**
      * Initialize the modal elements and events
@@ -18,6 +19,9 @@ window.zenctuaryAuth = (function() {
         overlay = modal;
         closeBtn = document.getElementById('zen-modal-close');
         views = document.querySelectorAll('.zen-auth-view');
+        
+        loginForm = document.getElementById('zen-login-form');
+        registerForm = document.getElementById('zen-register-form');
 
         // Close button click
         if (closeBtn) {
@@ -46,9 +50,94 @@ window.zenctuaryAuth = (function() {
                 const targetView = switchBtn.dataset.zenSwitchView;
                 setState(targetView);
             }
+
+            // Logout trigger
+            const logoutBtn = e.target.closest('.zen-logout-trigger');
+            if (logoutBtn) {
+                e.preventDefault();
+                handleLogout();
+            }
         });
 
+        // Form submissions
+        if (loginForm) {
+            loginForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                handleAuthSubmit(loginForm, 'zenctuary_login');
+            });
+        }
+
+        if (registerForm) {
+            registerForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                handleAuthSubmit(registerForm, 'zenctuary_register');
+            });
+        }
+
         console.log('Zenctuary Auth: Initialized');
+    }
+
+    /**
+     * Handle AJAX authentication submissions
+     * @param {HTMLFormElement} form - The form being submitted
+     * @param {string} action - The WP AJAX action
+     */
+    async function handleAuthSubmit(form, action) {
+        const errorContainer = form.querySelector('.zen-error-container');
+        const submitBtn = form.querySelector('button[type="submit"]');
+        const formData = new FormData(form);
+
+        // Reset UI
+        errorContainer.textContent = '';
+        submitBtn.disabled = true;
+        submitBtn.classList.add('is-loading');
+
+        // Prepare data
+        formData.append('action', action);
+        formData.append('security', zenctuaryAuthData.nonce);
+
+        try {
+            const response = await fetch(zenctuaryAuthData.ajax_url, {
+                method: 'POST',
+                body: formData
+            });
+
+            const result = await response.json();
+
+            if (result.success) {
+                // Success: switch to account view
+                setState('account');
+            } else {
+                // Error: show message
+                errorContainer.textContent = result.data.message || 'An error occurred. Please try again.';
+            }
+        } catch (error) {
+            console.error('Zenctuary Auth Error:', error);
+            errorContainer.textContent = 'Network error. Please check your connection.';
+        } finally {
+            submitBtn.disabled = false;
+            submitBtn.classList.remove('is-loading');
+        }
+    }
+
+    /**
+     * Handle Logout
+     */
+    async function handleLogout() {
+        const formData = new FormData();
+        formData.append('action', 'zenctuary_logout');
+
+        try {
+            await fetch(zenctuaryAuthData.ajax_url, {
+                method: 'POST',
+                body: formData
+            });
+            
+            // Reload page on logout to clear all sessions/menus
+            window.location.reload();
+        } catch (error) {
+            console.error('Logout error:', error);
+        }
     }
 
     /**

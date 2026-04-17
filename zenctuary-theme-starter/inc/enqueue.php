@@ -54,4 +54,9 @@ function zenctuary_enqueue_assets(): void {
 		ZENCTUARY_THEME_VERSION,
 		true
 	);
+
+	wp_localize_script( 'zenctuary-auth', 'zenctuaryAuthData', array(
+		'ajax_url' => admin_url( 'admin-ajax.php' ),
+		'nonce'    => wp_create_nonce( 'zenctuary_auth_nonce' ),
+	) );
 }

@@ -15,7 +15,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  */
 function zenctuary_ajax_login() {
 	// Security check
-    // check_ajax_referer( 'zenctuary_auth_nonce', 'security' );
+    check_ajax_referer( 'zenctuary_auth_nonce', 'security' );
 
 	$info = array();
 	$info['user_login']    = isset( $_POST['username'] ) ? sanitize_user( $_POST['username'] ) : '';
@@ -47,7 +47,7 @@ add_action( 'wp_ajax_zenctuary_login', 'zenctuary_ajax_login' );
  */
 function zenctuary_ajax_register() {
 	// Security check
-    // check_ajax_referer( 'zenctuary_auth_nonce', 'security' );
+    check_ajax_referer( 'zenctuary_auth_nonce', 'security' );
 
     // Check if registration is enabled
     if ( ! get_option( 'users_can_register' ) ) {

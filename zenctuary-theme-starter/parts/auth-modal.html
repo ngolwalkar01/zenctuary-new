@@ -7,7 +7,29 @@
             <!-- Login View -->
             <div id="zen-view-login" class="zen-auth-view" data-view="login">
                 <h2 tabindex="-1">Login</h2>
-                <p>Placeholder for login form.</p>
+                
+                <form id="zen-login-form" class="zen-auth-form">
+                    <div class="zen-form-group">
+                        <input type="text" name="username" placeholder="Username or Email" class="zen-input" required>
+                    </div>
+                    <div class="zen-form-group">
+                        <input type="password" name="password" placeholder="Password" class="zen-input" required>
+                    </div>
+                    <div class="zen-form-row">
+                        <label class="zen-checkbox-label">
+                            <input type="checkbox" name="remember" value="forever">
+                            <span>Remember Me</span>
+                        </label>
+                    </div>
+                    
+                    <div class="zen-error-container" aria-live="polite"></div>
+                    
+                    <button type="submit" class="zen-btn-auth">
+                        <span class="btn-text">Sign In</span>
+                        <span class="btn-loader"></span>
+                    </button>
+                </form>
+
                 <div class="zen-modal-nav">
                     <span>Don't have an account?</span>
                     <button type="button" class="zen-link-gold" data-zen-switch-view="signup">Create one</button>
@@ -17,7 +39,26 @@
             <!-- Signup View -->
             <div id="zen-view-signup" class="zen-auth-view" data-view="signup">
                 <h2 tabindex="-1">Sign Up</h2>
-                <p>Placeholder for signup form.</p>
+                
+                <form id="zen-register-form" class="zen-auth-form">
+                    <div class="zen-form-group">
+                        <input type="email" name="email" placeholder="Email Address" class="zen-input" required>
+                    </div>
+                    <div class="zen-form-group">
+                        <input type="password" name="password" placeholder="Password" class="zen-input" required>
+                    </div>
+                    <div class="zen-form-group">
+                        <input type="text" name="username" placeholder="Username (Optional)" class="zen-input">
+                    </div>
+
+                    <div class="zen-error-container" aria-live="polite"></div>
+
+                    <button type="submit" class="zen-btn-auth">
+                        <span class="btn-text">Create Account</span>
+                        <span class="btn-loader"></span>
+                    </button>
+                </form>
+
                 <div class="zen-modal-nav">
                     <span>Already have an account?</span>
                     <button type="button" class="zen-link-gold" data-zen-switch-view="login">Sign in</button>
@@ -27,9 +68,9 @@
             <!-- Account View -->
             <div id="zen-view-account" class="zen-auth-view" data-view="account">
                 <h2 tabindex="-1">My Account</h2>
-                <p>Placeholder for account details.</p>
-                <div class="zen-modal-nav">
-                    <button type="button" class="zen-link-gold" data-zen-switch-view="login">Switch to Login (Test)</button>
+                <div class="zen-account-placeholder">
+                    <p>Welcome back! You are now logged in.</p>
+                    <button type="button" class="zen-btn-outline zen-logout-trigger">Logout</button>
                 </div>
             </div>
         </div>
