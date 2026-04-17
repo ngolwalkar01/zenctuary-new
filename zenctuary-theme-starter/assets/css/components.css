@@ -1318,16 +1318,16 @@ input[type="checkbox"] {
     width: 100%;
   }
 
-  .wp-block-navigation__responsive-container .wp-block-navigation-item.has-child {
+  .wp-block-navigation__responsive-container .has-child {
     display: flex;
     flex-wrap: wrap;
   }
 
-  .wp-block-navigation__responsive-container .wp-block-navigation-item.has-child > .wp-block-navigation-item__content {
+  .wp-block-navigation__responsive-container .has-child > .wp-block-navigation-item__content {
     flex: 1 1 auto;
   }
 
-  .wp-block-navigation__responsive-container .wp-block-navigation-item.has-child > .wp-block-navigation-submenu__toggle {
+  .wp-block-navigation__responsive-container .has-child > .wp-block-navigation-submenu__toggle {
     align-items: center;
     display: inline-flex;
     justify-content: center;
@@ -1336,12 +1336,12 @@ input[type="checkbox"] {
     padding: 0 0 0 12px;
   }
 
-  .wp-block-navigation__responsive-container .wp-block-navigation-item.has-child > .wp-block-navigation-submenu__toggle::before {
+  .wp-block-navigation__responsive-container .has-child > .wp-block-navigation-submenu__toggle::before {
     transition: transform 0.25s ease;
   }
 
-  .wp-block-navigation__responsive-container .wp-block-navigation-item.has-child.is-submenu-open > .wp-block-navigation-submenu__toggle::before,
-  .wp-block-navigation__responsive-container .wp-block-navigation-item.has-child > .wp-block-navigation-submenu__toggle[aria-expanded="true"]::before {
+  .wp-block-navigation__responsive-container .has-child.is-submenu-open > .wp-block-navigation-submenu__toggle::before,
+  .wp-block-navigation__responsive-container .has-child > .wp-block-navigation-submenu__toggle[aria-expanded="true"]::before {
     transform: rotate(180deg);
   }
 
@@ -1355,8 +1355,8 @@ input[type="checkbox"] {
     width: 100%;
   }
 
-  .wp-block-navigation__responsive-container .wp-block-navigation-item.has-child.is-submenu-open > .wp-block-navigation__submenu-container,
-  .wp-block-navigation__responsive-container .wp-block-navigation-item.has-child > .wp-block-navigation-submenu__toggle[aria-expanded="true"] + .wp-block-navigation__submenu-container {
+  .wp-block-navigation__responsive-container .has-child.is-submenu-open > .wp-block-navigation__submenu-container,
+  .wp-block-navigation__responsive-container .has-child > .wp-block-navigation-submenu__toggle[aria-expanded="true"] + .wp-block-navigation__submenu-container {
     display: block;
   }
 

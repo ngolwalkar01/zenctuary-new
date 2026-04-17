@@ -15,23 +15,30 @@ document.addEventListener('DOMContentLoaded', () => {
   };
 
   const initMobileHeaderSubmenus = () => {
+    const isMobileView = () => window.matchMedia('(max-width: 1024px)').matches;
     const header = document.querySelector('.zen-site-header');
-    const responsiveContainer = header?.querySelector('.wp-block-navigation__responsive-container');
 
-    if (!responsiveContainer) {
+    if (!header) {
       return;
     }
 
-    const getParentItems = () =>
-      responsiveContainer.querySelectorAll('.wp-block-navigation-item.has-child');
+    const getDirectChild = (parent, className) =>
+      Array.from(parent.children).find((child) => child.classList.contains(className));
 
-    const syncSubmenuState = (forceClosed = false) => {
+    const getResponsiveContainers = () =>
+      document.querySelectorAll('.zen-site-header .wp-block-navigation__responsive-container');
+
+    const syncContainerSubmenus = (responsiveContainer, forceClosed = false) => {
+      if (!responsiveContainer) {
+        return;
+      }
+
       const mobileView = window.matchMedia('(max-width: 1024px)').matches;
-      const parentItems = getParentItems();
+      const parentItems = responsiveContainer.querySelectorAll('.has-child');
 
       parentItems.forEach((item) => {
-        const toggle = item.querySelector('.wp-block-navigation-submenu__toggle');
-        const submenu = item.querySelector('.wp-block-navigation__submenu-container');
+        const toggle = getDirectChild(item, 'wp-block-navigation-submenu__toggle');
+        const submenu = getDirectChild(item, 'wp-block-navigation__submenu-container');
 
         if (!toggle || !submenu) {
           return;
@@ -53,17 +60,22 @@ document.addEventListener('DOMContentLoaded', () => {
       });
     };
 
-    responsiveContainer.addEventListener('click', (event) => {
+    const syncAllResponsiveContainers = (forceClosed = false) => {
+      getResponsiveContainers().forEach((container) => syncContainerSubmenus(container, forceClosed));
+    };
+
+    document.addEventListener('click', (event) => {
       const toggle = event.target.closest('.wp-block-navigation-submenu__toggle');
 
-      if (!toggle || !window.matchMedia('(max-width: 1024px)').matches) {
+      if (!toggle || !isMobileView()) {
         return;
       }
 
-      const item = toggle.closest('.wp-block-navigation-item.has-child');
-      const submenu = item?.querySelector('.wp-block-navigation__submenu-container');
+      const responsiveContainer = toggle.closest('.wp-block-navigation__responsive-container');
+      const item = toggle.closest('.has-child');
+      const submenu = item ? getDirectChild(item, 'wp-block-navigation__submenu-container') : null;
 
-      if (!item || !submenu) {
+      if (!responsiveContainer || !item || !submenu) {
         return;
       }
 
@@ -75,8 +87,30 @@ document.addEventListener('DOMContentLoaded', () => {
       submenu.hidden = !isOpen;
     });
 
-    syncSubmenuState(true);
-    window.addEventListener('resize', () => syncSubmenuState());
+    document.addEventListener('click', (event) => {
+      const openButton = event.target.closest('.wp-block-navigation__responsive-container-open');
+      const closeButton = event.target.closest('.wp-block-navigation__responsive-container-close');
+
+      if (openButton) {
+        window.setTimeout(() => syncAllResponsiveContainers(true), 0);
+      }
+
+      if (closeButton) {
+        syncAllResponsiveContainers(true);
+      }
+    });
+
+    const observer = new MutationObserver(() => {
+      syncAllResponsiveContainers(true);
+    });
+
+    observer.observe(document.body, {
+      childList: true,
+      subtree: true,
+    });
+
+    syncAllResponsiveContainers(true);
+    window.addEventListener('resize', () => syncAllResponsiveContainers());
   };
 
   ensureMobileHeaderAccount();
