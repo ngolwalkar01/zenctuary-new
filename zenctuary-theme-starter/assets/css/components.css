@@ -1303,6 +1303,10 @@ input[type="checkbox"] {
   object-fit: contain;
 }
 
+.zen-contact-section__gallery {
+  order: 3;
+}
+
 /* ==========================================
    RESPONSIVE
    ========================================== */
@@ -1573,6 +1577,7 @@ input[type="checkbox"] {
   .zen-contact-section {
     display: flex;
     flex-direction: column;
+    align-items: center;
   }
 
   .zen-contact-section__gallery {

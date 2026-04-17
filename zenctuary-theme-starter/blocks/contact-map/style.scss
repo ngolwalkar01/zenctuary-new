@@ -111,12 +111,12 @@
 
   .wp-block-zenctuary-contact-map .zen-contact-overlay {
     left: auto;
-    margin: -40px auto 32px auto !important;
+    margin: -40px auto 32px !important;
     min-width: 0;
+    top: 288px;
     order: 2;
     padding: 32px !important;
-    position: relative;
-    top: auto;
+    position: absolute;
     transform: none;
     width: 90% !important;
   }
