@@ -1,16 +1,47 @@
 import { useBlockProps, RichText } from '@wordpress/block-editor';
 
+const buildGalleryImages = (galleryImages = [], fallbackImageUrl, fallbackImageAlt) => {
+    if (galleryImages.length) {
+        return galleryImages;
+    }
+
+    if (fallbackImageUrl) {
+        return [
+            {
+                id: 0,
+                url: fallbackImageUrl,
+                alt: fallbackImageAlt || 'Gallery image',
+            },
+        ];
+    }
+
+    return [];
+};
+
 export default function save({ attributes }) {
-    const { mapEmbedUrl, imageUrl, imageAlt, logoUrl, logoAlt, schedule, address, email, phone } = attributes;
+    const {
+        mapEmbedUrl,
+        imageUrl,
+        imageAlt,
+        galleryImages = [],
+        logoUrl,
+        logoAlt,
+        schedule,
+        address,
+        email,
+        phone,
+    } = attributes;
+
+    const renderedGalleryImages = buildGalleryImages(galleryImages, imageUrl, imageAlt);
 
     const blockProps = useBlockProps.save({
-        className: 'wp-block-group alignfull zen-contact-section'
+        className: 'wp-block-group alignfull zen-contact-section',
     });
 
     return (
-        <div { ...blockProps }>
-            <div className="wp-block-columns alignfull" style={{ gap: 0, margin: 0 }}>
-                <div className="wp-block-column" style={{ flexBasis: '50%', margin: 0 }}>
+        <div {...blockProps}>
+            <div className="wp-block-columns alignfull zen-contact-section__media" style={{ gap: 0, margin: 0 }}>
+                <div className="wp-block-column zen-contact-section__map" style={{ flexBasis: '50%', margin: 0 }}>
                     {mapEmbedUrl && (
                         <iframe
                             src={mapEmbedUrl}
@@ -23,20 +54,37 @@ export default function save({ attributes }) {
                         ></iframe>
                     )}
                 </div>
-                <div className="wp-block-column" style={{ flexBasis: '50%', margin: 0 }}>
-                    <figure className="wp-block-image size-large" style={{ width: '100%', height: '680px', margin: 0 }}>
-                        <img
-                            src={imageUrl || 'https://placehold.co/720x680/2b3420/fff?text=Buddha+Statue'}
-                            alt={imageAlt || 'Buddha Statue'}
-                            style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
-                        />
-                    </figure>
+
+                <div className="wp-block-column zen-contact-section__gallery" style={{ flexBasis: '50%', margin: 0 }}>
+                    <div className="zen-contact-gallery">
+                        {renderedGalleryImages.length ? (
+                            renderedGalleryImages.map((image, index) => (
+                                <figure
+                                    className="wp-block-image size-large zen-contact-gallery__item"
+                                    style={{ '--zen-gallery-delay': `${index * 4}s` }}
+                                    key={image.id || `${image.url}-${index}`}
+                                >
+                                    <img
+                                        src={image.url}
+                                        alt={image.alt || ''}
+                                        style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
+                                    />
+                                </figure>
+                            ))
+                        ) : (
+                            <figure className="wp-block-image size-large zen-contact-gallery__item zen-contact-gallery__item--placeholder" style={{ '--zen-gallery-delay': '0s' }}>
+                                <img
+                                    src="https://placehold.co/720x680/2b3420/fff?text=Zenctuary+Gallery"
+                                    alt="Zenctuary Gallery"
+                                    style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
+                                />
+                            </figure>
+                        )}
+                    </div>
                 </div>
             </div>
 
             <div className="wp-block-group zen-contact-overlay has-primary-beige-color has-primary-grey-background-color has-text-color has-background">
-
-                {/* Logo or fallback heading */}
                 {logoUrl ? (
                     <div className="zen-contact-logo">
                         <img src={logoUrl} alt={logoAlt || 'Logo'} />

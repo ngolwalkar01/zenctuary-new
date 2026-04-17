@@ -1,14 +1,66 @@
 import { __ } from '@wordpress/i18n';
-import { useBlockProps, RichText, MediaPlaceholder, InspectorControls } from '@wordpress/block-editor';
+import {
+    useBlockProps,
+    RichText,
+    MediaPlaceholder,
+    MediaUpload,
+    MediaUploadCheck,
+    InspectorControls,
+} from '@wordpress/block-editor';
 import { PanelBody, TextControl, Button } from '@wordpress/components';
 
+const buildGalleryImages = (galleryImages = [], fallbackImageUrl, fallbackImageAlt) => {
+    if (galleryImages.length) {
+        return galleryImages;
+    }
+
+    if (fallbackImageUrl) {
+        return [
+            {
+                id: 0,
+                url: fallbackImageUrl,
+                alt: fallbackImageAlt || 'Gallery image',
+            },
+        ];
+    }
+
+    return [];
+};
+
 export default function Edit({ attributes, setAttributes }) {
-    const { mapEmbedUrl, imageUrl, imageAlt, logoUrl, logoAlt, schedule, address, email, phone } = attributes;
+    const {
+        mapEmbedUrl,
+        imageUrl,
+        imageId,
+        imageAlt,
+        galleryImages = [],
+        logoUrl,
+        logoAlt,
+        schedule,
+        address,
+        email,
+        phone,
+    } = attributes;
 
     const blockProps = useBlockProps();
+    const previewGalleryImages = buildGalleryImages(galleryImages, imageUrl, imageAlt);
 
-    const onSelectImage = (media) => {
-        setAttributes({ imageUrl: media.url, imageId: media.id, imageAlt: media.alt });
+    const onSelectGallery = (mediaItems) => {
+        const items = Array.isArray(mediaItems) ? mediaItems : [mediaItems];
+        const normalizedItems = items
+            .filter((item) => item?.url)
+            .map((item) => ({
+                id: item.id,
+                url: item.url,
+                alt: item.alt || item.title || '',
+            }));
+
+        setAttributes({
+            galleryImages: normalizedItems,
+            imageUrl: normalizedItems[0]?.url || imageUrl,
+            imageId: normalizedItems[0]?.id || imageId,
+            imageAlt: normalizedItems[0]?.alt || imageAlt,
+        });
     };
 
     const onSelectLogo = (media) => {
@@ -16,7 +68,7 @@ export default function Edit({ attributes, setAttributes }) {
     };
 
     return (
-        <div { ...blockProps }>
+        <div {...blockProps}>
             <InspectorControls>
                 <PanelBody title={__('Map Settings', 'zenctuary')}>
                     <TextControl
@@ -29,51 +81,84 @@ export default function Edit({ attributes, setAttributes }) {
             </InspectorControls>
 
             <div style={{ backgroundColor: '#2a2a2a', padding: '40px', borderRadius: '16px', display: 'flex', gap: '32px', flexDirection: 'column' }}>
-
                 <h2 style={{ color: '#fff', margin: 0 }}>Contact Map Configuration</h2>
 
                 <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '20px' }}>
-                    {/* Map */}
                     <div style={{ background: '#333', padding: '20px', borderRadius: '8px' }}>
-                        <h4 style={{ color: '#aaa', marginTop: 0 }}>Left Side (Map Embed)</h4>
+                        <h4 style={{ color: '#aaa', marginTop: 0 }}>Map</h4>
                         <TextControl
                             label={__('Google Maps URL', 'zenctuary')}
                             value={mapEmbedUrl}
                             onChange={(value) => setAttributes({ mapEmbedUrl: value })}
                         />
                         {mapEmbedUrl ? (
-                            <iframe src={mapEmbedUrl} width="100%" height="200" style={{ border: 0 }} />
+                            <iframe title="Map preview" src={mapEmbedUrl} width="100%" height="200" style={{ border: 0 }} />
                         ) : (
-                            <div style={{ height: '200px', background: '#222', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#666' }}>No Map URL Provided</div>
+                            <div style={{ height: '200px', background: '#222', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#666' }}>
+                                No Map URL Provided
+                            </div>
                         )}
                     </div>
 
-                    {/* Image */}
                     <div style={{ background: '#333', padding: '20px', borderRadius: '8px' }}>
-                        <h4 style={{ color: '#aaa', marginTop: 0 }}>Right Side (Statue Image)</h4>
-                        {imageUrl ? (
+                        <h4 style={{ color: '#aaa', marginTop: 0 }}>Right Side Gallery</h4>
+                        {previewGalleryImages.length ? (
                             <div>
-                                <img src={imageUrl} alt={imageAlt} style={{ width: '100%', height: '200px', objectFit: 'cover' }} />
-                                <Button isSecondary onClick={() => setAttributes({ imageUrl: null, imageId: null })} style={{ marginTop: '10px' }}>
-                                    Remove Image
-                                </Button>
+                                <div style={{ position: 'relative', height: '200px', borderRadius: '10px', overflow: 'hidden', background: '#222' }}>
+                                    {previewGalleryImages.slice(0, 3).map((image, index) => (
+                                        <img
+                                            key={image.id || image.url}
+                                            src={image.url}
+                                            alt={image.alt || ''}
+                                            style={{
+                                                position: index === 0 ? 'relative' : 'absolute',
+                                                inset: 0,
+                                                width: '100%',
+                                                height: '100%',
+                                                objectFit: 'cover',
+                                                opacity: index === 0 ? 1 : 0.45 - (index * 0.15),
+                                            }}
+                                        />
+                                    ))}
+                                </div>
+                                <div style={{ display: 'flex', gap: '10px', marginTop: '12px', flexWrap: 'wrap' }}>
+                                    <MediaUploadCheck>
+                                        <MediaUpload
+                                            onSelect={onSelectGallery}
+                                            allowedTypes={['image']}
+                                            multiple
+                                            gallery
+                                            value={previewGalleryImages.map((item) => item.id).filter(Boolean)}
+                                            render={({ open }) => (
+                                                <Button isSecondary onClick={open}>
+                                                    Replace Gallery
+                                                </Button>
+                                            )}
+                                        />
+                                    </MediaUploadCheck>
+                                    <Button
+                                        isDestructive
+                                        onClick={() => setAttributes({ galleryImages: [], imageUrl: null, imageId: null, imageAlt: '' })}
+                                    >
+                                        Remove Gallery
+                                    </Button>
+                                </div>
                             </div>
                         ) : (
                             <MediaPlaceholder
-                                onSelect={onSelectImage}
+                                onSelect={onSelectGallery}
                                 allowedTypes={['image']}
-                                multiple={false}
-                                labels={{ title: 'Select Image' }}
+                                multiple
+                                gallery
+                                labels={{ title: 'Select Gallery Images' }}
                             />
                         )}
                     </div>
                 </div>
 
-                {/* Contact Info Box */}
                 <div style={{ background: '#333', padding: '30px', borderRadius: '8px' }}>
                     <h4 style={{ color: '#aaa', marginTop: 0 }}>Contact Details (Center Overlay Box)</h4>
 
-                    {/* Logo Upload */}
                     <div style={{ marginBottom: '24px' }}>
                         <label style={{ display: 'block', color: '#888', marginBottom: '8px' }}>Logo (replaces "Zenctuary" text)</label>
                         {logoUrl ? (
