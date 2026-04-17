@@ -7,7 +7,6 @@ window.zenctuaryAuth = (function() {
 
     // Private variables
     let modal, overlay, closeBtn, views;
-    let loginForm, registerForm;
 
     /**
      * Initialize the modal elements and events
@@ -19,9 +18,6 @@ window.zenctuaryAuth = (function() {
         overlay = modal;
         closeBtn = document.getElementById('zen-modal-close');
         views = document.querySelectorAll('.zen-auth-view');
-        
-        loginForm = document.getElementById('zen-login-form');
-        registerForm = document.getElementById('zen-register-form');
 
         // Close button click
         if (closeBtn) {
@@ -59,22 +55,22 @@ window.zenctuaryAuth = (function() {
             }
         });
 
-        // Form submissions
-        if (loginForm) {
-            loginForm.addEventListener('submit', function(e) {
+        // Delegated form submissions
+        modal.addEventListener('submit', function(e) {
+            const form = e.target;
+            
+            if (form.id === 'zen-login-form') {
                 e.preventDefault();
-                handleAuthSubmit(loginForm, 'zenctuary_login');
-            });
-        }
-
-        if (registerForm) {
-            registerForm.addEventListener('submit', function(e) {
+                console.log('Zenctuary Auth: Login form submit captured (Delegated)');
+                handleAuthSubmit(form, 'zenctuary_login');
+            } else if (form.id === 'zen-register-form') {
                 e.preventDefault();
-                handleAuthSubmit(registerForm, 'zenctuary_register');
-            });
-        }
+                console.log('Zenctuary Auth: Register form submit captured (Delegated)');
+                handleAuthSubmit(form, 'zenctuary_register');
+            }
+        });
 
-        console.log('Zenctuary Auth: Initialized');
+        console.log('Zenctuary Auth: Initialized with delegation');
     }
 
     /**
