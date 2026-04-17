@@ -32,9 +32,24 @@ function zenctuary_enqueue_assets(): void {
 		ZENCTUARY_THEME_VERSION
 	);
 
+	wp_enqueue_style(
+		'zenctuary-auth',
+		ZENCTUARY_THEME_URI . '/assets/css/auth.css',
+		array( 'zenctuary-utilities' ),
+		ZENCTUARY_THEME_VERSION
+	);
+
 	wp_enqueue_script(
 		'zenctuary-theme',
 		ZENCTUARY_THEME_URI . '/assets/js/theme.js',
+		array(),
+		ZENCTUARY_THEME_VERSION,
+		true
+	);
+
+	wp_enqueue_script(
+		'zenctuary-auth',
+		ZENCTUARY_THEME_URI . '/assets/js/auth.js',
 		array(),
 		ZENCTUARY_THEME_VERSION,
 		true

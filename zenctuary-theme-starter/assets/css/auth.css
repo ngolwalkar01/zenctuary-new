@@ -1,0 +1,95 @@
+/**
+ * Zenctuary Authentication Modal Styles
+ */
+
+:root {
+    --zen-modal-z-index: 9999;
+}
+
+/* Modal Overlay */
+.zen-modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: var(--zen-modal-z-index);
+    
+    /* Visibility Control */
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+.zen-modal-overlay.is-active {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+}
+
+/* Modal Container */
+.zen-modal-container {
+    background-color: var(--wp--preset--color--primary-grey);
+    color: var(--wp--preset--color--primary-beige);
+    width: 90%;
+    max-width: 500px;
+    padding: 40px;
+    position: relative;
+    border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+    
+    /* Animation */
+    transform: scale(0.9);
+    transition: transform 0.3s ease;
+}
+
+.zen-modal-overlay.is-active .zen-modal-container {
+    transform: scale(1);
+}
+
+/* Close Button */
+.zen-modal-close {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    background: none;
+    border: none;
+    color: var(--wp--preset--color--primary-gold);
+    font-size: 32px;
+    cursor: pointer;
+    line-height: 1;
+    padding: 0;
+}
+
+.zen-modal-close:hover {
+    opacity: 0.8;
+}
+
+/* Auth Views */
+.zen-auth-view {
+    /* Visibility Control */
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    height: 0;
+    overflow: hidden;
+    transition: opacity 0.2s ease;
+}
+
+.zen-auth-view.is-active {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+    height: auto;
+}
+
+/* Body Scroll Lock */
+body.zen-modal-open {
+    overflow: hidden;
+    padding-right: 15px; /* Prevent layout shift if scrollbar disappears */
+}
