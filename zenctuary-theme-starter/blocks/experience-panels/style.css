@@ -217,7 +217,7 @@
 .zep-panel.is-active .zep-panel__hotspots {
     opacity: 1;
     visibility: visible;
-    transform: translate(0, -50%) scale(1);
+    transform: translate(0, -25%) scale(1);
     /* Reset sliding margins */
     transition-delay: 0.2s;
 }
@@ -294,6 +294,7 @@
         height: auto;
         display: flex;
         flex-direction: column;
+        justify-content: center;
     }
 
     /* Override hover states visually for Mobile */
