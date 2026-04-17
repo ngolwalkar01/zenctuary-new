@@ -143,6 +143,10 @@
     "ctaBorderWidth": { "type": "number", "default": 2 },
     "ctaShowIcon": { "type": "boolean", "default": true },
     "ctaIconPosition": { "type": "string", "default": "right" },
+    "hoverCtaHorizontalAlign": { "type": "string", "default": "end" },
+    "hoverCtaVerticalAlign": { "type": "string", "default": "end" },
+    "hoverCtaOffsetX": { "type": "number", "default": 0 },
+    "hoverCtaOffsetY": { "type": "number", "default": 0 },
 
     "mobileInteraction": { "type": "string", "default": "tap-expand" },
     "previewState": { "type": "string", "default": "resting" }

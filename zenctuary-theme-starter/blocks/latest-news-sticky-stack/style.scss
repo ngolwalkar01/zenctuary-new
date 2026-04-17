@@ -93,6 +93,13 @@
   --lnss-cta-pad-x: 28px;
   --lnss-cta-radius: 999px;
   --lnss-cta-border-width: 2px;
+  --lnss-hover-cta-justify: flex-end;
+  --lnss-hover-cta-top: auto;
+  --lnss-hover-cta-right: 0;
+  --lnss-hover-cta-bottom: 0;
+  --lnss-hover-cta-left: auto;
+  --lnss-hover-cta-offset-x: 0px;
+  --lnss-hover-cta-offset-y: 0px;
 
   background: var(--lnss-section-bg);
   color: var(--lnss-section-text);
@@ -321,6 +328,7 @@
     display: flex;
     flex-direction: column;
     min-height: 100%;
+    position: relative;
     width: 100%;
   }
 
@@ -392,7 +400,15 @@
 
   &__hover-cta-wrap {
     display: flex;
-    justify-content: flex-end;
+    justify-content: var(--lnss-hover-cta-justify);
+    left: 0;
+    position: absolute;
+    right: 0;
+    top: var(--lnss-hover-cta-top);
+    bottom: var(--lnss-hover-cta-bottom);
+    transform: translate(var(--lnss-hover-cta-offset-x), var(--lnss-hover-cta-offset-y));
+    width: 100%;
+    z-index: 2;
   }
 
   &__cta {

@@ -51,6 +51,12 @@ const VERTICAL_ALIGNMENT = [
 	{ label: __( 'Bottom', 'zenctuary' ), value: 'end' },
 ];
 
+const HORIZONTAL_POSITION = [
+	{ label: __( 'Left', 'zenctuary' ), value: 'start' },
+	{ label: __( 'Center', 'zenctuary' ), value: 'center' },
+	{ label: __( 'Right', 'zenctuary' ), value: 'end' },
+];
+
 const META_SOURCE = [
 	{ label: __( 'Date', 'zenctuary' ), value: 'date' },
 	{ label: __( 'Category / Term', 'zenctuary' ), value: 'term' },
@@ -378,6 +384,32 @@ export default function Edit( { attributes, setAttributes } ) {
 					<RangeControl label={ __( 'CTA Border Width', 'zenctuary' ) } value={ attributes.ctaBorderWidth } onChange={ ( ctaBorderWidth ) => setAttributes( { ctaBorderWidth } ) } min={ 0 } max={ 6 } />
 					<ToggleControl label={ __( 'Show CTA Icon', 'zenctuary' ) } checked={ attributes.ctaShowIcon } onChange={ ( ctaShowIcon ) => setAttributes( { ctaShowIcon } ) } />
 					<SelectControl label={ __( 'CTA Icon Position', 'zenctuary' ) } value={ attributes.ctaIconPosition } options={ [ { label: __( 'Right', 'zenctuary' ), value: 'right' }, { label: __( 'Left', 'zenctuary' ), value: 'left' } ] } onChange={ ( ctaIconPosition ) => setAttributes( { ctaIconPosition } ) } />
+					<SelectControl
+						label={ __( 'Hover CTA Horizontal Align', 'zenctuary' ) }
+						value={ attributes.hoverCtaHorizontalAlign }
+						options={ HORIZONTAL_POSITION }
+						onChange={ ( hoverCtaHorizontalAlign ) => setAttributes( { hoverCtaHorizontalAlign } ) }
+					/>
+					<SelectControl
+						label={ __( 'Hover CTA Vertical Align', 'zenctuary' ) }
+						value={ attributes.hoverCtaVerticalAlign }
+						options={ VERTICAL_ALIGNMENT }
+						onChange={ ( hoverCtaVerticalAlign ) => setAttributes( { hoverCtaVerticalAlign } ) }
+					/>
+					<RangeControl
+						label={ __( 'Hover CTA Horizontal Offset', 'zenctuary' ) }
+						value={ attributes.hoverCtaOffsetX }
+						onChange={ ( hoverCtaOffsetX ) => setAttributes( { hoverCtaOffsetX } ) }
+						min={ -300 }
+						max={ 300 }
+					/>
+					<RangeControl
+						label={ __( 'Hover CTA Vertical Offset', 'zenctuary' ) }
+						value={ attributes.hoverCtaOffsetY }
+						onChange={ ( hoverCtaOffsetY ) => setAttributes( { hoverCtaOffsetY } ) }
+						min={ -300 }
+						max={ 300 }
+					/>
 				</PanelBody>
 
 				<PanelBody title={ __( 'Mobile & Preview', 'zenctuary' ) }>
