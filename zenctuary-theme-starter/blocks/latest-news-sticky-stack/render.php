@@ -161,7 +161,7 @@ $wrapper_attributes = get_block_wrapper_attributes(
 	[
 		'class' => 'latest-news-sticky-stack' . ( $is_editor_preview ? ' is-editor-preview' : '' ),
 		'style' => sprintf(
-			'--lnss-section-bg:%1$s;--lnss-section-text:%2$s;--lnss-max-width:%3$dpx;--lnss-pad-top:%4$dpx;--lnss-pad-bottom:%5$dpx;--lnss-pad-x:%6$dpx;--lnss-header-cards-gap:%7$dpx;--lnss-sticky-z:%8$d;--lnss-sticky-top:%9$dpx;--lnss-sticky-top-tablet:%10$dpx;--lnss-sticky-top-mobile:%11$dpx;--lnss-sticky-bg:%12$s;--lnss-sticky-pad-top:%13$dpx;--lnss-sticky-pad-right:%14$dpx;--lnss-sticky-pad-bottom:%15$dpx;--lnss-sticky-pad-left:%16$dpx;--lnss-sticky-border-width:%17$dpx;--lnss-sticky-border-color:%18$s;--lnss-heading-color:%19$s;--lnss-heading-size:%20$dpx;--lnss-heading-weight:%21$s;--lnss-heading-line:%22$s;--lnss-heading-transform:%23$s;--lnss-header-button-color:%24$s;--lnss-header-button-bg:%25$s;--lnss-header-button-border:%26$s;--lnss-header-button-size:%27$dpx;--lnss-header-button-weight:%28$s;--lnss-header-button-pad-y:%29$dpx;--lnss-header-button-pad-x:%30$dpx;--lnss-header-button-radius:%31$dpx;--lnss-header-button-border-width:%32$dpx;--lnss-card-width:%33$dpx;--lnss-card-height:%34$dpx;--lnss-card-max-width:%35$dpx;--lnss-card-width-tablet:%36$d%%;--lnss-card-height-tablet:%37$dpx;--lnss-card-width-mobile:%38$d%%;--lnss-card-height-mobile:%39$dpx;--lnss-card-radius:%40$dpx;--lnss-card-gap:%41$dpx;--lnss-rest-overlay:%42$s;--lnss-rest-overlay-op:%43$s;--lnss-hover-overlay:%44$s;--lnss-hover-overlay-op:%45$s;--lnss-hover-border:%46$s;--lnss-hover-border-width:%47$dpx;--lnss-card-padding:%48$dpx;--lnss-card-padding-tablet:%49$dpx;--lnss-card-padding-mobile:%50$dpx;--lnss-hover-max-width:%51$dpx;--lnss-rest-title-size:%52$dpx;--lnss-rest-title-size-tablet:%53$dpx;--lnss-rest-title-size-mobile:%54$dpx;--lnss-rest-title-weight:%55$s;--lnss-rest-title-color:%56$s;--lnss-rest-title-max:%57$dpx;--lnss-rest-title-transform:%58$s;--lnss-rest-excerpt-size:%59$dpx;--lnss-rest-excerpt-size-tablet:%60$dpx;--lnss-rest-excerpt-size-mobile:%61$dpx;--lnss-rest-excerpt-line:%62$s;--lnss-rest-excerpt-color:%63$s;--lnss-rest-excerpt-max:%64$dpx;--lnss-rest-gap:%65$dpx;--lnss-hover-title-size:%66$dpx;--lnss-hover-title-weight:%67$s;--lnss-hover-title-color:%68$s;--lnss-hover-body-size:%69$dpx;--lnss-hover-body-size-tablet:%70$dpx;--lnss-hover-body-size-mobile:%71$dpx;--lnss-hover-body-line:%72$s;--lnss-hover-body-color:%73$s;--lnss-hover-title-gap:%74$dpx;--lnss-hover-button-gap:%75$dpx;--lnss-meta-size:%76$dpx;--lnss-meta-weight:%77$s;--lnss-meta-color:%78$s;--lnss-meta-gap:%79$dpx;--lnss-cta-label:%80$s;--lnss-cta-size:%81$dpx;--lnss-cta-weight:%82$s;--lnss-cta-color:%83$s;--lnss-cta-bg:%84$s;--lnss-cta-border:%85$s;--lnss-cta-pad-y:%86$dpx;--lnss-cta-pad-x:%87$dpx;--lnss-cta-radius:%88$dpx;--lnss-cta-border-width:%89$dpx;--lnss-header-gap:%90$dpx;',
+			'--lnss-section-bg:%1$s;--lnss-section-text:%2$s;--lnss-max-width:%3$dpx;--lnss-pad-top:%4$dpx;--lnss-pad-bottom:%5$dpx;--lnss-pad-x:%6$dpx;--lnss-header-cards-gap:%7$dpx;--lnss-sticky-z:%8$d;--lnss-sticky-top:%9$dpx;--lnss-sticky-top-tablet:%10$dpx;--lnss-sticky-top-mobile:%11$dpx;--lnss-sticky-bg:%12$s;--lnss-sticky-pad-top:%13$dpx;--lnss-sticky-pad-right:%14$dpx;--lnss-sticky-pad-bottom:%15$dpx;--lnss-sticky-pad-left:%16$dpx;--lnss-sticky-border-width:%17$dpx;--lnss-sticky-border-color:%18$s;--lnss-heading-color:%19$s;--lnss-heading-size:%20$dpx;--lnss-heading-weight:%21$s;--lnss-heading-line:%22$s;--lnss-heading-transform:%23$s;--lnss-header-button-color:%24$s;--lnss-header-button-bg:%25$s;--lnss-header-button-border:%26$s;--lnss-header-button-size:%27$dpx;--lnss-header-button-weight:%28$s;--lnss-header-button-pad-y:%29$dpx;--lnss-header-button-pad-x:%30$dpx;--lnss-header-button-radius:%31$dpx;--lnss-header-button-border-width:%32$dpx;--lnss-card-width:%33$dpx;--lnss-card-height:%34$dpx;--lnss-card-max-width:%35$dpx;--lnss-card-width-tablet:%36$d%%;--lnss-card-height-tablet:%37$dpx;--lnss-card-width-mobile:%38$d%%;--lnss-card-height-mobile:%39$dpx;--lnss-card-radius:%40$dpx;--lnss-card-gap:%41$dpx;--lnss-rest-overlay:%42$s;--lnss-rest-overlay-op:%43$s;--lnss-hover-overlay:%44$s;--lnss-hover-overlay-op:%45$s;--lnss-hover-border:%46$s;--lnss-hover-border-width:%47$dpx;--lnss-card-padding:%48$dpx;--lnss-card-padding-tablet:%49$dpx;--lnss-card-padding-mobile:%50$dpx;--lnss-hover-max-width:%51$dpx;--lnss-rest-title-size:%52$dpx;--lnss-rest-title-size-tablet:%53$dpx;--lnss-rest-title-size-mobile:%54$dpx;--lnss-rest-title-weight:%55$s;--lnss-rest-title-color:%56$s;--lnss-rest-title-max:%57$dpx;--lnss-rest-title-transform:%58$s;--lnss-rest-justify:%59$s;--lnss-rest-offset-x:%60$dpx;--lnss-rest-offset-y:%61$dpx;--lnss-rest-excerpt-size:%62$dpx;--lnss-rest-excerpt-size-tablet:%63$dpx;--lnss-rest-excerpt-size-mobile:%64$dpx;--lnss-rest-excerpt-line:%65$s;--lnss-rest-excerpt-color:%66$s;--lnss-rest-excerpt-max:%67$dpx;--lnss-rest-gap:%68$dpx;--lnss-hover-justify:%69$s;--lnss-hover-offset-x:%70$dpx;--lnss-hover-offset-y:%71$dpx;--lnss-hover-title-size:%72$dpx;--lnss-hover-title-weight:%73$s;--lnss-hover-title-color:%74$s;--lnss-hover-body-size:%75$dpx;--lnss-hover-body-size-tablet:%76$dpx;--lnss-hover-body-size-mobile:%77$dpx;--lnss-hover-body-line:%78$s;--lnss-hover-body-color:%79$s;--lnss-hover-title-gap:%80$dpx;--lnss-hover-button-gap:%81$dpx;--lnss-meta-size:%82$dpx;--lnss-meta-weight:%83$s;--lnss-meta-color:%84$s;--lnss-meta-gap:%85$dpx;--lnss-cta-label:%86$s;--lnss-cta-size:%87$dpx;--lnss-cta-weight:%88$s;--lnss-cta-color:%89$s;--lnss-cta-bg:%90$s;--lnss-cta-border:%91$s;--lnss-cta-pad-y:%92$dpx;--lnss-cta-pad-x:%93$dpx;--lnss-cta-radius:%94$dpx;--lnss-cta-border-width:%95$dpx;--lnss-header-gap:%96$dpx;',
 			esc_attr( $attributes['sectionBackgroundColor'] ?? '#3f3d3d' ),
 			esc_attr( $attributes['sectionTextColor'] ?? '#f1eee7' ),
 			absint( $attributes['sectionMaxWidth'] ?? 1600 ),
@@ -220,6 +220,9 @@ $wrapper_attributes = get_block_wrapper_attributes(
 			esc_attr( $attributes['restingTitleColor'] ?? '#f6f2ea' ),
 			absint( $attributes['restingTitleMaxWidth'] ?? 680 ),
 			! empty( $attributes['restingTitleUppercase'] ) ? 'uppercase' : 'none',
+			'start' === ( $attributes['restingContentVerticalAlign'] ?? 'center' ) ? 'flex-start' : ( 'end' === ( $attributes['restingContentVerticalAlign'] ?? 'center' ) ? 'flex-end' : 'center' ),
+			absint( $attributes['restingContentOffsetX'] ?? 0 ),
+			absint( $attributes['restingContentOffsetY'] ?? 0 ),
 			absint( $attributes['restingExcerptFontSize'] ?? 18 ),
 			absint( $attributes['restingExcerptFontSizeTablet'] ?? 16 ),
 			absint( $attributes['restingExcerptFontSizeMobile'] ?? 15 ),
@@ -227,6 +230,9 @@ $wrapper_attributes = get_block_wrapper_attributes(
 			esc_attr( $attributes['restingExcerptColor'] ?? '#f6f2ea' ),
 			absint( $attributes['restingExcerptMaxWidth'] ?? 620 ),
 			absint( $attributes['restingTitleExcerptGap'] ?? 16 ),
+			'start' === ( $attributes['hoverContentVerticalAlign'] ?? 'start' ) ? 'flex-start' : ( 'end' === ( $attributes['hoverContentVerticalAlign'] ?? 'start' ) ? 'flex-end' : 'center' ),
+			absint( $attributes['hoverContentOffsetX'] ?? 0 ),
+			absint( $attributes['hoverContentOffsetY'] ?? 0 ),
 			absint( $attributes['hoverTitleFontSize'] ?? 32 ),
 			esc_attr( $attributes['hoverTitleFontWeight'] ?? '700' ),
 			esc_attr( $attributes['hoverTitleColor'] ?? '#d8b354' ),
@@ -311,6 +317,7 @@ $shadow_class       = $sticky_shadow ? 'has-sticky-shadow' : '';
 							</div>
 
 							<div class="latest-news-sticky-stack__hover-state">
+								<div class="latest-news-sticky-stack__hover-panel">
 								<div class="latest-news-sticky-stack__hover-top">
 									<h3 class="latest-news-sticky-stack__hover-title"><?php echo esc_html( $title ); ?></h3>
 									<?php if ( $show_meta && ! empty( $meta_text ) ) : ?>
@@ -330,6 +337,7 @@ $shadow_class       = $sticky_shadow ? 'has-sticky-shadow' : '';
 										<?php endif; ?>
 										<span><?php echo esc_html( $attributes['ctaLabel'] ?? 'Read More' ); ?></span>
 									</a>
+								</div>
 								</div>
 							</div>
 						</div>

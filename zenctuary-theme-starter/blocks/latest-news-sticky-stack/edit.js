@@ -45,6 +45,12 @@ const ALIGNMENT = [
 	{ label: __( 'Right', 'zenctuary' ), value: 'end' },
 ];
 
+const VERTICAL_ALIGNMENT = [
+	{ label: __( 'Top', 'zenctuary' ), value: 'start' },
+	{ label: __( 'Center', 'zenctuary' ), value: 'center' },
+	{ label: __( 'Bottom', 'zenctuary' ), value: 'end' },
+];
+
 const META_SOURCE = [
 	{ label: __( 'Date', 'zenctuary' ), value: 'date' },
 	{ label: __( 'Category / Term', 'zenctuary' ), value: 'term' },
@@ -280,6 +286,26 @@ export default function Edit( { attributes, setAttributes } ) {
 				</PanelBody>
 
 				<PanelBody title={ __( 'Resting State', 'zenctuary' ) }>
+					<SelectControl
+						label={ __( 'Content Vertical Alignment', 'zenctuary' ) }
+						value={ attributes.restingContentVerticalAlign }
+						options={ VERTICAL_ALIGNMENT }
+						onChange={ ( restingContentVerticalAlign ) => setAttributes( { restingContentVerticalAlign } ) }
+					/>
+					<RangeControl
+						label={ __( 'Content Horizontal Offset', 'zenctuary' ) }
+						value={ attributes.restingContentOffsetX }
+						onChange={ ( restingContentOffsetX ) => setAttributes( { restingContentOffsetX } ) }
+						min={ -300 }
+						max={ 300 }
+					/>
+					<RangeControl
+						label={ __( 'Content Vertical Offset', 'zenctuary' ) }
+						value={ attributes.restingContentOffsetY }
+						onChange={ ( restingContentOffsetY ) => setAttributes( { restingContentOffsetY } ) }
+						min={ -300 }
+						max={ 300 }
+					/>
 					<RangeControl label={ __( 'Title Font Size', 'zenctuary' ) } value={ attributes.restingTitleFontSize } onChange={ ( restingTitleFontSize ) => setAttributes( { restingTitleFontSize } ) } min={ 16 } max={ 72 } />
 					<RangeControl label={ __( 'Title Font Size Tablet', 'zenctuary' ) } value={ attributes.restingTitleFontSizeTablet } onChange={ ( restingTitleFontSizeTablet ) => setAttributes( { restingTitleFontSizeTablet } ) } min={ 14 } max={ 64 } />
 					<RangeControl label={ __( 'Title Font Size Mobile', 'zenctuary' ) } value={ attributes.restingTitleFontSizeMobile } onChange={ ( restingTitleFontSizeMobile ) => setAttributes( { restingTitleFontSizeMobile } ) } min={ 14 } max={ 48 } />
@@ -298,6 +324,26 @@ export default function Edit( { attributes, setAttributes } ) {
 				</PanelBody>
 
 				<PanelBody title={ __( 'Hover State', 'zenctuary' ) }>
+					<SelectControl
+						label={ __( 'Content Vertical Alignment', 'zenctuary' ) }
+						value={ attributes.hoverContentVerticalAlign }
+						options={ VERTICAL_ALIGNMENT }
+						onChange={ ( hoverContentVerticalAlign ) => setAttributes( { hoverContentVerticalAlign } ) }
+					/>
+					<RangeControl
+						label={ __( 'Content Horizontal Offset', 'zenctuary' ) }
+						value={ attributes.hoverContentOffsetX }
+						onChange={ ( hoverContentOffsetX ) => setAttributes( { hoverContentOffsetX } ) }
+						min={ -300 }
+						max={ 300 }
+					/>
+					<RangeControl
+						label={ __( 'Content Vertical Offset', 'zenctuary' ) }
+						value={ attributes.hoverContentOffsetY }
+						onChange={ ( hoverContentOffsetY ) => setAttributes( { hoverContentOffsetY } ) }
+						min={ -300 }
+						max={ 300 }
+					/>
 					<RangeControl label={ __( 'Hover Title Font Size', 'zenctuary' ) } value={ attributes.hoverTitleFontSize } onChange={ ( hoverTitleFontSize ) => setAttributes( { hoverTitleFontSize } ) } min={ 16 } max={ 60 } />
 					<SelectControl label={ __( 'Hover Title Weight', 'zenctuary' ) } value={ attributes.hoverTitleFontWeight } options={ WEIGHTS } onChange={ ( hoverTitleFontWeight ) => setAttributes( { hoverTitleFontWeight } ) } />
 					<ColorControl label={ __( 'Hover Title Color', 'zenctuary' ) } value={ attributes.hoverTitleColor } fallback="#d8b354" onChange={ ( hoverTitleColor ) => setAttributes( { hoverTitleColor } ) } />
