@@ -11,6 +11,7 @@ require_once ZENCTUARY_THEME_DIR . '/inc/enqueue.php';
 require_once ZENCTUARY_THEME_DIR . '/inc/patterns.php';
 require_once ZENCTUARY_THEME_DIR . '/inc/taxonomies.php';
 require_once ZENCTUARY_THEME_DIR . '/inc/meta.php';
+require_once ZENCTUARY_THEME_DIR . '/inc/auth.php';
 require_once ZENCTUARY_THEME_DIR . '/inc/helpers/query.php';
 require_once ZENCTUARY_THEME_DIR . '/inc/helpers/grouping.php';
 
