@@ -44,6 +44,7 @@
   /* Sizes */
   --zen-btn-height-lg: 54px;
   --zen-btn-height-sm: 44px;
+  --zen-header-hamburger-size: var(--wp--custom--hamburgerIconSizeMobile, 30px);
   --zen-input-height: 52px;
   --zen-header-height: 120px;
   --zen-faq-height: 1211px;

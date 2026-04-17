@@ -229,6 +229,7 @@
       "buttonRadius": "32px",
       "buttonHeightLarge": "54px",
       "buttonHeightSmall": "44px",
+      "hamburgerIconSizeMobile": "30px",
       "headerHeightDesktop": "120px",
       "headerHeightMobile": "120px"
     }

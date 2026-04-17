@@ -1,4 +1,21 @@
 document.addEventListener('DOMContentLoaded', () => {
+  const ensureMobileHeaderAccount = () => {
+    const header = document.querySelector('.zen-site-header');
+    const accountLink = header?.querySelector('.wp-block-buttons .wp-block-button__link[href*="my-account"]');
+    const responsiveContent = header?.querySelector('.wp-block-navigation__responsive-container-content');
+
+    if (!accountLink || !responsiveContent || responsiveContent.querySelector('.zen-mobile-account-entry')) {
+      return;
+    }
+
+    const wrapper = document.createElement('div');
+    wrapper.className = 'zen-mobile-account-entry';
+    wrapper.innerHTML = accountLink.outerHTML;
+    responsiveContent.appendChild(wrapper);
+  };
+
+  ensureMobileHeaderAccount();
+
   // Existing snippet (if any)
   document.querySelectorAll('.zen-faq__question').forEach((button) => {
     button.addEventListener('click', () => {
