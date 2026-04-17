@@ -258,8 +258,14 @@
 		padding: 56px 18px !important;
 	}
 
+	.zen-what-zencoins__paragraph {
+		text-align: center;
+	}
+
 	.zen-what-zencoins__heading-row {
 		gap: 14px;
+		flex-direction: column;
+    	text-align: center;
 	}
 
 	.zen-what-zencoins__heading {
