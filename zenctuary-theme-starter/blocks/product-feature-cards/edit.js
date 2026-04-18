@@ -37,6 +37,12 @@ const WEIGHTS = [ '400', '500', '600', '700', '800' ].map( ( value ) => ( {
 	value,
 } ) );
 
+const ALIGN_OPTIONS = [
+	{ label: __( 'Left', 'zenctuary' ), value: 'left' },
+	{ label: __( 'Center', 'zenctuary' ), value: 'center' },
+	{ label: __( 'Right', 'zenctuary' ), value: 'right' },
+];
+
 function ColorControl( { label, value, fallback, onChange } ) {
 	return (
 		<BaseControl label={ label }>
@@ -253,6 +259,14 @@ export default function Edit( { attributes, setAttributes } ) {
 						label={ __( 'Intro Text', 'zenctuary' ) }
 						value={ attributes.sectionIntro }
 						onChange={ ( sectionIntro ) => setAttributes( { sectionIntro } ) }
+					/>
+					<SelectControl
+						label={ __( 'Header Alignment', 'zenctuary' ) }
+						value={ attributes.sectionHeaderAlignment }
+						options={ ALIGN_OPTIONS }
+						onChange={ ( sectionHeaderAlignment ) =>
+							setAttributes( { sectionHeaderAlignment } )
+						}
 					/>
 					<ColorControl
 						label={ __( 'Background', 'zenctuary' ) }
@@ -637,22 +651,22 @@ export default function Edit( { attributes, setAttributes } ) {
 						}
 					/>
 					<ColorControl
-						label={ __( 'Excerpt Color', 'zenctuary' ) }
-						value={ attributes.excerptColor }
+						label={ __( 'Ideal For Color', 'zenctuary' ) }
+						value={ attributes.idealForColor }
 						fallback="#f6f2ea"
-						onChange={ ( excerptColor ) => setAttributes( { excerptColor } ) }
+						onChange={ ( idealForColor ) => setAttributes( { idealForColor } ) }
 					/>
 					<RangeControl
-						label={ __( 'Excerpt Font Size', 'zenctuary' ) }
-						value={ attributes.excerptFontSize }
-						onChange={ ( excerptFontSize ) => setAttributes( { excerptFontSize } ) }
+						label={ __( 'Ideal For Font Size', 'zenctuary' ) }
+						value={ attributes.idealForFontSize }
+						onChange={ ( idealForFontSize ) => setAttributes( { idealForFontSize } ) }
 						min={ 12 }
 						max={ 26 }
 					/>
 					<RangeControl
-						label={ __( 'Excerpt Max Width', 'zenctuary' ) }
-						value={ attributes.excerptMaxWidth }
-						onChange={ ( excerptMaxWidth ) => setAttributes( { excerptMaxWidth } ) }
+						label={ __( 'Ideal For Max Width', 'zenctuary' ) }
+						value={ attributes.idealForMaxWidth }
+						onChange={ ( idealForMaxWidth ) => setAttributes( { idealForMaxWidth } ) }
 						min={ 160 }
 						max={ 340 }
 					/>
@@ -709,6 +723,36 @@ export default function Edit( { attributes, setAttributes } ) {
 						value={ attributes.dividerColor }
 						fallback="rgba(246, 242, 234, 0.72)"
 						onChange={ ( dividerColor ) => setAttributes( { dividerColor } ) }
+					/>
+					<RangeControl
+						label={ __( 'Divider Space Top', 'zenctuary' ) }
+						value={ attributes.dividerSpacingTop }
+						onChange={ ( dividerSpacingTop ) => setAttributes( { dividerSpacingTop } ) }
+						min={ 0 }
+						max={ 40 }
+					/>
+					<RangeControl
+						label={ __( 'Divider Space Right', 'zenctuary' ) }
+						value={ attributes.dividerSpacingRight }
+						onChange={ ( dividerSpacingRight ) => setAttributes( { dividerSpacingRight } ) }
+						min={ 0 }
+						max={ 40 }
+					/>
+					<RangeControl
+						label={ __( 'Divider Space Bottom', 'zenctuary' ) }
+						value={ attributes.dividerSpacingBottom }
+						onChange={ ( dividerSpacingBottom ) =>
+							setAttributes( { dividerSpacingBottom } )
+						}
+						min={ 0 }
+						max={ 40 }
+					/>
+					<RangeControl
+						label={ __( 'Divider Space Left', 'zenctuary' ) }
+						value={ attributes.dividerSpacingLeft }
+						onChange={ ( dividerSpacingLeft ) => setAttributes( { dividerSpacingLeft } ) }
+						min={ 0 }
+						max={ 40 }
 					/>
 					<ColorControl
 						label={ __( 'Label Color', 'zenctuary' ) }

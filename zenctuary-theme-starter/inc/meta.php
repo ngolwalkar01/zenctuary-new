@@ -524,12 +524,12 @@ function zenctuary_register_product_feature_card_meta(): void {
 
 	register_post_meta(
 		'product',
-		'_card_excerpt',
+		'_ideal_for',
 		array_merge(
 			$defaults,
 			[
 				'type'              => 'string',
-				'description'       => __( 'Short card excerpt used by Product Feature Cards.', 'zenctuary' ),
+				'description'       => __( 'Ideal for text used by Product Feature Cards.', 'zenctuary' ),
 				'sanitize_callback' => 'sanitize_textarea_field',
 				'default'           => '',
 			]
@@ -587,7 +587,7 @@ function zenctuary_render_product_feature_cards_metabox( WP_Post $post ): void {
 	wp_nonce_field( 'zenctuary_save_product_feature_cards_meta', 'zenctuary_product_feature_cards_nonce' );
 
 	$session_time   = (string) get_post_meta( $post->ID, '_session_time', true );
-	$card_excerpt   = (string) get_post_meta( $post->ID, '_card_excerpt', true );
+	$ideal_for      = (string) get_post_meta( $post->ID, '_ideal_for', true );
 	$what_to_expect = (string) get_post_meta( $post->ID, '_what_to_expect', true );
 	$zencoin_value  = (string) get_post_meta( $post->ID, '_zencoin_value', true );
 	?>
@@ -627,8 +627,8 @@ function zenctuary_render_product_feature_cards_metabox( WP_Post $post ): void {
 		</div>
 
 		<div class="zen-meta-field zen-meta-full">
-			<label for="_card_excerpt"><?php esc_html_e( 'Card Excerpt', 'zenctuary' ); ?></label>
-			<textarea id="_card_excerpt" name="_card_excerpt" rows="4" placeholder="<?php esc_attr_e( 'Short summary used inside the product card.', 'zenctuary' ); ?>"><?php echo esc_textarea( $card_excerpt ); ?></textarea>
+			<label for="_ideal_for"><?php esc_html_e( 'Ideal for', 'zenctuary' ); ?></label>
+			<textarea id="_ideal_for" name="_ideal_for" rows="4" placeholder="<?php esc_attr_e( 'Short ideal-for text used inside the product card.', 'zenctuary' ); ?>"><?php echo esc_textarea( $ideal_for ); ?></textarea>
 		</div>
 
 		<div class="zen-meta-field zen-meta-full">
@@ -680,8 +680,8 @@ function zenctuary_save_product_feature_cards_metabox( int $post_id ): void {
 		update_post_meta( $post_id, '_zencoin_value', sanitize_text_field( wp_unslash( $_POST['_zencoin_value'] ) ) );
 	}
 
-	if ( isset( $_POST['_card_excerpt'] ) ) {
-		update_post_meta( $post_id, '_card_excerpt', sanitize_textarea_field( wp_unslash( $_POST['_card_excerpt'] ) ) );
+	if ( isset( $_POST['_ideal_for'] ) ) {
+		update_post_meta( $post_id, '_ideal_for', sanitize_textarea_field( wp_unslash( $_POST['_ideal_for'] ) ) );
 	}
 
 	if ( isset( $_POST['_what_to_expect'] ) ) {

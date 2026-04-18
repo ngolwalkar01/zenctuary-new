@@ -1,8 +1,11 @@
 .wp-block-zenctuary-product-feature-cards {
 	background: var(--pfc-section-bg, #3f3d3d);
+	border: 0;
+	box-shadow: none;
 	color: var(--pfc-section-text, #f6f2ea);
 	margin-bottom: var(--pfc-mb, 0);
 	margin-top: var(--pfc-mt, 0);
+	outline: 0;
 	padding: var(--pfc-pt, 80px) var(--pfc-pr, 24px) var(--pfc-pb, 80px)
 		var(--pfc-pl, 24px);
 
@@ -25,7 +28,7 @@
 .pfc__header {
 	margin: 0 auto var(--pfc-intro-bottom, 48px);
 	max-width: 1000px;
-	text-align: center;
+	text-align: var(--pfc-header-align, center);
 }
 
 .pfc__section-heading {
@@ -160,7 +163,7 @@
 .pfc__content {
 	display: flex;
 	flex-direction: column;
-	height: 100%;
+	min-height: 100%;
 	padding: var(--pfc-body-pt, 30px) var(--pfc-body-pr, 20px)
 		var(--pfc-body-pb, 24px) var(--pfc-body-pl, 20px);
 	position: relative;
@@ -206,12 +209,12 @@
 	}
 }
 
-.pfc__excerpt {
-	color: var(--pfc-excerpt-color, #f6f2ea);
-	font-size: var(--pfc-excerpt-font-size, 16px);
-	line-height: var(--pfc-excerpt-line-height, 1.55);
-	margin: 0 0 var(--pfc-excerpt-bottom, 22px);
-	max-width: var(--pfc-excerpt-max-width, 310px);
+.pfc__ideal-for {
+	color: var(--pfc-ideal-for-color, #f6f2ea);
+	font-size: var(--pfc-ideal-for-font-size, 16px);
+	line-height: var(--pfc-ideal-for-line-height, 1.55);
+	margin: 0 0 var(--pfc-ideal-for-bottom, 22px);
+	max-width: var(--pfc-ideal-for-max-width, 310px);
 
 	p {
 		margin: 0 0 0.45em;
@@ -235,7 +238,7 @@
 	gap: 10px;
 	justify-content: center;
 	margin-bottom: var(--pfc-button-mb, 22px);
-	margin-top: var(--pfc-button-mt, 0);
+	margin-top: auto;
 	padding: var(--pfc-button-py, 16px) var(--pfc-button-px, 28px);
 	text-decoration: none;
 }
@@ -251,15 +254,19 @@
 	width: 18px;
 }
 
+.pfc__divider-wrap {
+	padding: var(--pfc-divider-pt, 0) var(--pfc-divider-pr, 0)
+		var(--pfc-divider-pb, 18px) var(--pfc-divider-pl, 0);
+}
+
 .pfc__divider {
 	background: var(--pfc-divider-color, rgba(246, 242, 234, 0.72));
 	height: var(--pfc-divider-thickness, 2px);
-	margin: var(--pfc-divider-mt, 0) 0 var(--pfc-divider-mb, 18px);
 	width: 100%;
 }
 
 .pfc__expect {
-	margin-top: auto;
+	margin-top: 0;
 }
 
 .pfc__expect-toggle {
@@ -380,8 +387,8 @@
 		font-size: clamp(28px, 8vw, var(--pfc-heading-size, 36px));
 	}
 
-	.pfc__excerpt {
-		font-size: var(--pfc-excerpt-font-size-mobile, 15px);
+	.pfc__ideal-for {
+		font-size: var(--pfc-ideal-for-font-size-mobile, 15px);
 	}
 
 	.pfc__button {

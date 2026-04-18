@@ -60,6 +60,10 @@
       "type": "string",
       "default": ""
     },
+    "sectionHeaderAlignment": {
+      "type": "string",
+      "default": "center"
+    },
     "sectionBackgroundColor": {
       "type": "string",
       "default": "#3f3d3d"
@@ -404,27 +408,27 @@
       "type": "number",
       "default": 18
     },
-    "excerptColor": {
+    "idealForColor": {
       "type": "string",
       "default": "#f6f2ea"
     },
-    "excerptFontSize": {
+    "idealForFontSize": {
       "type": "number",
       "default": 16
     },
-    "excerptFontSizeMobile": {
+    "idealForFontSizeMobile": {
       "type": "number",
       "default": 15
     },
-    "excerptLineHeight": {
+    "idealForLineHeight": {
       "type": "number",
       "default": 1.55
     },
-    "excerptMaxWidth": {
+    "idealForMaxWidth": {
       "type": "number",
       "default": 310
     },
-    "excerptBottomSpacing": {
+    "idealForBottomSpacing": {
       "type": "number",
       "default": 22
     },
@@ -496,13 +500,21 @@
       "type": "number",
       "default": 2
     },
-    "dividerSpacingAbove": {
+    "dividerSpacingTop": {
       "type": "number",
       "default": 0
     },
-    "dividerSpacingBelow": {
+    "dividerSpacingRight": {
+      "type": "number",
+      "default": 0
+    },
+    "dividerSpacingBottom": {
       "type": "number",
       "default": 18
+    },
+    "dividerSpacingLeft": {
+      "type": "number",
+      "default": 0
     },
     "expandLabel": {
       "type": "string",

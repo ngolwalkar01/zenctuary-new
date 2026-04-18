@@ -31,11 +31,11 @@ if ( ! function_exists( 'zenctuary_pfc_clean_ids' ) ) {
 	}
 }
 
-if ( ! function_exists( 'zenctuary_pfc_excerpt' ) ) {
-	function zenctuary_pfc_excerpt( int $product_id ): string {
-		$custom_excerpt = (string) get_post_meta( $product_id, '_card_excerpt', true );
-		if ( '' !== trim( $custom_excerpt ) ) {
-			return $custom_excerpt;
+if ( ! function_exists( 'zenctuary_pfc_ideal_for' ) ) {
+	function zenctuary_pfc_ideal_for( int $product_id ): string {
+		$ideal_for = (string) get_post_meta( $product_id, '_ideal_for', true );
+		if ( '' !== trim( $ideal_for ) ) {
+			return $ideal_for;
 		}
 
 		$product = wc_get_product( $product_id );
@@ -109,6 +109,7 @@ $posts = $query->posts;
 $css_vars = [
 	'--pfc-section-bg:' . esc_attr( $attributes['sectionBackgroundColor'] ?? '#3f3d3d' ),
 	'--pfc-section-text:' . esc_attr( $attributes['sectionTextColor'] ?? '#f6f2ea' ),
+	'--pfc-header-align:' . esc_attr( $attributes['sectionHeaderAlignment'] ?? 'center' ),
 	'--pfc-heading-color:' . esc_attr( $attributes['sectionHeadingColor'] ?? '#d8b354' ),
 	'--pfc-heading-size:' . absint( $attributes['sectionHeadingFontSize'] ?? 36 ) . 'px',
 	'--pfc-heading-weight:' . esc_attr( $attributes['sectionHeadingFontWeight'] ?? '700' ),
@@ -191,12 +192,12 @@ $css_vars = [
 	'--pfc-session-font-weight:' . esc_attr( $attributes['sessionFontWeight'] ?? '400' ),
 	'--pfc-session-gap:' . absint( $attributes['sessionGap'] ?? 10 ) . 'px',
 	'--pfc-session-bottom:' . absint( $attributes['sessionBottomSpacing'] ?? 18 ) . 'px',
-	'--pfc-excerpt-color:' . esc_attr( $attributes['excerptColor'] ?? '#f6f2ea' ),
-	'--pfc-excerpt-font-size:' . absint( $attributes['excerptFontSize'] ?? 16 ) . 'px',
-	'--pfc-excerpt-font-size-mobile:' . absint( $attributes['excerptFontSizeMobile'] ?? 15 ) . 'px',
-	'--pfc-excerpt-line-height:' . esc_attr( $attributes['excerptLineHeight'] ?? 1.55 ),
-	'--pfc-excerpt-max-width:' . absint( $attributes['excerptMaxWidth'] ?? 310 ) . 'px',
-	'--pfc-excerpt-bottom:' . absint( $attributes['excerptBottomSpacing'] ?? 22 ) . 'px',
+	'--pfc-ideal-for-color:' . esc_attr( $attributes['idealForColor'] ?? '#f6f2ea' ),
+	'--pfc-ideal-for-font-size:' . absint( $attributes['idealForFontSize'] ?? 16 ) . 'px',
+	'--pfc-ideal-for-font-size-mobile:' . absint( $attributes['idealForFontSizeMobile'] ?? 15 ) . 'px',
+	'--pfc-ideal-for-line-height:' . esc_attr( $attributes['idealForLineHeight'] ?? 1.55 ),
+	'--pfc-ideal-for-max-width:' . absint( $attributes['idealForMaxWidth'] ?? 310 ) . 'px',
+	'--pfc-ideal-for-bottom:' . absint( $attributes['idealForBottomSpacing'] ?? 22 ) . 'px',
 	'--pfc-button-text-color:' . esc_attr( $attributes['buttonTextColor'] ?? '#d8b354' ),
 	'--pfc-button-bg:' . esc_attr( $attributes['buttonBackgroundColor'] ?? '#3f3d3d' ),
 	'--pfc-button-border-color:' . esc_attr( $attributes['buttonBorderColor'] ?? '#d8b354' ),
@@ -211,8 +212,10 @@ $css_vars = [
 	'--pfc-button-mb:' . absint( $attributes['buttonSpacingBottom'] ?? 22 ) . 'px',
 	'--pfc-divider-color:' . esc_attr( $attributes['dividerColor'] ?? 'rgba(246, 242, 234, 0.72)' ),
 	'--pfc-divider-thickness:' . absint( $attributes['dividerThickness'] ?? 2 ) . 'px',
-	'--pfc-divider-mt:' . absint( $attributes['dividerSpacingAbove'] ?? 0 ) . 'px',
-	'--pfc-divider-mb:' . absint( $attributes['dividerSpacingBelow'] ?? 18 ) . 'px',
+	'--pfc-divider-pt:' . absint( $attributes['dividerSpacingTop'] ?? 0 ) . 'px',
+	'--pfc-divider-pr:' . absint( $attributes['dividerSpacingRight'] ?? 0 ) . 'px',
+	'--pfc-divider-pb:' . absint( $attributes['dividerSpacingBottom'] ?? 18 ) . 'px',
+	'--pfc-divider-pl:' . absint( $attributes['dividerSpacingLeft'] ?? 0 ) . 'px',
 	'--pfc-expand-label-color:' . esc_attr( $attributes['expandLabelColor'] ?? '#f6f2ea' ),
 	'--pfc-expand-label-size:' . absint( $attributes['expandLabelFontSize'] ?? 16 ) . 'px',
 	'--pfc-expand-label-weight:' . esc_attr( $attributes['expandLabelFontWeight'] ?? '700' ),
@@ -261,7 +264,7 @@ $wrapper_attributes = get_block_wrapper_attributes(
 					<?php
 					$product          = wc_get_product( $post->ID );
 					$session_time     = (string) get_post_meta( $post->ID, '_session_time', true );
-					$card_excerpt     = zenctuary_pfc_excerpt( $post->ID );
+					$ideal_for        = zenctuary_pfc_ideal_for( $post->ID );
 					$what_to_expect   = zenctuary_pfc_expect_content( $post->ID );
 					$zencoin_value    = zenctuary_pfc_zencoin_value( $post->ID );
 					$image_url        = get_the_post_thumbnail_url( $post, 'large' );
@@ -300,8 +303,8 @@ $wrapper_attributes = get_block_wrapper_attributes(
 									</div>
 								<?php endif; ?>
 
-								<?php if ( $card_excerpt ) : ?>
-									<div class="pfc__excerpt"><?php echo wp_kses_post( wpautop( esc_html( $card_excerpt ) ) ); ?></div>
+								<?php if ( $ideal_for ) : ?>
+									<div class="pfc__ideal-for"><?php echo wp_kses_post( wpautop( esc_html( $ideal_for ) ) ); ?></div>
 								<?php endif; ?>
 
 								<a class="pfc__button<?php echo ! empty( $attributes['buttonShowIcon'] ) && 'left' === ( $attributes['buttonIconPosition'] ?? 'right' ) ? ' is-icon-left' : ''; ?>" href="<?php echo esc_url( get_permalink( $post ) ); ?>">
@@ -311,7 +314,9 @@ $wrapper_attributes = get_block_wrapper_attributes(
 									<?php endif; ?>
 								</a>
 
-								<div class="pfc__divider" aria-hidden="true"></div>
+								<div class="pfc__divider-wrap" aria-hidden="true">
+									<div class="pfc__divider"></div>
+								</div>
 
 								<div class="pfc__expect">
 									<button
