@@ -7,14 +7,13 @@ import ServerSideRender from '@wordpress/server-side-render';
 import apiFetch from '@wordpress/api-fetch';
 import {
 	BaseControl,
-	CheckboxControl,
 	ColorPalette,
 	PanelBody,
 	RangeControl,
 	SelectControl,
 	TextControl,
-	TextareaControl,
 	ToggleControl,
+	CheckboxControl,
 } from '@wordpress/components';
 import { useEffect, useMemo, useState } from '@wordpress/element';
 
@@ -23,21 +22,14 @@ const COLORS = [
 	{ name: 'Charcoal', color: '#3f3d3d' },
 	{ name: 'Cream', color: '#f6f2ea' },
 	{ name: 'White', color: '#ffffff' },
-	{ name: 'Ink', color: '#1f1c18' },
+	{ name: 'Ink', color: '#111111' },
 ];
 
 const ORDER_BY = [
 	{ label: __( 'Date', 'zenctuary' ), value: 'date' },
 	{ label: __( 'Title', 'zenctuary' ), value: 'title' },
-	{ label: __( 'Modified', 'zenctuary' ), value: 'modified' },
-	{ label: __( 'Random', 'zenctuary' ), value: 'rand' },
 	{ label: __( 'Menu Order', 'zenctuary' ), value: 'menu_order' },
-];
-
-const ALIGN_OPTIONS = [
-	{ label: __( 'Left', 'zenctuary' ), value: 'start' },
-	{ label: __( 'Center', 'zenctuary' ), value: 'center' },
-	{ label: __( 'Right', 'zenctuary' ), value: 'end' },
+	{ label: __( 'Random', 'zenctuary' ), value: 'rand' },
 ];
 
 const WEIGHTS = [ '400', '500', '600', '700', '800' ].map( ( value ) => ( {
@@ -88,10 +80,7 @@ function MultiCheckboxControl( { label, options, selected, onChange, emptyLabel 
 }
 
 export default function Edit( { attributes, setAttributes } ) {
-	const blockProps = useBlockProps( {
-		className: 'pfc-editor',
-	} );
-
+	const blockProps = useBlockProps( { className: 'pfc-editor' } );
 	const [ productRestBase, setProductRestBase ] = useState( 'products' );
 	const [ taxonomies, setTaxonomies ] = useState( [] );
 	const [ terms, setTerms ] = useState( [] );
@@ -108,14 +97,15 @@ export default function Edit( { attributes, setAttributes } ) {
 
 		apiFetch( { path: '/wp/v2/taxonomies?type=product' } )
 			.then( ( response ) => {
-				const options = Object.values( response || {} )
+				const nextTaxonomies = Object.values( response || {} )
 					.filter( ( taxonomy ) => taxonomy.rest_base )
 					.map( ( taxonomy ) => ( {
 						label: taxonomy.name,
 						value: taxonomy.slug,
 						restBase: taxonomy.rest_base,
 					} ) );
-				setTaxonomies( options );
+
+				setTaxonomies( nextTaxonomies );
 			} )
 			.catch( () => setTaxonomies( [] ) );
 	}, [] );
@@ -146,17 +136,19 @@ export default function Edit( { attributes, setAttributes } ) {
 			taxonomies.length
 				? taxonomies
 				: [
-						{ label: __( 'Product categories', 'zenctuary' ), value: 'product_cat', restBase: 'product_cat' },
-						{ label: __( 'Product tags', 'zenctuary' ), value: 'product_tag', restBase: 'product_tag' },
+						{
+							label: __( 'Product categories', 'zenctuary' ),
+							value: 'product_cat',
+							restBase: 'product_cat',
+						},
+						{
+							label: __( 'Product tags', 'zenctuary' ),
+							value: 'product_tag',
+							restBase: 'product_tag',
+						},
 				  ],
 		[ taxonomies ]
 	);
-
-	useEffect( () => {
-		if ( ! taxonomyOptions.find( ( taxonomy ) => taxonomy.value === attributes.productTaxonomy ) ) {
-			setAttributes( { productTaxonomy: taxonomyOptions[ 0 ]?.value || 'product_cat', termIds: [] } );
-		}
-	}, [ taxonomyOptions, attributes.productTaxonomy, setAttributes ] );
 
 	useEffect( () => {
 		const selectedTaxonomy = taxonomyOptions.find(
@@ -187,172 +179,529 @@ export default function Edit( { attributes, setAttributes } ) {
 	return (
 		<div { ...blockProps }>
 			<InspectorControls>
-				<PanelBody title={ __( 'Query', 'zenctuary' ) } initialOpen>
+				<PanelBody title={ __( 'Products', 'zenctuary' ) } initialOpen>
 					<SelectControl
-						label={ __( 'Query Mode', 'zenctuary' ) }
+						label={ __( 'Selection Mode', 'zenctuary' ) }
 						value={ attributes.queryMode }
 						options={ [
-							{ label: __( 'Taxonomy', 'zenctuary' ), value: 'taxonomy' },
+							{ label: __( 'Taxonomy Query', 'zenctuary' ), value: 'taxonomy' },
 							{ label: __( 'Manual Products', 'zenctuary' ), value: 'manual' },
-							{ label: __( 'Hybrid Manual Order', 'zenctuary' ), value: 'hybrid' },
 						] }
 						onChange={ ( queryMode ) => setAttributes( { queryMode } ) }
 					/>
-					<SelectControl
-						label={ __( 'Product Taxonomy', 'zenctuary' ) }
-						value={ attributes.productTaxonomy }
-						options={ taxonomyOptions }
-						onChange={ ( productTaxonomy ) => setAttributes( { productTaxonomy, termIds: [] } ) }
-					/>
-					<MultiCheckboxControl
-						label={ __( 'Terms', 'zenctuary' ) }
-						options={ terms }
-						selected={ attributes.termIds || [] }
-						onChange={ ( termIds ) => setAttributes( { termIds } ) }
-						emptyLabel={ __( 'No terms found for the selected taxonomy.', 'zenctuary' ) }
-					/>
-					<RangeControl
-						label={ __( 'Products To Show', 'zenctuary' ) }
-						value={ attributes.productsToShow }
-						onChange={ ( productsToShow ) => setAttributes( { productsToShow } ) }
-						min={ 1 }
-						max={ 20 }
-					/>
-					<SelectControl
-						label={ __( 'Order By', 'zenctuary' ) }
-						value={ attributes.orderBy }
-						options={ ORDER_BY }
-						onChange={ ( orderBy ) => setAttributes( { orderBy } ) }
-					/>
-					<SelectControl
-						label={ __( 'Order', 'zenctuary' ) }
-						value={ attributes.order }
-						options={ [
-							{ label: __( 'Descending', 'zenctuary' ), value: 'DESC' },
-							{ label: __( 'Ascending', 'zenctuary' ), value: 'ASC' },
-						] }
-						onChange={ ( order ) => setAttributes( { order } ) }
-					/>
-					<RangeControl
-						label={ __( 'Offset', 'zenctuary' ) }
-						value={ attributes.offset }
-						onChange={ ( offset ) => setAttributes( { offset } ) }
-						min={ 0 }
-						max={ 20 }
-					/>
-					<MultiCheckboxControl
-						label={ __( 'Manual Products', 'zenctuary' ) }
-						options={ products }
-						selected={ attributes.manualProductIds || [] }
-						onChange={ ( manualProductIds ) => setAttributes( { manualProductIds } ) }
-						emptyLabel={ __( 'No products available in REST yet.', 'zenctuary' ) }
-					/>
-					<MultiCheckboxControl
-						label={ __( 'Exclude Products', 'zenctuary' ) }
-						options={ products }
-						selected={ attributes.excludeProductIds || [] }
-						onChange={ ( excludeProductIds ) => setAttributes( { excludeProductIds } ) }
-						emptyLabel={ __( 'No products available in REST yet.', 'zenctuary' ) }
-					/>
-					<ToggleControl
-						label={ __( 'Hide Out Of Stock', 'zenctuary' ) }
-						checked={ attributes.hideOutOfStock }
-						onChange={ ( hideOutOfStock ) => setAttributes( { hideOutOfStock } ) }
-					/>
-					<ToggleControl
-						label={ __( 'Only Featured Products', 'zenctuary' ) }
-						checked={ attributes.onlyFeaturedProducts }
-						onChange={ ( onlyFeaturedProducts ) => setAttributes( { onlyFeaturedProducts } ) }
-					/>
+
+					{ 'taxonomy' === attributes.queryMode && (
+						<>
+							<SelectControl
+								label={ __( 'Product Taxonomy', 'zenctuary' ) }
+								value={ attributes.productTaxonomy }
+								options={ taxonomyOptions }
+								onChange={ ( productTaxonomy ) =>
+									setAttributes( { productTaxonomy, termIds: [] } )
+								}
+							/>
+							<MultiCheckboxControl
+								label={ __( 'Terms', 'zenctuary' ) }
+								options={ terms }
+								selected={ attributes.termIds || [] }
+								onChange={ ( termIds ) => setAttributes( { termIds } ) }
+								emptyLabel={ __( 'No terms found for the selected taxonomy.', 'zenctuary' ) }
+							/>
+							<RangeControl
+								label={ __( 'Number Of Products', 'zenctuary' ) }
+								value={ attributes.productsToShow }
+								onChange={ ( productsToShow ) => setAttributes( { productsToShow } ) }
+								min={ 1 }
+								max={ 12 }
+							/>
+							<SelectControl
+								label={ __( 'Order By', 'zenctuary' ) }
+								value={ attributes.orderBy }
+								options={ ORDER_BY }
+								onChange={ ( orderBy ) => setAttributes( { orderBy } ) }
+							/>
+							<SelectControl
+								label={ __( 'Order', 'zenctuary' ) }
+								value={ attributes.order }
+								options={ [
+									{ label: __( 'Ascending', 'zenctuary' ), value: 'ASC' },
+									{ label: __( 'Descending', 'zenctuary' ), value: 'DESC' },
+								] }
+								onChange={ ( order ) => setAttributes( { order } ) }
+							/>
+						</>
+					) }
+
+					{ 'manual' === attributes.queryMode && (
+						<MultiCheckboxControl
+							label={ __( 'Products', 'zenctuary' ) }
+							options={ products }
+							selected={ attributes.manualProductIds || [] }
+							onChange={ ( manualProductIds ) => setAttributes( { manualProductIds } ) }
+							emptyLabel={ __( 'No products available in REST yet.', 'zenctuary' ) }
+						/>
+					) }
 				</PanelBody>
 
 				<PanelBody title={ __( 'Section', 'zenctuary' ) }>
-					<TextControl label={ __( 'Heading', 'zenctuary' ) } value={ attributes.sectionHeading } onChange={ ( sectionHeading ) => setAttributes( { sectionHeading } ) } />
-					<TextareaControl label={ __( 'Intro Text', 'zenctuary' ) } value={ attributes.sectionIntro } onChange={ ( sectionIntro ) => setAttributes( { sectionIntro } ) } />
-					<ColorControl label={ __( 'Background', 'zenctuary' ) } value={ attributes.sectionBackgroundColor } fallback="#3f3d3d" onChange={ ( sectionBackgroundColor ) => setAttributes( { sectionBackgroundColor } ) } />
-					<ColorControl label={ __( 'Text Color', 'zenctuary' ) } value={ attributes.sectionTextColor } fallback="#f6f2ea" onChange={ ( sectionTextColor ) => setAttributes( { sectionTextColor } ) } />
-					<SelectControl label={ __( 'Content Alignment', 'zenctuary' ) } value={ attributes.contentAlignment } options={ ALIGN_OPTIONS } onChange={ ( contentAlignment ) => setAttributes( { contentAlignment } ) } />
-					<RangeControl label={ __( 'Max Width', 'zenctuary' ) } value={ attributes.sectionMaxWidth } onChange={ ( sectionMaxWidth ) => setAttributes( { sectionMaxWidth } ) } min={ 900 } max={ 1920 } />
-					<RangeControl label={ __( 'Padding Top', 'zenctuary' ) } value={ attributes.sectionPaddingTop } onChange={ ( sectionPaddingTop ) => setAttributes( { sectionPaddingTop } ) } min={ 0 } max={ 220 } />
-					<RangeControl label={ __( 'Padding Bottom', 'zenctuary' ) } value={ attributes.sectionPaddingBottom } onChange={ ( sectionPaddingBottom ) => setAttributes( { sectionPaddingBottom } ) } min={ 0 } max={ 220 } />
-					<RangeControl label={ __( 'Padding Left', 'zenctuary' ) } value={ attributes.sectionPaddingLeft } onChange={ ( sectionPaddingLeft ) => setAttributes( { sectionPaddingLeft } ) } min={ 0 } max={ 120 } />
-					<RangeControl label={ __( 'Padding Right', 'zenctuary' ) } value={ attributes.sectionPaddingRight } onChange={ ( sectionPaddingRight ) => setAttributes( { sectionPaddingRight } ) } min={ 0 } max={ 120 } />
-					<RangeControl label={ __( 'Heading Bottom Spacing', 'zenctuary' ) } value={ attributes.headingBottomSpacing } onChange={ ( headingBottomSpacing ) => setAttributes( { headingBottomSpacing } ) } min={ 0 } max={ 100 } />
-					<RangeControl label={ __( 'Intro Bottom Spacing', 'zenctuary' ) } value={ attributes.introBottomSpacing } onChange={ ( introBottomSpacing ) => setAttributes( { introBottomSpacing } ) } min={ 0 } max={ 120 } />
+					<ColorControl
+						label={ __( 'Background', 'zenctuary' ) }
+						value={ attributes.sectionBackgroundColor }
+						fallback="#3f3d3d"
+						onChange={ ( sectionBackgroundColor ) => setAttributes( { sectionBackgroundColor } ) }
+					/>
+					<ColorControl
+						label={ __( 'Text Color', 'zenctuary' ) }
+						value={ attributes.sectionTextColor }
+						fallback="#f6f2ea"
+						onChange={ ( sectionTextColor ) => setAttributes( { sectionTextColor } ) }
+					/>
+					<RangeControl
+						label={ __( 'Section Max Width', 'zenctuary' ) }
+						value={ attributes.sectionMaxWidth }
+						onChange={ ( sectionMaxWidth ) => setAttributes( { sectionMaxWidth } ) }
+						min={ 900 }
+						max={ 1800 }
+					/>
+					<RangeControl
+						label={ __( 'Row Max Width', 'zenctuary' ) }
+						value={ attributes.sectionRowMaxWidth }
+						onChange={ ( sectionRowMaxWidth ) => setAttributes( { sectionRowMaxWidth } ) }
+						min={ 700 }
+						max={ 1600 }
+					/>
+					<RangeControl
+						label={ __( 'Padding Top', 'zenctuary' ) }
+						value={ attributes.sectionPaddingTop }
+						onChange={ ( sectionPaddingTop ) => setAttributes( { sectionPaddingTop } ) }
+						min={ 0 }
+						max={ 180 }
+					/>
+					<RangeControl
+						label={ __( 'Padding Bottom', 'zenctuary' ) }
+						value={ attributes.sectionPaddingBottom }
+						onChange={ ( sectionPaddingBottom ) => setAttributes( { sectionPaddingBottom } ) }
+						min={ 0 }
+						max={ 180 }
+					/>
+					<RangeControl
+						label={ __( 'Padding Left', 'zenctuary' ) }
+						value={ attributes.sectionPaddingLeft }
+						onChange={ ( sectionPaddingLeft ) => setAttributes( { sectionPaddingLeft } ) }
+						min={ 0 }
+						max={ 120 }
+					/>
+					<RangeControl
+						label={ __( 'Padding Right', 'zenctuary' ) }
+						value={ attributes.sectionPaddingRight }
+						onChange={ ( sectionPaddingRight ) => setAttributes( { sectionPaddingRight } ) }
+						min={ 0 }
+						max={ 120 }
+					/>
+					<RangeControl
+						label={ __( 'Mobile Padding Left', 'zenctuary' ) }
+						value={ attributes.sectionPaddingLeftMobile }
+						onChange={ ( sectionPaddingLeftMobile ) => setAttributes( { sectionPaddingLeftMobile } ) }
+						min={ 0 }
+						max={ 60 }
+					/>
+					<RangeControl
+						label={ __( 'Mobile Padding Right', 'zenctuary' ) }
+						value={ attributes.sectionPaddingRightMobile }
+						onChange={ ( sectionPaddingRightMobile ) => setAttributes( { sectionPaddingRightMobile } ) }
+						min={ 0 }
+						max={ 60 }
+					/>
 				</PanelBody>
 
-				<PanelBody title={ __( 'Slider / Row', 'zenctuary' ) }>
-					<RangeControl label={ __( 'Slides Per View Desktop', 'zenctuary' ) } value={ attributes.slidesPerViewDesktop } onChange={ ( slidesPerViewDesktop ) => setAttributes( { slidesPerViewDesktop } ) } min={ 1 } max={ 4 } step={ 0.1 } />
-					<RangeControl label={ __( 'Slides Per View Tablet', 'zenctuary' ) } value={ attributes.slidesPerViewTablet } onChange={ ( slidesPerViewTablet ) => setAttributes( { slidesPerViewTablet } ) } min={ 1 } max={ 3 } step={ 0.05 } />
-					<RangeControl label={ __( 'Slides Per View Mobile', 'zenctuary' ) } value={ attributes.slidesPerViewMobile } onChange={ ( slidesPerViewMobile ) => setAttributes( { slidesPerViewMobile } ) } min={ 1 } max={ 2 } step={ 0.05 } />
-					<RangeControl label={ __( 'Card Width', 'zenctuary' ) } value={ attributes.cardWidth } onChange={ ( cardWidth ) => setAttributes( { cardWidth } ) } min={ 320 } max={ 900 } />
-					<RangeControl label={ __( 'Card Height Desktop', 'zenctuary' ) } value={ attributes.cardHeight } onChange={ ( cardHeight ) => setAttributes( { cardHeight } ) } min={ 420 } max={ 1200 } />
-					<RangeControl label={ __( 'Card Height Tablet', 'zenctuary' ) } value={ attributes.cardHeightTablet } onChange={ ( cardHeightTablet ) => setAttributes( { cardHeightTablet } ) } min={ 360 } max={ 1200 } />
-					<RangeControl label={ __( 'Card Height Mobile', 'zenctuary' ) } value={ attributes.cardHeightMobile } onChange={ ( cardHeightMobile ) => setAttributes( { cardHeightMobile } ) } min={ 320 } max={ 1000 } />
-					<RangeControl label={ __( 'Gap Desktop', 'zenctuary' ) } value={ attributes.cardGapDesktop } onChange={ ( cardGapDesktop ) => setAttributes( { cardGapDesktop } ) } min={ 0 } max={ 80 } />
-					<RangeControl label={ __( 'Gap Tablet', 'zenctuary' ) } value={ attributes.cardGapTablet } onChange={ ( cardGapTablet ) => setAttributes( { cardGapTablet } ) } min={ 0 } max={ 80 } />
-					<RangeControl label={ __( 'Gap Mobile', 'zenctuary' ) } value={ attributes.cardGapMobile } onChange={ ( cardGapMobile ) => setAttributes( { cardGapMobile } ) } min={ 0 } max={ 60 } />
-					<ToggleControl label={ __( 'Show Arrows', 'zenctuary' ) } checked={ attributes.showArrows } onChange={ ( showArrows ) => setAttributes( { showArrows } ) } />
-					<ToggleControl label={ __( 'Enable Drag / Swipe', 'zenctuary' ) } checked={ attributes.enableDrag } onChange={ ( enableDrag ) => setAttributes( { enableDrag } ) } />
-					<ToggleControl label={ __( 'Enable Loop', 'zenctuary' ) } checked={ attributes.enableLoop } onChange={ ( enableLoop ) => setAttributes( { enableLoop } ) } />
-					<ToggleControl label={ __( 'Autoplay', 'zenctuary' ) } checked={ attributes.autoplay } onChange={ ( autoplay ) => setAttributes( { autoplay } ) } />
-					{ attributes.autoplay && <RangeControl label={ __( 'Autoplay Speed', 'zenctuary' ) } value={ attributes.autoplaySpeed } onChange={ ( autoplaySpeed ) => setAttributes( { autoplaySpeed } ) } min={ 1500 } max={ 10000 } step={ 250 } /> }
+				<PanelBody title={ __( 'Row Layout', 'zenctuary' ) }>
+					<RangeControl
+						label={ __( 'Desktop Gap', 'zenctuary' ) }
+						value={ attributes.cardGapDesktop }
+						onChange={ ( cardGapDesktop ) => setAttributes( { cardGapDesktop } ) }
+						min={ 0 }
+						max={ 80 }
+					/>
+					<RangeControl
+						label={ __( 'Tablet Gap', 'zenctuary' ) }
+						value={ attributes.cardGapTablet }
+						onChange={ ( cardGapTablet ) => setAttributes( { cardGapTablet } ) }
+						min={ 0 }
+						max={ 80 }
+					/>
+					<RangeControl
+						label={ __( 'Mobile Gap', 'zenctuary' ) }
+						value={ attributes.cardGapMobile }
+						onChange={ ( cardGapMobile ) => setAttributes( { cardGapMobile } ) }
+						min={ 0 }
+						max={ 50 }
+					/>
+					<ToggleControl
+						label={ __( 'Allow Desktop Wrap', 'zenctuary' ) }
+						checked={ attributes.rowWrapDesktop }
+						onChange={ ( rowWrapDesktop ) => setAttributes( { rowWrapDesktop } ) }
+					/>
+					<SelectControl
+						label={ __( 'Mobile Layout', 'zenctuary' ) }
+						value={ attributes.mobileLayout }
+						options={ [
+							{ label: __( 'Stacked', 'zenctuary' ), value: 'stack' },
+							{ label: __( 'Horizontal Scroll', 'zenctuary' ), value: 'scroll' },
+						] }
+						onChange={ ( mobileLayout ) => setAttributes( { mobileLayout } ) }
+					/>
 				</PanelBody>
 
-				<PanelBody title={ __( 'Card', 'zenctuary' ) }>
-					<ColorControl label={ __( 'Overlay Color', 'zenctuary' ) } value={ attributes.cardOverlayColor } fallback="#20201f" onChange={ ( cardOverlayColor ) => setAttributes( { cardOverlayColor } ) } />
-					<RangeControl label={ __( 'Overlay Opacity', 'zenctuary' ) } value={ attributes.cardOverlayOpacity } onChange={ ( cardOverlayOpacity ) => setAttributes( { cardOverlayOpacity } ) } min={ 0 } max={ 1 } step={ 0.05 } />
-					<ColorControl label={ __( 'Border Color', 'zenctuary' ) } value={ attributes.cardBorderColor } fallback="rgba(246, 242, 234, 0.58)" onChange={ ( cardBorderColor ) => setAttributes( { cardBorderColor } ) } />
-					<RangeControl label={ __( 'Border Width', 'zenctuary' ) } value={ attributes.cardBorderWidth } onChange={ ( cardBorderWidth ) => setAttributes( { cardBorderWidth } ) } min={ 0 } max={ 8 } />
-					<RangeControl label={ __( 'Border Radius', 'zenctuary' ) } value={ attributes.cardBorderRadius } onChange={ ( cardBorderRadius ) => setAttributes( { cardBorderRadius } ) } min={ 0 } max={ 60 } />
-					<TextControl label={ __( 'Card Shadow', 'zenctuary' ) } value={ attributes.cardShadow } onChange={ ( cardShadow ) => setAttributes( { cardShadow } ) } help={ __( 'Use CSS shadow value or none.', 'zenctuary' ) } />
+				<PanelBody title={ __( 'Card Shell', 'zenctuary' ) }>
+					<RangeControl
+						label={ __( 'Card Width', 'zenctuary' ) }
+						value={ attributes.cardWidth }
+						onChange={ ( cardWidth ) => setAttributes( { cardWidth } ) }
+						min={ 260 }
+						max={ 520 }
+					/>
+					<RangeControl
+						label={ __( 'Card Height', 'zenctuary' ) }
+						value={ attributes.cardHeight }
+						onChange={ ( cardHeight ) => setAttributes( { cardHeight } ) }
+						min={ 420 }
+						max={ 760 }
+					/>
+					<RangeControl
+						label={ __( 'Mobile Card Width', 'zenctuary' ) }
+						value={ attributes.cardWidthMobile }
+						onChange={ ( cardWidthMobile ) => setAttributes( { cardWidthMobile } ) }
+						min={ 240 }
+						max={ 420 }
+					/>
+					<RangeControl
+						label={ __( 'Mobile Card Height', 'zenctuary' ) }
+						value={ attributes.cardHeightMobile }
+						onChange={ ( cardHeightMobile ) => setAttributes( { cardHeightMobile } ) }
+						min={ 360 }
+						max={ 700 }
+					/>
+					<RangeControl
+						label={ __( 'Border Radius', 'zenctuary' ) }
+						value={ attributes.cardBorderRadius }
+						onChange={ ( cardBorderRadius ) => setAttributes( { cardBorderRadius } ) }
+						min={ 0 }
+						max={ 60 }
+					/>
+					<RangeControl
+						label={ __( 'Border Width', 'zenctuary' ) }
+						value={ attributes.cardBorderWidth }
+						onChange={ ( cardBorderWidth ) => setAttributes( { cardBorderWidth } ) }
+						min={ 0 }
+						max={ 8 }
+					/>
+					<ColorControl
+						label={ __( 'Border Color', 'zenctuary' ) }
+						value={ attributes.cardBorderColor }
+						fallback="rgba(246, 242, 234, 0.55)"
+						onChange={ ( cardBorderColor ) => setAttributes( { cardBorderColor } ) }
+					/>
+					<ColorControl
+						label={ __( 'Card Background', 'zenctuary' ) }
+						value={ attributes.cardBackgroundColor }
+						fallback="#3f3d3d"
+						onChange={ ( cardBackgroundColor ) => setAttributes( { cardBackgroundColor } ) }
+					/>
+					<TextControl
+						label={ __( 'Card Shadow', 'zenctuary' ) }
+						value={ attributes.cardShadow }
+						onChange={ ( cardShadow ) => setAttributes( { cardShadow } ) }
+					/>
 				</PanelBody>
 
-				<PanelBody title={ __( 'Top Strip / Zencoin', 'zenctuary' ) }>
-					<RangeControl label={ __( 'Top Strip Height', 'zenctuary' ) } value={ attributes.topStripHeight } onChange={ ( topStripHeight ) => setAttributes( { topStripHeight } ) } min={ 50 } max={ 180 } />
-					<ColorControl label={ __( 'Top Strip Background', 'zenctuary' ) } value={ attributes.topStripBackgroundColor } fallback="#3f3d3d" onChange={ ( topStripBackgroundColor ) => setAttributes( { topStripBackgroundColor } ) } />
-					<SelectControl label={ __( 'Top Strip Alignment', 'zenctuary' ) } value={ attributes.topStripAlignment } options={ ALIGN_OPTIONS } onChange={ ( topStripAlignment ) => setAttributes( { topStripAlignment } ) } />
-					<TextControl label={ __( 'Label', 'zenctuary' ) } value={ attributes.zencoinLabel } onChange={ ( zencoinLabel ) => setAttributes( { zencoinLabel } ) } />
-					<SelectControl label={ __( 'Value Source', 'zenctuary' ) } value={ attributes.zencoinSource } options={ [ { label: __( 'Custom Field', 'zenctuary' ), value: 'custom' }, { label: __( 'Regular Price', 'zenctuary' ), value: 'regular_price' }, { label: __( 'Sale Price', 'zenctuary' ), value: 'sale_price' }, { label: __( 'None', 'zenctuary' ), value: 'none' } ] } onChange={ ( zencoinSource ) => setAttributes( { zencoinSource } ) } />
-					<ColorControl label={ __( 'Label Color', 'zenctuary' ) } value={ attributes.zencoinLabelColor } fallback="#d8b354" onChange={ ( zencoinLabelColor ) => setAttributes( { zencoinLabelColor } ) } />
-					<ColorControl label={ __( 'Badge Background', 'zenctuary' ) } value={ attributes.zencoinBadgeBackgroundColor } fallback="#d8b354" onChange={ ( zencoinBadgeBackgroundColor ) => setAttributes( { zencoinBadgeBackgroundColor } ) } />
-					<ColorControl label={ __( 'Badge Border Color', 'zenctuary' ) } value={ attributes.zencoinBadgeBorderColor } fallback="#d8b354" onChange={ ( zencoinBadgeBorderColor ) => setAttributes( { zencoinBadgeBorderColor } ) } />
-					<ColorControl label={ __( 'Value Color', 'zenctuary' ) } value={ attributes.zencoinValueColor } fallback="#3f3d3d" onChange={ ( zencoinValueColor ) => setAttributes( { zencoinValueColor } ) } />
+				<PanelBody title={ __( 'Top Header Bar', 'zenctuary' ) }>
+					<RangeControl
+						label={ __( 'Bar Height', 'zenctuary' ) }
+						value={ attributes.topBarHeight }
+						onChange={ ( topBarHeight ) => setAttributes( { topBarHeight } ) }
+						min={ 52 }
+						max={ 140 }
+					/>
+					<ColorControl
+						label={ __( 'Bar Background', 'zenctuary' ) }
+						value={ attributes.topBarBackgroundColor }
+						fallback="#3f3d3d"
+						onChange={ ( topBarBackgroundColor ) => setAttributes( { topBarBackgroundColor } ) }
+					/>
+					<TextControl
+						label={ __( 'Label Text', 'zenctuary' ) }
+						value={ attributes.zencoinLabel }
+						onChange={ ( zencoinLabel ) => setAttributes( { zencoinLabel } ) }
+					/>
+					<ColorControl
+						label={ __( 'Label Color', 'zenctuary' ) }
+						value={ attributes.zencoinLabelColor }
+						fallback="#d8b354"
+						onChange={ ( zencoinLabelColor ) => setAttributes( { zencoinLabelColor } ) }
+					/>
+					<RangeControl
+						label={ __( 'Label Font Size', 'zenctuary' ) }
+						value={ attributes.zencoinLabelFontSize }
+						onChange={ ( zencoinLabelFontSize ) => setAttributes( { zencoinLabelFontSize } ) }
+						min={ 12 }
+						max={ 28 }
+					/>
+					<RangeControl
+						label={ __( 'Label / Badge Gap', 'zenctuary' ) }
+						value={ attributes.zencoinGap }
+						onChange={ ( zencoinGap ) => setAttributes( { zencoinGap } ) }
+						min={ 0 }
+						max={ 30 }
+					/>
+					<RangeControl
+						label={ __( 'Badge Size', 'zenctuary' ) }
+						value={ attributes.zencoinBadgeSize }
+						onChange={ ( zencoinBadgeSize ) => setAttributes( { zencoinBadgeSize } ) }
+						min={ 28 }
+						max={ 70 }
+					/>
+					<ColorControl
+						label={ __( 'Badge Border Color', 'zenctuary' ) }
+						value={ attributes.zencoinBadgeBorderColor }
+						fallback="#d8b354"
+						onChange={ ( zencoinBadgeBorderColor ) => setAttributes( { zencoinBadgeBorderColor } ) }
+					/>
+					<ColorControl
+						label={ __( 'Badge Text Color', 'zenctuary' ) }
+						value={ attributes.zencoinBadgeTextColor }
+						fallback="#d8b354"
+						onChange={ ( zencoinBadgeTextColor ) => setAttributes( { zencoinBadgeTextColor } ) }
+					/>
+				</PanelBody>
+
+				<PanelBody title={ __( 'Image Body', 'zenctuary' ) }>
+					<ColorControl
+						label={ __( 'Overlay Color', 'zenctuary' ) }
+						value={ attributes.overlayColor }
+						fallback="#111111"
+						onChange={ ( overlayColor ) => setAttributes( { overlayColor } ) }
+					/>
+					<RangeControl
+						label={ __( 'Overlay Opacity', 'zenctuary' ) }
+						value={ attributes.overlayOpacity }
+						onChange={ ( overlayOpacity ) => setAttributes( { overlayOpacity } ) }
+						min={ 0 }
+						max={ 1 }
+						step={ 0.05 }
+					/>
+					<RangeControl
+						label={ __( 'Body Padding Top', 'zenctuary' ) }
+						value={ attributes.bodyPaddingTop }
+						onChange={ ( bodyPaddingTop ) => setAttributes( { bodyPaddingTop } ) }
+						min={ 0 }
+						max={ 80 }
+					/>
+					<RangeControl
+						label={ __( 'Body Padding Right', 'zenctuary' ) }
+						value={ attributes.bodyPaddingRight }
+						onChange={ ( bodyPaddingRight ) => setAttributes( { bodyPaddingRight } ) }
+						min={ 0 }
+						max={ 60 }
+					/>
+					<RangeControl
+						label={ __( 'Body Padding Bottom', 'zenctuary' ) }
+						value={ attributes.bodyPaddingBottom }
+						onChange={ ( bodyPaddingBottom ) => setAttributes( { bodyPaddingBottom } ) }
+						min={ 0 }
+						max={ 60 }
+					/>
+					<RangeControl
+						label={ __( 'Body Padding Left', 'zenctuary' ) }
+						value={ attributes.bodyPaddingLeft }
+						onChange={ ( bodyPaddingLeft ) => setAttributes( { bodyPaddingLeft } ) }
+						min={ 0 }
+						max={ 60 }
+					/>
 				</PanelBody>
 
 				<PanelBody title={ __( 'Title / Session / Excerpt', 'zenctuary' ) }>
-					<ColorControl label={ __( 'Title Color', 'zenctuary' ) } value={ attributes.titleColor } fallback="#ffffff" onChange={ ( titleColor ) => setAttributes( { titleColor } ) } />
-					<RangeControl label={ __( 'Title Font Size', 'zenctuary' ) } value={ attributes.titleFontSize } onChange={ ( titleFontSize ) => setAttributes( { titleFontSize } ) } min={ 20 } max={ 96 } />
-					<SelectControl label={ __( 'Title Weight', 'zenctuary' ) } value={ attributes.titleFontWeight } options={ WEIGHTS } onChange={ ( titleFontWeight ) => setAttributes( { titleFontWeight } ) } />
-					<SelectControl label={ __( 'Title Transform', 'zenctuary' ) } value={ attributes.titleTextTransform } options={ [ { label: __( 'Uppercase', 'zenctuary' ), value: 'uppercase' }, { label: __( 'None', 'zenctuary' ), value: 'none' } ] } onChange={ ( titleTextTransform ) => setAttributes( { titleTextTransform } ) } />
-					<ToggleControl label={ __( 'Show Session Icon', 'zenctuary' ) } checked={ attributes.showSessionIcon } onChange={ ( showSessionIcon ) => setAttributes( { showSessionIcon } ) } />
-					<ColorControl label={ __( 'Session Text Color', 'zenctuary' ) } value={ attributes.sessionTextColor } fallback="#f6f2ea" onChange={ ( sessionTextColor ) => setAttributes( { sessionTextColor } ) } />
-					<ColorControl label={ __( 'Session Icon Color', 'zenctuary' ) } value={ attributes.sessionIconColor } fallback="#3f3d3d" onChange={ ( sessionIconColor ) => setAttributes( { sessionIconColor } ) } />
-					<ColorControl label={ __( 'Session Icon Badge Background', 'zenctuary' ) } value={ attributes.sessionBadgeBackground } fallback="#d8b354" onChange={ ( sessionBadgeBackground ) => setAttributes( { sessionBadgeBackground } ) } />
-					<ColorControl label={ __( 'Excerpt Color', 'zenctuary' ) } value={ attributes.excerptColor } fallback="#f6f2ea" onChange={ ( excerptColor ) => setAttributes( { excerptColor } ) } />
-					<RangeControl label={ __( 'Excerpt Font Size', 'zenctuary' ) } value={ attributes.excerptFontSize } onChange={ ( excerptFontSize ) => setAttributes( { excerptFontSize } ) } min={ 12 } max={ 34 } />
+					<ColorControl
+						label={ __( 'Title Color', 'zenctuary' ) }
+						value={ attributes.titleColor }
+						fallback="#ffffff"
+						onChange={ ( titleColor ) => setAttributes( { titleColor } ) }
+					/>
+					<RangeControl
+						label={ __( 'Title Font Size', 'zenctuary' ) }
+						value={ attributes.titleFontSize }
+						onChange={ ( titleFontSize ) => setAttributes( { titleFontSize } ) }
+						min={ 20 }
+						max={ 72 }
+					/>
+					<SelectControl
+						label={ __( 'Title Weight', 'zenctuary' ) }
+						value={ attributes.titleFontWeight }
+						options={ WEIGHTS }
+						onChange={ ( titleFontWeight ) => setAttributes( { titleFontWeight } ) }
+					/>
+					<SelectControl
+						label={ __( 'Title Transform', 'zenctuary' ) }
+						value={ attributes.titleTextTransform }
+						options={ [
+							{ label: __( 'Uppercase', 'zenctuary' ), value: 'uppercase' },
+							{ label: __( 'None', 'zenctuary' ), value: 'none' },
+						] }
+						onChange={ ( titleTextTransform ) => setAttributes( { titleTextTransform } ) }
+					/>
+					<RangeControl
+						label={ __( 'Title Max Width', 'zenctuary' ) }
+						value={ attributes.titleMaxWidth }
+						onChange={ ( titleMaxWidth ) => setAttributes( { titleMaxWidth } ) }
+						min={ 120 }
+						max={ 340 }
+					/>
+					<ToggleControl
+						label={ __( 'Show Session Icon', 'zenctuary' ) }
+						checked={ attributes.showSessionIcon }
+						onChange={ ( showSessionIcon ) => setAttributes( { showSessionIcon } ) }
+					/>
+					<ColorControl
+						label={ __( 'Session Text Color', 'zenctuary' ) }
+						value={ attributes.sessionTextColor }
+						fallback="#ffffff"
+						onChange={ ( sessionTextColor ) => setAttributes( { sessionTextColor } ) }
+					/>
+					<ColorControl
+						label={ __( 'Session Icon Color', 'zenctuary' ) }
+						value={ attributes.sessionIconColor }
+						fallback="#3f3d3d"
+						onChange={ ( sessionIconColor ) => setAttributes( { sessionIconColor } ) }
+					/>
+					<ColorControl
+						label={ __( 'Session Icon Background', 'zenctuary' ) }
+						value={ attributes.sessionIconBackgroundColor }
+						fallback="#d8b354"
+						onChange={ ( sessionIconBackgroundColor ) =>
+							setAttributes( { sessionIconBackgroundColor } )
+						}
+					/>
+					<ColorControl
+						label={ __( 'Excerpt Color', 'zenctuary' ) }
+						value={ attributes.excerptColor }
+						fallback="#f6f2ea"
+						onChange={ ( excerptColor ) => setAttributes( { excerptColor } ) }
+					/>
+					<RangeControl
+						label={ __( 'Excerpt Font Size', 'zenctuary' ) }
+						value={ attributes.excerptFontSize }
+						onChange={ ( excerptFontSize ) => setAttributes( { excerptFontSize } ) }
+						min={ 12 }
+						max={ 26 }
+					/>
+					<RangeControl
+						label={ __( 'Excerpt Max Width', 'zenctuary' ) }
+						value={ attributes.excerptMaxWidth }
+						onChange={ ( excerptMaxWidth ) => setAttributes( { excerptMaxWidth } ) }
+						min={ 160 }
+						max={ 340 }
+					/>
 				</PanelBody>
 
 				<PanelBody title={ __( 'Button', 'zenctuary' ) }>
-					<TextControl label={ __( 'CTA Label', 'zenctuary' ) } value={ attributes.ctaLabel } onChange={ ( ctaLabel ) => setAttributes( { ctaLabel } ) } />
-					<ColorControl label={ __( 'Text Color', 'zenctuary' ) } value={ attributes.ctaTextColor } fallback="#d8b354" onChange={ ( ctaTextColor ) => setAttributes( { ctaTextColor } ) } />
-					<ColorControl label={ __( 'Background', 'zenctuary' ) } value={ attributes.ctaBackgroundColor } fallback="#3f3d3d" onChange={ ( ctaBackgroundColor ) => setAttributes( { ctaBackgroundColor } ) } />
-					<ColorControl label={ __( 'Border Color', 'zenctuary' ) } value={ attributes.ctaBorderColor } fallback="#d8b354" onChange={ ( ctaBorderColor ) => setAttributes( { ctaBorderColor } ) } />
-					<RangeControl label={ __( 'Border Width', 'zenctuary' ) } value={ attributes.ctaBorderWidth } onChange={ ( ctaBorderWidth ) => setAttributes( { ctaBorderWidth } ) } min={ 0 } max={ 6 } />
-					<RangeControl label={ __( 'Border Radius', 'zenctuary' ) } value={ attributes.ctaBorderRadius } onChange={ ( ctaBorderRadius ) => setAttributes( { ctaBorderRadius } ) } min={ 0 } max={ 999 } />
-					<ToggleControl label={ __( 'Show Icon', 'zenctuary' ) } checked={ attributes.ctaShowIcon } onChange={ ( ctaShowIcon ) => setAttributes( { ctaShowIcon } ) } />
-					<SelectControl label={ __( 'Icon Position', 'zenctuary' ) } value={ attributes.ctaIconPosition } options={ [ { label: __( 'Right', 'zenctuary' ), value: 'right' }, { label: __( 'Left', 'zenctuary' ), value: 'left' } ] } onChange={ ( ctaIconPosition ) => setAttributes( { ctaIconPosition } ) } />
+					<TextControl
+						label={ __( 'Button Label', 'zenctuary' ) }
+						value={ attributes.buttonLabel }
+						onChange={ ( buttonLabel ) => setAttributes( { buttonLabel } ) }
+					/>
+					<ColorControl
+						label={ __( 'Text Color', 'zenctuary' ) }
+						value={ attributes.buttonTextColor }
+						fallback="#d8b354"
+						onChange={ ( buttonTextColor ) => setAttributes( { buttonTextColor } ) }
+					/>
+					<ColorControl
+						label={ __( 'Background', 'zenctuary' ) }
+						value={ attributes.buttonBackgroundColor }
+						fallback="#3f3d3d"
+						onChange={ ( buttonBackgroundColor ) => setAttributes( { buttonBackgroundColor } ) }
+					/>
+					<ColorControl
+						label={ __( 'Border Color', 'zenctuary' ) }
+						value={ attributes.buttonBorderColor }
+						fallback="#d8b354"
+						onChange={ ( buttonBorderColor ) => setAttributes( { buttonBorderColor } ) }
+					/>
+					<ToggleControl
+						label={ __( 'Show Icon', 'zenctuary' ) }
+						checked={ attributes.buttonShowIcon }
+						onChange={ ( buttonShowIcon ) => setAttributes( { buttonShowIcon } ) }
+					/>
+					<SelectControl
+						label={ __( 'Icon Position', 'zenctuary' ) }
+						value={ attributes.buttonIconPosition }
+						options={ [
+							{ label: __( 'Right', 'zenctuary' ), value: 'right' },
+							{ label: __( 'Left', 'zenctuary' ), value: 'left' },
+						] }
+						onChange={ ( buttonIconPosition ) => setAttributes( { buttonIconPosition } ) }
+					/>
 				</PanelBody>
 
 				<PanelBody title={ __( 'Expandable Area', 'zenctuary' ) }>
-					<TextControl label={ __( 'Expand Label', 'zenctuary' ) } value={ attributes.expandLabel } onChange={ ( expandLabel ) => setAttributes( { expandLabel } ) } />
-					<ColorControl label={ __( 'Divider Color', 'zenctuary' ) } value={ attributes.dividerColor } fallback="rgba(246, 242, 234, 0.7)" onChange={ ( dividerColor ) => setAttributes( { dividerColor } ) } />
-					<ColorControl label={ __( 'Label Color', 'zenctuary' ) } value={ attributes.expandLabelColor } fallback="#f6f2ea" onChange={ ( expandLabelColor ) => setAttributes( { expandLabelColor } ) } />
-					<ColorControl label={ __( 'Icon Color', 'zenctuary' ) } value={ attributes.expandIconColor } fallback="#f6f2ea" onChange={ ( expandIconColor ) => setAttributes( { expandIconColor } ) } />
-					<ColorControl label={ __( 'Expanded Content Color', 'zenctuary' ) } value={ attributes.expandedContentColor } fallback="#f6f2ea" onChange={ ( expandedContentColor ) => setAttributes( { expandedContentColor } ) } />
-					<RangeControl label={ __( 'Expanded Content Max Height', 'zenctuary' ) } value={ attributes.expandedContentMaxHeight } onChange={ ( expandedContentMaxHeight ) => setAttributes( { expandedContentMaxHeight } ) } min={ 80 } max={ 520 } />
-					<ToggleControl label={ __( 'Allow Multiple Expanded Cards', 'zenctuary' ) } checked={ attributes.allowMultipleExpanded } onChange={ ( allowMultipleExpanded ) => setAttributes( { allowMultipleExpanded } ) } />
-					<SelectControl label={ __( 'Editor Preview State', 'zenctuary' ) } value={ attributes.previewState } options={ [ { label: __( 'Collapsed', 'zenctuary' ), value: 'collapsed' }, { label: __( 'Expanded', 'zenctuary' ), value: 'expanded' } ] } onChange={ ( previewState ) => setAttributes( { previewState } ) } />
+					<TextControl
+						label={ __( 'Row Label', 'zenctuary' ) }
+						value={ attributes.expandLabel }
+						onChange={ ( expandLabel ) => setAttributes( { expandLabel } ) }
+					/>
+					<ColorControl
+						label={ __( 'Divider Color', 'zenctuary' ) }
+						value={ attributes.dividerColor }
+						fallback="rgba(246, 242, 234, 0.72)"
+						onChange={ ( dividerColor ) => setAttributes( { dividerColor } ) }
+					/>
+					<ColorControl
+						label={ __( 'Label Color', 'zenctuary' ) }
+						value={ attributes.expandLabelColor }
+						fallback="#f6f2ea"
+						onChange={ ( expandLabelColor ) => setAttributes( { expandLabelColor } ) }
+					/>
+					<ColorControl
+						label={ __( 'Icon Color', 'zenctuary' ) }
+						value={ attributes.expandIconColor }
+						fallback="#f6f2ea"
+						onChange={ ( expandIconColor ) => setAttributes( { expandIconColor } ) }
+					/>
+					<ColorControl
+						label={ __( 'Expanded Text Color', 'zenctuary' ) }
+						value={ attributes.expandedContentColor }
+						fallback="#f6f2ea"
+						onChange={ ( expandedContentColor ) => setAttributes( { expandedContentColor } ) }
+					/>
+					<RangeControl
+						label={ __( 'Expanded Max Height', 'zenctuary' ) }
+						value={ attributes.expandedContentMaxHeight }
+						onChange={ ( expandedContentMaxHeight ) =>
+							setAttributes( { expandedContentMaxHeight } )
+						}
+						min={ 80 }
+						max={ 320 }
+					/>
+					<RangeControl
+						label={ __( 'Transition Duration', 'zenctuary' ) }
+						value={ attributes.transitionDuration }
+						onChange={ ( transitionDuration ) => setAttributes( { transitionDuration } ) }
+						min={ 100 }
+						max={ 800 }
+					/>
+					<ToggleControl
+						label={ __( 'Allow Multiple Open', 'zenctuary' ) }
+						checked={ attributes.allowMultipleOpen }
+						onChange={ ( allowMultipleOpen ) => setAttributes( { allowMultipleOpen } ) }
+					/>
+					<SelectControl
+						label={ __( 'Editor Preview', 'zenctuary' ) }
+						value={ attributes.previewState }
+						options={ [
+							{ label: __( 'Collapsed', 'zenctuary' ), value: 'collapsed' },
+							{ label: __( 'Expanded', 'zenctuary' ), value: 'expanded' },
+						] }
+						onChange={ ( previewState ) => setAttributes( { previewState } ) }
+					/>
 				</PanelBody>
 			</InspectorControls>
 

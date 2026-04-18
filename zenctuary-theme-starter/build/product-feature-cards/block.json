@@ -6,13 +6,13 @@
   "title": "Product Feature Cards",
   "category": "design",
   "icon": "cart",
-  "description": "Premium WooCommerce product cards with zencoin strip, session meta, CTA, and expandable What to Expect content.",
+  "description": "Centered premium WooCommerce product cards with zencoin header, session time, CTA, and expandable What to Expect content.",
   "keywords": [
     "zenctuary",
     "woocommerce",
-    "products",
+    "product",
     "cards",
-    "zencoins"
+    "zencoin"
   ],
   "textdomain": "zenctuary",
   "supports": {
@@ -38,7 +38,7 @@
     },
     "productsToShow": {
       "type": "number",
-      "default": 6
+      "default": 2
     },
     "orderBy": {
       "type": "string",
@@ -46,27 +46,11 @@
     },
     "order": {
       "type": "string",
-      "default": "DESC"
-    },
-    "offset": {
-      "type": "number",
-      "default": 0
+      "default": "ASC"
     },
     "manualProductIds": {
       "type": "array",
       "default": []
-    },
-    "excludeProductIds": {
-      "type": "array",
-      "default": []
-    },
-    "hideOutOfStock": {
-      "type": "boolean",
-      "default": true
-    },
-    "onlyFeaturedProducts": {
-      "type": "boolean",
-      "default": false
     },
     "sectionBackgroundColor": {
       "type": "string",
@@ -78,23 +62,59 @@
     },
     "sectionMaxWidth": {
       "type": "number",
-      "default": 1600
+      "default": 1400
+    },
+    "sectionRowMaxWidth": {
+      "type": "number",
+      "default": 1200
     },
     "sectionPaddingTop": {
       "type": "number",
-      "default": 88
-    },
-    "sectionPaddingBottom": {
-      "type": "number",
-      "default": 88
-    },
-    "sectionPaddingLeft": {
-      "type": "number",
-      "default": 40
+      "default": 80
     },
     "sectionPaddingRight": {
       "type": "number",
-      "default": 40
+      "default": 24
+    },
+    "sectionPaddingBottom": {
+      "type": "number",
+      "default": 80
+    },
+    "sectionPaddingLeft": {
+      "type": "number",
+      "default": 24
+    },
+    "sectionPaddingTopTablet": {
+      "type": "number",
+      "default": 64
+    },
+    "sectionPaddingRightTablet": {
+      "type": "number",
+      "default": 20
+    },
+    "sectionPaddingBottomTablet": {
+      "type": "number",
+      "default": 64
+    },
+    "sectionPaddingLeftTablet": {
+      "type": "number",
+      "default": 20
+    },
+    "sectionPaddingTopMobile": {
+      "type": "number",
+      "default": 48
+    },
+    "sectionPaddingRightMobile": {
+      "type": "number",
+      "default": 16
+    },
+    "sectionPaddingBottomMobile": {
+      "type": "number",
+      "default": 48
+    },
+    "sectionPaddingLeftMobile": {
+      "type": "number",
+      "default": 16
     },
     "sectionMarginTop": {
       "type": "number",
@@ -104,117 +124,53 @@
       "type": "number",
       "default": 0
     },
-    "sectionHeading": {
-      "type": "string",
-      "default": ""
-    },
-    "sectionIntro": {
-      "type": "string",
-      "default": ""
-    },
-    "headingColor": {
-      "type": "string",
-      "default": "#d8b354"
-    },
-    "headingFontSize": {
-      "type": "number",
-      "default": 36
-    },
-    "headingFontWeight": {
-      "type": "string",
-      "default": "700"
-    },
-    "headingTextTransform": {
-      "type": "string",
-      "default": "uppercase"
-    },
-    "introColor": {
-      "type": "string",
-      "default": "#f6f2ea"
-    },
-    "introFontSize": {
-      "type": "number",
-      "default": 18
-    },
-    "introLineHeight": {
-      "type": "number",
-      "default": 1.6
-    },
-    "headingBottomSpacing": {
-      "type": "number",
-      "default": 18
-    },
-    "introBottomSpacing": {
-      "type": "number",
-      "default": 38
-    },
-    "contentAlignment": {
-      "type": "string",
-      "default": "start"
-    },
-    "slidesPerViewDesktop": {
-      "type": "number",
-      "default": 2
-    },
-    "slidesPerViewTablet": {
-      "type": "number",
-      "default": 1.35
-    },
-    "slidesPerViewMobile": {
-      "type": "number",
-      "default": 1.08
-    },
-    "cardWidth": {
-      "type": "number",
-      "default": 620
-    },
-    "cardHeight": {
-      "type": "number",
-      "default": 980
-    },
-    "cardHeightTablet": {
-      "type": "number",
-      "default": 860
-    },
-    "cardHeightMobile": {
-      "type": "number",
-      "default": 760
-    },
-    "cardMaxWidth": {
-      "type": "number",
-      "default": 680
-    },
     "cardGapDesktop": {
       "type": "number",
-      "default": 36
+      "default": 32
     },
     "cardGapTablet": {
       "type": "number",
-      "default": 26
+      "default": 24
     },
     "cardGapMobile": {
       "type": "number",
       "default": 18
     },
-    "showArrows": {
-      "type": "boolean",
-      "default": true
-    },
-    "enableDrag": {
-      "type": "boolean",
-      "default": true
-    },
-    "enableLoop": {
+    "rowWrapDesktop": {
       "type": "boolean",
       "default": false
     },
-    "autoplay": {
-      "type": "boolean",
-      "default": false
+    "mobileLayout": {
+      "type": "string",
+      "default": "stack"
     },
-    "autoplaySpeed": {
+    "cardWidth": {
       "type": "number",
-      "default": 4500
+      "default": 370
+    },
+    "cardHeight": {
+      "type": "number",
+      "default": 566
+    },
+    "cardWidthTablet": {
+      "type": "number",
+      "default": 340
+    },
+    "cardHeightTablet": {
+      "type": "number",
+      "default": 540
+    },
+    "cardWidthMobile": {
+      "type": "number",
+      "default": 320
+    },
+    "cardHeightMobile": {
+      "type": "number",
+      "default": 520
+    },
+    "cardMinHeight": {
+      "type": "number",
+      "default": 566
     },
     "cardBorderRadius": {
       "type": "number",
@@ -222,67 +178,39 @@
     },
     "cardBorderColor": {
       "type": "string",
-      "default": "rgba(246, 242, 234, 0.58)"
+      "default": "rgba(246, 242, 234, 0.55)"
     },
     "cardBorderWidth": {
       "type": "number",
       "default": 2
     },
+    "cardBackgroundColor": {
+      "type": "string",
+      "default": "#3f3d3d"
+    },
     "cardShadow": {
       "type": "string",
       "default": "none"
     },
-    "cardOverlayColor": {
-      "type": "string",
-      "default": "#20201f"
-    },
-    "cardOverlayOpacity": {
+    "topBarHeight": {
       "type": "number",
-      "default": 0.4
+      "default": 86
     },
-    "cardPaddingTop": {
-      "type": "number",
-      "default": 0
-    },
-    "cardPaddingRight": {
-      "type": "number",
-      "default": 0
-    },
-    "cardPaddingBottom": {
-      "type": "number",
-      "default": 0
-    },
-    "cardPaddingLeft": {
-      "type": "number",
-      "default": 0
-    },
-    "topStripHeight": {
-      "type": "number",
-      "default": 108
-    },
-    "topStripBackgroundColor": {
+    "topBarBackgroundColor": {
       "type": "string",
       "default": "#3f3d3d"
     },
-    "topStripPaddingX": {
+    "topBarPaddingX": {
       "type": "number",
-      "default": 30
+      "default": 24
     },
-    "topStripPaddingY": {
+    "topBarPaddingY": {
       "type": "number",
-      "default": 18
-    },
-    "topStripAlignment": {
-      "type": "string",
-      "default": "center"
+      "default": 14
     },
     "zencoinLabel": {
       "type": "string",
       "default": "ZENCOINS:"
-    },
-    "zencoinSource": {
-      "type": "string",
-      "default": "custom"
     },
     "zencoinLabelColor": {
       "type": "string",
@@ -290,27 +218,19 @@
     },
     "zencoinLabelFontSize": {
       "type": "number",
-      "default": 24
+      "default": 18
     },
     "zencoinLabelFontWeight": {
       "type": "string",
       "default": "700"
     },
-    "zencoinValueColor": {
-      "type": "string",
-      "default": "#3f3d3d"
-    },
-    "zencoinValueFontSize": {
+    "zencoinGap": {
       "type": "number",
-      "default": 22
-    },
-    "zencoinValueFontWeight": {
-      "type": "string",
-      "default": "700"
+      "default": 12
     },
     "zencoinBadgeSize": {
       "type": "number",
-      "default": 56
+      "default": 42
     },
     "zencoinBadgeBorderWidth": {
       "type": "number",
@@ -320,25 +240,57 @@
       "type": "string",
       "default": "#d8b354"
     },
-    "zencoinBadgeBackgroundColor": {
+    "zencoinBadgeTextColor": {
       "type": "string",
       "default": "#d8b354"
     },
-    "zencoinGap": {
+    "zencoinBadgeFontSize": {
       "type": "number",
-      "default": 16
+      "default": 20
     },
-    "contentPaddingX": {
-      "type": "number",
-      "default": 52
+    "zencoinBadgeFontWeight": {
+      "type": "string",
+      "default": "700"
     },
-    "contentPaddingTop": {
-      "type": "number",
-      "default": 50
+    "overlayColor": {
+      "type": "string",
+      "default": "#111111"
     },
-    "contentPaddingBottom": {
+    "overlayOpacity": {
       "type": "number",
-      "default": 32
+      "default": 0.38
+    },
+    "bodyPaddingTop": {
+      "type": "number",
+      "default": 30
+    },
+    "bodyPaddingRight": {
+      "type": "number",
+      "default": 20
+    },
+    "bodyPaddingBottom": {
+      "type": "number",
+      "default": 24
+    },
+    "bodyPaddingLeft": {
+      "type": "number",
+      "default": 20
+    },
+    "bodyPaddingTopMobile": {
+      "type": "number",
+      "default": 24
+    },
+    "bodyPaddingRightMobile": {
+      "type": "number",
+      "default": 18
+    },
+    "bodyPaddingBottomMobile": {
+      "type": "number",
+      "default": 22
+    },
+    "bodyPaddingLeftMobile": {
+      "type": "number",
+      "default": 18
     },
     "titleColor": {
       "type": "string",
@@ -346,7 +298,15 @@
     },
     "titleFontSize": {
       "type": "number",
-      "default": 58
+      "default": 52
+    },
+    "titleFontSizeTablet": {
+      "type": "number",
+      "default": 44
+    },
+    "titleFontSizeMobile": {
+      "type": "number",
+      "default": 36
     },
     "titleFontWeight": {
       "type": "string",
@@ -354,7 +314,7 @@
     },
     "titleLineHeight": {
       "type": "number",
-      "default": 1.06
+      "default": 1.05
     },
     "titleLetterSpacing": {
       "type": "number",
@@ -364,9 +324,13 @@
       "type": "string",
       "default": "uppercase"
     },
+    "titleMaxWidth": {
+      "type": "number",
+      "default": 240
+    },
     "titleBottomSpacing": {
       "type": "number",
-      "default": 28
+      "default": 18
     },
     "showSessionIcon": {
       "type": "boolean",
@@ -374,23 +338,23 @@
     },
     "sessionIconSize": {
       "type": "number",
-      "default": 18
+      "default": 15
     },
     "sessionIconColor": {
       "type": "string",
       "default": "#3f3d3d"
     },
-    "sessionBadgeBackground": {
+    "sessionIconBackgroundColor": {
       "type": "string",
       "default": "#d8b354"
     },
     "sessionTextColor": {
       "type": "string",
-      "default": "#f6f2ea"
+      "default": "#ffffff"
     },
     "sessionFontSize": {
       "type": "number",
-      "default": 18
+      "default": 16
     },
     "sessionFontWeight": {
       "type": "string",
@@ -398,11 +362,11 @@
     },
     "sessionGap": {
       "type": "number",
-      "default": 12
+      "default": 10
     },
     "sessionBottomSpacing": {
       "type": "number",
-      "default": 28
+      "default": 18
     },
     "excerptColor": {
       "type": "string",
@@ -410,87 +374,99 @@
     },
     "excerptFontSize": {
       "type": "number",
-      "default": 19
+      "default": 16
+    },
+    "excerptFontSizeMobile": {
+      "type": "number",
+      "default": 15
     },
     "excerptLineHeight": {
       "type": "number",
-      "default": 1.5
+      "default": 1.55
     },
     "excerptMaxWidth": {
       "type": "number",
-      "default": 470
+      "default": 310
     },
     "excerptBottomSpacing": {
       "type": "number",
-      "default": 32
+      "default": 22
     },
-    "ctaLabel": {
+    "buttonLabel": {
       "type": "string",
       "default": "Book Now"
     },
-    "ctaTextColor": {
+    "buttonTextColor": {
       "type": "string",
       "default": "#d8b354"
     },
-    "ctaBackgroundColor": {
+    "buttonBackgroundColor": {
       "type": "string",
       "default": "#3f3d3d"
     },
-    "ctaBorderColor": {
+    "buttonBorderColor": {
       "type": "string",
       "default": "#d8b354"
     },
-    "ctaBorderWidth": {
+    "buttonBorderWidth": {
       "type": "number",
       "default": 2
     },
-    "ctaBorderRadius": {
+    "buttonBorderRadius": {
       "type": "number",
       "default": 999
     },
-    "ctaFontSize": {
+    "buttonFontSize": {
       "type": "number",
-      "default": 18
+      "default": 16
     },
-    "ctaFontWeight": {
+    "buttonFontSizeMobile": {
+      "type": "number",
+      "default": 15
+    },
+    "buttonFontWeight": {
       "type": "string",
       "default": "700"
     },
-    "ctaPaddingY": {
+    "buttonPaddingY": {
       "type": "number",
-      "default": 18
+      "default": 16
     },
-    "ctaPaddingX": {
+    "buttonPaddingX": {
       "type": "number",
-      "default": 42
+      "default": 28
     },
-    "ctaShowIcon": {
+    "buttonShowIcon": {
       "type": "boolean",
       "default": true
     },
-    "ctaIconPosition": {
+    "buttonIconPosition": {
       "type": "string",
       "default": "right"
     },
-    "ctaTopSpacing": {
+    "buttonSpacingTop": {
       "type": "number",
       "default": 0
     },
+    "buttonSpacingBottom": {
+      "type": "number",
+      "default": 22
+    },
     "dividerColor": {
       "type": "string",
-      "default": "rgba(246, 242, 234, 0.7)"
+      "default": "rgba(246, 242, 234, 0.72)"
     },
     "dividerThickness": {
       "type": "number",
       "default": 2
     },
-    "dividerTopSpacing": {
+    "dividerSpacingAbove": {
       "type": "number",
-      "default": 40
+      "default": 0
     },
-    "dividerBottomSpacing": {
+    "dividerSpacingBelow": {
       "type": "number",
-      "default": 22
+      "default": 18
     },
     "expandLabel": {
       "type": "string",
@@ -502,23 +478,35 @@
     },
     "expandLabelFontSize": {
       "type": "number",
-      "default": 18
+      "default": 16
     },
     "expandLabelFontWeight": {
       "type": "string",
       "default": "700"
     },
-    "expandIconSize": {
-      "type": "number",
-      "default": 28
-    },
     "expandIconColor": {
       "type": "string",
       "default": "#f6f2ea"
     },
-    "expandRowPaddingY": {
+    "expandIconSize": {
       "type": "number",
-      "default": 8
+      "default": 20
+    },
+    "expandRowPaddingTop": {
+      "type": "number",
+      "default": 6
+    },
+    "expandRowPaddingRight": {
+      "type": "number",
+      "default": 0
+    },
+    "expandRowPaddingBottom": {
+      "type": "number",
+      "default": 6
+    },
+    "expandRowPaddingLeft": {
+      "type": "number",
+      "default": 0
     },
     "expandedContentColor": {
       "type": "string",
@@ -526,21 +514,29 @@
     },
     "expandedContentFontSize": {
       "type": "number",
-      "default": 16
+      "default": 15
     },
     "expandedContentLineHeight": {
       "type": "number",
-      "default": 1.6
+      "default": 1.55
     },
     "expandedContentSpacingTop": {
       "type": "number",
-      "default": 18
+      "default": 12
+    },
+    "expandedContentSpacingBottom": {
+      "type": "number",
+      "default": 0
     },
     "expandedContentMaxHeight": {
       "type": "number",
+      "default": 160
+    },
+    "transitionDuration": {
+      "type": "number",
       "default": 260
     },
-    "allowMultipleExpanded": {
+    "allowMultipleOpen": {
       "type": "boolean",
       "default": true
     },
