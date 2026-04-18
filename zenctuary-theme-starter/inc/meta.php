@@ -494,3 +494,197 @@ function zenctuary_save_news_hover_metabox( int $post_id ): void {
 		);
 	}
 }
+
+/**
+ * Register product feature card meta fields.
+ */
+add_action( 'init', 'zenctuary_register_product_feature_card_meta' );
+
+function zenctuary_register_product_feature_card_meta(): void {
+	$defaults = [
+		'object_subtype' => 'product',
+		'show_in_rest'   => true,
+		'single'         => true,
+		'auth_callback'  => '__return_true',
+	];
+
+	register_post_meta(
+		'product',
+		'_session_time',
+		array_merge(
+			$defaults,
+			[
+				'type'              => 'string',
+				'description'       => __( 'Session time shown on Product Feature Cards.', 'zenctuary' ),
+				'sanitize_callback' => 'sanitize_text_field',
+				'default'           => '',
+			]
+		)
+	);
+
+	register_post_meta(
+		'product',
+		'_card_excerpt',
+		array_merge(
+			$defaults,
+			[
+				'type'              => 'string',
+				'description'       => __( 'Short card excerpt used by Product Feature Cards.', 'zenctuary' ),
+				'sanitize_callback' => 'sanitize_textarea_field',
+				'default'           => '',
+			]
+		)
+	);
+
+	register_post_meta(
+		'product',
+		'_what_to_expect',
+		array_merge(
+			$defaults,
+			[
+				'type'              => 'string',
+				'description'       => __( 'Expandable What to Expect content used by Product Feature Cards.', 'zenctuary' ),
+				'sanitize_callback' => 'wp_kses_post',
+				'default'           => '',
+			]
+		)
+	);
+
+	register_post_meta(
+		'product',
+		'_zencoin_value',
+		array_merge(
+			$defaults,
+			[
+				'type'              => 'string',
+				'description'       => __( 'Independent Zencoin value shown on Product Feature Cards.', 'zenctuary' ),
+				'sanitize_callback' => 'sanitize_text_field',
+				'default'           => '',
+			]
+		)
+	);
+}
+
+add_action( 'add_meta_boxes', 'zenctuary_add_product_feature_cards_metabox' );
+
+function zenctuary_add_product_feature_cards_metabox(): void {
+	add_meta_box(
+		'zenctuary_product_feature_cards',
+		__( 'Product Feature Card Details', 'zenctuary' ),
+		'zenctuary_render_product_feature_cards_metabox',
+		'product',
+		'normal',
+		'default'
+	);
+}
+
+/**
+ * Render the Product Feature Cards metabox.
+ *
+ * @param WP_Post $post Product post object.
+ */
+function zenctuary_render_product_feature_cards_metabox( WP_Post $post ): void {
+	wp_nonce_field( 'zenctuary_save_product_feature_cards_meta', 'zenctuary_product_feature_cards_nonce' );
+
+	$session_time   = (string) get_post_meta( $post->ID, '_session_time', true );
+	$card_excerpt   = (string) get_post_meta( $post->ID, '_card_excerpt', true );
+	$what_to_expect = (string) get_post_meta( $post->ID, '_what_to_expect', true );
+	$zencoin_value  = (string) get_post_meta( $post->ID, '_zencoin_value', true );
+	?>
+	<style>
+		#zenctuary_product_feature_cards .zen-meta-grid {
+			display: grid;
+			grid-template-columns: 1fr 1fr;
+			gap: 16px 24px;
+			padding: 8px 0;
+		}
+		#zenctuary_product_feature_cards .zen-meta-field {
+			display: flex;
+			flex-direction: column;
+			gap: 4px;
+		}
+		#zenctuary_product_feature_cards .zen-meta-field.zen-meta-full {
+			grid-column: 1 / -1;
+		}
+		#zenctuary_product_feature_cards label {
+			font-size: 13px;
+			font-weight: 600;
+		}
+		#zenctuary_product_feature_cards input[type="text"],
+		#zenctuary_product_feature_cards textarea {
+			width: 100%;
+		}
+	</style>
+	<div class="zen-meta-grid">
+		<div class="zen-meta-field">
+			<label for="_session_time"><?php esc_html_e( 'Session Time', 'zenctuary' ); ?></label>
+			<input type="text" id="_session_time" name="_session_time" value="<?php echo esc_attr( $session_time ); ?>" placeholder="<?php esc_attr_e( 'e.g. 60 min', 'zenctuary' ); ?>" />
+		</div>
+
+		<div class="zen-meta-field">
+			<label for="_zencoin_value"><?php esc_html_e( 'Zencoin Value', 'zenctuary' ); ?></label>
+			<input type="text" id="_zencoin_value" name="_zencoin_value" value="<?php echo esc_attr( $zencoin_value ); ?>" placeholder="<?php esc_attr_e( 'e.g. 5', 'zenctuary' ); ?>" />
+		</div>
+
+		<div class="zen-meta-field zen-meta-full">
+			<label for="_card_excerpt"><?php esc_html_e( 'Card Excerpt', 'zenctuary' ); ?></label>
+			<textarea id="_card_excerpt" name="_card_excerpt" rows="4" placeholder="<?php esc_attr_e( 'Short summary used inside the product card.', 'zenctuary' ); ?>"><?php echo esc_textarea( $card_excerpt ); ?></textarea>
+		</div>
+
+		<div class="zen-meta-field zen-meta-full">
+			<label for="zenctuary_what_to_expect_editor"><?php esc_html_e( 'What to Expect', 'zenctuary' ); ?></label>
+			<?php
+			wp_editor(
+				$what_to_expect,
+				'zenctuary_what_to_expect_editor',
+				[
+					'textarea_name' => '_what_to_expect',
+					'textarea_rows' => 8,
+					'media_buttons' => false,
+					'teeny'         => true,
+					'quicktags'     => [
+						'buttons' => 'strong,em,ul,ol,li,link,close',
+					],
+				]
+			);
+			?>
+		</div>
+	</div>
+	<?php
+}
+
+add_action( 'save_post_product', 'zenctuary_save_product_feature_cards_metabox' );
+
+function zenctuary_save_product_feature_cards_metabox( int $post_id ): void {
+	if ( ! isset( $_POST['zenctuary_product_feature_cards_nonce'] ) ) {
+		return;
+	}
+
+	if ( ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['zenctuary_product_feature_cards_nonce'] ) ), 'zenctuary_save_product_feature_cards_meta' ) ) {
+		return;
+	}
+
+	if ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ) {
+		return;
+	}
+
+	if ( ! current_user_can( 'edit_post', $post_id ) ) {
+		return;
+	}
+
+	if ( isset( $_POST['_session_time'] ) ) {
+		update_post_meta( $post_id, '_session_time', sanitize_text_field( wp_unslash( $_POST['_session_time'] ) ) );
+	}
+
+	if ( isset( $_POST['_zencoin_value'] ) ) {
+		update_post_meta( $post_id, '_zencoin_value', sanitize_text_field( wp_unslash( $_POST['_zencoin_value'] ) ) );
+	}
+
+	if ( isset( $_POST['_card_excerpt'] ) ) {
+		update_post_meta( $post_id, '_card_excerpt', sanitize_textarea_field( wp_unslash( $_POST['_card_excerpt'] ) ) );
+	}
+
+	if ( isset( $_POST['_what_to_expect'] ) ) {
+		update_post_meta( $post_id, '_what_to_expect', wp_kses_post( wp_unslash( $_POST['_what_to_expect'] ) ) );
+	}
+}

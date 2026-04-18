@@ -1,0 +1,12 @@
+.pfc-editor {
+	.pfc-editor__checklist {
+		border: 1px solid #d9d9d9;
+		max-height: 220px;
+		overflow-y: auto;
+		padding: 8px 12px;
+	}
+
+	.pfc-editor__preview {
+		min-height: 280px;
+	}
+}
