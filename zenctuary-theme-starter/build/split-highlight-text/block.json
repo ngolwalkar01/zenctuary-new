@@ -1,0 +1,265 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "zenctuary/split-highlight-text",
+  "version": "1.0.0",
+  "title": "Split Highlight Text",
+  "category": "design",
+  "icon": "editor-textcolor",
+  "description": "Premium two-column editorial text section with highlighted inline headline styling.",
+  "keywords": [
+    "zenctuary",
+    "split",
+    "headline",
+    "editorial",
+    "text"
+  ],
+  "textdomain": "zenctuary",
+  "supports": {
+    "html": false,
+    "anchor": true,
+    "align": [
+      "wide",
+      "full"
+    ]
+  },
+  "attributes": {
+    "headline": {
+      "type": "string",
+      "source": "html",
+      "selector": ".sht__headline"
+    },
+    "body": {
+      "type": "string",
+      "source": "html",
+      "selector": ".sht__body"
+    },
+    "sectionBackgroundColor": {
+      "type": "string",
+      "default": "#3f3d3d"
+    },
+    "sectionTextColor": {
+      "type": "string",
+      "default": "#f6f2ea"
+    },
+    "sectionMaxWidth": {
+      "type": "number",
+      "default": 1440
+    },
+    "sectionPaddingTop": {
+      "type": "number",
+      "default": 120
+    },
+    "sectionPaddingRight": {
+      "type": "number",
+      "default": 56
+    },
+    "sectionPaddingBottom": {
+      "type": "number",
+      "default": 120
+    },
+    "sectionPaddingLeft": {
+      "type": "number",
+      "default": 56
+    },
+    "sectionPaddingTopTablet": {
+      "type": "number",
+      "default": 88
+    },
+    "sectionPaddingRightTablet": {
+      "type": "number",
+      "default": 36
+    },
+    "sectionPaddingBottomTablet": {
+      "type": "number",
+      "default": 88
+    },
+    "sectionPaddingLeftTablet": {
+      "type": "number",
+      "default": 36
+    },
+    "sectionPaddingTopMobile": {
+      "type": "number",
+      "default": 64
+    },
+    "sectionPaddingRightMobile": {
+      "type": "number",
+      "default": 20
+    },
+    "sectionPaddingBottomMobile": {
+      "type": "number",
+      "default": 64
+    },
+    "sectionPaddingLeftMobile": {
+      "type": "number",
+      "default": 20
+    },
+    "sectionMarginTop": {
+      "type": "number",
+      "default": 0
+    },
+    "sectionMarginBottom": {
+      "type": "number",
+      "default": 0
+    },
+    "columnGapDesktop": {
+      "type": "number",
+      "default": 88
+    },
+    "columnGapTablet": {
+      "type": "number",
+      "default": 48
+    },
+    "columnGapMobile": {
+      "type": "number",
+      "default": 26
+    },
+    "leftColumnWidth": {
+      "type": "number",
+      "default": 50
+    },
+    "rightColumnWidth": {
+      "type": "number",
+      "default": 50
+    },
+    "verticalAlign": {
+      "type": "string",
+      "default": "center"
+    },
+    "horizontalAlign": {
+      "type": "string",
+      "default": "space-between"
+    },
+    "stackOnTablet": {
+      "type": "boolean",
+      "default": false
+    },
+    "stackOnMobile": {
+      "type": "boolean",
+      "default": true
+    },
+    "reverseOnMobile": {
+      "type": "boolean",
+      "default": false
+    },
+    "stackSpacingTablet": {
+      "type": "number",
+      "default": 36
+    },
+    "stackSpacingMobile": {
+      "type": "number",
+      "default": 24
+    },
+    "leftPaddingTop": {
+      "type": "number",
+      "default": 0
+    },
+    "leftPaddingRight": {
+      "type": "number",
+      "default": 24
+    },
+    "leftPaddingBottom": {
+      "type": "number",
+      "default": 0
+    },
+    "leftPaddingLeft": {
+      "type": "number",
+      "default": 0
+    },
+    "rightPaddingTop": {
+      "type": "number",
+      "default": 0
+    },
+    "rightPaddingRight": {
+      "type": "number",
+      "default": 0
+    },
+    "rightPaddingBottom": {
+      "type": "number",
+      "default": 0
+    },
+    "rightPaddingLeft": {
+      "type": "number",
+      "default": 24
+    },
+    "headlineMaxWidth": {
+      "type": "number",
+      "default": 620
+    },
+    "headlineAlignment": {
+      "type": "string",
+      "default": "left"
+    },
+    "headlineColor": {
+      "type": "string",
+      "default": "#f6f2ea"
+    },
+    "headlineFontSize": {
+      "type": "number",
+      "default": 76
+    },
+    "headlineFontSizeTablet": {
+      "type": "number",
+      "default": 58
+    },
+    "headlineFontSizeMobile": {
+      "type": "number",
+      "default": 38
+    },
+    "headlineFontWeight": {
+      "type": "string",
+      "default": "700"
+    },
+    "headlineLineHeight": {
+      "type": "number",
+      "default": 1.03
+    },
+    "headlineLetterSpacing": {
+      "type": "number",
+      "default": 0
+    },
+    "headlineTextTransform": {
+      "type": "string",
+      "default": "uppercase"
+    },
+    "bodyMaxWidth": {
+      "type": "number",
+      "default": 520
+    },
+    "bodyAlignment": {
+      "type": "string",
+      "default": "left"
+    },
+    "bodyColor": {
+      "type": "string",
+      "default": "#f6f2ea"
+    },
+    "bodyFontSize": {
+      "type": "number",
+      "default": 22
+    },
+    "bodyFontSizeTablet": {
+      "type": "number",
+      "default": 19
+    },
+    "bodyFontSizeMobile": {
+      "type": "number",
+      "default": 17
+    },
+    "bodyFontWeight": {
+      "type": "string",
+      "default": "400"
+    },
+    "bodyLineHeight": {
+      "type": "number",
+      "default": 1.7
+    },
+    "bodyLetterSpacing": {
+      "type": "number",
+      "default": 0
+    }
+  },
+  "editorScript": "file:./index.js",
+  "style": "file:./style-index.css",
+  "editorStyle": "file:./index.css"
+}
