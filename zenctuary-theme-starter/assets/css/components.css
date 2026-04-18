@@ -1643,6 +1643,10 @@ input[type="checkbox"] {
     padding-right: var(--zen-space-25);
 }
 
+.zen-image-row .wp-block-image img {
+    width: 100%;
+}
+
 }
 
 @media (min-width: 1025px) {
