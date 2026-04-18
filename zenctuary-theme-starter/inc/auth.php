@@ -128,27 +128,3 @@ function zenctuary_ajax_logout() {
 }
 add_action( 'wp_ajax_zenctuary_logout', 'zenctuary_ajax_logout' );
 add_action( 'wp_ajax_nopriv_zenctuary_logout', 'zenctuary_ajax_logout' ); // Allow even if not logged in (to prevent weird states)
-/**
- * Render Header Authentication Trigger (Shortcode)
- * 
- * Provides a PHP-controlled button that shows "Sign-In" or "My Account"
- * based on the user's login state.
- */
-function zenctuary_render_auth_trigger() {
-    $is_logged_in = is_user_logged_in();
-    $action = $is_logged_in ? 'account' : 'login';
-    $label = $is_logged_in ? __( 'My Account', 'zenctuary' ) : __( 'Sign-In', 'zenctuary' );
-    $icon = '<svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M12 12C14.21 12 16 10.21 16 8C16 5.79 14.21 4 12 4C9.79 4 8 5.79 8 8C8 10.21 9.79 12 12 12ZM12 14C9.33 14 4 15.34 4 18V20H20V18C20 15.34 14.67 14 12 14Z"/></svg>';
-
-    ob_start();
-    ?>
-    <div class="wp-block-button zen-btn zen-btn--outline-neutral zen-btn--small zen-auth-trigger" data-auth="<?php echo esc_attr( $action ); ?>">
-        <a class="wp-block-button__link wp-element-button" href="javascript:void(0);">
-            <span class="zen-auth-label"><?php echo esc_html( $label ); ?></span>
-            <?php echo $icon; ?>
-        </a>
-    </div>
-    <?php
-    return ob_get_clean();
-}
-add_shortcode( 'zen_auth_trigger', 'zenctuary_render_auth_trigger' );
