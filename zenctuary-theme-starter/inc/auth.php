@@ -32,8 +32,12 @@ function zenctuary_ajax_login() {
 		wp_send_json_error( array( 'message' => $user_signon->get_error_message() ) );
 	} else {
 		wp_send_json_success( array( 
-            'message' => __( 'Login successful! Redirecting...', 'zenctuary' ),
-            'user_id' => $user_signon->ID
+            'message' => __( 'Login successful!', 'zenctuary' ),
+            'user_id' => $user_signon->ID,
+            'user_data' => array(
+                'display_name' => $user_signon->display_name,
+                'user_email'   => $user_signon->user_email,
+            )
         ) );
 	}
 
@@ -77,9 +81,14 @@ function zenctuary_ajax_register() {
         // Log the user in after registration if successful
         wp_set_auth_cookie( $customer_id );
         
+        $user = get_userdata( $customer_id );
         wp_send_json_success( array( 
             'message' => __( 'Registration successful!', 'zenctuary' ),
-            'user_id' => $customer_id
+            'user_id' => $customer_id,
+            'user_data' => array(
+                'display_name' => $user->display_name,
+                'user_email'   => $user->user_email,
+            )
         ) );
 
     } else {
@@ -93,9 +102,14 @@ function zenctuary_ajax_register() {
         // Log the user in after registration
         wp_set_auth_cookie( $user_id );
 
+        $user = get_userdata( $user_id );
         wp_send_json_success( array( 
             'message' => __( 'Registration successful!', 'zenctuary' ),
-            'user_id' => $user_id
+            'user_id' => $user_id,
+            'user_data' => array(
+                'display_name' => $user->display_name,
+                'user_email'   => $user->user_email,
+            )
         ) );
     }
 

@@ -65,12 +65,14 @@
                 </div>
             </div>
 
-            <!-- Account View -->
             <div id="zen-view-account" class="zen-auth-view" data-view="account">
                 <h2 tabindex="-1">My Account</h2>
-                <div class="zen-account-placeholder">
-                    <p>Welcome back! You are now logged in.</p>
-                    <button type="button" class="zen-btn-outline zen-logout-trigger">Logout</button>
+                <div class="zen-account-details">
+                    <p>Welcome back, <strong id="zen-user-display-name"></strong>!</p>
+                    <p class="zen-user-email" id="zen-user-email"></p>
+                    <div class="zen-account-actions">
+                        <button type="button" class="zen-btn-outline zen-logout-trigger">Logout</button>
+                    </div>
                 </div>
             </div>
         </div>

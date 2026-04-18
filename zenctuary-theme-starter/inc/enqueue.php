@@ -55,8 +55,14 @@ function zenctuary_enqueue_assets(): void {
 		true
 	);
 
+	$current_user = wp_get_current_user();
 	wp_localize_script( 'zenctuary-auth', 'zenctuaryAuthData', array(
-		'ajax_url' => admin_url( 'admin-ajax.php' ),
-		'nonce'    => wp_create_nonce( 'zenctuary_auth_nonce' ),
+		'ajax_url'     => admin_url( 'admin-ajax.php' ),
+		'nonce'        => wp_create_nonce( 'zenctuary_auth_nonce' ),
+		'is_logged_in' => is_user_logged_in(),
+		'user_data'    => is_user_logged_in() ? array(
+			'display_name' => $current_user->display_name,
+			'user_email'   => $current_user->user_email,
+		) : null,
 	) );
 }

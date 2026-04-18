@@ -224,13 +224,23 @@
     color: var(--wp--preset--color--secondary-gold-light);
 }
 
-/* Account Placeholder */
-.zen-account-placeholder {
+/* Account Details */
+.zen-account-details {
     text-align: center;
 }
 
-.zen-account-placeholder p {
-    margin-bottom: 24px;
+.zen-account-details p {
+    margin-bottom: 8px;
+}
+
+.zen-user-email {
+    color: var(--wp--preset--color--secondary-grey-light);
+    font-size: 14px;
+    margin-bottom: 24px !important;
+}
+
+.zen-account-actions {
+    margin-top: 24px;
 }
 
 .zen-btn-outline {
