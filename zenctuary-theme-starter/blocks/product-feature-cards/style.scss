@@ -22,20 +22,40 @@
 	max-width: var(--pfc-section-max-width, 1400px);
 }
 
+.pfc__header {
+	margin: 0 auto var(--pfc-intro-bottom, 48px);
+	max-width: 1000px;
+	text-align: center;
+}
+
+.pfc__section-heading {
+	color: var(--pfc-heading-color, #d8b354);
+	font-size: var(--pfc-heading-size, 36px);
+	font-weight: var(--pfc-heading-weight, 700);
+	line-height: 1.1;
+	margin: 0 0 var(--pfc-heading-bottom, 22px);
+	text-transform: uppercase;
+}
+
+.pfc__section-intro {
+	color: var(--pfc-intro-color, #f6f2ea);
+	font-size: var(--pfc-intro-size, 18px);
+	line-height: var(--pfc-intro-line-height, 1.55);
+	margin: 0 auto;
+	max-width: var(--pfc-intro-max-width, 830px);
+}
+
 .pfc__row {
+	align-items: flex-start;
 	display: flex;
+	flex-wrap: wrap;
 	gap: var(--pfc-gap, 32px);
 	justify-content: center;
 	margin: 0 auto;
-	max-width: var(--pfc-row-max-width, 1200px);
-
-	&.is-nowrap {
-		flex-wrap: nowrap;
-	}
-
-	&.is-wrap {
-		flex-wrap: wrap;
-	}
+	max-width: min(
+		var(--pfc-row-max-width, 1200px),
+		calc((var(--pfc-card-width, 370px) * 4) + (var(--pfc-gap, 32px) * 3))
+	);
 }
 
 .pfc__empty {
@@ -62,6 +82,8 @@
 	width: var(--pfc-card-width, 370px);
 
 	&.is-expanded {
+		height: auto;
+
 		.pfc__expect-plus {
 			display: none;
 		}
@@ -275,8 +297,8 @@
 	color: var(--pfc-expanded-color, #f6f2ea);
 	font-size: var(--pfc-expanded-font-size, 15px);
 	line-height: var(--pfc-expanded-line-height, 1.55);
-	max-height: var(--pfc-expanded-max-height, 160px);
-	overflow: auto;
+	max-height: none;
+	overflow: visible;
 }
 
 .pfc__expect-panel-inner {
@@ -309,6 +331,10 @@
 
 	.pfc__row {
 		gap: var(--pfc-gap-tablet, 24px);
+		max-width: min(
+			var(--pfc-row-max-width, 1200px),
+			calc((var(--pfc-card-width-tablet, 340px) * 2) + var(--pfc-gap-tablet, 24px))
+		);
 	}
 
 	.pfc__card {
@@ -329,33 +355,16 @@
 	}
 
 	.pfc__row {
-		gap: var(--pfc-gap-mobile, 18px);
-	}
-
-	.wp-block-zenctuary-product-feature-cards.mobile-layout-stack .pfc__row {
 		align-items: center;
 		flex-direction: column;
-	}
-
-	.wp-block-zenctuary-product-feature-cards.mobile-layout-stack .pfc__card {
-		width: min(100%, var(--pfc-card-width-mobile, 320px));
-	}
-
-	.wp-block-zenctuary-product-feature-cards.mobile-layout-scroll .pfc__row {
-		flex-wrap: nowrap;
-		justify-content: flex-start;
-		overflow-x: auto;
-		padding-bottom: 4px;
-	}
-
-	.wp-block-zenctuary-product-feature-cards.mobile-layout-scroll .pfc__row::-webkit-scrollbar {
-		display: none;
+		gap: var(--pfc-gap-mobile, 18px);
+		max-width: var(--pfc-card-width-mobile, 320px);
 	}
 
 	.pfc__card {
 		flex-basis: var(--pfc-card-width-mobile, 320px);
 		height: var(--pfc-card-height-mobile, 520px);
-		width: var(--pfc-card-width-mobile, 320px);
+		width: min(100%, var(--pfc-card-width-mobile, 320px));
 	}
 
 	.pfc__content {
@@ -365,6 +374,10 @@
 
 	.pfc__title {
 		font-size: var(--pfc-title-size-mobile, 36px);
+	}
+
+	.pfc__section-heading {
+		font-size: clamp(28px, 8vw, var(--pfc-heading-size, 36px));
 	}
 
 	.pfc__excerpt {

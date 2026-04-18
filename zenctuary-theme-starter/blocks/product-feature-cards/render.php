@@ -109,6 +109,15 @@ $posts = $query->posts;
 $css_vars = [
 	'--pfc-section-bg:' . esc_attr( $attributes['sectionBackgroundColor'] ?? '#3f3d3d' ),
 	'--pfc-section-text:' . esc_attr( $attributes['sectionTextColor'] ?? '#f6f2ea' ),
+	'--pfc-heading-color:' . esc_attr( $attributes['sectionHeadingColor'] ?? '#d8b354' ),
+	'--pfc-heading-size:' . absint( $attributes['sectionHeadingFontSize'] ?? 36 ) . 'px',
+	'--pfc-heading-weight:' . esc_attr( $attributes['sectionHeadingFontWeight'] ?? '700' ),
+	'--pfc-intro-color:' . esc_attr( $attributes['sectionIntroColor'] ?? '#f6f2ea' ),
+	'--pfc-intro-size:' . absint( $attributes['sectionIntroFontSize'] ?? 18 ) . 'px',
+	'--pfc-intro-line-height:' . esc_attr( $attributes['sectionIntroLineHeight'] ?? 1.55 ),
+	'--pfc-heading-bottom:' . absint( $attributes['sectionHeadingBottomSpacing'] ?? 22 ) . 'px',
+	'--pfc-intro-bottom:' . absint( $attributes['sectionIntroBottomSpacing'] ?? 48 ) . 'px',
+	'--pfc-intro-max-width:' . absint( $attributes['sectionIntroMaxWidth'] ?? 830 ) . 'px',
 	'--pfc-section-max-width:' . absint( $attributes['sectionMaxWidth'] ?? 1400 ) . 'px',
 	'--pfc-row-max-width:' . absint( $attributes['sectionRowMaxWidth'] ?? 1200 ) . 'px',
 	'--pfc-pt:' . absint( $attributes['sectionPaddingTop'] ?? 80 ) . 'px',
@@ -224,7 +233,7 @@ $css_vars = [
 
 $wrapper_attributes = get_block_wrapper_attributes(
 	[
-		'class' => 'product-feature-cards mobile-layout-' . esc_attr( $attributes['mobileLayout'] ?? 'stack' ),
+		'class' => 'product-feature-cards',
 		'style' => implode( ';', $css_vars ),
 		'data-allow-multiple' => $allow_multiple ? 'true' : 'false',
 	]
@@ -233,7 +242,18 @@ $wrapper_attributes = get_block_wrapper_attributes(
 
 <section <?php echo $wrapper_attributes; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>>
 	<div class="pfc__inner">
-		<div class="pfc__row<?php echo ! empty( $attributes['rowWrapDesktop'] ) ? ' is-wrap' : ' is-nowrap'; ?>">
+		<?php if ( ! empty( $attributes['sectionHeading'] ) || ! empty( $attributes['sectionIntro'] ) ) : ?>
+			<header class="pfc__header">
+				<?php if ( ! empty( $attributes['sectionHeading'] ) ) : ?>
+					<h2 class="pfc__section-heading"><?php echo esc_html( $attributes['sectionHeading'] ); ?></h2>
+				<?php endif; ?>
+				<?php if ( ! empty( $attributes['sectionIntro'] ) ) : ?>
+					<p class="pfc__section-intro"><?php echo esc_html( $attributes['sectionIntro'] ); ?></p>
+				<?php endif; ?>
+			</header>
+		<?php endif; ?>
+
+		<div class="pfc__row">
 			<?php if ( empty( $posts ) ) : ?>
 				<div class="pfc__empty"><?php esc_html_e( 'No products matched this selection.', 'zenctuary' ); ?></div>
 			<?php else : ?>
@@ -303,7 +323,7 @@ $wrapper_attributes = get_block_wrapper_attributes(
 										<span class="pfc__expect-label"><?php echo esc_html( $attributes['expandLabel'] ?? __( 'What to expect', 'zenctuary' ) ); ?></span>
 										<span class="pfc__expect-icon" aria-hidden="true">
 											<span class="pfc__expect-plus">+</span>
-											<span class="pfc__expect-minus">−</span>
+											<span class="pfc__expect-minus">-</span>
 										</span>
 									</button>
 

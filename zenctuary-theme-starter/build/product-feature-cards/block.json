@@ -52,6 +52,14 @@
       "type": "array",
       "default": []
     },
+    "sectionHeading": {
+      "type": "string",
+      "default": "CHOOSE YOUR EXPERIENCE"
+    },
+    "sectionIntro": {
+      "type": "string",
+      "default": ""
+    },
     "sectionBackgroundColor": {
       "type": "string",
       "default": "#3f3d3d"
@@ -59,6 +67,42 @@
     "sectionTextColor": {
       "type": "string",
       "default": "#f6f2ea"
+    },
+    "sectionHeadingColor": {
+      "type": "string",
+      "default": "#d8b354"
+    },
+    "sectionHeadingFontSize": {
+      "type": "number",
+      "default": 36
+    },
+    "sectionHeadingFontWeight": {
+      "type": "string",
+      "default": "700"
+    },
+    "sectionIntroColor": {
+      "type": "string",
+      "default": "#f6f2ea"
+    },
+    "sectionIntroFontSize": {
+      "type": "number",
+      "default": 18
+    },
+    "sectionIntroLineHeight": {
+      "type": "number",
+      "default": 1.55
+    },
+    "sectionHeadingBottomSpacing": {
+      "type": "number",
+      "default": 22
+    },
+    "sectionIntroBottomSpacing": {
+      "type": "number",
+      "default": 48
+    },
+    "sectionIntroMaxWidth": {
+      "type": "number",
+      "default": 830
     },
     "sectionMaxWidth": {
       "type": "number",
@@ -135,14 +179,6 @@
     "cardGapMobile": {
       "type": "number",
       "default": 18
-    },
-    "rowWrapDesktop": {
-      "type": "boolean",
-      "default": false
-    },
-    "mobileLayout": {
-      "type": "string",
-      "default": "stack"
     },
     "cardWidth": {
       "type": "number",
@@ -530,7 +566,7 @@
     },
     "expandedContentMaxHeight": {
       "type": "number",
-      "default": 160
+      "default": 400
     },
     "transitionDuration": {
       "type": "number",

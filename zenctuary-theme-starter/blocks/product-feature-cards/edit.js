@@ -244,11 +244,33 @@ export default function Edit( { attributes, setAttributes } ) {
 				</PanelBody>
 
 				<PanelBody title={ __( 'Section', 'zenctuary' ) }>
+					<TextControl
+						label={ __( 'Heading', 'zenctuary' ) }
+						value={ attributes.sectionHeading }
+						onChange={ ( sectionHeading ) => setAttributes( { sectionHeading } ) }
+					/>
+					<TextControl
+						label={ __( 'Intro Text', 'zenctuary' ) }
+						value={ attributes.sectionIntro }
+						onChange={ ( sectionIntro ) => setAttributes( { sectionIntro } ) }
+					/>
 					<ColorControl
 						label={ __( 'Background', 'zenctuary' ) }
 						value={ attributes.sectionBackgroundColor }
 						fallback="#3f3d3d"
 						onChange={ ( sectionBackgroundColor ) => setAttributes( { sectionBackgroundColor } ) }
+					/>
+					<ColorControl
+						label={ __( 'Heading Color', 'zenctuary' ) }
+						value={ attributes.sectionHeadingColor }
+						fallback="#d8b354"
+						onChange={ ( sectionHeadingColor ) => setAttributes( { sectionHeadingColor } ) }
+					/>
+					<ColorControl
+						label={ __( 'Intro Color', 'zenctuary' ) }
+						value={ attributes.sectionIntroColor }
+						fallback="#f6f2ea"
+						onChange={ ( sectionIntroColor ) => setAttributes( { sectionIntroColor } ) }
 					/>
 					<ColorControl
 						label={ __( 'Text Color', 'zenctuary' ) }
@@ -269,6 +291,51 @@ export default function Edit( { attributes, setAttributes } ) {
 						onChange={ ( sectionRowMaxWidth ) => setAttributes( { sectionRowMaxWidth } ) }
 						min={ 700 }
 						max={ 1600 }
+					/>
+					<RangeControl
+						label={ __( 'Heading Font Size', 'zenctuary' ) }
+						value={ attributes.sectionHeadingFontSize }
+						onChange={ ( sectionHeadingFontSize ) => setAttributes( { sectionHeadingFontSize } ) }
+						min={ 20 }
+						max={ 72 }
+					/>
+					<SelectControl
+						label={ __( 'Heading Weight', 'zenctuary' ) }
+						value={ attributes.sectionHeadingFontWeight }
+						options={ WEIGHTS }
+						onChange={ ( sectionHeadingFontWeight ) => setAttributes( { sectionHeadingFontWeight } ) }
+					/>
+					<RangeControl
+						label={ __( 'Intro Font Size', 'zenctuary' ) }
+						value={ attributes.sectionIntroFontSize }
+						onChange={ ( sectionIntroFontSize ) => setAttributes( { sectionIntroFontSize } ) }
+						min={ 12 }
+						max={ 28 }
+					/>
+					<RangeControl
+						label={ __( 'Intro Max Width', 'zenctuary' ) }
+						value={ attributes.sectionIntroMaxWidth }
+						onChange={ ( sectionIntroMaxWidth ) => setAttributes( { sectionIntroMaxWidth } ) }
+						min={ 300 }
+						max={ 1200 }
+					/>
+					<RangeControl
+						label={ __( 'Space Below Heading', 'zenctuary' ) }
+						value={ attributes.sectionHeadingBottomSpacing }
+						onChange={ ( sectionHeadingBottomSpacing ) =>
+							setAttributes( { sectionHeadingBottomSpacing } )
+						}
+						min={ 0 }
+						max={ 80 }
+					/>
+					<RangeControl
+						label={ __( 'Space Below Intro', 'zenctuary' ) }
+						value={ attributes.sectionIntroBottomSpacing }
+						onChange={ ( sectionIntroBottomSpacing ) =>
+							setAttributes( { sectionIntroBottomSpacing } )
+						}
+						min={ 0 }
+						max={ 100 }
 					/>
 					<RangeControl
 						label={ __( 'Padding Top', 'zenctuary' ) }
@@ -336,20 +403,9 @@ export default function Edit( { attributes, setAttributes } ) {
 						min={ 0 }
 						max={ 50 }
 					/>
-					<ToggleControl
-						label={ __( 'Allow Desktop Wrap', 'zenctuary' ) }
-						checked={ attributes.rowWrapDesktop }
-						onChange={ ( rowWrapDesktop ) => setAttributes( { rowWrapDesktop } ) }
-					/>
-					<SelectControl
-						label={ __( 'Mobile Layout', 'zenctuary' ) }
-						value={ attributes.mobileLayout }
-						options={ [
-							{ label: __( 'Stacked', 'zenctuary' ), value: 'stack' },
-							{ label: __( 'Horizontal Scroll', 'zenctuary' ), value: 'scroll' },
-						] }
-						onChange={ ( mobileLayout ) => setAttributes( { mobileLayout } ) }
-					/>
+					<p>
+						{ __( 'Desktop keeps cards centered with up to 4 per row. Smaller screens stack them vertically.', 'zenctuary' ) }
+					</p>
 				</PanelBody>
 
 				<PanelBody title={ __( 'Card Shell', 'zenctuary' ) }>
