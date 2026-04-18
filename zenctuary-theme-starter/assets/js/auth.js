@@ -18,14 +18,21 @@ window.zenctuaryAuth = (function() {
 
         // --- GLOBAL CLICK DELEGATION ---
         document.addEventListener('click', function(e) {
-            // 1. Header triggers (Sign-In / My Account)
-            const authTrigger = e.target.closest('.zen-auth-trigger');
+            // 1. Reusable Auth Triggers (data-auth)
+            const authTrigger = e.target.closest('[data-auth]');
             if (authTrigger) {
                 e.preventDefault();
-                if (zenctuaryAuthData.is_logged_in) {
-                    openModal('account');
-                } else {
-                    openModal('login');
+                const action = authTrigger.dataset.auth;
+
+                switch (action) {
+                    case 'login':
+                    case 'signup':
+                    case 'account':
+                        openModal(action);
+                        break;
+                    case 'logout':
+                        handleLogout();
+                        break;
                 }
                 return;
             }
@@ -109,21 +116,17 @@ window.zenctuaryAuth = (function() {
             if (emailEl) emailEl.textContent = userData.user_email;
         }
 
-        // Update Header Buttons dynamically
-        const headerTriggers = document.querySelectorAll('.zen-auth-trigger');
-        headerTriggers.forEach(trigger => {
-            const link = trigger.querySelector('a');
-            if (!link) return;
-
-            const icon = link.querySelector('svg');
+        // Update all data-auth triggers dynamically (ensures header and other triggers sync)
+        const triggers = document.querySelectorAll('[data-auth="login"], [data-auth="account"]');
+        triggers.forEach(trigger => {
+            const label = trigger.querySelector('.zen-auth-label');
+            
             if (isLoggedIn) {
-                link.innerHTML = 'My Account ';
-                if (icon) link.appendChild(icon);
-                link.setAttribute('href', '#account');
+                trigger.dataset.auth = 'account';
+                if (label) label.textContent = 'My Account';
             } else {
-                link.innerHTML = 'Sign-In ';
-                if (icon) link.appendChild(icon);
-                link.setAttribute('href', '/my-account');
+                trigger.dataset.auth = 'login';
+                if (label) label.textContent = 'Sign-In';
             }
         });
 
