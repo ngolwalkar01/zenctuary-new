@@ -1,102 +1,106 @@
 /**
- * Zenctuary Authentication Modal Logic
+ * Zenctuary Authentication Modal Logic (Robust Version)
+ * 
+ * This version uses event delegation and dynamic DOM querying to remain
+ * resilient even if WordPress or WooCommerce replaces DOM elements.
  */
 
 window.zenctuaryAuth = (function() {
     'use strict';
 
-    // Private variables
-    let modal, overlay, closeBtn, views, headerTriggers;
+    let isInitialized = false;
 
     /**
-     * Initialize the modal elements and events
+     * Initialize the global event listeners (Delegated)
      */
     function init() {
-        modal = document.getElementById('zenctuary-auth-modal');
-        if (!modal) return;
+        if (isInitialized) return;
 
-        overlay = modal;
-        closeBtn = document.getElementById('zen-modal-close');
-        views = document.querySelectorAll('.zen-auth-view');
-        headerTriggers = document.querySelectorAll('.zen-auth-trigger');
-
-        // Sync UI on load
-        syncUI();
-
-        // Header trigger clicks
-        headerTriggers.forEach(trigger => {
-            trigger.addEventListener('click', function(e) {
+        // --- GLOBAL CLICK DELEGATION ---
+        document.addEventListener('click', function(e) {
+            // 1. Header triggers (Sign-In / My Account)
+            const authTrigger = e.target.closest('.zen-auth-trigger');
+            if (authTrigger) {
                 e.preventDefault();
                 if (zenctuaryAuthData.is_logged_in) {
                     openModal('account');
                 } else {
                     openModal('login');
                 }
-            });
-        });
-
-        // Close button click
-        if (closeBtn) {
-            closeBtn.addEventListener('click', closeModal);
-        }
-
-        // Overlay click (closes only if clicking the overlay itself)
-        overlay.addEventListener('click', function(e) {
-            if (e.target === overlay) {
-                closeModal();
+                return;
             }
-        });
 
-        // ESC key close
-        document.addEventListener('keydown', function(e) {
-            if (e.key === 'Escape' && modal.classList.contains('is-active')) {
+            // 2. Modal Close Button
+            if (e.target.closest('#zen-modal-close')) {
                 closeModal();
+                return;
             }
-        });
 
-        // Delegate clicks for view switching
-        modal.addEventListener('click', function(e) {
+            // 3. Modal Overlay click
+            const modal = document.getElementById('zenctuary-auth-modal');
+            if (modal && e.target === modal) {
+                closeModal();
+                return;
+            }
+
+            // 4. View Switching (Login <-> Signup)
             const switchBtn = e.target.closest('[data-zen-switch-view]');
             if (switchBtn) {
                 e.preventDefault();
                 const targetView = switchBtn.dataset.zenSwitchView;
                 setState(targetView);
+                return;
             }
 
-            // Logout trigger
-            const logoutBtn = e.target.closest('.zen-logout-trigger');
-            if (logoutBtn) {
+            // 5. Logout Trigger
+            if (e.target.closest('.zen-logout-trigger')) {
                 e.preventDefault();
                 handleLogout();
+                return;
             }
         });
 
-        // Delegated form submissions
-        modal.addEventListener('submit', function(e) {
+        // --- GLOBAL SUBMIT DELEGATION ---
+        document.addEventListener('submit', function(e) {
             const form = e.target;
             
             if (form.id === 'zen-login-form') {
                 e.preventDefault();
-                console.log('Zenctuary Auth: Login form submit captured');
+                console.log('Zenctuary Auth: Login form submit');
                 handleAuthSubmit(form, 'zenctuary_login');
             } else if (form.id === 'zen-register-form') {
                 e.preventDefault();
-                console.log('Zenctuary Auth: Register form submit captured');
+                console.log('Zenctuary Auth: Register form submit');
                 handleAuthSubmit(form, 'zenctuary_register');
             }
         });
 
-        console.log('Zenctuary Auth: Initialized');
+        // --- GLOBAL KEYDOWN DELEGATION ---
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                const modal = document.getElementById('zenctuary-auth-modal');
+                if (modal && modal.classList.contains('is-active')) {
+                    closeModal();
+                }
+            }
+        });
+
+        // Sync UI on load
+        syncUI();
+
+        isInitialized = true;
+        console.log('Zenctuary Auth: Robust initialization complete');
     }
 
     /**
      * Synchronize UI elements with the current auth state
+     * Re-queries DOM every time to avoid stale references.
      */
     function syncUI() {
         const isLoggedIn = zenctuaryAuthData.is_logged_in;
         const userData = zenctuaryAuthData.user_data;
 
-        // Update Account View
+        // Update Account View Content
         const displayNameEl = document.getElementById('zen-user-display-name');
         const emailEl = document.getElementById('zen-user-email');
 
@@ -105,46 +109,47 @@ window.zenctuaryAuth = (function() {
             if (emailEl) emailEl.textContent = userData.user_email;
         }
 
-        // Update Header Buttons
+        // Update Header Buttons dynamically
+        const headerTriggers = document.querySelectorAll('.zen-auth-trigger');
         headerTriggers.forEach(trigger => {
             const link = trigger.querySelector('a');
             if (!link) return;
 
+            const icon = link.querySelector('svg');
             if (isLoggedIn) {
-                // Change to "My Account"
-                const icon = link.querySelector('svg');
                 link.innerHTML = 'My Account ';
                 if (icon) link.appendChild(icon);
                 link.setAttribute('href', '#account');
             } else {
-                // Change to "Sign-In"
-                const icon = link.querySelector('svg');
                 link.innerHTML = 'Sign-In ';
                 if (icon) link.appendChild(icon);
                 link.setAttribute('href', '/my-account');
             }
         });
 
-        // Set default modal view based on session
+        // Sync modal view state
         if (isLoggedIn) {
             setState('account');
         } else {
-            // Default to login, but preserve if user was on signup
-            const currentActive = Array.from(views).find(v => v.classList.contains('is-active'));
-            if (!currentActive || currentActive.dataset.view === 'account') {
-                setState('login');
+            // Only force to login if current visible is account
+            const modal = document.getElementById('zenctuary-auth-modal');
+            if (modal) {
+                const accountView = modal.querySelector('.zen-auth-view[data-view="account"]');
+                if (accountView && accountView.classList.contains('is-active')) {
+                    setState('login');
+                }
             }
         }
     }
 
     /**
      * Handle AJAX authentication submissions
-     * @param {HTMLFormElement} form - The form being submitted
-     * @param {string} action - The WP AJAX action
      */
     async function handleAuthSubmit(form, action) {
         const errorContainer = form.querySelector('.zen-error-container');
         const submitBtn = form.querySelector('button[type="submit"]');
+        if (!submitBtn || !errorContainer) return;
+
         const formData = new FormData(form);
 
         // Reset UI
@@ -165,20 +170,16 @@ window.zenctuaryAuth = (function() {
             const result = await response.json();
 
             if (result.success) {
-                // Update local state
                 zenctuaryAuthData.is_logged_in = true;
                 zenctuaryAuthData.user_data = result.data.user_data;
-                
-                // Sync UI and switch to account view
                 syncUI();
                 setState('account');
             } else {
-                // Error: show message
-                errorContainer.textContent = result.data.message || 'An error occurred. Please try again.';
+                errorContainer.textContent = result.data.message || 'An error occurred.';
             }
         } catch (error) {
             console.error('Zenctuary Auth Error:', error);
-            errorContainer.textContent = 'Network error. Please check your connection.';
+            errorContainer.textContent = 'Network error.';
         } finally {
             submitBtn.disabled = false;
             submitBtn.classList.remove('is-loading');
@@ -186,7 +187,7 @@ window.zenctuaryAuth = (function() {
     }
 
     /**
-     * Handle Logout
+     * Handle Logout via AJAX
      */
     async function handleLogout() {
         const formData = new FormData();
@@ -202,15 +203,11 @@ window.zenctuaryAuth = (function() {
             const result = await response.json();
 
             if (result.success) {
-                // Update local state
                 zenctuaryAuthData.is_logged_in = false;
                 zenctuaryAuthData.user_data = null;
-
-                // Sync UI and switch to login view
                 syncUI();
                 setState('login');
-                
-                console.log('Zenctuary Auth: Logged out successfully');
+                console.log('Zenctuary Auth: Logout successful');
             }
         } catch (error) {
             console.error('Logout error:', error);
@@ -219,11 +216,12 @@ window.zenctuaryAuth = (function() {
 
     /**
      * Set the current modal state (view)
-     * @param {string} state - login, signup, or account
      */
     function setState(state) {
-        if (!views) return;
+        const modal = document.getElementById('zenctuary-auth-modal');
+        if (!modal) return;
 
+        const views = modal.querySelectorAll('.zen-auth-view');
         let targetViewElement = null;
 
         views.forEach(view => {
@@ -235,20 +233,17 @@ window.zenctuaryAuth = (function() {
             }
         });
 
-        // Accessibility: Focus the heading of the new view
         if (targetViewElement) {
             const heading = targetViewElement.querySelector('h2');
-            if (heading) {
-                heading.focus();
-            }
+            if (heading) heading.focus();
         }
     }
 
     /**
-     * Open the modal and switch to a specific state
-     * @param {string} state - login, signup, or account
+     * Open the modal
      */
     function openModal(state = 'login') {
+        const modal = document.getElementById('zenctuary-auth-modal');
         if (!modal) return;
 
         setState(state);
@@ -261,6 +256,7 @@ window.zenctuaryAuth = (function() {
      * Close the modal
      */
     function closeModal() {
+        const modal = document.getElementById('zenctuary-auth-modal');
         if (!modal) return;
 
         modal.classList.remove('is-active');
@@ -268,7 +264,7 @@ window.zenctuaryAuth = (function() {
         modal.setAttribute('aria-hidden', 'true');
     }
 
-    // Run init on DOMContentLoaded
+    // Run init early or on DOMContentLoaded
     if (document.readyState === 'loading') {
         document.addEventListener('DOMContentLoaded', init);
     } else {
@@ -279,7 +275,8 @@ window.zenctuaryAuth = (function() {
     return {
         openModal: openModal,
         closeModal: closeModal,
-        setState: setState
+        setState: setState,
+        syncUI: syncUI
     };
 
 })();
