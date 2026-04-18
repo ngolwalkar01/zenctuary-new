@@ -37,6 +37,7 @@
 	font-weight: var(--pfc-heading-weight, 700);
 	line-height: 1.1;
 	margin: 0 0 var(--pfc-heading-bottom, 22px);
+	text-align: var(--pfc-heading-align, center);
 	text-transform: uppercase;
 }
 
@@ -46,6 +47,7 @@
 	line-height: var(--pfc-intro-line-height, 1.55);
 	margin: 0 auto;
 	max-width: var(--pfc-intro-max-width, 830px);
+	text-align: var(--pfc-intro-align, center);
 }
 
 .pfc__row {
@@ -124,8 +126,9 @@
 
 .pfc__zencoin-badge {
 	align-items: center;
+	background: var(--pfc-zencoin-badge-bg, #d8b354);
 	border: var(--pfc-zencoin-badge-border-width, 2px) solid
-		var(--pfc-zencoin-badge-border-color, #d8b354);
+		var(--pfc-zencoin-badge-ring-color, #3f3d3d);
 	border-radius: 50%;
 	color: var(--pfc-zencoin-badge-text-color, #d8b354);
 	display: inline-flex;
@@ -134,7 +137,21 @@
 	height: var(--pfc-zencoin-badge-size, 42px);
 	justify-content: center;
 	line-height: 1;
+	position: relative;
 	width: var(--pfc-zencoin-badge-size, 42px);
+}
+
+.pfc__zencoin-badge-ring {
+	border: var(--pfc-zencoin-badge-border-width, 2px) solid
+		var(--pfc-zencoin-badge-ring-color, #3f3d3d);
+	border-radius: 50%;
+	inset: 5px;
+	position: absolute;
+}
+
+.pfc__zencoin-badge-value {
+	position: relative;
+	z-index: 1;
 }
 
 .pfc__card-body {
@@ -161,6 +178,8 @@
 }
 
 .pfc__content {
+	border-top: var(--pfc-card-border-width, 2px) solid
+		var(--pfc-card-border-color, rgba(246, 242, 234, 0.55));
 	display: flex;
 	flex-direction: column;
 	min-height: 100%;
@@ -207,11 +226,16 @@
 		height: var(--pfc-session-icon-size, 15px);
 		width: var(--pfc-session-icon-size, 15px);
 	}
+
+	svg path {
+		fill: currentColor;
+	}
 }
 
 .pfc__ideal-for {
 	color: var(--pfc-ideal-for-color, #f6f2ea);
 	font-size: var(--pfc-ideal-for-font-size, 16px);
+	font-weight: var(--pfc-ideal-for-font-weight, 400);
 	line-height: var(--pfc-ideal-for-line-height, 1.55);
 	margin: 0 0 var(--pfc-ideal-for-bottom, 22px);
 	max-width: var(--pfc-ideal-for-max-width, 310px);
@@ -252,6 +276,10 @@
 	display: block;
 	height: 18px;
 	width: 18px;
+}
+
+.pfc__button-icon svg path {
+	fill: currentColor;
 }
 
 .pfc__divider-wrap {

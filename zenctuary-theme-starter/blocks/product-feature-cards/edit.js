@@ -268,6 +268,22 @@ export default function Edit( { attributes, setAttributes } ) {
 							setAttributes( { sectionHeaderAlignment } )
 						}
 					/>
+					<SelectControl
+						label={ __( 'Heading Alignment', 'zenctuary' ) }
+						value={ attributes.sectionHeadingAlignment }
+						options={ ALIGN_OPTIONS }
+						onChange={ ( sectionHeadingAlignment ) =>
+							setAttributes( { sectionHeadingAlignment } )
+						}
+					/>
+					<SelectControl
+						label={ __( 'Description Alignment', 'zenctuary' ) }
+						value={ attributes.sectionIntroAlignment }
+						options={ ALIGN_OPTIONS }
+						onChange={ ( sectionIntroAlignment ) =>
+							setAttributes( { sectionIntroAlignment } )
+						}
+					/>
 					<ColorControl
 						label={ __( 'Background', 'zenctuary' ) }
 						value={ attributes.sectionBackgroundColor }
@@ -531,10 +547,26 @@ export default function Edit( { attributes, setAttributes } ) {
 						max={ 70 }
 					/>
 					<ColorControl
+						label={ __( 'Badge Background', 'zenctuary' ) }
+						value={ attributes.zencoinBadgeBackgroundColor }
+						fallback="#d8b354"
+						onChange={ ( zencoinBadgeBackgroundColor ) =>
+							setAttributes( { zencoinBadgeBackgroundColor } )
+						}
+					/>
+					<ColorControl
 						label={ __( 'Badge Border Color', 'zenctuary' ) }
 						value={ attributes.zencoinBadgeBorderColor }
 						fallback="#d8b354"
 						onChange={ ( zencoinBadgeBorderColor ) => setAttributes( { zencoinBadgeBorderColor } ) }
+					/>
+					<ColorControl
+						label={ __( 'Badge Inner Ring Color', 'zenctuary' ) }
+						value={ attributes.zencoinBadgeRingColor }
+						fallback="#3f3d3d"
+						onChange={ ( zencoinBadgeRingColor ) =>
+							setAttributes( { zencoinBadgeRingColor } )
+						}
 					/>
 					<ColorControl
 						label={ __( 'Badge Text Color', 'zenctuary' ) }
@@ -662,6 +694,12 @@ export default function Edit( { attributes, setAttributes } ) {
 						onChange={ ( idealForFontSize ) => setAttributes( { idealForFontSize } ) }
 						min={ 12 }
 						max={ 26 }
+					/>
+					<SelectControl
+						label={ __( 'Ideal For Weight', 'zenctuary' ) }
+						value={ attributes.idealForFontWeight }
+						options={ WEIGHTS }
+						onChange={ ( idealForFontWeight ) => setAttributes( { idealForFontWeight } ) }
 					/>
 					<RangeControl
 						label={ __( 'Ideal For Max Width', 'zenctuary' ) }

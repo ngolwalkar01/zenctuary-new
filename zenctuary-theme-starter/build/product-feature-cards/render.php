@@ -110,6 +110,8 @@ $css_vars = [
 	'--pfc-section-bg:' . esc_attr( $attributes['sectionBackgroundColor'] ?? '#3f3d3d' ),
 	'--pfc-section-text:' . esc_attr( $attributes['sectionTextColor'] ?? '#f6f2ea' ),
 	'--pfc-header-align:' . esc_attr( $attributes['sectionHeaderAlignment'] ?? 'center' ),
+	'--pfc-heading-align:' . esc_attr( $attributes['sectionHeadingAlignment'] ?? 'center' ),
+	'--pfc-intro-align:' . esc_attr( $attributes['sectionIntroAlignment'] ?? 'center' ),
 	'--pfc-heading-color:' . esc_attr( $attributes['sectionHeadingColor'] ?? '#d8b354' ),
 	'--pfc-heading-size:' . absint( $attributes['sectionHeadingFontSize'] ?? 36 ) . 'px',
 	'--pfc-heading-weight:' . esc_attr( $attributes['sectionHeadingFontWeight'] ?? '700' ),
@@ -160,7 +162,9 @@ $css_vars = [
 	'--pfc-zencoin-gap:' . absint( $attributes['zencoinGap'] ?? 12 ) . 'px',
 	'--pfc-zencoin-badge-size:' . absint( $attributes['zencoinBadgeSize'] ?? 42 ) . 'px',
 	'--pfc-zencoin-badge-border-width:' . absint( $attributes['zencoinBadgeBorderWidth'] ?? 2 ) . 'px',
+	'--pfc-zencoin-badge-bg:' . esc_attr( $attributes['zencoinBadgeBackgroundColor'] ?? '#d8b354' ),
 	'--pfc-zencoin-badge-border-color:' . esc_attr( $attributes['zencoinBadgeBorderColor'] ?? '#d8b354' ),
+	'--pfc-zencoin-badge-ring-color:' . esc_attr( $attributes['zencoinBadgeRingColor'] ?? '#3f3d3d' ),
 	'--pfc-zencoin-badge-text-color:' . esc_attr( $attributes['zencoinBadgeTextColor'] ?? '#d8b354' ),
 	'--pfc-zencoin-badge-font-size:' . absint( $attributes['zencoinBadgeFontSize'] ?? 20 ) . 'px',
 	'--pfc-zencoin-badge-font-weight:' . esc_attr( $attributes['zencoinBadgeFontWeight'] ?? '700' ),
@@ -195,6 +199,7 @@ $css_vars = [
 	'--pfc-ideal-for-color:' . esc_attr( $attributes['idealForColor'] ?? '#f6f2ea' ),
 	'--pfc-ideal-for-font-size:' . absint( $attributes['idealForFontSize'] ?? 16 ) . 'px',
 	'--pfc-ideal-for-font-size-mobile:' . absint( $attributes['idealForFontSizeMobile'] ?? 15 ) . 'px',
+	'--pfc-ideal-for-font-weight:' . esc_attr( $attributes['idealForFontWeight'] ?? '400' ),
 	'--pfc-ideal-for-line-height:' . esc_attr( $attributes['idealForLineHeight'] ?? 1.55 ),
 	'--pfc-ideal-for-max-width:' . absint( $attributes['idealForMaxWidth'] ?? 310 ) . 'px',
 	'--pfc-ideal-for-bottom:' . absint( $attributes['idealForBottomSpacing'] ?? 22 ) . 'px',
@@ -280,7 +285,10 @@ $wrapper_attributes = get_block_wrapper_attributes(
 							<div class="pfc__zencoin">
 								<span class="pfc__zencoin-label"><?php echo esc_html( $attributes['zencoinLabel'] ?? 'ZENCOINS:' ); ?></span>
 								<?php if ( '' !== trim( $zencoin_value ) ) : ?>
-									<span class="pfc__zencoin-badge"><?php echo esc_html( $zencoin_value ); ?></span>
+									<span class="pfc__zencoin-badge">
+										<span class="pfc__zencoin-badge-ring" aria-hidden="true"></span>
+										<span class="pfc__zencoin-badge-value"><?php echo esc_html( $zencoin_value ); ?></span>
+									</span>
 								<?php endif; ?>
 							</div>
 						</div>

@@ -64,6 +64,14 @@
       "type": "string",
       "default": "center"
     },
+    "sectionHeadingAlignment": {
+      "type": "string",
+      "default": "center"
+    },
+    "sectionIntroAlignment": {
+      "type": "string",
+      "default": "center"
+    },
     "sectionBackgroundColor": {
       "type": "string",
       "default": "#3f3d3d"
@@ -276,9 +284,17 @@
       "type": "number",
       "default": 2
     },
+    "zencoinBadgeBackgroundColor": {
+      "type": "string",
+      "default": "#d8b354"
+    },
     "zencoinBadgeBorderColor": {
       "type": "string",
       "default": "#d8b354"
+    },
+    "zencoinBadgeRingColor": {
+      "type": "string",
+      "default": "#3f3d3d"
     },
     "zencoinBadgeTextColor": {
       "type": "string",
@@ -419,6 +435,10 @@
     "idealForFontSizeMobile": {
       "type": "number",
       "default": 15
+    },
+    "idealForFontWeight": {
+      "type": "string",
+      "default": "400"
     },
     "idealForLineHeight": {
       "type": "number",
