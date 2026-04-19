@@ -22,9 +22,9 @@
 
     .premium-tabs-carousel__header {
         display: flex;
+        flex-direction: column;
         align-items: flex-start;
-        justify-content: space-between;
-        gap: 24px;
+        gap: 0;
         margin-bottom: 28px;
     }
 
@@ -55,6 +55,12 @@
         gap: 12px;
         flex-shrink: 0;
         align-items: center;
+        margin-top: var(--premium-tabs-header-nav-gap, 24px);
+        align-self: flex-end;
+    }
+
+    .premium-tabs-carousel__tabs + .premium-tabs-carousel__nav {
+        margin-top: var(--premium-tabs-tabs-nav-gap, 28px);
     }
 
     .premium-tabs-carousel__arrow {
@@ -107,7 +113,7 @@
         display: flex;
         flex-wrap: wrap;
         gap: 12px;
-        margin-bottom: 24px;
+        margin-top: var(--premium-tabs-heading-tabs-gap, 24px);
     }
 
     .premium-tabs-carousel__tab {
@@ -182,6 +188,7 @@
         background-repeat: no-repeat;
         background-size: cover;
         isolation: isolate;
+        box-shadow: none;
     }
 
     .premium-tabs-carousel__overlay {
@@ -334,13 +341,10 @@
     }
 
     @media (max-width: 781px) {
-        .premium-tabs-carousel__header {
-            flex-direction: column;
-        }
-
         .premium-tabs-carousel__nav {
             width: 100%;
             justify-content: flex-end;
+            align-self: stretch;
         }
 
         .premium-tabs-carousel__slide {
@@ -354,8 +358,13 @@
             width: 100%;
         }
 
+        .premium-tabs-carousel__nav {
+            justify-content: flex-start;
+        }
+
         .premium-tabs-carousel__tabs {
             gap: 10px;
+            margin-top: var(--premium-tabs-heading-tabs-gap, 24px);
         }
 
         .premium-tabs-carousel__tab {

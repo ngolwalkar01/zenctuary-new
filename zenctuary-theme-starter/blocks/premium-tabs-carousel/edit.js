@@ -9,6 +9,7 @@ import {
 import {
 	BaseControl,
 	Button,
+	CheckboxControl,
 	ColorPalette,
 	PanelBody,
 	RangeControl,
@@ -37,6 +38,7 @@ function createDefaultTab( index = 0 ) {
 function createDefaultCard( tabId = 'default' ) {
 	return {
 		tabId,
+		tabIds: [ tabId ],
 		imageId: 0,
 		imageUrl: '',
 		showOverlay: true,
@@ -112,6 +114,9 @@ function normalizeCards( cards, tabs ) {
 		...createDefaultCard( card?.tabId || defaultTabId ),
 		...card,
 		tabId: card?.tabId || defaultTabId,
+		tabIds: Array.isArray( card?.tabIds ) && card.tabIds.length
+			? card.tabIds.filter( Boolean )
+			: [ card?.tabId || defaultTabId ],
 		showOverlay: card?.showOverlay !== false,
 		items: Array.isArray( card?.items ) && card.items.length ? card.items : [ __( 'List item', 'zenctuary' ) ],
 	} ) );
@@ -163,7 +168,11 @@ export default function Edit( { attributes, setAttributes } ) {
 	const activeTabId = selectedTabId || tabs[ 0 ]?.id || 'default';
 	const visibleCards = cards
 		.map( ( card, index ) => ( { card, index } ) )
-		.filter( ( entry ) => ! attributes.enableTabs || entry.card.tabId === activeTabId );
+		.filter(
+			( entry ) =>
+				! attributes.enableTabs ||
+				( Array.isArray( entry.card.tabIds ) && entry.card.tabIds.includes( activeTabId ) )
+		);
 	const selectedCard = cards[ selectedCardIndex ] || cards[ 0 ];
 
 	function updateCards( nextCards ) {
@@ -217,12 +226,35 @@ export default function Edit( { attributes, setAttributes } ) {
 		const fallbackTabId = normalizedTabs[ 0 ]?.id || 'default';
 		setAttributes( {
 			tabs: normalizedTabs,
-			cards: cards.map( ( card ) => ( {
-				...card,
-				tabId: validIds.includes( card.tabId ) ? card.tabId : fallbackTabId,
-			} ) ),
+			cards: cards.map( ( card ) => {
+				const nextTabIds = ( Array.isArray( card.tabIds ) && card.tabIds.length
+					? card.tabIds
+					: [ card.tabId || fallbackTabId ] ).filter( ( id ) => validIds.includes( id ) );
+				const safeTabIds = nextTabIds.length ? nextTabIds : [ fallbackTabId ];
+
+				return {
+					...card,
+					tabId: safeTabIds[ 0 ],
+					tabIds: safeTabIds,
+				};
+			} ),
 		} );
 		setSelectedTabId( fallbackTabId );
+	}
+
+	function toggleCardTab( tabId, checked ) {
+		const currentTabIds = Array.isArray( selectedCard?.tabIds ) && selectedCard.tabIds.length
+			? selectedCard.tabIds
+			: [ selectedCard?.tabId || activeTabId ];
+		const nextTabIds = checked
+			? Array.from( new Set( [ ...currentTabIds, tabId ] ) )
+			: currentTabIds.filter( ( id ) => id !== tabId );
+		const safeTabIds = nextTabIds.length ? nextTabIds : [ tabs[ 0 ]?.id || 'default' ];
+
+		updateCard( selectedCardIndex, {
+			tabId: safeTabIds[ 0 ],
+			tabIds: safeTabIds,
+		} );
 	}
 
 	function addTab() {
@@ -251,6 +283,9 @@ export default function Edit( { attributes, setAttributes } ) {
 			'--premium-tabs-heading-weight': attributes.headingFontWeight || '700',
 			'--premium-tabs-heading-line-height': attributes.headingLineHeight || '0.98',
 			'--premium-tabs-heading-color': attributes.headingColor || '#171717',
+			'--premium-tabs-heading-tabs-gap': `${ attributes.headingTabsGap || 24 }px`,
+			'--premium-tabs-tabs-nav-gap': `${ attributes.tabsNavGap || 28 }px`,
+			'--premium-tabs-header-nav-gap': `${ attributes.headerNavGap || 24 }px`,
 			'--premium-tabs-card-title-size': attributes.cardTitleFontSize || 'clamp(1.5rem, 2.4vw, 2rem)',
 			'--premium-tabs-card-title-weight': attributes.cardTitleFontWeight || '700',
 			'--premium-tabs-card-title-line-height': attributes.cardTitleLineHeight || '1.04',
@@ -312,6 +347,9 @@ export default function Edit( { attributes, setAttributes } ) {
 
 				<PanelBody title={ __( 'Main Title', 'zenctuary' ) }>
 					<RangeControl label={ __( 'Heading Width', 'zenctuary' ) } value={ attributes.headingMaxWidth } onChange={ ( value ) => setAttributes( { headingMaxWidth: value } ) } min={ 320 } max={ 1200 } step={ 10 } />
+					<RangeControl label={ __( 'Heading To Tabs Gap', 'zenctuary' ) } value={ attributes.headingTabsGap } onChange={ ( value ) => setAttributes( { headingTabsGap: value } ) } min={ 0 } max={ 120 } step={ 1 } />
+					<RangeControl label={ __( 'Tabs To Navigation Gap', 'zenctuary' ) } value={ attributes.tabsNavGap } onChange={ ( value ) => setAttributes( { tabsNavGap: value } ) } min={ 0 } max={ 120 } step={ 1 } />
+					<RangeControl label={ __( 'Navigation Top Gap', 'zenctuary' ) } value={ attributes.headerNavGap } onChange={ ( value ) => setAttributes( { headerNavGap: value } ) } min={ 0 } max={ 120 } step={ 1 } />
 					<TextControl label={ __( 'Font Size', 'zenctuary' ) } value={ attributes.headingFontSize } onChange={ ( value ) => setAttributes( { headingFontSize: value } ) } />
 					<TextControl label={ __( 'Font Weight', 'zenctuary' ) } value={ attributes.headingFontWeight } onChange={ ( value ) => setAttributes( { headingFontWeight: value } ) } />
 					<TextControl label={ __( 'Line Height', 'zenctuary' ) } value={ attributes.headingLineHeight } onChange={ ( value ) => setAttributes( { headingLineHeight: value } ) } />
@@ -416,12 +454,16 @@ export default function Edit( { attributes, setAttributes } ) {
 
 				<PanelBody title={ __( 'Selected Card Content', 'zenctuary' ) }>
 					{ attributes.enableTabs && (
-						<SelectControl
-							label={ __( 'Assigned Tab', 'zenctuary' ) }
-							value={ selectedCard?.tabId || activeTabId }
-							options={ tabs.map( ( tab ) => ( { label: tab.label, value: tab.id } ) ) }
-							onChange={ ( value ) => updateCard( selectedCardIndex, { tabId: value } ) }
-						/>
+						<BaseControl label={ __( 'Assigned Tabs', 'zenctuary' ) }>
+							{ tabs.map( ( tab ) => (
+								<CheckboxControl
+									key={ tab.id }
+									label={ tab.label }
+									checked={ ( selectedCard?.tabIds || [ selectedCard?.tabId || activeTabId ] ).includes( tab.id ) }
+									onChange={ ( checked ) => toggleCardTab( tab.id, checked ) }
+								/>
+							) ) }
+						</BaseControl>
 					) }
 					<BaseControl label={ __( 'Card Image', 'zenctuary' ) }>
 						<MediaUploadCheck>
@@ -474,21 +516,22 @@ export default function Edit( { attributes, setAttributes } ) {
 							<RichText tagName="h2" className="premium-tabs-carousel__heading" value={ attributes.heading } onChange={ ( value ) => setAttributes( { heading: value } ) } placeholder={ __( 'Add heading', 'zenctuary' ) } />
 							<RichText tagName="p" className="premium-tabs-carousel__subheading" value={ attributes.subheading } onChange={ ( value ) => setAttributes( { subheading: value } ) } placeholder={ __( 'Add subheading', 'zenctuary' ) } />
 						</div>
+
+						{ attributes.enableTabs && tabs.length > 0 && (
+							<div className="premium-tabs-carousel__tabs">
+								{ tabs.map( ( tab ) => (
+									<button key={ tab.id } type="button" className={ `premium-tabs-carousel__tab${ tab.id === activeTabId ? ' is-active' : '' }` } onClick={ () => setSelectedTabId( tab.id ) }>
+										{ tab.label }
+									</button>
+								) ) }
+							</div>
+						) }
+
 						<div className="premium-tabs-carousel__nav">
 							<button type="button" className="premium-tabs-carousel__arrow">{ navigationIcon( attributes.navIconSet, 'prev' ) }</button>
 							<button type="button" className="premium-tabs-carousel__arrow">{ navigationIcon( attributes.navIconSet, 'next' ) }</button>
 						</div>
 					</div>
-
-					{ attributes.enableTabs && tabs.length > 0 && (
-						<div className="premium-tabs-carousel__tabs">
-							{ tabs.map( ( tab ) => (
-								<button key={ tab.id } type="button" className={ `premium-tabs-carousel__tab${ tab.id === activeTabId ? ' is-active' : '' }` } onClick={ () => setSelectedTabId( tab.id ) }>
-									{ tab.label }
-								</button>
-							) ) }
-						</div>
-					) }
 
 					<div className="premium-tabs-carousel__stage">
 						<div className="premium-tabs-carousel__editor-track">

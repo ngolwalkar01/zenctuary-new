@@ -18,6 +18,9 @@
     "headingFontWeight": { "type": "string", "default": "700" },
     "headingLineHeight": { "type": "string", "default": "0.98" },
     "headingColor": { "type": "string", "default": "#171717" },
+    "headingTabsGap": { "type": "number", "default": 24 },
+    "tabsNavGap": { "type": "number", "default": 28 },
+    "headerNavGap": { "type": "number", "default": 24 },
     "sectionPadding": {
       "type": "object",
       "default": { "top": "72px", "right": "24px", "bottom": "72px", "left": "24px" }
@@ -92,6 +95,7 @@
       "default": [
         {
           "tabId": "featured",
+          "tabIds": ["featured"],
           "imageId": 0,
           "imageUrl": "",
           "showOverlay": true,
@@ -107,6 +111,7 @@
         },
         {
           "tabId": "popular",
+          "tabIds": ["popular"],
           "imageId": 0,
           "imageUrl": "",
           "showOverlay": true,
@@ -122,6 +127,7 @@
         },
         {
           "tabId": "new",
+          "tabIds": ["new"],
           "imageId": 0,
           "imageUrl": "",
           "showOverlay": true,

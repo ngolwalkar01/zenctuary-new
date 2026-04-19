@@ -42,6 +42,9 @@ function normalizeCards( cards, tabs ) {
 		buttonUrl: card?.buttonUrl || '',
 		openInNewTab: !! card?.openInNewTab,
 		tabId: card?.tabId || defaultTabId,
+		tabIds: Array.isArray( card?.tabIds ) && card.tabIds.length
+			? card.tabIds.filter( Boolean )
+			: [ card?.tabId || defaultTabId ],
 	} ) );
 }
 
@@ -101,6 +104,9 @@ export default function save( { attributes } ) {
 			'--premium-tabs-heading-weight': attributes.headingFontWeight || '700',
 			'--premium-tabs-heading-line-height': attributes.headingLineHeight || '0.98',
 			'--premium-tabs-heading-color': attributes.headingColor || '#171717',
+			'--premium-tabs-heading-tabs-gap': `${ attributes.headingTabsGap || 24 }px`,
+			'--premium-tabs-tabs-nav-gap': `${ attributes.tabsNavGap || 28 }px`,
+			'--premium-tabs-header-nav-gap': `${ attributes.headerNavGap || 24 }px`,
 			'--premium-tabs-card-title-size': attributes.cardTitleFontSize || 'clamp(1.5rem, 2.4vw, 2rem)',
 			'--premium-tabs-card-title-weight': attributes.cardTitleFontWeight || '700',
 			'--premium-tabs-card-title-line-height': attributes.cardTitleLineHeight || '1.04',
@@ -165,32 +171,39 @@ export default function save( { attributes } ) {
 						{ attributes.heading && <RichText.Content tagName="h2" className="premium-tabs-carousel__heading" value={ attributes.heading } /> }
 						{ attributes.subheading && <RichText.Content tagName="p" className="premium-tabs-carousel__subheading" value={ attributes.subheading } /> }
 					</div>
+
+					{ attributes.enableTabs && tabs.length > 0 && (
+						<div className="premium-tabs-carousel__tabs" role="tablist" aria-label="Carousel tabs">
+							{ tabs.map( ( tab, index ) => (
+								<button
+									key={ tab.id }
+									type="button"
+									className={ `premium-tabs-carousel__tab${ index === 0 ? ' is-active' : '' }` }
+									data-tab-id={ tab.id }
+									role="tab"
+									aria-pressed={ index === 0 ? 'true' : 'false' }
+								>
+									{ tab.label }
+								</button>
+							) ) }
+						</div>
+					) }
+
 					<div className="premium-tabs-carousel__nav">
 						<button type="button" className="premium-tabs-carousel__arrow premium-tabs-carousel__arrow--prev" aria-label="Previous slide">{ navigationIcon( attributes.navIconSet, 'prev' ) }</button>
 						<button type="button" className="premium-tabs-carousel__arrow premium-tabs-carousel__arrow--next" aria-label="Next slide">{ navigationIcon( attributes.navIconSet, 'next' ) }</button>
 					</div>
 				</div>
-				{ attributes.enableTabs && tabs.length > 0 && (
-					<div className="premium-tabs-carousel__tabs" role="tablist" aria-label="Carousel tabs">
-						{ tabs.map( ( tab, index ) => (
-							<button
-								key={ tab.id }
-								type="button"
-								className={ `premium-tabs-carousel__tab${ index === 0 ? ' is-active' : '' }` }
-								data-tab-id={ tab.id }
-								role="tab"
-								aria-pressed={ index === 0 ? 'true' : 'false' }
-							>
-								{ tab.label }
-							</button>
-						) ) }
-					</div>
-				) }
 				<div className="premium-tabs-carousel__stage">
 					<div className="premium-tabs-carousel__swiper swiper">
 						<div className="swiper-wrapper">
 							{ cards.map( ( card, index ) => (
-								<div key={ index } className="swiper-slide premium-tabs-carousel__slide" data-tab-id={ card.tabId || activeTab }>
+								<div
+									key={ index }
+									className="swiper-slide premium-tabs-carousel__slide"
+									data-tab-id={ card.tabId || activeTab }
+									data-tab-ids={ ( card.tabIds || [ card.tabId || activeTab ] ).join( ',' ) }
+								>
 									<article className="premium-tabs-carousel__card" style={ {
 										backgroundImage: card.imageUrl ? `url("${ card.imageUrl }")` : undefined,
 										backgroundColor: ! card.imageUrl ? '#c8bfb2' : undefined,

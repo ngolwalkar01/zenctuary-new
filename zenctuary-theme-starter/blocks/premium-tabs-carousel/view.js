@@ -10,9 +10,25 @@ function parseBoolean( value ) {
 	return value === 'true';
 }
 
+function getSlideTabIds( slide ) {
+	const tabIds = ( slide.dataset.tabIds || '' )
+		.split( ',' )
+		.map( ( id ) => id.trim() )
+		.filter( Boolean );
+
+	if ( tabIds.length ) {
+		return tabIds;
+	}
+
+	return slide.dataset.tabId ? [ slide.dataset.tabId ] : [];
+}
+
 function getVisibleSlides( block, activeTabId, tabsEnabled ) {
 	return Array.from( block.querySelectorAll( '.premium-tabs-carousel__slide' ) ).filter( ( slide ) => {
-		const matches = ! tabsEnabled || ! activeTabId || slide.dataset.tabId === activeTabId;
+		const matches =
+			! tabsEnabled ||
+			! activeTabId ||
+			getSlideTabIds( slide ).includes( activeTabId );
 		slide.hidden = ! matches;
 		slide.classList.toggle( 'is-hidden', ! matches );
 		return matches;
