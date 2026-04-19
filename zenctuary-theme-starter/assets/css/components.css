@@ -260,6 +260,12 @@
   width: 100%;
 }
 
+li.wp-social-link.has-primary-grey-color.has-primary-gold-background-color.zen-square.wp-block-social-link {
+    border-radius: 10px !important;
+    padding: 5px;
+    margin: 0 10px;
+}
+
 @media (max-width: 768px) {
   .zen-section.zen-mobile-section {
     margin-top: 80px !important;

@@ -201,6 +201,9 @@ export default function Edit( { attributes, setAttributes } ) {
 			'--premium-testimonial-gap': `${ attributes.gap || 36 }px`,
 			'--premium-testimonial-card-radius': `${ attributes.cardBorderRadius || 24 }px`,
 			'--premium-testimonial-card-padding': `${ attributes.cardContentPadding || 32 }px`,
+			'--premium-testimonial-card-height-desktop': `${ attributes.cardHeightDesktop || 640 }px`,
+			'--premium-testimonial-card-height-tablet': `${ attributes.cardHeightTablet || 560 }px`,
+			'--premium-testimonial-card-height-mobile': `${ attributes.cardHeightMobile || 520 }px`,
 			'--premium-testimonial-heading-max-width': `${ attributes.headingMaxWidth || 980 }px`,
 			'--premium-testimonial-heading-size': attributes.headingFontSize || 'clamp(2.1rem, 4vw, 4rem)',
 			'--premium-testimonial-heading-weight': attributes.headingFontWeight || '700',
@@ -303,6 +306,9 @@ export default function Edit( { attributes, setAttributes } ) {
 				<PanelBody title={ __( 'Card Style', 'zenctuary' ) } initialOpen={ false }>
 					<RangeControl label={ __( 'Card Border Radius', 'zenctuary' ) } value={ attributes.cardBorderRadius } onChange={ ( value ) => setAttributes( { cardBorderRadius: value } ) } min={ 0 } max={ 40 } />
 					<RangeControl label={ __( 'Card Content Padding', 'zenctuary' ) } value={ attributes.cardContentPadding } onChange={ ( value ) => setAttributes( { cardContentPadding: value } ) } min={ 12 } max={ 48 } />
+					<RangeControl label={ __( 'Card Height Desktop', 'zenctuary' ) } value={ attributes.cardHeightDesktop } onChange={ ( value ) => setAttributes( { cardHeightDesktop: value } ) } min={ 320 } max={ 1000 } step={ 10 } />
+					<RangeControl label={ __( 'Card Height Tablet', 'zenctuary' ) } value={ attributes.cardHeightTablet } onChange={ ( value ) => setAttributes( { cardHeightTablet: value } ) } min={ 280 } max={ 900 } step={ 10 } />
+					<RangeControl label={ __( 'Card Height Mobile', 'zenctuary' ) } value={ attributes.cardHeightMobile } onChange={ ( value ) => setAttributes( { cardHeightMobile: value } ) } min={ 240 } max={ 800 } step={ 10 } />
 					<p className="components-base-control__label">{ __( 'Text Card Background', 'zenctuary' ) }</p>
 					<ColorPalette colors={ PRESET_COLORS } value={ attributes.textCardBackgroundColor } onChange={ ( value ) => setAttributes( { textCardBackgroundColor: value || '#4a4848' } ) } />
 					<TextControl label={ __( 'Custom Text Card Background', 'zenctuary' ) } value={ attributes.textCardBackgroundColor } onChange={ ( value ) => setAttributes( { textCardBackgroundColor: value || '#4a4848' } ) } />
