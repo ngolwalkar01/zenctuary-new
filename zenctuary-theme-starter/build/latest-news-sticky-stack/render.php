@@ -323,6 +323,7 @@ $shadow_class       = $sticky_shadow ? 'has-sticky-shadow' : '';
 						</div>
 						<div class="latest-news-sticky-stack__card-inner">
 							<div class="latest-news-sticky-stack__resting-state">
+								<button class="latest-news-sticky-stack__mobile-open" type="button" aria-label="<?php esc_attr_e( 'Open details', 'zenctuary' ); ?>"></button>
 								<h3 class="latest-news-sticky-stack__resting-title"><?php echo esc_html( $title ); ?></h3>
 								<?php if ( ! empty( $excerpt ) ) : ?>
 									<div class="latest-news-sticky-stack__resting-excerpt"><?php echo esc_html( $excerpt ); ?></div>

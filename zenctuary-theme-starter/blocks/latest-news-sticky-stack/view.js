@@ -1,6 +1,6 @@
 const SELECTOR = '.wp-block-zenctuary-latest-news-sticky-stack';
 const CARD_SELECTOR = '.latest-news-sticky-stack__card';
-const CTA_SELECTOR = '.latest-news-sticky-stack__cta, .latest-news-sticky-stack__header-button';
+const OPEN_SELECTOR = '.latest-news-sticky-stack__mobile-open';
 const CLOSE_SELECTOR = '.latest-news-sticky-stack__mobile-close';
 
 function closeSiblingCards(section, currentCard) {
@@ -29,27 +29,25 @@ function initStickyStack(section) {
 	}
 
 	cards.forEach((card) => {
-		card.addEventListener('click', (event) => {
-			if (event.target.closest(CLOSE_SELECTOR)) {
+		const openButton = card.querySelector(OPEN_SELECTOR);
+		const closeButton = card.querySelector(CLOSE_SELECTOR);
+
+		if (openButton) {
+			openButton.addEventListener('click', (event) => {
+				event.preventDefault();
+				event.stopPropagation();
+				closeSiblingCards(section, card);
+				card.classList.add('is-expanded');
+			});
+		}
+
+		if (closeButton) {
+			closeButton.addEventListener('click', (event) => {
 				event.preventDefault();
 				event.stopPropagation();
 				card.classList.remove('is-expanded');
-				return;
-			}
-
-			if (event.target.closest(CTA_SELECTOR)) {
-				return;
-			}
-
-			if (!card.classList.contains('is-expanded')) {
-				event.preventDefault();
-				closeSiblingCards(section, card);
-				card.classList.add('is-expanded');
-				return;
-			}
-
-			event.preventDefault();
-		});
+			});
+		}
 	});
 
 	document.addEventListener('click', (event) => {
