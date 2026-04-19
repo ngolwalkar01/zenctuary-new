@@ -23,6 +23,8 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    overflow-y: auto; /* Enable vertical scroll */
+    padding: 60px 24px; /* Give breathing space at top and bottom */
     z-index: var(--zen-modal-z-index);
     
     /* Visibility Control */
@@ -67,6 +69,7 @@
     max-width: 400px;
     position: relative;
     padding: 0;
+    margin: auto; /* Crucial for centering in flex while allowing scroll when larger than parent */
     background: transparent; /* Elements float on the blurred background */
     box-shadow: none;
     
