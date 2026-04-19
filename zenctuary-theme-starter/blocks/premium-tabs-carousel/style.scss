@@ -35,7 +35,7 @@
     .premium-tabs-carousel__heading {
         margin: 0;
         color: var(--premium-tabs-heading-color);
-        font-family: var(--wp--preset--font-family--montserrat, "Montserrat", sans-serif);
+        font-family: var(--premium-tabs-heading-family, var(--wp--preset--font-family--montserrat, "Montserrat", sans-serif));
         font-size: var(--premium-tabs-heading-size);
         font-weight: var(--premium-tabs-heading-weight);
         line-height: var(--premium-tabs-heading-line-height);
@@ -45,9 +45,11 @@
     .premium-tabs-carousel__subheading {
         margin: 14px 0 0;
         max-width: 640px;
-        color: rgba(23, 23, 23, 0.72);
-        font-size: 1rem;
-        line-height: 1.6;
+        color: var(--premium-tabs-subheading-color, rgba(23, 23, 23, 0.72));
+        font-family: var(--premium-tabs-subheading-family, var(--wp--preset--font-family--dm-sans, "DM Sans", sans-serif));
+        font-size: var(--premium-tabs-subheading-size, 1rem);
+        font-weight: var(--premium-tabs-subheading-weight, 400);
+        line-height: var(--premium-tabs-subheading-line-height, 1.6);
     }
 
     .premium-tabs-carousel__nav {
@@ -123,6 +125,7 @@
         background: var(--premium-tabs-tab-bg);
         color: var(--premium-tabs-tab-color);
         cursor: pointer;
+        font-family: var(--premium-tabs-tab-family, var(--wp--preset--font-family--montserrat, "Montserrat", sans-serif));
         font-size: var(--premium-tabs-tab-size);
         font-weight: var(--premium-tabs-tab-weight);
         line-height: 1.2;
@@ -221,7 +224,7 @@
 
     .premium-tabs-carousel__card-title {
         margin: 0;
-        font-family: var(--wp--preset--font-family--montserrat, "Montserrat", sans-serif);
+        font-family: var(--premium-tabs-card-title-family, var(--wp--preset--font-family--montserrat, "Montserrat", sans-serif));
         font-size: var(--premium-tabs-card-title-size);
         font-weight: var(--premium-tabs-card-title-weight);
         line-height: var(--premium-tabs-card-title-line-height);
@@ -236,6 +239,7 @@
         list-style: none;
         display: grid;
         gap: 6px;
+        font-family: var(--premium-tabs-card-body-family, var(--wp--preset--font-family--dm-sans, "DM Sans", sans-serif));
         font-size: var(--premium-tabs-card-body-size);
         line-height: var(--premium-tabs-card-body-line-height);
         font-weight: var(--premium-tabs-card-body-weight);
@@ -267,6 +271,7 @@
         backdrop-filter: blur(10px);
         color: var(--premium-tabs-button-color);
         text-decoration: none;
+        font-family: var(--premium-tabs-button-family, var(--wp--preset--font-family--montserrat, "Montserrat", sans-serif));
         font-size: var(--premium-tabs-button-size);
         font-weight: var(--premium-tabs-button-weight);
         line-height: var(--premium-tabs-button-line-height);

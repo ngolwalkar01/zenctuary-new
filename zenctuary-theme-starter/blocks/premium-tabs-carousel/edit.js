@@ -28,6 +28,17 @@ const PRESET_COLORS = [
 	{ name: 'Olive', color: '#4d5a47' },
 ];
 
+const FONT_FAMILIES = [
+	{
+		label: __( 'Montserrat', 'zenctuary' ),
+		value: 'var(--wp--preset--font-family--montserrat)',
+	},
+	{
+		label: __( 'DM Sans', 'zenctuary' ),
+		value: 'var(--wp--preset--font-family--dm-sans)',
+	},
+];
+
 function createDefaultTab( index = 0 ) {
 	return {
 		id: `tab-${ Date.now() }-${ index }`,
@@ -279,17 +290,25 @@ export default function Edit( { attributes, setAttributes } ) {
 			'--premium-tabs-card-radius': `${ attributes.cardBorderRadius || 20 }px`,
 			'--premium-tabs-card-padding': `${ attributes.cardContentPadding || 24 }px`,
 			'--premium-tabs-heading-max-width': `${ attributes.headingMaxWidth || 760 }px`,
+			'--premium-tabs-heading-family': attributes.headingFontFamily || 'var(--wp--preset--font-family--montserrat)',
 			'--premium-tabs-heading-size': attributes.headingFontSize || 'clamp(2rem, 4vw, 3.75rem)',
 			'--premium-tabs-heading-weight': attributes.headingFontWeight || '700',
 			'--premium-tabs-heading-line-height': attributes.headingLineHeight || '0.98',
 			'--premium-tabs-heading-color': attributes.headingColor || '#171717',
+			'--premium-tabs-subheading-family': attributes.subheadingFontFamily || 'var(--wp--preset--font-family--dm-sans)',
+			'--premium-tabs-subheading-size': attributes.subheadingFontSize || '1rem',
+			'--premium-tabs-subheading-weight': attributes.subheadingFontWeight || '400',
+			'--premium-tabs-subheading-line-height': attributes.subheadingLineHeight || '1.6',
+			'--premium-tabs-subheading-color': attributes.subheadingColor || 'rgba(23, 23, 23, 0.72)',
 			'--premium-tabs-heading-tabs-gap': `${ attributes.headingTabsGap || 24 }px`,
 			'--premium-tabs-tabs-nav-gap': `${ attributes.tabsNavGap || 28 }px`,
 			'--premium-tabs-header-nav-gap': `${ attributes.headerNavGap || 24 }px`,
+			'--premium-tabs-card-title-family': attributes.cardTitleFontFamily || 'var(--wp--preset--font-family--montserrat)',
 			'--premium-tabs-card-title-size': attributes.cardTitleFontSize || 'clamp(1.5rem, 2.4vw, 2rem)',
 			'--premium-tabs-card-title-weight': attributes.cardTitleFontWeight || '700',
 			'--premium-tabs-card-title-line-height': attributes.cardTitleLineHeight || '1.04',
 			'--premium-tabs-card-title-color': attributes.cardTitleColor || '#ffffff',
+			'--premium-tabs-card-body-family': attributes.cardBodyFontFamily || 'var(--wp--preset--font-family--dm-sans)',
 			'--premium-tabs-card-body-size': attributes.cardBodyFontSize || '1rem',
 			'--premium-tabs-card-body-weight': attributes.cardBodyFontWeight || '400',
 			'--premium-tabs-card-body-line-height': attributes.cardBodyLineHeight || '1.5',
@@ -298,6 +317,7 @@ export default function Edit( { attributes, setAttributes } ) {
 			'--premium-tabs-dots-size': attributes.dotsFontSize || '1.35rem',
 			'--premium-tabs-dots-spacing': attributes.dotsLetterSpacing || '0.22em',
 			'--premium-tabs-dots-color': attributes.dotsColor || 'rgba(255, 255, 255, 0.86)',
+			'--premium-tabs-button-family': attributes.buttonFontFamily || 'var(--wp--preset--font-family--montserrat)',
 			'--premium-tabs-button-size': attributes.buttonFontSize || '0.95rem',
 			'--premium-tabs-button-weight': attributes.buttonFontWeight || '600',
 			'--premium-tabs-button-line-height': attributes.buttonLineHeight || '1.2',
@@ -323,6 +343,7 @@ export default function Edit( { attributes, setAttributes } ) {
 			'--premium-tabs-card-scale-desktop': String( attributes.cardWidthScaleDesktop || 100 ),
 			'--premium-tabs-card-scale-tablet': String( attributes.cardWidthScaleTablet || 100 ),
 			'--premium-tabs-card-scale-mobile': String( attributes.cardWidthScaleMobile || 100 ),
+			'--premium-tabs-tab-family': attributes.tabFontFamily || 'var(--wp--preset--font-family--montserrat)',
 			'--premium-tabs-tab-size': attributes.tabFontSize || '0.95rem',
 			'--premium-tabs-tab-weight': attributes.tabFontWeight || '600',
 			'--premium-tabs-tab-color': attributes.tabTextColor || 'rgba(23, 23, 23, 0.72)',
@@ -347,6 +368,7 @@ export default function Edit( { attributes, setAttributes } ) {
 
 				<PanelBody title={ __( 'Main Title', 'zenctuary' ) }>
 					<RangeControl label={ __( 'Heading Width', 'zenctuary' ) } value={ attributes.headingMaxWidth } onChange={ ( value ) => setAttributes( { headingMaxWidth: value } ) } min={ 320 } max={ 1200 } step={ 10 } />
+					<SelectControl label={ __( 'Heading Font Family', 'zenctuary' ) } value={ attributes.headingFontFamily } options={ FONT_FAMILIES } onChange={ ( value ) => setAttributes( { headingFontFamily: value } ) } />
 					<RangeControl label={ __( 'Heading To Tabs Gap', 'zenctuary' ) } value={ attributes.headingTabsGap } onChange={ ( value ) => setAttributes( { headingTabsGap: value } ) } min={ 0 } max={ 120 } step={ 1 } />
 					<RangeControl label={ __( 'Tabs To Navigation Gap', 'zenctuary' ) } value={ attributes.tabsNavGap } onChange={ ( value ) => setAttributes( { tabsNavGap: value } ) } min={ 0 } max={ 120 } step={ 1 } />
 					<RangeControl label={ __( 'Navigation Top Gap', 'zenctuary' ) } value={ attributes.headerNavGap } onChange={ ( value ) => setAttributes( { headerNavGap: value } ) } min={ 0 } max={ 120 } step={ 1 } />
@@ -355,6 +377,13 @@ export default function Edit( { attributes, setAttributes } ) {
 					<TextControl label={ __( 'Line Height', 'zenctuary' ) } value={ attributes.headingLineHeight } onChange={ ( value ) => setAttributes( { headingLineHeight: value } ) } />
 					<p className="components-base-control__label">{ __( 'Heading Color', 'zenctuary' ) }</p>
 					<ColorPalette colors={ PRESET_COLORS } value={ attributes.headingColor } onChange={ ( value ) => setAttributes( { headingColor: value || '#171717' } ) } />
+					<SelectControl label={ __( 'Subheading Font Family', 'zenctuary' ) } value={ attributes.subheadingFontFamily } options={ FONT_FAMILIES } onChange={ ( value ) => setAttributes( { subheadingFontFamily: value } ) } />
+					<TextControl label={ __( 'Subheading Font Size', 'zenctuary' ) } value={ attributes.subheadingFontSize } onChange={ ( value ) => setAttributes( { subheadingFontSize: value } ) } />
+					<TextControl label={ __( 'Subheading Font Weight', 'zenctuary' ) } value={ attributes.subheadingFontWeight } onChange={ ( value ) => setAttributes( { subheadingFontWeight: value } ) } />
+					<TextControl label={ __( 'Subheading Line Height', 'zenctuary' ) } value={ attributes.subheadingLineHeight } onChange={ ( value ) => setAttributes( { subheadingLineHeight: value } ) } />
+					<p className="components-base-control__label">{ __( 'Subheading Color', 'zenctuary' ) }</p>
+					<ColorPalette colors={ PRESET_COLORS } value={ attributes.subheadingColor } onChange={ ( value ) => setAttributes( { subheadingColor: value || 'rgba(23, 23, 23, 0.72)' } ) } />
+					<TextControl label={ __( 'Custom Subheading Color', 'zenctuary' ) } value={ attributes.subheadingColor } onChange={ ( value ) => setAttributes( { subheadingColor: value || 'rgba(23, 23, 23, 0.72)' } ) } />
 				</PanelBody>
 
 				<PanelBody title={ __( 'Carousel Settings', 'zenctuary' ) }>
@@ -382,8 +411,27 @@ export default function Edit( { attributes, setAttributes } ) {
 							<Button isDestructive onClick={ () => removeTab( index ) } disabled={ tabs.length === 1 }>{ __( 'Remove', 'zenctuary' ) }</Button>
 						</div>
 					) ) }
+					<SelectControl label={ __( 'Tab Font Family', 'zenctuary' ) } value={ attributes.tabFontFamily } options={ FONT_FAMILIES } onChange={ ( value ) => setAttributes( { tabFontFamily: value } ) } />
 					<TextControl label={ __( 'Tab Font Size', 'zenctuary' ) } value={ attributes.tabFontSize } onChange={ ( value ) => setAttributes( { tabFontSize: value } ) } />
 					<TextControl label={ __( 'Tab Font Weight', 'zenctuary' ) } value={ attributes.tabFontWeight } onChange={ ( value ) => setAttributes( { tabFontWeight: value } ) } />
+					<p className="components-base-control__label">{ __( 'Tab Text Color', 'zenctuary' ) }</p>
+					<ColorPalette colors={ PRESET_COLORS } value={ attributes.tabTextColor } onChange={ ( value ) => setAttributes( { tabTextColor: value || 'rgba(23, 23, 23, 0.72)' } ) } />
+					<TextControl label={ __( 'Custom Tab Text Color', 'zenctuary' ) } value={ attributes.tabTextColor } onChange={ ( value ) => setAttributes( { tabTextColor: value || 'rgba(23, 23, 23, 0.72)' } ) } />
+					<p className="components-base-control__label">{ __( 'Active Tab Text Color', 'zenctuary' ) }</p>
+					<ColorPalette colors={ PRESET_COLORS } value={ attributes.tabActiveTextColor } onChange={ ( value ) => setAttributes( { tabActiveTextColor: value || '#171717' } ) } />
+					<TextControl label={ __( 'Custom Active Tab Text Color', 'zenctuary' ) } value={ attributes.tabActiveTextColor } onChange={ ( value ) => setAttributes( { tabActiveTextColor: value || '#171717' } ) } />
+					<p className="components-base-control__label">{ __( 'Tab Border Color', 'zenctuary' ) }</p>
+					<ColorPalette colors={ PRESET_COLORS } value={ attributes.tabBorderColor } onChange={ ( value ) => setAttributes( { tabBorderColor: value || 'rgba(23, 23, 23, 0.14)' } ) } />
+					<TextControl label={ __( 'Custom Tab Border Color', 'zenctuary' ) } value={ attributes.tabBorderColor } onChange={ ( value ) => setAttributes( { tabBorderColor: value || 'rgba(23, 23, 23, 0.14)' } ) } />
+					<p className="components-base-control__label">{ __( 'Active Tab Border Color', 'zenctuary' ) }</p>
+					<ColorPalette colors={ PRESET_COLORS } value={ attributes.tabActiveBorderColor } onChange={ ( value ) => setAttributes( { tabActiveBorderColor: value || '#171717' } ) } />
+					<TextControl label={ __( 'Custom Active Tab Border Color', 'zenctuary' ) } value={ attributes.tabActiveBorderColor } onChange={ ( value ) => setAttributes( { tabActiveBorderColor: value || '#171717' } ) } />
+					<p className="components-base-control__label">{ __( 'Tab Background Color', 'zenctuary' ) }</p>
+					<ColorPalette colors={ PRESET_COLORS } value={ attributes.tabBackgroundColor } onChange={ ( value ) => setAttributes( { tabBackgroundColor: value || 'rgba(255, 255, 255, 0.82)' } ) } />
+					<TextControl label={ __( 'Custom Tab Background Color', 'zenctuary' ) } value={ attributes.tabBackgroundColor } onChange={ ( value ) => setAttributes( { tabBackgroundColor: value || 'rgba(255, 255, 255, 0.82)' } ) } />
+					<p className="components-base-control__label">{ __( 'Active Tab Background Color', 'zenctuary' ) }</p>
+					<ColorPalette colors={ PRESET_COLORS } value={ attributes.tabActiveBackgroundColor } onChange={ ( value ) => setAttributes( { tabActiveBackgroundColor: value || '#ffffff' } ) } />
+					<TextControl label={ __( 'Custom Active Tab Background Color', 'zenctuary' ) } value={ attributes.tabActiveBackgroundColor } onChange={ ( value ) => setAttributes( { tabActiveBackgroundColor: value || '#ffffff' } ) } />
 				</PanelBody>
 
 				<PanelBody title={ __( 'Card Style', 'zenctuary' ) }>
@@ -392,9 +440,11 @@ export default function Edit( { attributes, setAttributes } ) {
 				</PanelBody>
 
 				<PanelBody title={ __( 'Card Typography', 'zenctuary' ) }>
+					<SelectControl label={ __( 'Title Font Family', 'zenctuary' ) } value={ attributes.cardTitleFontFamily } options={ FONT_FAMILIES } onChange={ ( value ) => setAttributes( { cardTitleFontFamily: value } ) } />
 					<TextControl label={ __( 'Title Font Size', 'zenctuary' ) } value={ attributes.cardTitleFontSize } onChange={ ( value ) => setAttributes( { cardTitleFontSize: value } ) } />
 					<TextControl label={ __( 'Title Font Weight', 'zenctuary' ) } value={ attributes.cardTitleFontWeight } onChange={ ( value ) => setAttributes( { cardTitleFontWeight: value } ) } />
 					<TextControl label={ __( 'Title Line Height', 'zenctuary' ) } value={ attributes.cardTitleLineHeight } onChange={ ( value ) => setAttributes( { cardTitleLineHeight: value } ) } />
+					<SelectControl label={ __( 'Body Font Family', 'zenctuary' ) } value={ attributes.cardBodyFontFamily } options={ FONT_FAMILIES } onChange={ ( value ) => setAttributes( { cardBodyFontFamily: value } ) } />
 					<TextControl label={ __( 'Body Font Size', 'zenctuary' ) } value={ attributes.cardBodyFontSize } onChange={ ( value ) => setAttributes( { cardBodyFontSize: value } ) } />
 					<TextControl label={ __( 'Body Font Weight', 'zenctuary' ) } value={ attributes.cardBodyFontWeight } onChange={ ( value ) => setAttributes( { cardBodyFontWeight: value } ) } />
 					<TextControl label={ __( 'Body Line Height', 'zenctuary' ) } value={ attributes.cardBodyLineHeight } onChange={ ( value ) => setAttributes( { cardBodyLineHeight: value } ) } />
@@ -402,6 +452,7 @@ export default function Edit( { attributes, setAttributes } ) {
 				</PanelBody>
 
 				<PanelBody title={ __( 'Button Style', 'zenctuary' ) }>
+					<SelectControl label={ __( 'Button Font Family', 'zenctuary' ) } value={ attributes.buttonFontFamily } options={ FONT_FAMILIES } onChange={ ( value ) => setAttributes( { buttonFontFamily: value } ) } />
 					<TextControl label={ __( 'Button Font Size', 'zenctuary' ) } value={ attributes.buttonFontSize } onChange={ ( value ) => setAttributes( { buttonFontSize: value } ) } />
 					<TextControl label={ __( 'Button Font Weight', 'zenctuary' ) } value={ attributes.buttonFontWeight } onChange={ ( value ) => setAttributes( { buttonFontWeight: value } ) } />
 					<TextControl label={ __( 'Button Line Height', 'zenctuary' ) } value={ attributes.buttonLineHeight } onChange={ ( value ) => setAttributes( { buttonLineHeight: value } ) } />

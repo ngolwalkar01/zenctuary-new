@@ -34,6 +34,10 @@
       "type": "number",
       "default": 760
     },
+    "headingFontFamily": {
+      "type": "string",
+      "default": "var(--wp--preset--font-family--montserrat)"
+    },
     "headingFontSize": {
       "type": "string",
       "default": "clamp(2rem, 4vw, 3.75rem)"
@@ -49,6 +53,26 @@
     "headingColor": {
       "type": "string",
       "default": "#171717"
+    },
+    "subheadingFontFamily": {
+      "type": "string",
+      "default": "var(--wp--preset--font-family--dm-sans)"
+    },
+    "subheadingFontSize": {
+      "type": "string",
+      "default": "1rem"
+    },
+    "subheadingFontWeight": {
+      "type": "string",
+      "default": "400"
+    },
+    "subheadingLineHeight": {
+      "type": "string",
+      "default": "1.6"
+    },
+    "subheadingColor": {
+      "type": "string",
+      "default": "rgba(23, 23, 23, 0.72)"
     },
     "headingTabsGap": {
       "type": "number",
@@ -136,6 +160,10 @@
       "type": "number",
       "default": 24
     },
+    "cardTitleFontFamily": {
+      "type": "string",
+      "default": "var(--wp--preset--font-family--montserrat)"
+    },
     "cardTitleFontSize": {
       "type": "string",
       "default": "clamp(1.5rem, 2.4vw, 2rem)"
@@ -151,6 +179,10 @@
     "cardTitleColor": {
       "type": "string",
       "default": "#ffffff"
+    },
+    "cardBodyFontFamily": {
+      "type": "string",
+      "default": "var(--wp--preset--font-family--dm-sans)"
     },
     "cardBodyFontSize": {
       "type": "string",
@@ -187,6 +219,10 @@
     "buttonFontSize": {
       "type": "string",
       "default": "0.95rem"
+    },
+    "buttonFontFamily": {
+      "type": "string",
+      "default": "var(--wp--preset--font-family--montserrat)"
     },
     "buttonFontWeight": {
       "type": "string",
@@ -276,6 +312,10 @@
     "navIconSet": {
       "type": "string",
       "default": "line-arrow"
+    },
+    "tabFontFamily": {
+      "type": "string",
+      "default": "var(--wp--preset--font-family--montserrat)"
     },
     "tabFontSize": {
       "type": "string",
