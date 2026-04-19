@@ -1,6 +1,7 @@
 const SELECTOR = '.wp-block-zenctuary-latest-news-sticky-stack';
 const CARD_SELECTOR = '.latest-news-sticky-stack__card';
 const CTA_SELECTOR = '.latest-news-sticky-stack__cta, .latest-news-sticky-stack__header-button';
+const CLOSE_SELECTOR = '.latest-news-sticky-stack__mobile-close';
 
 function closeSiblingCards(section, currentCard) {
 	section.querySelectorAll(`${ CARD_SELECTOR }.is-expanded`).forEach((card) => {
@@ -29,6 +30,13 @@ function initStickyStack(section) {
 
 	cards.forEach((card) => {
 		card.addEventListener('click', (event) => {
+			if (event.target.closest(CLOSE_SELECTOR)) {
+				event.preventDefault();
+				event.stopPropagation();
+				card.classList.remove('is-expanded');
+				return;
+			}
+
 			if (event.target.closest(CTA_SELECTOR)) {
 				return;
 			}
@@ -40,7 +48,7 @@ function initStickyStack(section) {
 				return;
 			}
 
-			card.classList.remove('is-expanded');
+			event.preventDefault();
 		});
 	});
 

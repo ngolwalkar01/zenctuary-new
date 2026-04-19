@@ -335,6 +335,10 @@
     width: 100%;
   }
 
+  &__hover-content-scroll {
+    width: 100%;
+  }
+
   &__hover-top {
     align-items: flex-start;
     display: flex;
@@ -399,6 +403,10 @@
   &__hover-body ul,
   &__hover-body ol {
     padding-left: 1.2em;
+  }
+
+  &__mobile-close {
+    display: none;
   }
 
   &__hover-cta-wrap {
@@ -636,8 +644,10 @@
     }
 
     &__hover-top {
+      align-items: flex-start;
       flex-direction: column;
       gap: 12px;
+      padding-right: 44px;
     }
 
     &__meta {
@@ -645,16 +655,67 @@
       text-align: left;
     }
 
+    &__hover-panel {
+      min-height: 100%;
+      overflow: hidden;
+    }
+
+    &__hover-content-scroll {
+      flex: 1 1 auto;
+      min-height: 0;
+      overflow-x: hidden;
+      overflow-y: auto;
+      padding-right: 4px;
+      scrollbar-width: thin;
+    }
+
     &__hover-body {
       font-size: var(--lnss-hover-body-size-mobile);
-      margin-bottom: 20px;
+      margin-bottom: 0;
+      padding-bottom: 18px;
     }
 
     &__hover-cta-wrap {
+      background: linear-gradient(180deg, rgba(63, 61, 61, 0) 0%, rgba(63, 61, 61, 0.92) 24%, rgba(63, 61, 61, 1) 100%);
       justify-content: flex-start;
+      left: auto;
+      margin-top: auto;
+      padding-top: 14px;
+      position: relative;
+      right: auto;
+      top: auto;
+      transform: none;
     }
 
     &__cta {
+      width: 100%;
+    }
+
+    &__mobile-close {
+      align-items: center;
+      appearance: none;
+      background: transparent;
+      border: 0;
+      color: var(--lnss-hover-title-color);
+      cursor: pointer;
+      display: inline-flex;
+      justify-content: center;
+      padding: 4px;
+      position: absolute;
+      right: 0;
+      top: 0;
+      z-index: 3;
+    }
+
+    &__mobile-close-icon {
+      display: inline-flex;
+      height: 24px;
+      width: 24px;
+    }
+
+    &__mobile-close-icon svg {
+      display: block;
+      height: 100%;
       width: 100%;
     }
 

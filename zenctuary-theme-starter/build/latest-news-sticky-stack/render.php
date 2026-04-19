@@ -82,6 +82,12 @@ if ( ! function_exists( 'zenctuary_latest_news_arrow_icon' ) ) {
 	}
 }
 
+if ( ! function_exists( 'zenctuary_latest_news_close_icon' ) ) {
+	function zenctuary_latest_news_close_icon(): string {
+		return '<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M6.7 6.7 17.3 17.3M17.3 6.7 6.7 17.3" fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="1.8"/></svg>';
+	}
+}
+
 $post_type               = sanitize_key( $attributes['postType'] ?? 'post' );
 $taxonomy                = sanitize_key( $attributes['taxonomy'] ?? 'category' );
 $term_ids                = array_values( array_filter( array_map( 'absint', (array) ( $attributes['termIds'] ?? [] ) ) ) );
@@ -325,6 +331,10 @@ $shadow_class       = $sticky_shadow ? 'has-sticky-shadow' : '';
 
 							<div class="latest-news-sticky-stack__hover-state">
 								<div class="latest-news-sticky-stack__hover-panel">
+									<button class="latest-news-sticky-stack__mobile-close" type="button" aria-label="<?php esc_attr_e( 'Close details', 'zenctuary' ); ?>">
+										<span class="latest-news-sticky-stack__mobile-close-icon" aria-hidden="true"><?php echo zenctuary_latest_news_close_icon(); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></span>
+									</button>
+									<div class="latest-news-sticky-stack__hover-content-scroll">
 								<div class="latest-news-sticky-stack__hover-top">
 									<h3 class="latest-news-sticky-stack__hover-title"><?php echo esc_html( $title ); ?></h3>
 									<?php if ( $show_meta && ! empty( $meta_text ) ) : ?>
@@ -337,6 +347,7 @@ $shadow_class       = $sticky_shadow ? 'has-sticky-shadow' : '';
 									<?php endif; ?>
 								</div>
 								<div class="latest-news-sticky-stack__hover-body"><?php echo wp_kses_post( $hover_body ); ?></div>
+									</div>
 								<div class="latest-news-sticky-stack__hover-cta-wrap">
 									<a class="latest-news-sticky-stack__cta latest-news-sticky-stack__cta--icon-<?php echo esc_attr( $cta_icon_position ); ?>" href="<?php echo esc_url( $permalink ); ?>">
 										<?php if ( $cta_show_icon ) : ?>
