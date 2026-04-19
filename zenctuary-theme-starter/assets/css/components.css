@@ -261,7 +261,7 @@
 }
 
 @media (max-width: 768px) {
-  zen-section.zen-mobile-section {
+  .zen-section.zen-mobile-section {
     margin-top: 80px !important;
   }
 }
