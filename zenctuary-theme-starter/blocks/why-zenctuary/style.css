@@ -189,7 +189,7 @@
     }
 }
 
-/* Mobile — single column, preserve internal flex-row structure */
+/* Mobile — single column with number in left column and icon/content in right column */
 @media (max-width: 767px) {
     .zen-why-zenctuary {
         padding-top:    max(48px, calc(var(--zwz-pt, 80px) * 0.65));
@@ -218,8 +218,32 @@
         margin-bottom: clamp(28px, 5vw, 40px);
     }
 
-    /* Slightly tighter internal gaps on small screens */
+    .zen-why-zenctuary__item {
+        display: grid;
+        grid-template-columns: 28px minmax(0, 1fr);
+        column-gap: 16px;
+        row-gap: 12px;
+        align-items: start;
+    }
+
     .zen-why-zenctuary__number {
         min-width: 20px;
+        margin-right: 0;
+        padding-top: 0;
+        grid-column: 1;
+        grid-row: 1;
+        align-self: start;
+    }
+
+    .zen-why-zenctuary__icon {
+        grid-column: 2;
+        grid-row: 1;
+        margin-right: 0;
+        justify-content: flex-start;
+    }
+
+    .zen-why-zenctuary__content {
+        grid-column: 2;
+        grid-row: 2;
     }
 }
