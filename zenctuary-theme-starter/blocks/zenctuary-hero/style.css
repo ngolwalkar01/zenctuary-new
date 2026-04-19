@@ -221,6 +221,40 @@
     transition: transform 0.2s ease, background 0.2s ease;
 }
 
+.zh-ctrigger-icons {
+    display: grid;
+    grid-template-areas:
+        "phone email"
+        ". whatsapp";
+    justify-items: center;
+    align-items: center;
+    gap: 3px;
+}
+
+.zh-ctrigger-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.zh-ctrigger-icon svg {
+    display: block;
+    width: calc(var(--zh-contact-trig-sz, 64px) * 0.26);
+    height: calc(var(--zh-contact-trig-sz, 64px) * 0.26);
+}
+
+.zh-ctrigger-icon--phone {
+    grid-area: phone;
+}
+
+.zh-ctrigger-icon--email {
+    grid-area: email;
+}
+
+.zh-ctrigger-icon--whatsapp {
+    grid-area: whatsapp;
+}
+
 .zenctuary-hero__contact-trigger:hover {
     transform: scale(1.05);
 }
@@ -229,8 +263,14 @@
     display: block !important;
 }
 
-.zenctuary-hero__contact-wrapper.is-open .zenctuary-hero__contact-trigger svg:first-child {
+.zenctuary-hero__contact-wrapper.is-open .zh-ctrigger-icons {
     display: none !important;
+}
+
+.zh-cclose-icon svg {
+    display: block;
+    width: calc(var(--zh-contact-trig-sz, 64px) * 0.42);
+    height: calc(var(--zh-contact-trig-sz, 64px) * 0.42);
 }
 
 /* 5. Entrance Animations (Intersection Observer) */

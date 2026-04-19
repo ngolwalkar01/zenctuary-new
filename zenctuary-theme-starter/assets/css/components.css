@@ -260,6 +260,12 @@
   width: 100%;
 }
 
+@media (max-width: 768px) {
+  zen-section.zen-mobile-section {
+    margin-top: 80px !important;
+  }
+}
+
 .zen-mobile-account-entry .wp-block-button,
 .zen-mobile-account-entry .wp-element-button {
   width: 100%;

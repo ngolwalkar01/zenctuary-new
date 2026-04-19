@@ -174,8 +174,12 @@ if ( ! function_exists( 'zh_format_link' ) ) {
             <?php endforeach; ?>
         </div>
         <button class="zenctuary-hero__contact-trigger" aria-label="<?php esc_attr_e('Open contact options', 'zenctuary'); ?>" aria-expanded="false" aria-controls="zh-actions-<?php echo esc_attr(uniqid()); ?>">
-            <?php echo $icons['trigger']; ?>
-            <span class="zh-cclose-icon" style="display:none;"><svg viewBox="0 0 24 24" width="32" height="32" fill="currentColor"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg></span>
+            <span class="zh-ctrigger-icons" aria-hidden="true">
+                <span class="zh-ctrigger-icon zh-ctrigger-icon--phone"><?php echo $icons['phone']; ?></span>
+                <span class="zh-ctrigger-icon zh-ctrigger-icon--email"><?php echo $icons['email']; ?></span>
+                <span class="zh-ctrigger-icon zh-ctrigger-icon--whatsapp"><?php echo $icons['whatsapp']; ?></span>
+            </span>
+            <span class="zh-cclose-icon" style="display:none;" aria-hidden="true"><svg viewBox="0 0 24 24" width="32" height="32" fill="currentColor"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg></span>
         </button>
     </div>
     <?php endif; ?>
