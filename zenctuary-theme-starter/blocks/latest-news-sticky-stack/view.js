@@ -49,16 +49,6 @@ function initStickyStack(section) {
 			});
 		}
 	});
-
-	document.addEventListener('click', (event) => {
-		if (section.contains(event.target)) {
-			return;
-		}
-
-		section.querySelectorAll(`${ CARD_SELECTOR }.is-expanded`).forEach((card) => {
-			card.classList.remove('is-expanded');
-		});
-	});
 }
 
 function bootStickyStacks() {

@@ -332,6 +332,7 @@
     flex-direction: column;
     justify-content: var(--lnss-hover-justify);
     opacity: 0;
+    pointer-events: none;
     transform: translate(var(--lnss-hover-offset-x), calc(var(--lnss-hover-offset-y) + 16px));
     visibility: hidden;
   }
@@ -466,8 +467,6 @@
     text-align: center;
   }
 
-  &__card:hover,
-  &__card:focus-within,
   &__card.is-expanded,
   .is-preview-hover &__card {
     &::after {
@@ -490,6 +489,7 @@
 
     .latest-news-sticky-stack__hover-state {
       opacity: 1;
+      pointer-events: auto;
       transform: translate(var(--lnss-hover-offset-x), var(--lnss-hover-offset-y));
       visibility: visible;
     }
@@ -516,14 +516,46 @@
 
     .latest-news-sticky-stack__hover-state {
       opacity: 0;
+      pointer-events: none;
       transform: translate(var(--lnss-hover-offset-x), calc(var(--lnss-hover-offset-y) + 16px));
       visibility: hidden;
     }
   }
 }
 
+@media (hover: hover) and (pointer: fine) {
+  .latest-news-sticky-stack__card:hover,
+  .latest-news-sticky-stack__card:focus-within {
+    &::after {
+      border-color: var(--lnss-hover-border);
+    }
+
+    .latest-news-sticky-stack__rest-overlay {
+      opacity: 0.12;
+    }
+
+    .latest-news-sticky-stack__hover-overlay {
+      opacity: var(--lnss-hover-overlay-op);
+    }
+
+    .latest-news-sticky-stack__resting-state {
+      opacity: 0;
+      transform: translate(var(--lnss-rest-offset-x), calc(var(--lnss-rest-offset-y) - 10px));
+      visibility: hidden;
+    }
+
+    .latest-news-sticky-stack__hover-state {
+      opacity: 1;
+      pointer-events: auto;
+      transform: translate(var(--lnss-hover-offset-x), var(--lnss-hover-offset-y));
+      visibility: visible;
+    }
+  }
+}
+
 @media (hover: none) {
-  .latest-news-sticky-stack__card:hover {
+  .latest-news-sticky-stack__card:hover,
+  .latest-news-sticky-stack__card:focus-within {
     &::after {
       border-color: transparent;
     }
@@ -544,6 +576,7 @@
 
     .latest-news-sticky-stack__hover-state {
       opacity: 0;
+      pointer-events: none;
       transform: translate(var(--lnss-hover-offset-x), calc(var(--lnss-hover-offset-y) + 16px));
       visibility: hidden;
     }
@@ -726,7 +759,7 @@
       inset: 0;
       padding: 0;
       position: absolute;
-      z-index: 0;
+      z-index: 2;
     }
 
     &__mobile-close-icon {
@@ -744,6 +777,11 @@
     &__resting-state,
     &__hover-state {
       padding: var(--lnss-card-padding-mobile);
+    }
+
+    &__resting-title,
+    &__resting-excerpt {
+      pointer-events: none;
     }
   }
 }
