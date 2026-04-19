@@ -1,5 +1,6 @@
 /**
  * Zenctuary Authentication Modal Styles
+ * High-Fidelity Design Refinement (Reference Match)
  */
 
 :root {
@@ -13,7 +14,12 @@
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(0, 0, 0, 0.7);
+    /* Dark semi-transparent background with soft radial gradients to mimic reference design light spots */
+    background: radial-gradient(circle at 10% 20%, rgba(91, 78, 44, 0.3) 0%, transparent 40%),
+                radial-gradient(circle at 80% 80%, rgba(44, 62, 80, 0.3) 0%, transparent 40%),
+                rgba(0, 0, 0, 0.7);
+    backdrop-filter: blur(25px);
+    -webkit-backdrop-filter: blur(25px);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -23,7 +29,7 @@
     opacity: 0;
     visibility: hidden;
     pointer-events: none;
-    transition: opacity 0.3s ease, visibility 0.3s ease;
+    transition: opacity 0.4s ease, visibility 0.4s ease;
 }
 
 .zen-modal-overlay.is-active {
@@ -32,74 +38,90 @@
     pointer-events: auto;
 }
 
-/* Modal Container */
-.zen-modal-container {
-    background-color: var(--wp--preset--color--primary-grey);
-    color: var(--wp--preset--color--primary-beige);
-    width: 95%;
-    max-width: 440px;
-    padding: 40px;
-    position: relative;
-    border-radius: 20px;
-    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
-    
-    /* Animation */
-    transform: scale(0.9);
-    transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
-}
-
-.zen-modal-overlay.is-active .zen-modal-container {
-    transform: scale(1);
-}
-
-/* Close Button */
+/* Close Button (Fixed Top-Right Corner of Viewport) */
 .zen-modal-close {
-    position: absolute;
-    top: 24px;
-    right: 24px;
+    position: fixed;
+    top: 40px;
+    right: 40px;
     background: none;
     border: none;
-    color: var(--wp--preset--color--secondary-grey-light);
-    font-size: 28px;
+    color: rgba(255, 255, 255, 0.5);
     cursor: pointer;
-    line-height: 1;
     padding: 0;
-    transition: color 0.2s ease;
+    z-index: 10000;
+    transition: color 0.3s ease, transform 0.3s ease;
 }
 
 .zen-modal-close:hover {
     color: var(--wp--preset--color--primary-gold);
+    transform: scale(1.1);
+}
+
+.zen-modal-close svg {
+    display: block;
+}
+
+/* Modal Container */
+.zen-modal-container {
+    width: 100%;
+    max-width: 400px;
+    position: relative;
+    padding: 0;
+    background: transparent; /* Elements float on the blurred background */
+    box-shadow: none;
+    
+    /* Animation */
+    transform: translateY(30px);
+    transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.5s ease;
+    opacity: 0;
+}
+
+.zen-modal-overlay.is-active .zen-modal-container {
+    transform: translateY(0);
+    opacity: 1;
 }
 
 /* Auth Views */
 .zen-auth-view {
-    /* Visibility Control */
+    display: none;
     opacity: 0;
-    visibility: hidden;
-    pointer-events: none;
-    height: 0;
-    overflow: hidden;
-    transition: opacity 0.3s ease;
+    transition: opacity 0.4s ease;
 }
 
 .zen-auth-view.is-active {
+    display: block;
     opacity: 1;
-    visibility: visible;
-    pointer-events: auto;
-    height: auto;
 }
 
-.zen-auth-view h2 {
-    margin-bottom: 24px;
+/* Heading Section */
+.zen-auth-header {
     text-align: center;
-    color: var(--wp--preset--color--primary-gold);
+    margin-bottom: 40px;
 }
 
-/* Forms */
+.zen-auth-header h2 {
+    color: var(--wp--preset--color--primary-gold);
+    font-size: 48px;
+    font-weight: 800;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin: 0 0 10px 0 !important;
+    font-family: var(--wp--preset--font-family--montserrat);
+}
+
+.zen-auth-subheading {
+    color: var(--wp--preset--color--primary-beige);
+    font-size: 18px;
+    font-weight: 400;
+    opacity: 0.9;
+    margin: 0;
+}
+
+/* Form Layout */
 .zen-auth-form {
     display: flex;
     flex-direction: column;
-    gap: 16px;
+    gap: 24px;
 }
 
 .zen-form-group {
@@ -107,83 +129,185 @@
     flex-direction: column;
 }
 
+.zen-form-group label {
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--wp--preset--color--primary-beige);
+    margin-bottom: 12px;
+    text-align: left;
+}
+
+/* Inputs */
+.zen-input-container {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
 .zen-input {
-    background-color: var(--wp--preset--color--secondary-grey-light-back);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    border-radius: 8px;
-    padding: 14px 16px;
+    width: 100%;
+    background-color: #2D2D2D; /* Charcoal background as in reference */
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 12px;
+    padding: 18px 50px 18px 20px;
     color: white;
     font-size: 16px;
-    transition: border-color 0.2s ease;
+    transition: border-color 0.3s ease, background-color 0.3s ease;
+}
+
+.zen-input::placeholder {
+    color: rgba(255, 255, 255, 0.3);
 }
 
 .zen-input:focus {
     outline: none;
     border-color: var(--wp--preset--color--primary-gold);
+    background-color: #353535;
 }
 
-.zen-form-row {
-    display: flex;
-    align-items: center;
-}
-
-.zen-checkbox-label {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    font-size: 14px;
-    cursor: pointer;
-}
-
-.zen-checkbox-label input {
-    accent-color: var(--wp--preset--color--primary-gold);
-}
-
-/* Submit Button */
-.zen-btn-auth {
-    background-color: var(--wp--preset--color--primary-gold);
-    color: var(--wp--preset--color--primary-grey);
+/* Input Icons */
+.zen-input-icon {
+    position: absolute;
+    right: 14px;
+    background: none;
     border: none;
-    border-radius: 32px;
-    padding: 16px;
-    font-weight: 700;
-    font-size: 16px;
+    color: rgba(255, 255, 255, 0.4);
     cursor: pointer;
-    transition: transform 0.2s ease, background-color 0.2s ease;
-    margin-top: 8px;
-    position: relative;
+    padding: 4px;
     display: flex;
     align-items: center;
     justify-content: center;
+    transition: color 0.3s ease;
 }
 
-.zen-btn-auth:hover {
+.zen-input-icon:hover {
+    color: var(--wp--preset--color--primary-beige);
+}
+
+/* Forgot Password Link */
+.zen-form-helper {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 10px;
+}
+
+.zen-link-forgot {
+    font-size: 14px;
+    color: var(--wp--preset--color--primary-gold);
+    text-decoration: underline;
+    font-weight: 600;
+    transition: color 0.2s ease;
+}
+
+.zen-link-forgot:hover {
+    color: var(--wp--preset--color--secondary-gold-light);
+}
+
+/* Checkbox Section */
+.zen-checkbox-label {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 15px;
+    font-size: 14px;
+    color: var(--wp--preset--color--primary-beige);
+    cursor: pointer;
+    line-height: normal;
+    align-items: flex-start;
+    margin-top: 5px;
+}
+
+.zen-checkbox-label input {
+    width: 20px;
+    height: 20px;
+    margin-top: 0;
+    accent-color: var(--wp--preset--color--primary-gold);
+}
+
+.zen-checkbox-label span {
+    opacity: 0.95;
+    white-space: normal;
+}
+
+/* Buttons (Pill Shaped) */
+.zen-btn-auth {
+    width: 100%;
+    border-radius: 50px;
+    padding: 18px;
+    font-size: 18px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border: 2px solid transparent;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    font-family: var(--wp--preset--font-family--dm-sans);
+}
+
+.zen-btn-auth--primary {
+    background-color: var(--wp--preset--color--primary-gold);
+    color: #1a1a1a;
+}
+
+.zen-btn-auth--primary:hover {
     background-color: var(--wp--preset--color--secondary-gold-light);
     transform: translateY(-2px);
 }
 
-.zen-btn-auth:disabled {
-    opacity: 0.7;
-    cursor: not-allowed;
-    transform: none;
+.zen-btn-auth--secondary {
+    background-color: transparent;
+    border: 2px solid var(--wp--preset--color--primary-gold);
+    color: var(--wp--preset--color--primary-gold);
+    margin-top: 15px;
 }
 
+.zen-btn-auth--secondary:hover {
+    background-color: rgba(216, 179, 85, 0.1);
+    transform: translateY(-2px);
+}
+
+/* Divider with Horizontal Lines */
+.zen-divider {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 32px 0 15px;
+    gap: 15px;
+}
+
+.zen-divider-line {
+    flex: 1;
+    height: 1.5px;
+    background-color: rgba(255, 255, 255, 0.2);
+    /* Make lines taper or have a specific width if horizontal space is narrow */
+}
+
+.zen-divider-text {
+    color: var(--wp--preset--color--primary-beige);
+    font-size: 18px;
+    font-weight: 500;
+    white-space: nowrap;
+    opacity: 0.9;
+}
+
+/* Form Errors */
+.zen-error-container {
+    color: var(--wp--preset--color--error);
+    font-size: 14px;
+    text-align: center;
+    min-height: 20px;
+}
+
+/* Loader Animation */
 .btn-loader {
     display: none;
-    width: 20px;
-    height: 20px;
-    border: 2px solid rgba(0,0,0,0.1);
-    border-top-color: var(--wp--preset--color--primary-grey);
+    width: 22px;
+    height: 22px;
+    border: 3.5px solid rgba(0,0,0,0.2);
+    border-top-color: currentColor;
     border-radius: 50%;
-    animation: zen-spin 0.6s linear infinite;
-}
-
-.is-loading .btn-text {
-    visibility: hidden;
-}
-
-.is-loading .btn-loader {
-    display: block;
+    animation: zen-spin 0.8s linear infinite;
     position: absolute;
 }
 
@@ -191,161 +315,29 @@
     to { transform: rotate(360deg); }
 }
 
-/* Error Messages */
-.zen-error-container {
-    color: var(--wp--preset--color--error);
-    font-size: 14px;
-    margin-top: 4px;
-    min-height: 20px;
-}
+.is-loading .btn-text { visibility: hidden; }
+.is-loading .btn-loader { display: block; }
 
-/* Modal Navigation */
-.zen-modal-nav {
-    margin-top: 24px;
-    font-size: 14px;
-    text-align: center;
-    display: block;
-}
-
-.zen-link-gold {
-    background: none;
-    border: none;
-    padding: 0;
-    color: var(--wp--preset--color--primary-gold);
-    text-decoration: underline;
-    font-weight: 700;
-    cursor: pointer;
-    font-family: inherit;
-    font-size: inherit;
-    margin-left: 4px;
-}
-
-.zen-link-gold:hover {
-    color: var(--wp--preset--color--secondary-gold-light);
-}
-
-/* Account Details */
-.zen-account-details {
-    text-align: center;
-}
-
-.zen-account-details p {
-    margin-bottom: 8px;
-}
-
-.zen-user-email {
-    color: var(--wp--preset--color--secondary-grey-light);
-    font-size: 14px;
-    margin-bottom: 24px !important;
-}
-
-.zen-account-actions {
-    margin-top: 24px;
-}
-
-.zen-btn-outline {
-    background: transparent;
-    border: 2px solid var(--wp--preset--color--primary-gold);
-    color: var(--wp--preset--color--primary-gold);
-    border-radius: 32px;
-    padding: 10px 24px;
-    font-weight: 700;
-    cursor: pointer;
-    transition: all 0.2s ease;
-}
-
-.zen-btn-outline:hover {
-    background: var(--wp--preset--color--primary-gold);
-    color: var(--wp--preset--color--primary-grey);
+/* Modal Navigation Groups */
+.zen-modal-footer {
+    width: 100%;
 }
 
 /* Body Scroll Lock */
 body.zen-modal-open {
     overflow: hidden;
-    padding-right: 15px;
 }
 
-
-.zen-auth-view h2:focus {
-    outline: none;
-}
-
-/* Login View Structural Updates */
-.login-wrapper {
-    display: flex;
-    flex-direction: column;
-    height: 100%;
-    justify-content: center;
-}
-
-.zen-auth-header {
-    text-align: center;
-    margin-bottom: 32px;
-}
-
-.zen-auth-header h2 {
-    margin-bottom: 0px !important; /* Overriding default */
-}
-
-.zen-auth-subheading {
-    color: var(--wp--preset--color--secondary-grey-light);
-    font-size: 14px;
-    margin-top: 8px;
-}
-
-.zen-form-group label {
-    display: block;
-    font-size: 14px;
-    font-weight: 600;
-    margin-bottom: 8px;
-    color: var(--wp--preset--color--primary-beige);
-}
-
-.zen-input-container {
-    position: relative;
-    display: flex;
-    align-items: center;
-}
-
-.zen-input-container .zen-input {
-    width: 100%;
-    padding-right: 45px; /* Space for icon */
-}
-
-.zen-input-icon {
-    position: absolute;
-    right: 6px;
-    background: none;
-    border: none;
-    color: var(--wp--preset--color--secondary-grey-light);
-    cursor: pointer;
-    padding: 8px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: color 0.2s ease;
-}
-
-.zen-input-icon:hover {
-    color: var(--wp--preset--color--primary-gold);
-}
-
-.zen-form-helper {
-    display: flex;
-    justify-content: flex-end;
-    margin-top: 8px;
-}
-
-.zen-link-forgot {
-    font-size: 13px;
-    color: var(--wp--preset--color--secondary-grey-light);
-    text-decoration: underline;
-}
-
-.zen-modal-footer {
-    margin-top: 32px;
-    border-top: 1px solid rgba(255, 255, 255, 0.1);
-    padding-top: 24px;
-    text-align: center;
-    font-size: 14px;
+/* Mobile Responsiveness */
+@media (max-width: 480px) {
+    .zen-modal-container {
+        padding: 0 24px;
+    }
+    .zen-modal-close {
+        top: 24px;
+        right: 24px;
+    }
+    .zen-auth-header h2 {
+        font-size: 36px;
+    }
 }

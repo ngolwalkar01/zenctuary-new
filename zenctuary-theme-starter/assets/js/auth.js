@@ -85,7 +85,18 @@ window.zenctuaryAuth = (function() {
                     const type = input.getAttribute('type') === 'password' ? 'text' : 'password';
                     input.setAttribute('type', type);
                     
-                    // Update icon visual state if needed
+                    // Update icon visual state
+                    const eyeOpen = toggleBtn.querySelector('.eye-open');
+                    const eyeClosed = toggleBtn.querySelector('.eye-closed');
+                    if (eyeOpen && eyeClosed) {
+                        if (type === 'text') {
+                            eyeOpen.style.display = 'block';
+                            eyeClosed.style.display = 'none';
+                        } else {
+                            eyeOpen.style.display = 'none';
+                            eyeClosed.style.display = 'block';
+                        }
+                    }
                     toggleBtn.classList.toggle('is-visible', type === 'text');
                 }
                 return;
