@@ -65,6 +65,31 @@ window.zenctuaryAuth = (function() {
                 handleLogout();
                 return;
             }
+
+            // 6. Clear Input Field
+            const clearBtn = e.target.closest('.zen-clear-input');
+            if (clearBtn) {
+                const input = clearBtn.closest('.zen-input-container').querySelector('input');
+                if (input) {
+                    input.value = '';
+                    input.focus();
+                }
+                return;
+            }
+
+            // 7. Toggle Password Visibility
+            const toggleBtn = e.target.closest('.zen-toggle-password');
+            if (toggleBtn) {
+                const input = toggleBtn.closest('.zen-input-container').querySelector('input');
+                if (input) {
+                    const type = input.getAttribute('type') === 'password' ? 'text' : 'password';
+                    input.setAttribute('type', type);
+                    
+                    // Update icon visual state if needed
+                    toggleBtn.classList.toggle('is-visible', type === 'text');
+                }
+                return;
+            }
         });
 
         // --- GLOBAL SUBMIT DELEGATION ---

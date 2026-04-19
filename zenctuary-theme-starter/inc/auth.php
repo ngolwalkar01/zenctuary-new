@@ -18,7 +18,7 @@ function zenctuary_ajax_login() {
     check_ajax_referer( 'zenctuary_auth_nonce', 'security' );
 
 	$info = array();
-	$info['user_login']    = isset( $_POST['username'] ) ? sanitize_user( $_POST['username'] ) : '';
+	$info['user_login']    = isset( $_POST['username'] ) ? sanitize_user( $_POST['username'] ) : (isset( $_POST['email'] ) ? sanitize_email( $_POST['email'] ) : '');
 	$info['user_password'] = isset( $_POST['password'] ) ? $_POST['password'] : '';
 	$info['remember']      = isset( $_POST['remember'] ) ? filter_var( $_POST['remember'], FILTER_VALIDATE_BOOLEAN ) : false;
 

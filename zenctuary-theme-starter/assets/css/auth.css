@@ -265,6 +265,87 @@ body.zen-modal-open {
     padding-right: 15px;
 }
 
+
 .zen-auth-view h2:focus {
     outline: none;
+}
+
+/* Login View Structural Updates */
+.login-wrapper {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    justify-content: center;
+}
+
+.zen-auth-header {
+    text-align: center;
+    margin-bottom: 32px;
+}
+
+.zen-auth-header h2 {
+    margin-bottom: 0px !important; /* Overriding default */
+}
+
+.zen-auth-subheading {
+    color: var(--wp--preset--color--secondary-grey-light);
+    font-size: 14px;
+    margin-top: 8px;
+}
+
+.zen-form-group label {
+    display: block;
+    font-size: 14px;
+    font-weight: 600;
+    margin-bottom: 8px;
+    color: var(--wp--preset--color--primary-beige);
+}
+
+.zen-input-container {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.zen-input-container .zen-input {
+    width: 100%;
+    padding-right: 45px; /* Space for icon */
+}
+
+.zen-input-icon {
+    position: absolute;
+    right: 6px;
+    background: none;
+    border: none;
+    color: var(--wp--preset--color--secondary-grey-light);
+    cursor: pointer;
+    padding: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: color 0.2s ease;
+}
+
+.zen-input-icon:hover {
+    color: var(--wp--preset--color--primary-gold);
+}
+
+.zen-form-helper {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 8px;
+}
+
+.zen-link-forgot {
+    font-size: 13px;
+    color: var(--wp--preset--color--secondary-grey-light);
+    text-decoration: underline;
+}
+
+.zen-modal-footer {
+    margin-top: 32px;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    padding-top: 24px;
+    text-align: center;
+    font-size: 14px;
 }
