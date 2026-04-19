@@ -30,17 +30,20 @@ function getVisibleSlides( block, activeTabId, tabsEnabled ) {
 			! activeTabId ||
 			getSlideTabIds( slide ).includes( activeTabId );
 		slide.hidden = ! matches;
+		slide.style.display = matches ? '' : 'none';
+		slide.setAttribute( 'aria-hidden', matches ? 'false' : 'true' );
 		slide.classList.toggle( 'is-hidden', ! matches );
 		return matches;
 	} );
 }
 
-function createSwiper( block ) {
+function createSwiper( block, visibleSlidesCount ) {
 	const swiperElement = block.querySelector( '.premium-tabs-carousel__swiper' );
 	const nextButton = block.querySelector( '.premium-tabs-carousel__arrow--next' );
 	const prevButton = block.querySelector( '.premium-tabs-carousel__arrow--prev' );
 	const pagination = block.querySelector( '.premium-tabs-carousel__pagination' );
 	const showPagination = parseBoolean( block.dataset.showPagination );
+	const shouldLoop = parseBoolean( block.dataset.loop ) && visibleSlidesCount > 3;
 	const modules = [ Navigation ];
 	const options = {
 		modules,
@@ -48,7 +51,7 @@ function createSwiper( block ) {
 		slidesPerGroup: 1,
 		spaceBetween: parseNumber( block.dataset.gap, 24 ),
 		speed: parseNumber( block.dataset.speed, 450 ),
-		loop: parseBoolean( block.dataset.loop ),
+		loop: shouldLoop,
 		watchOverflow: true,
 		grabCursor: true,
 		navigation: nextButton && prevButton ? {
@@ -110,9 +113,15 @@ function mountPremiumTabsCarousel( block ) {
 			block.__premiumTabsSwiper = null;
 		}
 
-		getVisibleSlides( block, activeTabId, tabsEnabled );
+		const visibleSlides = getVisibleSlides( block, activeTabId, tabsEnabled );
 		syncTabs();
-		block.__premiumTabsSwiper = createSwiper( block );
+
+		if ( ! visibleSlides.length ) {
+			return;
+		}
+
+		block.__premiumTabsSwiper = createSwiper( block, visibleSlides.length );
+		block.__premiumTabsSwiper.slideTo( 0, 0 );
 	}
 
 	if ( block.__premiumTabsHandlersBound ) {
