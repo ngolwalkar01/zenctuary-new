@@ -47,6 +47,7 @@
     "cardHeightDesktop": { "type": "number", "default": 640 },
     "cardHeightTablet": { "type": "number", "default": 560 },
     "cardHeightMobile": { "type": "number", "default": 520 },
+    "textContentVerticalPosition": { "type": "string", "default": "bottom" },
     "textCardBackgroundColor": { "type": "string", "default": "#4a4848" },
     "quoteFontSize": { "type": "string", "default": "clamp(1.35rem, 1.7vw, 1.65rem)" },
     "quoteFontWeight": { "type": "string", "default": "400" },

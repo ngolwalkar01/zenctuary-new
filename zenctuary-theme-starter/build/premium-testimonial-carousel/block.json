@@ -160,6 +160,10 @@
       "type": "number",
       "default": 520
     },
+    "textContentVerticalPosition": {
+      "type": "string",
+      "default": "bottom"
+    },
     "textCardBackgroundColor": {
       "type": "string",
       "default": "#4a4848"

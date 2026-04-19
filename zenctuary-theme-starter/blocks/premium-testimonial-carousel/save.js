@@ -123,6 +123,7 @@ export default function save( { attributes } ) {
 			'--premium-testimonial-card-height-desktop': `${ attributes.cardHeightDesktop || 640 }px`,
 			'--premium-testimonial-card-height-tablet': `${ attributes.cardHeightTablet || 560 }px`,
 			'--premium-testimonial-card-height-mobile': `${ attributes.cardHeightMobile || 520 }px`,
+			'--premium-testimonial-text-justify': attributes.textContentVerticalPosition === 'top' ? 'flex-start' : 'flex-end',
 			'--premium-testimonial-heading-max-width': `${ attributes.headingMaxWidth || 980 }px`,
 			'--premium-testimonial-heading-size': attributes.headingFontSize || 'clamp(2.1rem, 4vw, 4rem)',
 			'--premium-testimonial-heading-weight': attributes.headingFontWeight || '700',

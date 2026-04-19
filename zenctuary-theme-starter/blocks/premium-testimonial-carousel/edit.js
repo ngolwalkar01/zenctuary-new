@@ -204,6 +204,7 @@ export default function Edit( { attributes, setAttributes } ) {
 			'--premium-testimonial-card-height-desktop': `${ attributes.cardHeightDesktop || 640 }px`,
 			'--premium-testimonial-card-height-tablet': `${ attributes.cardHeightTablet || 560 }px`,
 			'--premium-testimonial-card-height-mobile': `${ attributes.cardHeightMobile || 520 }px`,
+			'--premium-testimonial-text-justify': attributes.textContentVerticalPosition === 'top' ? 'flex-start' : 'flex-end',
 			'--premium-testimonial-heading-max-width': `${ attributes.headingMaxWidth || 980 }px`,
 			'--premium-testimonial-heading-size': attributes.headingFontSize || 'clamp(2.1rem, 4vw, 4rem)',
 			'--premium-testimonial-heading-weight': attributes.headingFontWeight || '700',
@@ -309,6 +310,15 @@ export default function Edit( { attributes, setAttributes } ) {
 					<RangeControl label={ __( 'Card Height Desktop', 'zenctuary' ) } value={ attributes.cardHeightDesktop } onChange={ ( value ) => setAttributes( { cardHeightDesktop: value } ) } min={ 320 } max={ 1000 } step={ 10 } />
 					<RangeControl label={ __( 'Card Height Tablet', 'zenctuary' ) } value={ attributes.cardHeightTablet } onChange={ ( value ) => setAttributes( { cardHeightTablet: value } ) } min={ 280 } max={ 900 } step={ 10 } />
 					<RangeControl label={ __( 'Card Height Mobile', 'zenctuary' ) } value={ attributes.cardHeightMobile } onChange={ ( value ) => setAttributes( { cardHeightMobile: value } ) } min={ 240 } max={ 800 } step={ 10 } />
+					<SelectControl
+						label={ __( 'Quote / Author Position', 'zenctuary' ) }
+						value={ attributes.textContentVerticalPosition || 'bottom' }
+						options={ [
+							{ label: __( 'Bottom', 'zenctuary' ), value: 'bottom' },
+							{ label: __( 'Top', 'zenctuary' ), value: 'top' },
+						] }
+						onChange={ ( value ) => setAttributes( { textContentVerticalPosition: value || 'bottom' } ) }
+					/>
 					<p className="components-base-control__label">{ __( 'Text Card Background', 'zenctuary' ) }</p>
 					<ColorPalette colors={ PRESET_COLORS } value={ attributes.textCardBackgroundColor } onChange={ ( value ) => setAttributes( { textCardBackgroundColor: value || '#4a4848' } ) } />
 					<TextControl label={ __( 'Custom Text Card Background', 'zenctuary' ) } value={ attributes.textCardBackgroundColor } onChange={ ( value ) => setAttributes( { textCardBackgroundColor: value || '#4a4848' } ) } />
