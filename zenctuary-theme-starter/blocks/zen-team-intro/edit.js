@@ -40,6 +40,12 @@ const POSITIONS_Y = [
 	{ label: __( 'Bottom', 'zenctuary' ), value: 'bottom' },
 ];
 
+const TEXT_ALIGN_OPTIONS = [
+	{ label: __( 'Left', 'zenctuary' ), value: 'left' },
+	{ label: __( 'Center', 'zenctuary' ), value: 'center' },
+	{ label: __( 'Right', 'zenctuary' ), value: 'right' },
+];
+
 function ColorControl( { label, value, fallback, onChange } ) {
 	return (
 		<BaseControl label={ label }>
@@ -85,6 +91,33 @@ function getOverlayPositionStyle( x, y, offsetX, offsetY ) {
 	return style;
 }
 
+function getContentPositionStyle( x, y, offsetX, offsetY, width, textAlign ) {
+	const style = {
+		maxWidth: `${ width }px`,
+		textAlign,
+	};
+
+	if ( x === 'left' ) {
+		style.justifySelf = 'start';
+	} else if ( x === 'center' ) {
+		style.justifySelf = 'center';
+	} else {
+		style.justifySelf = 'end';
+	}
+
+	if ( y === 'top' ) {
+		style.alignSelf = 'start';
+	} else if ( y === 'center' ) {
+		style.alignSelf = 'center';
+	} else {
+		style.alignSelf = 'end';
+	}
+
+	style.transform = `translate(${ offsetX }px, ${ offsetY }px)`;
+
+	return style;
+}
+
 export default function Edit( { attributes, setAttributes } ) {
 	const blockProps = useBlockProps( {
 		className: 'zti',
@@ -110,12 +143,14 @@ export default function Edit( { attributes, setAttributes } ) {
 			'--zti-name-line': attributes.nameLineHeight,
 			'--zti-name-ls': `${ attributes.nameLetterSpacing }px`,
 			'--zti-name-transform': attributes.nameTextTransform,
+			'--zti-name-max': `${ attributes.nameMaxWidth }px`,
 			'--zti-role-color': attributes.roleColor,
 			'--zti-role-size': `${ attributes.roleFontSize }px`,
 			'--zti-role-weight': attributes.roleFontWeight,
 			'--zti-role-line': attributes.roleLineHeight,
 			'--zti-role-ls': `${ attributes.roleLetterSpacing }px`,
 			'--zti-role-transform': attributes.roleTextTransform,
+			'--zti-role-max': `${ attributes.roleMaxWidth }px`,
 			'--zti-content-title-color': attributes.contentTitleColor,
 			'--zti-content-title-size': `${ attributes.contentTitleFontSize }px`,
 			'--zti-content-title-weight': attributes.contentTitleFontWeight,
@@ -129,6 +164,7 @@ export default function Edit( { attributes, setAttributes } ) {
 			'--zti-body-line': attributes.contentBodyLineHeight,
 			'--zti-body-ls': `${ attributes.contentBodyLetterSpacing }px`,
 			'--zti-body-max': `${ attributes.contentBodyMaxWidth }px`,
+			'--zti-content-max': `${ attributes.contentWidth }px`,
 		},
 	} );
 
@@ -144,6 +180,15 @@ export default function Edit( { attributes, setAttributes } ) {
 		attributes.roleVertical,
 		attributes.roleOffsetX,
 		attributes.roleOffsetY
+	);
+
+	const contentPositionStyle = getContentPositionStyle(
+		attributes.contentHorizontal,
+		attributes.contentVertical,
+		attributes.contentOffsetX,
+		attributes.contentOffsetY,
+		attributes.contentWidth,
+		attributes.contentTextAlign
 	);
 
 	return (
@@ -171,6 +216,44 @@ export default function Edit( { attributes, setAttributes } ) {
 				</PanelBody>
 
 				<PanelBody title={ __( 'Image', 'zenctuary' ) }>
+					<BaseControl label={ __( 'Profile Image', 'zenctuary' ) }>
+						<MediaUploadCheck>
+							<MediaUpload
+								onSelect={ ( media ) =>
+									setAttributes( {
+										imageId: media.id,
+										imageUrl: media.url,
+										imageAlt: media.alt || '',
+									} )
+								}
+								allowedTypes={ [ 'image' ] }
+								value={ attributes.imageId }
+								render={ ( { open } ) => (
+									<div className="zti__media-actions">
+										<Button variant="secondary" onClick={ open }>
+											{ attributes.imageUrl
+												? __( 'Replace Image', 'zenctuary' )
+												: __( 'Select Image', 'zenctuary' ) }
+										</Button>
+										{ attributes.imageUrl && (
+											<Button
+												variant="tertiary"
+												onClick={ () =>
+													setAttributes( {
+														imageId: undefined,
+														imageUrl: '',
+														imageAlt: '',
+													} )
+												}
+											>
+												{ __( 'Remove Image', 'zenctuary' ) }
+											</Button>
+										) }
+									</div>
+								) }
+							/>
+						</MediaUploadCheck>
+					</BaseControl>
 					<RangeControl label={ __( 'Image Width', 'zenctuary' ) } value={ attributes.imageWidth } onChange={ ( imageWidth ) => setAttributes( { imageWidth } ) } min={ 280 } max={ 900 } />
 					<RangeControl label={ __( 'Image Min Height', 'zenctuary' ) } value={ attributes.imageMinHeight } onChange={ ( imageMinHeight ) => setAttributes( { imageMinHeight } ) } min={ 360 } max={ 1100 } />
 					<RangeControl label={ __( 'Image Border Radius', 'zenctuary' ) } value={ attributes.imageBorderRadius } onChange={ ( imageBorderRadius ) => setAttributes( { imageBorderRadius } ) } min={ 0 } max={ 80 } />
@@ -181,6 +264,7 @@ export default function Edit( { attributes, setAttributes } ) {
 					<SelectControl label={ __( 'Vertical Position', 'zenctuary' ) } value={ attributes.nameVertical } options={ POSITIONS_Y } onChange={ ( nameVertical ) => setAttributes( { nameVertical } ) } />
 					<RangeControl label={ __( 'Horizontal Offset', 'zenctuary' ) } value={ attributes.nameOffsetX } onChange={ ( nameOffsetX ) => setAttributes( { nameOffsetX } ) } min={ -200 } max={ 200 } />
 					<RangeControl label={ __( 'Vertical Offset', 'zenctuary' ) } value={ attributes.nameOffsetY } onChange={ ( nameOffsetY ) => setAttributes( { nameOffsetY } ) } min={ -200 } max={ 200 } />
+					<RangeControl label={ __( 'Text Width', 'zenctuary' ) } value={ attributes.nameMaxWidth } onChange={ ( nameMaxWidth ) => setAttributes( { nameMaxWidth } ) } min={ 80 } max={ 500 } />
 					<ColorControl label={ __( 'Color', 'zenctuary' ) } value={ attributes.nameColor } fallback="#ffffff" onChange={ ( nameColor ) => setAttributes( { nameColor } ) } />
 					<RangeControl label={ __( 'Font Size', 'zenctuary' ) } value={ attributes.nameFontSize } onChange={ ( nameFontSize ) => setAttributes( { nameFontSize } ) } min={ 16 } max={ 110 } />
 					<SelectControl label={ __( 'Weight', 'zenctuary' ) } value={ attributes.nameFontWeight } options={ WEIGHTS } onChange={ ( nameFontWeight ) => setAttributes( { nameFontWeight } ) } />
@@ -191,12 +275,19 @@ export default function Edit( { attributes, setAttributes } ) {
 					<SelectControl label={ __( 'Vertical Position', 'zenctuary' ) } value={ attributes.roleVertical } options={ POSITIONS_Y } onChange={ ( roleVertical ) => setAttributes( { roleVertical } ) } />
 					<RangeControl label={ __( 'Horizontal Offset', 'zenctuary' ) } value={ attributes.roleOffsetX } onChange={ ( roleOffsetX ) => setAttributes( { roleOffsetX } ) } min={ -200 } max={ 200 } />
 					<RangeControl label={ __( 'Vertical Offset', 'zenctuary' ) } value={ attributes.roleOffsetY } onChange={ ( roleOffsetY ) => setAttributes( { roleOffsetY } ) } min={ -200 } max={ 200 } />
+					<RangeControl label={ __( 'Text Width', 'zenctuary' ) } value={ attributes.roleMaxWidth } onChange={ ( roleMaxWidth ) => setAttributes( { roleMaxWidth } ) } min={ 80 } max={ 500 } />
 					<ColorControl label={ __( 'Color', 'zenctuary' ) } value={ attributes.roleColor } fallback="#ffffff" onChange={ ( roleColor ) => setAttributes( { roleColor } ) } />
 					<RangeControl label={ __( 'Font Size', 'zenctuary' ) } value={ attributes.roleFontSize } onChange={ ( roleFontSize ) => setAttributes( { roleFontSize } ) } min={ 12 } max={ 72 } />
 					<SelectControl label={ __( 'Weight', 'zenctuary' ) } value={ attributes.roleFontWeight } options={ WEIGHTS } onChange={ ( roleFontWeight ) => setAttributes( { roleFontWeight } ) } />
 				</PanelBody>
 
 				<PanelBody title={ __( 'Right Content', 'zenctuary' ) }>
+					<SelectControl label={ __( 'Horizontal Position', 'zenctuary' ) } value={ attributes.contentHorizontal } options={ POSITIONS_X } onChange={ ( contentHorizontal ) => setAttributes( { contentHorizontal } ) } />
+					<SelectControl label={ __( 'Vertical Position', 'zenctuary' ) } value={ attributes.contentVertical } options={ POSITIONS_Y } onChange={ ( contentVertical ) => setAttributes( { contentVertical } ) } />
+					<RangeControl label={ __( 'Horizontal Offset', 'zenctuary' ) } value={ attributes.contentOffsetX } onChange={ ( contentOffsetX ) => setAttributes( { contentOffsetX } ) } min={ -300 } max={ 300 } />
+					<RangeControl label={ __( 'Vertical Offset', 'zenctuary' ) } value={ attributes.contentOffsetY } onChange={ ( contentOffsetY ) => setAttributes( { contentOffsetY } ) } min={ -300 } max={ 300 } />
+					<RangeControl label={ __( 'Content Width', 'zenctuary' ) } value={ attributes.contentWidth } onChange={ ( contentWidth ) => setAttributes( { contentWidth } ) } min={ 240 } max={ 1000 } />
+					<SelectControl label={ __( 'Text Align', 'zenctuary' ) } value={ attributes.contentTextAlign } options={ TEXT_ALIGN_OPTIONS } onChange={ ( contentTextAlign ) => setAttributes( { contentTextAlign } ) } />
 					<ColorControl label={ __( 'Title Color', 'zenctuary' ) } value={ attributes.contentTitleColor } fallback="#d8b354" onChange={ ( contentTitleColor ) => setAttributes( { contentTitleColor } ) } />
 					<RangeControl label={ __( 'Title Font Size', 'zenctuary' ) } value={ attributes.contentTitleFontSize } onChange={ ( contentTitleFontSize ) => setAttributes( { contentTitleFontSize } ) } min={ 18 } max={ 110 } />
 					<SelectControl label={ __( 'Title Weight', 'zenctuary' ) } value={ attributes.contentTitleFontWeight } options={ WEIGHTS } onChange={ ( contentTitleFontWeight ) => setAttributes( { contentTitleFontWeight } ) } />
@@ -258,7 +349,7 @@ export default function Edit( { attributes, setAttributes } ) {
 					</div>
 				</div>
 
-				<div className="zti__content">
+				<div className="zti__content" style={ contentPositionStyle }>
 					<RichText
 						tagName="h2"
 						className="zti__content-title"

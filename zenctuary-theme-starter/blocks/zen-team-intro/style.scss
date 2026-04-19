@@ -25,6 +25,12 @@
 	position: relative;
 }
 
+.zti__media-actions {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 10px;
+}
+
 .zti__image,
 .zti__image-button img {
 	display: block;
@@ -42,7 +48,6 @@
 
 .zti__name,
 .zti__role {
-	max-width: calc(100% - 20px);
 	position: absolute;
 	white-space: normal;
 }
@@ -53,6 +58,7 @@
 	font-weight: var(--zti-name-weight, 700);
 	letter-spacing: var(--zti-name-ls, 0);
 	line-height: var(--zti-name-line, 1.02);
+	max-width: min(var(--zti-name-max, 260px), calc(100% - 20px));
 	text-transform: var(--zti-name-transform, uppercase);
 }
 
@@ -62,7 +68,13 @@
 	font-weight: var(--zti-role-weight, 400);
 	letter-spacing: var(--zti-role-ls, 0);
 	line-height: var(--zti-role-line, 1.1);
+	max-width: min(var(--zti-role-max, 300px), calc(100% - 20px));
 	text-transform: var(--zti-role-transform, uppercase);
+}
+
+.zti__content {
+	max-width: min(var(--zti-content-max, 760px), 100%);
+	width: 100%;
 }
 
 .zti__content-title {
@@ -99,6 +111,13 @@
 
 	.zti__media {
 		max-width: min(100%, var(--zti-image-width, 740px));
+	}
+
+	.zti__content {
+		justify-self: stretch !important;
+		max-width: min(var(--zti-content-max, 760px), 100%);
+		transform: none !important;
+		width: 100%;
 	}
 }
 

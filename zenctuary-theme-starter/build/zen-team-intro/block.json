@@ -158,6 +158,10 @@
       "type": "number",
       "default": 0
     },
+    "nameMaxWidth": {
+      "type": "number",
+      "default": 260
+    },
     "roleColor": {
       "type": "string",
       "default": "#ffffff"
@@ -197,6 +201,10 @@
     "roleOffsetY": {
       "type": "number",
       "default": 0
+    },
+    "roleMaxWidth": {
+      "type": "number",
+      "default": 300
     },
     "contentTitleColor": {
       "type": "string",
@@ -249,6 +257,30 @@
     "contentBodyMaxWidth": {
       "type": "number",
       "default": 760
+    },
+    "contentWidth": {
+      "type": "number",
+      "default": 760
+    },
+    "contentHorizontal": {
+      "type": "string",
+      "default": "left"
+    },
+    "contentVertical": {
+      "type": "string",
+      "default": "center"
+    },
+    "contentOffsetX": {
+      "type": "number",
+      "default": 0
+    },
+    "contentOffsetY": {
+      "type": "number",
+      "default": 0
+    },
+    "contentTextAlign": {
+      "type": "string",
+      "default": "left"
     }
   },
   "editorScript": "file:./index.js",

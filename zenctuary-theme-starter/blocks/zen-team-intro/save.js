@@ -29,6 +29,33 @@ function getOverlayPositionStyle( x, y, offsetX, offsetY ) {
 	return style;
 }
 
+function getContentPositionStyle( x, y, offsetX, offsetY, width, textAlign ) {
+	const style = {
+		maxWidth: `${ width }px`,
+		textAlign,
+	};
+
+	if ( x === 'left' ) {
+		style.justifySelf = 'start';
+	} else if ( x === 'center' ) {
+		style.justifySelf = 'center';
+	} else {
+		style.justifySelf = 'end';
+	}
+
+	if ( y === 'top' ) {
+		style.alignSelf = 'start';
+	} else if ( y === 'center' ) {
+		style.alignSelf = 'center';
+	} else {
+		style.alignSelf = 'end';
+	}
+
+	style.transform = `translate(${ offsetX }px, ${ offsetY }px)`;
+
+	return style;
+}
+
 export default function save( { attributes } ) {
 	const blockProps = useBlockProps.save( {
 		className: 'zti',
@@ -54,12 +81,14 @@ export default function save( { attributes } ) {
 			'--zti-name-line': attributes.nameLineHeight,
 			'--zti-name-ls': `${ attributes.nameLetterSpacing }px`,
 			'--zti-name-transform': attributes.nameTextTransform,
+			'--zti-name-max': `${ attributes.nameMaxWidth }px`,
 			'--zti-role-color': attributes.roleColor,
 			'--zti-role-size': `${ attributes.roleFontSize }px`,
 			'--zti-role-weight': attributes.roleFontWeight,
 			'--zti-role-line': attributes.roleLineHeight,
 			'--zti-role-ls': `${ attributes.roleLetterSpacing }px`,
 			'--zti-role-transform': attributes.roleTextTransform,
+			'--zti-role-max': `${ attributes.roleMaxWidth }px`,
 			'--zti-content-title-color': attributes.contentTitleColor,
 			'--zti-content-title-size': `${ attributes.contentTitleFontSize }px`,
 			'--zti-content-title-weight': attributes.contentTitleFontWeight,
@@ -73,6 +102,7 @@ export default function save( { attributes } ) {
 			'--zti-body-line': attributes.contentBodyLineHeight,
 			'--zti-body-ls': `${ attributes.contentBodyLetterSpacing }px`,
 			'--zti-body-max': `${ attributes.contentBodyMaxWidth }px`,
+			'--zti-content-max': `${ attributes.contentWidth }px`,
 		},
 	} );
 
@@ -109,7 +139,17 @@ export default function save( { attributes } ) {
 					</div>
 				</div>
 
-				<div className="zti__content">
+				<div
+					className="zti__content"
+					style={ getContentPositionStyle(
+						attributes.contentHorizontal,
+						attributes.contentVertical,
+						attributes.contentOffsetX,
+						attributes.contentOffsetY,
+						attributes.contentWidth,
+						attributes.contentTextAlign
+					) }
+				>
 					<RichText.Content tagName="h2" className="zti__content-title" value={ attributes.contentTitle } />
 					<RichText.Content tagName="div" className="zti__content-body" value={ attributes.contentBody } />
 				</div>
