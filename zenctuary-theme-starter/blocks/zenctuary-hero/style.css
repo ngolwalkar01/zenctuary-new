@@ -12,7 +12,7 @@
     overflow: hidden;
 }
 
-/* ── 1. Background Layers ── */
+/* 1. Background Layers */
 .zenctuary-hero__bg {
     position: absolute;
     top: 0;
@@ -39,7 +39,7 @@
     opacity: var(--zh-bg-overlay-op, 0.4);
 }
 
-/* ── 2. Inner Center Container ── */
+/* 2. Inner Center Container */
 .zenctuary-hero__inner {
     position: relative;
     z-index: 10;
@@ -105,7 +105,7 @@
     object-fit: contain;
 }
 
-/* ── 3. Bottom Tags Row ── */
+/* 3. Bottom Tags Row */
 .zenctuary-hero__tags-wrapper {
     position: absolute;
     bottom: var(--zh-tags-bottom, 60px);
@@ -140,13 +140,15 @@
 
 /* Generate dots between items */
 .zenctuary-hero__tags-list li:not(:last-child)::after {
-    content: "•";
+    content: "\2022";
     margin-left: var(--zh-tags-gap, 24px);
+    font-size: var(--zh-tags-bullet-size, 18px);
+    line-height: 1;
     color: inherit;
     opacity: 0.6;
 }
 
-/* ── 4. Floating Contact Bundle ── */
+/* 4. Floating Contact Bundle */
 .zenctuary-hero__contact-wrapper {
     position: absolute;
     bottom: var(--zh-contact-bottom, 40px);
@@ -163,8 +165,6 @@
     flex-direction: column;
     align-items: flex-end;
     gap: var(--zh-contact-act-gap, 12px);
-    
-    /* Animation state for popup */
     opacity: 0;
     visibility: hidden;
     transform: translateY(20px);
@@ -172,7 +172,6 @@
     pointer-events: none;
 }
 
-/* When active, show the links */
 .zenctuary-hero__contact-wrapper.is-open .zenctuary-hero__contact-actions {
     opacity: 1;
     visibility: visible;
@@ -218,7 +217,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
     transition: transform 0.2s ease, background 0.2s ease;
 }
 
@@ -226,15 +225,15 @@
     transform: scale(1.05);
 }
 
-/* Toggle trigger icons based on state */
 .zenctuary-hero__contact-wrapper.is-open .zh-cclose-icon {
     display: block !important;
 }
+
 .zenctuary-hero__contact-wrapper.is-open .zenctuary-hero__contact-trigger svg:first-child {
     display: none !important;
 }
 
-/* ── 5. Entrance Animations (Intersection Observer) ── */
+/* 5. Entrance Animations (Intersection Observer) */
 [data-animate] {
     transition-property: opacity, transform;
     transition-timing-function: cubic-bezier(0.16, 1, 0.3, 1);
@@ -243,6 +242,7 @@
 [data-animate="fade"] {
     opacity: 0;
 }
+
 [data-animate="fade"].is-visible {
     opacity: 1;
 }
@@ -251,6 +251,7 @@
     opacity: 0;
     transform: translateY(40px);
 }
+
 [data-animate="slide-up"].is-visible {
     opacity: 1;
     transform: translateY(0);
@@ -260,6 +261,7 @@
     opacity: 0;
     transform: translateY(-40px);
 }
+
 [data-animate="slide-down"].is-visible {
     opacity: 1;
     transform: translateY(0);
@@ -269,6 +271,7 @@
     opacity: 0;
     transform: translateX(40px);
 }
+
 [data-animate="slide-left"].is-visible {
     opacity: 1;
     transform: translateX(0);
@@ -278,6 +281,7 @@
     opacity: 0;
     transform: translateX(-40px);
 }
+
 [data-animate="slide-right"].is-visible {
     opacity: 1;
     transform: translateX(0);
@@ -287,16 +291,18 @@
     opacity: 0;
     transform: scale(0.9);
 }
+
 [data-animate="zoom-in"].is-visible {
     opacity: 1;
     transform: scale(1);
 }
 
-/* ── 6. Responsive Fallbacks ── */
+/* 6. Responsive Fallbacks */
 @media (max-width: 1024px) {
     .zenctuary-hero__title {
         font-size: clamp(36px, 8vw, var(--zh-title-fs, 64px));
     }
+
     .zenctuary-hero__logo-wrapper img {
         max-width: 80% !important;
         margin: 0 auto;
@@ -327,18 +333,20 @@
         bottom: 20px;
         right: 20px;
     }
-    
+
     .zenctuary-hero__tags-wrapper {
-        bottom: 40px;
+        bottom: var(--zh-tags-bottom-mobile, 80px);
     }
-    
+
     .zenctuary-hero__tags-list {
         column-gap: 16px;
         row-gap: 8px;
     }
+
     .zenctuary-hero__tags-list li:not(:last-child)::after {
-        content: ""; /* Wrap nicely on mobile without orphans */
-        margin: 0;
-        display: none;
+        content: "\2022";
+        display: inline-block;
+        font-size: var(--zh-tags-bullet-mobile-size, var(--zh-tags-bullet-size, 18px));
+        line-height: 1;
     }
 }

@@ -169,6 +169,10 @@
       "type": "number",
       "default": 60
     },
+    "tagsMobileBottomOffset": {
+      "type": "number",
+      "default": 80
+    },
     "tagsGap": {
       "type": "number",
       "default": 24
@@ -178,6 +182,14 @@
       "default": "#D8B355"
     },
     "tagsFontSize": {
+      "type": "number",
+      "default": 18
+    },
+    "tagsBulletSize": {
+      "type": "number",
+      "default": 18
+    },
+    "tagsBulletMobileSize": {
       "type": "number",
       "default": 18
     },

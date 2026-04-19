@@ -47,9 +47,12 @@ $vars = [
     '--zh-title-c:'        . sanitize_hex_color( $attributes['titleColor'] ?? '#F6F2EA' ),
 
     '--zh-tags-bottom:'    . absint( $attributes['tagsBottomOffset'] ?? 60 ) . 'px',
+    '--zh-tags-bottom-mobile:' . absint( $attributes['tagsMobileBottomOffset'] ?? 80 ) . 'px',
     '--zh-tags-gap:'       . absint( $attributes['tagsGap'] ?? 24 ) . 'px',
     '--zh-tags-c:'         . sanitize_hex_color( $attributes['tagsColor'] ?? '#D8B355' ),
     '--zh-tags-fs:'        . absint( $attributes['tagsFontSize'] ?? 18 ) . 'px',
+    '--zh-tags-bullet-size:' . absint( $attributes['tagsBulletSize'] ?? 18 ) . 'px',
+    '--zh-tags-bullet-mobile-size:' . absint( $attributes['tagsBulletMobileSize'] ?? 18 ) . 'px',
     '--zh-tags-fw:'        . esc_attr( $attributes['tagsFontWeight'] ?? '500' ),
     '--zh-tags-tt:'        . esc_attr( $attributes['tagsTextTransform'] ?? 'uppercase' ),
     '--zh-tags-ls:'        . floatval( $attributes['tagsLetterSpacing'] ?? 0.05 ) . 'em',

@@ -60,9 +60,12 @@
 
     "showTagsRow": { "type": "boolean", "default": true },
     "tagsBottomOffset": { "type": "number", "default": 60 },
+    "tagsMobileBottomOffset": { "type": "number", "default": 80 },
     "tagsGap": { "type": "number", "default": 24 },
     "tagsColor": { "type": "string", "default": "#D8B355" },
     "tagsFontSize": { "type": "number", "default": 18 },
+    "tagsBulletSize": { "type": "number", "default": 18 },
+    "tagsBulletMobileSize": { "type": "number", "default": 18 },
     "tagsFontWeight": { "type": "string", "default": "500" },
     "tagsTextTransform": { "type": "string", "default": "uppercase" },
     "tagsLetterSpacing": { "type": "number", "default": 0.05 },

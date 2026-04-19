@@ -74,7 +74,7 @@ export default function Edit( { attributes, setAttributes } ) {
         taglineAnim = 'slide-up', taglineAnimDur = 1.0, taglineAnimDel = 0.4,
         titleAnim = 'zoom-in', titleAnimDur = 1.2, titleAnimDel = 0.2,
         iconAnim = 'fade', iconAnimDur = 1.0, iconAnimDel = 0.1,
-        showTagsRow = true, tagsItems = [], tagsColor = '#D8B355', tagsBottomOffset = 60, tagsGap = 24, tagsFontSize = 18, tagsFontWeight = '500', tagsTextTransform = 'uppercase', tagsLetterSpacing = 0.05,
+        showTagsRow = true, tagsItems = [], tagsColor = '#D8B355', tagsBottomOffset = 60, tagsMobileBottomOffset = 80, tagsGap = 24, tagsFontSize = 18, tagsBulletSize = 18, tagsBulletMobileSize = 18, tagsFontWeight = '500', tagsTextTransform = 'uppercase', tagsLetterSpacing = 0.05,
         showContactBundle = true, contactRightOffset = 40, contactBottomOffset = 40, contactTriggerBg = '#D8B355', contactTriggerColor = '#3F3E3E', contactTriggerSize = 64,
         contactActionBg = '#3F3E3E', contactActionBorder = '#D8B355', contactActionColor = '#D8B355', contactActionGap = 12, contactActions = []
     } = attributes || {};
@@ -292,9 +292,12 @@ export default function Edit( { attributes, setAttributes } ) {
                                 <Button variant="secondary" onClick={() => setAttributes({ tagsItems: [...(tagsItems || []), 'NEW TAG'] })} style={{ width: '100%', justifyContent: 'center' }}>+ Add Tag</Button>
                             </div>
 
-                            <RangeControl label="Bottom Offset" value={ tagsBottomOffset } min={0} max={160} step={4} onChange={ v => setAttributes({ tagsBottomOffset: v }) } />
+                            <RangeControl label="Bottom Offset (Desktop)" value={ tagsBottomOffset } min={0} max={200} step={4} onChange={ v => setAttributes({ tagsBottomOffset: v }) } />
+                            <RangeControl label="Bottom Offset (Mobile)" value={ tagsMobileBottomOffset } min={0} max={200} step={4} onChange={ v => setAttributes({ tagsMobileBottomOffset: v }) } />
                             <RangeControl label="Gap Between Tags" value={ tagsGap } min={0} max={64} step={4} onChange={ v => setAttributes({ tagsGap: v }) } />
                             <RangeControl label="Font Size" value={ tagsFontSize } min={10} max={32} step={1} onChange={ v => setAttributes({ tagsFontSize: v }) } />
+                            <RangeControl label="Bullet Size (Desktop)" value={ tagsBulletSize } min={6} max={40} step={1} onChange={ v => setAttributes({ tagsBulletSize: v }) } />
+                            <RangeControl label="Bullet Size (Mobile)" value={ tagsBulletMobileSize } min={6} max={40} step={1} onChange={ v => setAttributes({ tagsBulletMobileSize: v }) } />
                             <SelectControl label="Font Weight" value={ tagsFontWeight } options={[{label:'400',value:'400'},{label:'500',value:'500'},{label:'600',value:'600'}]} onChange={ v => setAttributes({ tagsFontWeight: v }) } />
                             <SelectControl label="Text Transform" value={ tagsTextTransform } options={[{label:'Uppercase',value:'uppercase'},{label:'None',value:'none'}]} onChange={ v => setAttributes({ tagsTextTransform: v }) } />
                             <ColorRow label="Color" value={ tagsColor } onChange={ v => setAttributes({ tagsColor: v }) } />
