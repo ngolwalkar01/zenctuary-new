@@ -209,8 +209,8 @@
 @media (max-width: 767px) {
 	.wp-block-zenctuary-zen-split-showcase,
 	.wp-block-zenctuary-zenctuary-split-showcase {
-		padding-left: 15px !important;
-		padding-right: 15px !important;
+		padding-left: 0 !important;
+		padding-right: 0 !important;
 
 		&.is-reversed {
 			.zen-split-showcase__content-column,
