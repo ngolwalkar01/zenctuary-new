@@ -54,6 +54,7 @@
 
 .zti__name {
 	color: var(--zti-name-color, #ffffff);
+	font-family: var(--zti-name-family, var(--wp--preset--font-family--montserrat));
 	font-size: var(--zti-name-size, 64px);
 	font-weight: var(--zti-name-weight, 700);
 	letter-spacing: var(--zti-name-ls, 0);
@@ -64,6 +65,7 @@
 
 .zti__role {
 	color: var(--zti-role-color, #ffffff);
+	font-family: var(--zti-role-family, var(--wp--preset--font-family--montserrat));
 	font-size: var(--zti-role-size, 34px);
 	font-weight: var(--zti-role-weight, 400);
 	letter-spacing: var(--zti-role-ls, 0);
@@ -79,6 +81,7 @@
 
 .zti__content-title {
 	color: var(--zti-content-title-color, #d8b354);
+	font-family: var(--zti-content-title-family, var(--wp--preset--font-family--montserrat));
 	font-size: var(--zti-content-title-size, 64px);
 	font-weight: var(--zti-content-title-weight, 700);
 	letter-spacing: var(--zti-content-title-ls, 0);
@@ -89,6 +92,7 @@
 
 .zti__content-body {
 	color: var(--zti-body-color, #f6f2ea);
+	font-family: var(--zti-body-family, var(--wp--preset--font-family--dm-sans));
 	font-size: var(--zti-body-size, 24px);
 	font-weight: var(--zti-body-weight, 400);
 	letter-spacing: var(--zti-body-ls, 0);

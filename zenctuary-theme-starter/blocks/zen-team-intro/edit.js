@@ -28,6 +28,17 @@ const WEIGHTS = [ '300', '400', '500', '600', '700', '800' ].map( ( value ) => (
 	value,
 } ) );
 
+const FONT_FAMILIES = [
+	{
+		label: __( 'Montserrat', 'zenctuary' ),
+		value: 'var(--wp--preset--font-family--montserrat)',
+	},
+	{
+		label: __( 'DM Sans', 'zenctuary' ),
+		value: 'var(--wp--preset--font-family--dm-sans)',
+	},
+];
+
 const POSITIONS_X = [
 	{ label: __( 'Left', 'zenctuary' ), value: 'left' },
 	{ label: __( 'Center', 'zenctuary' ), value: 'center' },
@@ -138,6 +149,7 @@ export default function Edit( { attributes, setAttributes } ) {
 			'--zti-overlay-pb': `${ attributes.imageOverlayPaddingBottom }px`,
 			'--zti-overlay-pl': `${ attributes.imageOverlayPaddingLeft }px`,
 			'--zti-name-color': attributes.nameColor,
+			'--zti-name-family': attributes.nameFontFamily,
 			'--zti-name-size': `${ attributes.nameFontSize }px`,
 			'--zti-name-weight': attributes.nameFontWeight,
 			'--zti-name-line': attributes.nameLineHeight,
@@ -145,6 +157,7 @@ export default function Edit( { attributes, setAttributes } ) {
 			'--zti-name-transform': attributes.nameTextTransform,
 			'--zti-name-max': `${ attributes.nameMaxWidth }px`,
 			'--zti-role-color': attributes.roleColor,
+			'--zti-role-family': attributes.roleFontFamily,
 			'--zti-role-size': `${ attributes.roleFontSize }px`,
 			'--zti-role-weight': attributes.roleFontWeight,
 			'--zti-role-line': attributes.roleLineHeight,
@@ -152,6 +165,7 @@ export default function Edit( { attributes, setAttributes } ) {
 			'--zti-role-transform': attributes.roleTextTransform,
 			'--zti-role-max': `${ attributes.roleMaxWidth }px`,
 			'--zti-content-title-color': attributes.contentTitleColor,
+			'--zti-content-title-family': attributes.contentTitleFontFamily,
 			'--zti-content-title-size': `${ attributes.contentTitleFontSize }px`,
 			'--zti-content-title-weight': attributes.contentTitleFontWeight,
 			'--zti-content-title-line': attributes.contentTitleLineHeight,
@@ -159,6 +173,7 @@ export default function Edit( { attributes, setAttributes } ) {
 			'--zti-content-title-transform': attributes.contentTitleTextTransform,
 			'--zti-content-title-bottom': `${ attributes.contentTitleBottomSpacing }px`,
 			'--zti-body-color': attributes.contentBodyColor,
+			'--zti-body-family': attributes.contentBodyFontFamily,
 			'--zti-body-size': `${ attributes.contentBodyFontSize }px`,
 			'--zti-body-weight': attributes.contentBodyFontWeight,
 			'--zti-body-line': attributes.contentBodyLineHeight,
@@ -260,6 +275,7 @@ export default function Edit( { attributes, setAttributes } ) {
 				</PanelBody>
 
 				<PanelBody title={ __( 'Left Overlay Name', 'zenctuary' ) }>
+					<SelectControl label={ __( 'Font Family', 'zenctuary' ) } value={ attributes.nameFontFamily } options={ FONT_FAMILIES } onChange={ ( nameFontFamily ) => setAttributes( { nameFontFamily } ) } />
 					<SelectControl label={ __( 'Horizontal Position', 'zenctuary' ) } value={ attributes.nameHorizontal } options={ POSITIONS_X } onChange={ ( nameHorizontal ) => setAttributes( { nameHorizontal } ) } />
 					<SelectControl label={ __( 'Vertical Position', 'zenctuary' ) } value={ attributes.nameVertical } options={ POSITIONS_Y } onChange={ ( nameVertical ) => setAttributes( { nameVertical } ) } />
 					<RangeControl label={ __( 'Horizontal Offset', 'zenctuary' ) } value={ attributes.nameOffsetX } onChange={ ( nameOffsetX ) => setAttributes( { nameOffsetX } ) } min={ -200 } max={ 200 } />
@@ -271,6 +287,8 @@ export default function Edit( { attributes, setAttributes } ) {
 				</PanelBody>
 
 				<PanelBody title={ __( 'Left Overlay Job Title', 'zenctuary' ) }>
+					<SelectControl label={ __( 'Font Family', 'zenctuary' ) } value={ attributes.roleFontFamily } options={ FONT_FAMILIES } onChange={ ( roleFontFamily ) => setAttributes( { roleFontFamily } ) } />
+					<BaseControl label={ __( 'Job Title Position', 'zenctuary' ) } />
 					<SelectControl label={ __( 'Horizontal Position', 'zenctuary' ) } value={ attributes.roleHorizontal } options={ POSITIONS_X } onChange={ ( roleHorizontal ) => setAttributes( { roleHorizontal } ) } />
 					<SelectControl label={ __( 'Vertical Position', 'zenctuary' ) } value={ attributes.roleVertical } options={ POSITIONS_Y } onChange={ ( roleVertical ) => setAttributes( { roleVertical } ) } />
 					<RangeControl label={ __( 'Horizontal Offset', 'zenctuary' ) } value={ attributes.roleOffsetX } onChange={ ( roleOffsetX ) => setAttributes( { roleOffsetX } ) } min={ -200 } max={ 200 } />
@@ -282,6 +300,7 @@ export default function Edit( { attributes, setAttributes } ) {
 				</PanelBody>
 
 				<PanelBody title={ __( 'Right Content', 'zenctuary' ) }>
+					<SelectControl label={ __( 'Title Font Family', 'zenctuary' ) } value={ attributes.contentTitleFontFamily } options={ FONT_FAMILIES } onChange={ ( contentTitleFontFamily ) => setAttributes( { contentTitleFontFamily } ) } />
 					<SelectControl label={ __( 'Horizontal Position', 'zenctuary' ) } value={ attributes.contentHorizontal } options={ POSITIONS_X } onChange={ ( contentHorizontal ) => setAttributes( { contentHorizontal } ) } />
 					<SelectControl label={ __( 'Vertical Position', 'zenctuary' ) } value={ attributes.contentVertical } options={ POSITIONS_Y } onChange={ ( contentVertical ) => setAttributes( { contentVertical } ) } />
 					<RangeControl label={ __( 'Horizontal Offset', 'zenctuary' ) } value={ attributes.contentOffsetX } onChange={ ( contentOffsetX ) => setAttributes( { contentOffsetX } ) } min={ -300 } max={ 300 } />
@@ -293,6 +312,7 @@ export default function Edit( { attributes, setAttributes } ) {
 					<SelectControl label={ __( 'Title Weight', 'zenctuary' ) } value={ attributes.contentTitleFontWeight } options={ WEIGHTS } onChange={ ( contentTitleFontWeight ) => setAttributes( { contentTitleFontWeight } ) } />
 					<RangeControl label={ __( 'Space Below Title', 'zenctuary' ) } value={ attributes.contentTitleBottomSpacing } onChange={ ( contentTitleBottomSpacing ) => setAttributes( { contentTitleBottomSpacing } ) } min={ 0 } max={ 100 } />
 					<ColorControl label={ __( 'Body Color', 'zenctuary' ) } value={ attributes.contentBodyColor } fallback="#f6f2ea" onChange={ ( contentBodyColor ) => setAttributes( { contentBodyColor } ) } />
+					<SelectControl label={ __( 'Body Font Family', 'zenctuary' ) } value={ attributes.contentBodyFontFamily } options={ FONT_FAMILIES } onChange={ ( contentBodyFontFamily ) => setAttributes( { contentBodyFontFamily } ) } />
 					<RangeControl label={ __( 'Body Font Size', 'zenctuary' ) } value={ attributes.contentBodyFontSize } onChange={ ( contentBodyFontSize ) => setAttributes( { contentBodyFontSize } ) } min={ 12 } max={ 40 } />
 					<SelectControl label={ __( 'Body Weight', 'zenctuary' ) } value={ attributes.contentBodyFontWeight } options={ WEIGHTS } onChange={ ( contentBodyFontWeight ) => setAttributes( { contentBodyFontWeight } ) } />
 					<RangeControl label={ __( 'Body Max Width', 'zenctuary' ) } value={ attributes.contentBodyMaxWidth } onChange={ ( contentBodyMaxWidth ) => setAttributes( { contentBodyMaxWidth } ) } min={ 280 } max={ 1000 } />

@@ -122,6 +122,10 @@
       "type": "string",
       "default": "#ffffff"
     },
+    "nameFontFamily": {
+      "type": "string",
+      "default": "var(--wp--preset--font-family--montserrat)"
+    },
     "nameFontSize": {
       "type": "number",
       "default": 64
@@ -165,6 +169,10 @@
     "roleColor": {
       "type": "string",
       "default": "#ffffff"
+    },
+    "roleFontFamily": {
+      "type": "string",
+      "default": "var(--wp--preset--font-family--montserrat)"
     },
     "roleFontSize": {
       "type": "number",
@@ -210,6 +218,10 @@
       "type": "string",
       "default": "#d8b354"
     },
+    "contentTitleFontFamily": {
+      "type": "string",
+      "default": "var(--wp--preset--font-family--montserrat)"
+    },
     "contentTitleFontSize": {
       "type": "number",
       "default": 64
@@ -237,6 +249,10 @@
     "contentBodyColor": {
       "type": "string",
       "default": "#f6f2ea"
+    },
+    "contentBodyFontFamily": {
+      "type": "string",
+      "default": "var(--wp--preset--font-family--dm-sans)"
     },
     "contentBodyFontSize": {
       "type": "number",
