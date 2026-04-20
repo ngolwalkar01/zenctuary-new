@@ -94,6 +94,7 @@
 .zen-auth-view.is-active {
     display: block;
     opacity: 1;
+    overflow: visible !important; /* Ensure dropdowns are not clipped */
 }
 
 /* Heading Section */
@@ -348,6 +349,7 @@ body.zen-modal-open {
 /* Signup View Specifics */
 .signup-wrapper {
     position: relative;
+    overflow: visible !important; /* Ensure phone dropdown is not clipped */
 }
 
 .zen-modal-back {
@@ -383,13 +385,16 @@ body.zen-modal-open {
     display: block;
 }
 
-.iti__country-list {
+.iti__country-list,
+.iti__dropdown-content {
     background-color: #2D2D2D !important;
     border: 1px solid rgba(255, 255, 255, 0.2) !important;
     border-radius: 12px !important;
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5) !important;
     z-index: 10001 !important; /* Above modal */
     padding: 10px 0 !important;
+    max-height: 250px !important; /* Limit height and allow scroll */
+    overflow-y: auto !important;
 }
 
 .iti__country {

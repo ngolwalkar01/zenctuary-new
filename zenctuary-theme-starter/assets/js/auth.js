@@ -24,10 +24,11 @@ window.zenctuaryAuth = (function() {
             itiInstance = window.intlTelInput(phoneInput, {
                 initialCountry: 'de',
                 separateDialCode: true,
+                countrySearch: true, // Enable searchable country list
                 utilsScript: 'https://cdn.jsdelivr.net/npm/intl-tel-input@23.0.10/build/js/utils.js',
                 autoPlaceholder: 'polite',
                 preferredCountries: ['de', 'us', 'gb', 'fr'],
-                dropdownContainer: document.body
+                dropdownContainer: document.body // Prevent clipping by modal
             });
         }
 
