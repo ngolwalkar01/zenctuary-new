@@ -48,7 +48,8 @@
     color: rgba(255, 255, 255, 0.5);
     cursor: pointer;
     padding: 10px;
-    z-index: 10010; /* Above card content */
+    z-index: 10010;
+    /* Above card content */
     transition: color 0.3s ease, transform 0.3s ease;
 }
 
@@ -68,8 +69,8 @@
     position: relative;
     padding: 60px 40px;
     margin: auto;
-    background: linear-gradient(rgba(0, 0, 0, 0.85), rgba(0, 0, 0, 0.85)), 
-                url('https://zenctuarylive.mystagingwebsite.com/wp-content/uploads/2026/04/Placeholder-News-1.png');
+    background: linear-gradient(rgba(0 0 0 / 0%), rgba(0 0 0 / 0%)),
+        url('https://zenctuarylive.mystagingwebsite.com/wp-content/uploads/2026/04/Placeholder-News-1.png');
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
@@ -105,7 +106,8 @@
 .zen-modal-container::-webkit-scrollbar-thumb {
     background: #d8b354;
     border-radius: 10px;
-    border: 2px solid #1e1e1e; /* Creates a small gap effect */
+    border: 2px solid #1e1e1e;
+    /* Creates a small gap effect */
 }
 
 .zen-modal-container::-webkit-scrollbar-thumb:hover {
@@ -115,7 +117,8 @@
 /* Modal Content Centering & View-Based Widths */
 .zen-modal-content {
     width: 100%;
-    margin: auto; /* Vertically and horizontally center content within the 80/90 box */
+    margin: auto;
+    /* Vertically and horizontally center content within the 80/90 box */
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -418,14 +421,19 @@ body.zen-modal-open {
         height: 98vh;
         padding: 40px 15px;
     }
-    
+
     .zen-modal-close,
     .zen-modal-back {
         top: 20px !important;
     }
-    
-    .zen-modal-close { right: 20px !important; }
-    .zen-modal-back { left: 20px !important; }
+
+    .zen-modal-close {
+        right: 20px !important;
+    }
+
+    .zen-modal-back {
+        left: 20px !important;
+    }
 
     .zen-auth-header h2 {
         font-size: 32px;
@@ -451,7 +459,8 @@ body.zen-modal-open {
     color: rgba(255, 255, 255, 0.5);
     cursor: pointer;
     padding: 10px;
-    z-index: 10010; /* Above card content */
+    z-index: 10010;
+    /* Above card content */
     transition: color 0.3s ease, transform 0.3s ease;
 }
 
