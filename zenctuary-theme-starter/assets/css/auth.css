@@ -177,8 +177,8 @@
 
 .zen-input:focus {
     outline: none;
-    border-color: var(--wp--preset--color--primary-gold);
-    background-color: #353535;
+    border-color: #d8b354;
+    /* Background color remains unchanged as per request */
 }
 
 /* Input Icons */
