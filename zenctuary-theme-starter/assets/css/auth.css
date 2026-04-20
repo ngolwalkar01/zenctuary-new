@@ -369,23 +369,35 @@ body.zen-modal-open {
     overflow: visible !important; /* Ensure phone dropdown is not clipped */
 }
 
+/* Global Back Button Positioning */
 .zen-modal-back {
-    position: absolute;
-    top: 10px;
-    left: 0;
+    display: none; /* Hidden by default */
+    position: fixed;
+    top: 40px;
+    left: 40px;
     background: none;
     border: none;
-    color: var(--wp--preset--color--primary-beige);
+    color: rgba(255, 255, 255, 0.5);
     cursor: pointer;
     padding: 10px;
-    opacity: 0.7;
-    transition: opacity 0.2s ease, transform 0.2s ease;
-    z-index: 10;
+    z-index: 10000;
+    transition: color 0.3s ease, transform 0.3s ease;
+}
+
+/* Visibility based on modal state */
+.zen-modal-container[data-view="signup"] .zen-modal-back {
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .zen-modal-back:hover {
-    opacity: 1;
-    transform: translateX(-3px);
+    color: var(--wp--preset--color--primary-gold);
+    transform: scale(1.1);
+}
+
+.zen-modal-back svg {
+    display: block;
 }
 
 /* Grid System for Form Rows */
