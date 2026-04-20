@@ -297,7 +297,7 @@
       "full"
     ],
     "html": false,
-    "className": false
+    "className": true
   },
   "style": "file:./style-index.css",
   "editorStyle": "file:./index.css",
