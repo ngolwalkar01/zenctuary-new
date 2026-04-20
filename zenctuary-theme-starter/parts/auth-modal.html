@@ -1,14 +1,23 @@
 <!-- Global Authentication Modal -->
 <div id="zenctuary-auth-modal" class="zen-modal-overlay" aria-hidden="true">
     <button id="zen-modal-close" class="zen-modal-close" aria-label="Close Modal">
-        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="15" y1="9" x2="9" y2="15"></line><line x1="9" y1="9" x2="15" y2="15"></line></svg>
+        <svg width="50" height="50" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2"
+            stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="10"></circle>
+            <line x1="15" y1="9" x2="9" y2="15"></line>
+            <line x1="9" y1="9" x2="15" y2="15"></line>
+        </svg>
     </button>
     <div class="zen-modal-container" data-view="login">
         <!-- Back Button (Dynamic Visibility) -->
         <button type="button" class="zen-modal-back" data-zen-switch-view="login" aria-label="Back to Login">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
+            <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                stroke-linecap="round" stroke-linejoin="round">
+                <line x1="19" y1="12" x2="5" y2="12"></line>
+                <polyline points="12 19 5 12 12 5"></polyline>
+            </svg>
         </button>
-        
+
         <div class="zen-modal-content">
             <!-- Login View -->
             <div id="zen-view-login" class="zen-auth-view" data-view="login">
@@ -17,15 +26,21 @@
                         <h2 tabindex="-1">SIGN-IN</h2>
                         <p class="zen-auth-subheading">Please sign in to continue.</p>
                     </header>
-                    
+
                     <form id="zen-login-form" class="zen-auth-form">
                         <!-- Email Field -->
                         <div class="zen-form-group">
                             <label for="zen-login-email">E-Mail</label>
                             <div class="zen-input-container">
-                                <input type="email" id="zen-login-email" name="email" placeholder="example@gmail.com" class="zen-input" required>
+                                <input type="email" id="zen-login-email" name="email" placeholder="example@gmail.com"
+                                    class="zen-input" required>
                                 <button type="button" class="zen-input-icon zen-clear-input" aria-label="Clear email">
-                                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="15" y1="9" x2="9" y2="15"></line><line x1="9" y1="9" x2="15" y2="15"></line></svg>
+                                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <circle cx="12" cy="12" r="10"></circle>
+                                        <line x1="15" y1="9" x2="9" y2="15"></line>
+                                        <line x1="9" y1="9" x2="15" y2="15"></line>
+                                    </svg>
                                 </button>
                             </div>
                         </div>
@@ -34,12 +49,26 @@
                         <div class="zen-form-group">
                             <label for="zen-login-password">Passwort</label>
                             <div class="zen-input-container">
-                                <input type="password" id="zen-login-password" name="password" placeholder="***********" class="zen-input" required>
-                                <button type="button" class="zen-input-icon zen-toggle-password" aria-label="Toggle password visibility">
+                                <input type="password" id="zen-login-password" name="password" placeholder="***********"
+                                    class="zen-input" required>
+                                <button type="button" class="zen-input-icon zen-toggle-password"
+                                    aria-label="Toggle password visibility">
                                     <!-- Eye Closed (Show) -->
-                                    <svg class="eye-icon eye-closed" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path><line x1="1" y1="1" x2="23" y2="23"></line></svg>
+                                    <svg class="eye-icon eye-closed" width="20" height="20" viewBox="0 0 24 24"
+                                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                        stroke-linejoin="round">
+                                        <path
+                                            d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24">
+                                        </path>
+                                        <line x1="1" y1="1" x2="23" y2="23"></line>
+                                    </svg>
                                     <!-- Eye Open (Hide) -->
-                                    <svg class="eye-icon eye-open" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:none;"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+                                    <svg class="eye-icon eye-open" width="20" height="20" viewBox="0 0 24 24"
+                                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                        stroke-linejoin="round" style="display:none;">
+                                        <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                                        <circle cx="12" cy="12" r="3"></circle>
+                                    </svg>
                                 </button>
                             </div>
                             <div class="zen-form-helper">
@@ -51,12 +80,13 @@
                         <div class="zen-form-row">
                             <label class="zen-checkbox-label">
                                 <input type="checkbox" name="zen_news_subscription" value="1">
-                                <span>I would like to be informed about news from Zenctuary (updates, discounts, and promotions)</span>
+                                <span>I would like to be informed about news from Zenctuary (updates, discounts, and
+                                    promotions)</span>
                             </label>
                         </div>
-                        
+
                         <div class="zen-error-container" aria-live="polite"></div>
-                        
+
                         <button type="submit" class="zen-btn-auth zen-btn-auth--primary">
                             <span class="btn-text">Sign-In</span>
                             <span class="btn-loader"></span>
@@ -69,7 +99,8 @@
                             <span class="zen-divider-text">Neu bei Zenctuary?</span>
                             <span class="zen-divider-line"></span>
                         </div>
-                        <button type="button" class="zen-btn-auth zen-btn-auth--secondary" data-zen-switch-view="signup">Sign-Up</button>
+                        <button type="button" class="zen-btn-auth zen-btn-auth--secondary"
+                            data-zen-switch-view="signup">Sign-Up</button>
                     </footer>
                 </div>
             </div>
@@ -81,25 +112,29 @@
                         <h2 tabindex="-1">SIGN-UP</h2>
                         <p class="zen-auth-subheading">Please sign up to continue.</p>
                     </header>
-                    
+
                     <form id="zen-register-form" class="zen-auth-form">
                         <!-- Row 1: Names -->
                         <div class="zen-form-grid">
                             <div class="zen-form-group">
-                                <input type="text" id="zen-reg-firstname" name="first_name" placeholder="First Name" class="zen-input" required>
+                                <input type="text" id="zen-reg-firstname" name="first_name" placeholder="First Name"
+                                    class="zen-input" required>
                             </div>
                             <div class="zen-form-group">
-                                <input type="text" id="zen-reg-lastname" name="last_name" placeholder="Last Name" class="zen-input" required>
+                                <input type="text" id="zen-reg-lastname" name="last_name" placeholder="Last Name"
+                                    class="zen-input" required>
                             </div>
                         </div>
 
                         <!-- Row 2: Email & Phone -->
                         <div class="zen-form-grid">
                             <div class="zen-form-group">
-                                <input type="email" id="zen-reg-email" name="email" placeholder="Email" class="zen-input" required>
+                                <input type="email" id="zen-reg-email" name="email" placeholder="Email"
+                                    class="zen-input" required>
                             </div>
                             <div class="zen-form-group">
-                                <input type="tel" id="zen-reg-phone" name="phone" placeholder="123 456 789" class="zen-input">
+                                <input type="tel" id="zen-reg-phone" name="phone" placeholder="123 456 789"
+                                    class="zen-input">
                             </div>
                         </div>
 
@@ -107,19 +142,47 @@
                         <div class="zen-form-grid">
                             <div class="zen-form-group">
                                 <div class="zen-input-container">
-                                    <input type="password" id="zen-reg-password" name="password" placeholder="Password" class="zen-input" required>
-                                    <button type="button" class="zen-input-icon zen-toggle-password" aria-label="Toggle password visibility">
-                                        <svg class="eye-icon eye-closed" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path><line x1="1" y1="1" x2="23" y2="23"></line></svg>
-                                        <svg class="eye-icon eye-open" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:none;"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+                                    <input type="password" id="zen-reg-password" name="password" placeholder="Password"
+                                        class="zen-input" required>
+                                    <button type="button" class="zen-input-icon zen-toggle-password"
+                                        aria-label="Toggle password visibility">
+                                        <svg class="eye-icon eye-closed" width="20" height="20" viewBox="0 0 24 24"
+                                            fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                            stroke-linejoin="round">
+                                            <path
+                                                d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24">
+                                            </path>
+                                            <line x1="1" y1="1" x2="23" y2="23"></line>
+                                        </svg>
+                                        <svg class="eye-icon eye-open" width="20" height="20" viewBox="0 0 24 24"
+                                            fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                            stroke-linejoin="round" style="display:none;">
+                                            <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                                            <circle cx="12" cy="12" r="3"></circle>
+                                        </svg>
                                     </button>
                                 </div>
                             </div>
                             <div class="zen-form-group">
                                 <div class="zen-input-container">
-                                    <input type="password" id="zen-reg-confirm-password" name="confirm_password" placeholder="Confirm Pass" class="zen-input" required>
-                                    <button type="button" class="zen-input-icon zen-toggle-password" aria-label="Toggle password visibility">
-                                        <svg class="eye-icon eye-closed" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path><line x1="1" y1="1" x2="23" y2="23"></line></svg>
-                                        <svg class="eye-icon eye-open" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:none;"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+                                    <input type="password" id="zen-reg-confirm-password" name="confirm_password"
+                                        placeholder="Confirm Pass" class="zen-input" required>
+                                    <button type="button" class="zen-input-icon zen-toggle-password"
+                                        aria-label="Toggle password visibility">
+                                        <svg class="eye-icon eye-closed" width="20" height="20" viewBox="0 0 24 24"
+                                            fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                            stroke-linejoin="round">
+                                            <path
+                                                d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24">
+                                            </path>
+                                            <line x1="1" y1="1" x2="23" y2="23"></line>
+                                        </svg>
+                                        <svg class="eye-icon eye-open" width="20" height="20" viewBox="0 0 24 24"
+                                            fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                            stroke-linejoin="round" style="display:none;">
+                                            <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                                            <circle cx="12" cy="12" r="3"></circle>
+                                        </svg>
                                     </button>
                                 </div>
                             </div>
@@ -140,10 +203,12 @@
                         <!-- Row 5: Country & Address -->
                         <div class="zen-form-grid">
                             <div class="zen-form-group">
-                                <input type="text" id="zen-reg-country" name="country" placeholder="Country" class="zen-input">
+                                <input type="text" id="zen-reg-country" name="country" placeholder="Country"
+                                    class="zen-input">
                             </div>
                             <div class="zen-form-group">
-                                <input type="text" id="zen-reg-address" name="address" placeholder="Address" class="zen-input">
+                                <input type="text" id="zen-reg-address" name="address" placeholder="Address"
+                                    class="zen-input">
                             </div>
                         </div>
 
@@ -153,7 +218,8 @@
                                 <input type="text" id="zen-reg-city" name="city" placeholder="City" class="zen-input">
                             </div>
                             <div class="zen-form-group">
-                                <input type="text" id="zen-reg-postal" name="postal_code" placeholder="Postal Code" class="zen-input">
+                                <input type="text" id="zen-reg-postal" name="postal_code" placeholder="Postal Code"
+                                    class="zen-input">
                             </div>
                         </div>
 
@@ -161,7 +227,8 @@
                         <div class="zen-checkbox-stack">
                             <label class="zen-checkbox-label">
                                 <input type="checkbox" name="email_notifications" value="1">
-                                <span>I agree to be notified by email about information related to my activity (schedule changes, last-minute cancellations, new workshop, ...)</span>
+                                <span>I agree to be notified by email about information related to my activity (schedule
+                                    changes, last-minute cancellations, new workshop, ...)</span>
                             </label>
                             <label class="zen-checkbox-label">
                                 <input type="checkbox" name="terms" value="1" required>
@@ -169,7 +236,8 @@
                             </label>
                             <label class="zen-checkbox-label">
                                 <input type="checkbox" name="sms_notifications" value="1">
-                                <span>I agree to be notified by SMS about information related to my activity (schedule changes, last-minute cancellations, new workshop, ...)</span>
+                                <span>I agree to be notified by SMS about information related to my activity (schedule
+                                    changes, last-minute cancellations, new workshop, ...)</span>
                             </label>
                         </div>
 

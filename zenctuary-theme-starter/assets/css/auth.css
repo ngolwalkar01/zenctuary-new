@@ -16,17 +16,19 @@
     height: 100%;
     /* Dark semi-transparent background with soft radial gradients to mimic reference design light spots */
     background: radial-gradient(circle at 10% 20%, rgba(91, 78, 44, 0.3) 0%, transparent 40%),
-                radial-gradient(circle at 80% 80%, rgba(44, 62, 80, 0.3) 0%, transparent 40%),
-                rgba(0, 0, 0, 0.7);
+        radial-gradient(circle at 80% 80%, rgba(44, 62, 80, 0.3) 0%, transparent 40%),
+        rgba(0, 0, 0, 0.7);
     backdrop-filter: blur(25px);
     -webkit-backdrop-filter: blur(25px);
     display: flex;
     align-items: center;
     justify-content: center;
-    overflow-y: auto; /* Enable vertical scroll */
-    padding: 60px 24px; /* Give breathing space at top and bottom */
+    overflow-y: auto;
+    /* Enable vertical scroll */
+    padding: 60px 24px;
+    /* Give breathing space at top and bottom */
     z-index: var(--zen-modal-z-index);
-    
+
     /* Visibility Control */
     opacity: 0;
     visibility: hidden;
@@ -66,18 +68,19 @@
 /* Modal Container */
 .zen-modal-container {
     width: 95%;
-    max-width: 400px; /* Default width */
+    max-width: 400px;
+    /* Default width */
     position: relative;
     padding: 0;
     margin: auto;
     background: transparent;
     box-shadow: none;
-    
+
     /* Animation */
     transform: translateY(30px);
-    transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1), 
-                opacity 0.5s ease, 
-                max-width 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1),
+        opacity 0.5s ease,
+        max-width 0.4s cubic-bezier(0.16, 1, 0.3, 1);
     opacity: 0;
 }
 
@@ -106,7 +109,8 @@
 .zen-auth-view.is-active {
     display: block;
     opacity: 1;
-    overflow: visible !important; /* Ensure dropdowns are not clipped */
+    overflow: visible !important;
+    /* Ensure dropdowns are not clipped */
 }
 
 /* Heading Section */
@@ -181,7 +185,8 @@
 #zenctuary-auth-modal .zen-select:focus {
     outline: none !important;
     border-color: #d8b354 !important;
-    background-color: #3f3e3e !important; /* Force matching background */
+    background-color: #3f3e3e !important;
+    /* Force matching background */
     box-shadow: none !important;
 }
 
@@ -237,9 +242,10 @@
 }
 
 .zen-checkbox-label input {
-    width: 24px;
-    height: 24px;
-    margin-top: -2px; /* Slight adjustment to center with first line of text */
+    width: 30px;
+    height: 32px;
+    margin-top: -2px;
+    /* Slight adjustment to center with first line of text */
     accent-color: var(--wp--preset--color--primary-gold);
     cursor: pointer;
 }
@@ -267,13 +273,16 @@
 }
 
 .zen-btn-auth--primary {
-    background-color: var(--wp--preset--color--primary-gold);
-    color: #1a1a1a;
+    background-color: #3f3d3d;
+    border-color: #d8b354;
+    color: #d8b354;
+    padding: 15px;
 }
 
 .zen-btn-auth--primary:hover {
     background-color: var(--wp--preset--color--secondary-gold-light);
     transform: translateY(-2px);
+    color: #3f3d3d;
 }
 
 .zen-btn-auth--secondary {
@@ -325,7 +334,7 @@
     display: none;
     width: 22px;
     height: 22px;
-    border: 3.5px solid rgba(0,0,0,0.2);
+    border: 3.5px solid rgba(0, 0, 0, 0.2);
     border-top-color: currentColor;
     border-radius: 50%;
     animation: zen-spin 0.8s linear infinite;
@@ -333,11 +342,18 @@
 }
 
 @keyframes zen-spin {
-    to { transform: rotate(360deg); }
+    to {
+        transform: rotate(360deg);
+    }
 }
 
-.is-loading .btn-text { visibility: hidden; }
-.is-loading .btn-loader { display: block; }
+.is-loading .btn-text {
+    visibility: hidden;
+}
+
+.is-loading .btn-loader {
+    display: block;
+}
 
 /* Modal Navigation Groups */
 .zen-modal-footer {
@@ -354,10 +370,12 @@ body.zen-modal-open {
     .zen-modal-container {
         padding: 0 24px;
     }
+
     .zen-modal-close {
         top: 24px;
         right: 24px;
     }
+
     .zen-auth-header h2 {
         font-size: 36px;
     }
@@ -366,15 +384,17 @@ body.zen-modal-open {
 /* Signup View Specifics */
 .signup-wrapper {
     position: relative;
-    overflow: visible !important; /* Ensure phone dropdown is not clipped */
+    overflow: visible !important;
+    /* Ensure phone dropdown is not clipped */
 }
 
 /* Global Back Button Positioning */
 .zen-modal-back {
-    display: none; /* Hidden by default */
+    display: none;
+    /* Hidden by default */
     position: fixed;
-    top: 40px;
-    left: 40px;
+    top: -23px;
+    left: -136px;
     background: none;
     border: none;
     color: rgba(255, 255, 255, 0.5);
@@ -415,7 +435,8 @@ body.zen-modal-open {
 }
 
 .iti--container {
-    z-index: 11000 !important; /* Ensure it is above the modal (9999) */
+    z-index: 11000 !important;
+    /* Ensure it is above the modal (9999) */
 }
 
 .iti__country-list,
@@ -424,9 +445,10 @@ body.zen-modal-open {
     border: 1px solid rgba(255, 255, 255, 0.2) !important;
     border-radius: 12px !important;
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5) !important;
-    z-index: 11001 !important; 
+    z-index: 11001 !important;
     padding: 10px 0 !important;
-    max-height: 250px !important; /* Limit height and allow scroll */
+    max-height: 250px !important;
+    /* Limit height and allow scroll */
     overflow-y: auto !important;
 }
 
@@ -435,7 +457,7 @@ body.zen-modal-open {
     transition: background-color 0.2s ease;
 }
 
-.iti__country:hover, 
+.iti__country:hover,
 .iti__country.iti__highlight {
     background-color: rgba(216, 179, 85, 0.2) !important;
 }
@@ -488,7 +510,7 @@ body.zen-modal-open {
     background-position: right 20px center !important;
     background-size: 18px !important;
     cursor: pointer !important;
-    
+
     border-width: 2px !important;
     border-color: #9a9a9a !important;
     color: #767575 !important;
@@ -500,13 +522,15 @@ body.zen-modal-open {
 #zenctuary-auth-modal select.zen-select {
     padding: 18px 50px 18px 20px !important;
     height: auto !important;
-    min-height: 60px !important; /* Match input height roughly */
+    min-height: 60px !important;
+    /* Match input height roughly */
 }
 
 /* Specific color for selected options to ensure legibility */
 #zenctuary-auth-modal select.zen-select option {
     background-color: #3f3e3e !important;
-    color: #ffffff !important; /* White for options list for better readability */
+    color: #ffffff !important;
+    /* White for options list for better readability */
 }
 
 /* Checkbox Stack */
@@ -532,6 +556,7 @@ body.zen-modal-open {
     .zen-modal-container[data-view="signup"] {
         max-width: 100%;
     }
+
     .zen-form-grid {
         grid-template-columns: 1fr;
         gap: 24px;
