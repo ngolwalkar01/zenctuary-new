@@ -389,6 +389,14 @@
         font-size: var(--zh-tags-bullet-mobile-size, var(--zh-tags-bullet-size, 18px));
         line-height: 1;
     }
+
+    .zen-fire-ice .zenctuary-hero__tagline-wrapper {
+        display: none !important;
+    }
+
+    .zen-fire-ice .zenctuary-hero__title-icon-text-row > div:first-child {
+        justify-content: center;
+    }
 }
 
 /* Keep taglines hidden by default, but allow the Fire & Ice hero to show it. */
