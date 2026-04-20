@@ -390,3 +390,33 @@
         line-height: 1;
     }
 }
+
+/* Keep taglines hidden by default, but allow the Fire & Ice hero to show it. */
+.zenctuary-hero__tagline-wrapper {
+    display: none !important;
+}
+
+.zen-fire-ice .zenctuary-hero__tagline-wrapper {
+    display: block !important;
+}
+
+.zen-fire-ice .zenctuary-hero__title-icon-text-row {
+    justify-content: center;
+    align-items: center;
+    display: flex;
+    flex-wrap: nowrap;
+    gap: var(--zh-center-gap-x, 32px);
+    margin-top: var(--zh-center-gap-y, 24px);
+    max-width: 1080px;
+    width: 100%;
+    flex-direction: row;
+}
+
+.zen-fire-ice .zenctuary-hero__title-icon-text-row > div {
+    flex: 0 0 50%;
+}
+
+.zen-fire-ice .zenctuary-hero__title-icon-text-row > div:first-child {
+    display: flex;
+    justify-content: flex-end;
+}
