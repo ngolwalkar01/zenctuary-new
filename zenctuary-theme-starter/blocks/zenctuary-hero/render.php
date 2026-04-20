@@ -69,6 +69,12 @@ $vars = [
 ];
 
 $inline_style = implode( '; ', $vars );
+$wrapper_attributes = get_block_wrapper_attributes(
+    [
+        'class' => 'zenctuary-hero',
+        'style' => $inline_style,
+    ]
+);
 
 // Icons library for Contact Actions
 $icons = [
@@ -88,7 +94,7 @@ if ( ! function_exists( 'zh_format_link' ) ) {
     }
 }
 ?>
-<section class="zenctuary-hero" style="<?php echo esc_attr( $inline_style ); ?>">
+<section <?php echo $wrapper_attributes; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>>
 
     <!-- 1. Background Media -->
     <div class="zenctuary-hero__bg">
