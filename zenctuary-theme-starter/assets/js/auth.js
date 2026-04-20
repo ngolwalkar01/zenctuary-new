@@ -308,7 +308,12 @@ window.zenctuaryAuth = (function() {
         if (!modal) return;
 
         const views = modal.querySelectorAll('.zen-auth-view');
+        const container = modal.querySelector('.zen-modal-container');
         let targetViewElement = null;
+
+        if (container) {
+            container.dataset.view = state;
+        }
 
         views.forEach(view => {
             if (view.dataset.view === state) {

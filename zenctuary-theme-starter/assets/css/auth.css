@@ -65,18 +65,30 @@
 
 /* Modal Container */
 .zen-modal-container {
-    width: 100%;
-    max-width: 400px;
+    width: 95%;
+    max-width: 400px; /* Default width */
     position: relative;
     padding: 0;
-    margin: auto; /* Crucial for centering in flex while allowing scroll when larger than parent */
-    background: transparent; /* Elements float on the blurred background */
+    margin: auto;
+    background: transparent;
     box-shadow: none;
     
     /* Animation */
     transform: translateY(30px);
-    transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.5s ease;
+    transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1), 
+                opacity 0.5s ease, 
+                max-width 0.4s cubic-bezier(0.16, 1, 0.3, 1);
     opacity: 0;
+}
+
+/* View-Based Widths */
+.zen-modal-container[data-view="signup"] {
+    max-width: 800px;
+}
+
+.zen-modal-container[data-view="login"],
+.zen-modal-container[data-view="account"] {
+    max-width: 400px;
 }
 
 .zen-modal-overlay.is-active .zen-modal-container {
@@ -472,7 +484,16 @@ body.zen-modal-open {
     margin-bottom: 30px;
 }
 
+@media (max-width: 850px) {
+    .zen-modal-container[data-view="signup"] {
+        max-width: 600px;
+    }
+}
+
 @media (max-width: 600px) {
+    .zen-modal-container[data-view="signup"] {
+        max-width: 100%;
+    }
     .zen-form-grid {
         grid-template-columns: 1fr;
         gap: 24px;
