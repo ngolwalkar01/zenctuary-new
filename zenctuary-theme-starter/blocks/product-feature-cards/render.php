@@ -305,7 +305,7 @@ $wrapper_attributes = get_block_wrapper_attributes(
 								<?php if ( $session_time ) : ?>
 									<div class="pfc__session-row">
 										<?php if ( ! empty( $attributes['showSessionIcon'] ) ) : ?>
-											<span class="pfc__session-icon" aria-hidden="true"><?php echo wp_kses_post( zenctuary_pfc_clock_icon() ); ?></span>
+											<span class="pfc__session-icon" aria-hidden="true"><?php echo zenctuary_pfc_clock_icon(); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></span>
 										<?php endif; ?>
 										<span class="pfc__session-text"><?php echo esc_html( $session_time ); ?></span>
 									</div>
@@ -318,7 +318,7 @@ $wrapper_attributes = get_block_wrapper_attributes(
 								<a class="pfc__button<?php echo ! empty( $attributes['buttonShowIcon'] ) && 'left' === ( $attributes['buttonIconPosition'] ?? 'right' ) ? ' is-icon-left' : ''; ?>" href="<?php echo esc_url( get_permalink( $post ) ); ?>">
 									<span class="pfc__button-label"><?php echo esc_html( $attributes['buttonLabel'] ?? __( 'Book Now', 'zenctuary' ) ); ?></span>
 									<?php if ( ! empty( $attributes['buttonShowIcon'] ) ) : ?>
-										<span class="pfc__button-icon" aria-hidden="true"><?php echo wp_kses_post( zenctuary_pfc_arrow_icon() ); ?></span>
+										<span class="pfc__button-icon" aria-hidden="true"><?php echo zenctuary_pfc_arrow_icon(); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></span>
 									<?php endif; ?>
 								</a>
 

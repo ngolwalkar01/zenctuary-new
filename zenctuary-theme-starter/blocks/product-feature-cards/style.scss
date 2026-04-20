@@ -43,8 +43,8 @@
 
 .pfc__section-intro {
 	color: var(--pfc-intro-color, #f6f2ea);
-	font-size: var(--pfc-intro-size, 18px);
-	line-height: var(--pfc-intro-line-height, 1.55);
+	font-size: var(--pfc-intro-size, 18px) !important;
+	line-height: var(--pfc-intro-line-height, 1.55) !important;
 	margin: 0 auto;
 	max-width: var(--pfc-intro-max-width, 830px);
 	text-align: var(--pfc-intro-align, center);
@@ -234,13 +234,18 @@
 
 .pfc__ideal-for {
 	color: var(--pfc-ideal-for-color, #f6f2ea);
-	font-size: var(--pfc-ideal-for-font-size, 16px);
+	font-size: var(--pfc-ideal-for-font-size, 16px) !important;
 	font-weight: var(--pfc-ideal-for-font-weight, 400);
-	line-height: var(--pfc-ideal-for-line-height, 1.55);
+	line-height: var(--pfc-ideal-for-line-height, 1.55) !important;
 	margin: 0 0 var(--pfc-ideal-for-bottom, 22px);
 	max-width: var(--pfc-ideal-for-max-width, 310px);
 
 	p {
+		color: inherit;
+		font-family: inherit;
+		font-size: inherit !important;
+		font-weight: inherit;
+		line-height: inherit !important;
 		margin: 0 0 0.45em;
 	}
 
@@ -416,7 +421,7 @@
 	}
 
 	.pfc__ideal-for {
-		font-size: var(--pfc-ideal-for-font-size-mobile, 15px);
+		font-size: var(--pfc-ideal-for-font-size-mobile, 15px) !important;
 	}
 
 	.pfc__button {
