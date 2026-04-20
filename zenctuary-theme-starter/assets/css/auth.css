@@ -67,30 +67,43 @@
 
 /* Modal Container */
 .zen-modal-container {
-    width: 95%;
-    max-width: 400px;
-    /* Default width */
+    width: 80vw;
+    height: 90vh;
     position: relative;
-    padding: 0;
+    padding: 60px 40px;
     margin: auto;
-    background: transparent;
-    box-shadow: none;
+    background: #1e1e1e; /* Defined dark background for the large box */
+    border-radius: 24px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 30px 60px rgba(0, 0, 0, 0.5);
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 
     /* Animation */
     transform: translateY(30px);
     transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1),
-        opacity 0.5s ease,
-        max-width 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        opacity 0.5s ease;
     opacity: 0;
 }
 
-/* View-Based Widths */
-.zen-modal-container[data-view="signup"] {
+/* Modal Content Centering & View-Based Widths */
+.zen-modal-content {
+    width: 100%;
+    margin: auto; /* Vertically and horizontally center content within the 80/90 box */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    transition: max-width 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.zen-modal-container[data-view="signup"] .zen-modal-content {
     max-width: 800px;
 }
 
-.zen-modal-container[data-view="login"],
-.zen-modal-container[data-view="account"] {
+.zen-modal-container[data-view="login"] .zen-modal-content,
+.zen-modal-container[data-view="account"] .zen-modal-content {
     max-width: 400px;
 }
 
@@ -367,18 +380,31 @@ body.zen-modal-open {
 }
 
 /* Mobile Responsiveness */
+@media (max-width: 900px) {
+    .zen-modal-container {
+        width: 90vw;
+        height: 95vh;
+        padding: 40px 20px;
+    }
+}
+
 @media (max-width: 480px) {
     .zen-modal-container {
-        padding: 0 24px;
+        width: 95vw;
+        height: 98vh;
+        padding: 40px 15px;
     }
-
-    .zen-modal-close {
-        top: 24px;
-        right: 24px;
+    
+    .zen-modal-close,
+    .zen-modal-back {
+        top: 20px !important;
     }
+    
+    .zen-modal-close { right: 20px !important; }
+    .zen-modal-back { left: 20px !important; }
 
     .zen-auth-header h2 {
-        font-size: 36px;
+        font-size: 32px;
     }
 }
 
