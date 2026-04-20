@@ -273,9 +273,9 @@
 }
 
 .zen-btn-auth--primary {
-    background-color: #3f3d3d;
+    background-color: #d8b354;
     border-color: #d8b354;
-    color: #d8b354;
+    color: #3f3d3d;
     padding: 15px;
 }
 
@@ -286,10 +286,11 @@
 }
 
 .zen-btn-auth--secondary {
-    background-color: transparent;
-    border: 2px solid var(--wp--preset--color--primary-gold);
-    color: var(--wp--preset--color--primary-gold);
+    border: 2px solid #d8b354;
     margin-top: 15px;
+    background-color: #3f3d3d;
+    color: #d8b354;
+    padding: 15px;
 }
 
 .zen-btn-auth--secondary:hover {
