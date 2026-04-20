@@ -20,6 +20,11 @@ $contact_acts  = is_array( $attributes['contactActions'] ?? null ) ? $attributes
     [ 'type' => 'email', 'label' => 'Write E-Mail', 'value' => 'info@example.com' ],
     [ 'type' => 'phone', 'label' => 'Call +49 1658954345', 'value' => '+491658954345' ]
 ];
+$contact_trigger_icons = is_array( $attributes['contactTriggerIcons'] ?? null ) ? $attributes['contactTriggerIcons'] : [
+    [ 'type' => 'phone', 'x' => 38, 'y' => 34, 'size' => 18 ],
+    [ 'type' => 'email', 'x' => 63, 'y' => 34, 'size' => 18 ],
+    [ 'type' => 'whatsapp', 'x' => 50, 'y' => 62, 'size' => 18 ],
+];
 
 // Parse animations
 if ( ! function_exists( 'zh_anim_attrs' ) ) {
@@ -62,11 +67,15 @@ $vars = [
     '--zh-contact-trig-bg:'. sanitize_hex_color( $attributes['contactTriggerBg'] ?? '#D8B355' ),
     '--zh-contact-trig-c:' . sanitize_hex_color( $attributes['contactTriggerColor'] ?? '#3F3E3E' ),
     '--zh-contact-trig-sz:'. absint( $attributes['contactTriggerSize'] ?? 64 ) . 'px',
+    '--zh-contact-trig-bw:'. absint( $attributes['contactTriggerBorderWidth'] ?? 3 ) . 'px',
+    '--zh-contact-trig-bd:'. sanitize_hex_color( $attributes['contactTriggerBorderColor'] ?? '#D8B355' ),
     '--zh-contact-act-bg:' . sanitize_hex_color( $attributes['contactActionBg'] ?? '#3F3E3E' ),
     '--zh-contact-act-bd:' . sanitize_hex_color( $attributes['contactActionBorder'] ?? '#D8B355' ),
     '--zh-contact-act-c:'  . sanitize_hex_color( $attributes['contactActionColor'] ?? '#D8B355' ),
     '--zh-contact-act-gap:'. absint( $attributes['contactActionGap'] ?? 12 ) . 'px',
 ];
+
+$contact_actions_id = 'zh-actions-' . wp_unique_id();
 
 $inline_style = implode( '; ', $vars );
 $wrapper_attributes = get_block_wrapper_attributes(
@@ -168,7 +177,7 @@ if ( ! function_exists( 'zh_format_link' ) ) {
     <!-- 5. Floating Contact Bundle -->
     <?php if ( $show_contact && !empty($contact_acts) ) : ?>
     <div class="zenctuary-hero__contact-wrapper">
-        <div class="zenctuary-hero__contact-actions" id="zh-actions-<?php echo esc_attr(uniqid()); ?>" aria-hidden="true">
+        <div class="zenctuary-hero__contact-actions" id="<?php echo esc_attr( $contact_actions_id ); ?>" aria-hidden="true">
             <?php foreach ( $contact_acts as $act ) : 
                 $t = esc_attr($act['type'] ?? 'email');
                 $icon = $icons[$t] ?? $icons['email'];
@@ -179,11 +188,17 @@ if ( ! function_exists( 'zh_format_link' ) ) {
                 </a>
             <?php endforeach; ?>
         </div>
-        <button class="zenctuary-hero__contact-trigger" aria-label="<?php esc_attr_e('Open contact options', 'zenctuary'); ?>" aria-expanded="false" aria-controls="zh-actions-<?php echo esc_attr(uniqid()); ?>">
+        <button class="zenctuary-hero__contact-trigger" aria-label="<?php esc_attr_e('Open contact options', 'zenctuary'); ?>" aria-expanded="false" aria-controls="<?php echo esc_attr( $contact_actions_id ); ?>">
             <span class="zh-ctrigger-icons" aria-hidden="true">
-                <span class="zh-ctrigger-icon zh-ctrigger-icon--phone"><?php echo $icons['phone']; ?></span>
-                <span class="zh-ctrigger-icon zh-ctrigger-icon--email"><?php echo $icons['email']; ?></span>
-                <span class="zh-ctrigger-icon zh-ctrigger-icon--whatsapp"><?php echo $icons['whatsapp']; ?></span>
+                <?php foreach ( $contact_trigger_icons as $trigger_icon ) :
+                    $icon_type = esc_attr( $trigger_icon['type'] ?? 'email' );
+                    $icon_svg  = $icons[ $icon_type ] ?? $icons['email'];
+                    $icon_x    = isset( $trigger_icon['x'] ) ? floatval( $trigger_icon['x'] ) : 50;
+                    $icon_y    = isset( $trigger_icon['y'] ) ? floatval( $trigger_icon['y'] ) : 50;
+                    $icon_size = isset( $trigger_icon['size'] ) ? absint( $trigger_icon['size'] ) : 18;
+                ?>
+                <span class="zh-ctrigger-icon" style="<?php echo esc_attr( sprintf( '--zh-ctrigger-x:%s%%; --zh-ctrigger-y:%s%%; --zh-ctrigger-size:%spx;', $icon_x, $icon_y, $icon_size ) ); ?>"><?php echo $icon_svg; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></span>
+                <?php endforeach; ?>
             </span>
             <span class="zh-cclose-icon" style="display:none;" aria-hidden="true"><svg viewBox="0 0 24 24" width="32" height="32" fill="currentColor"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg></span>
         </button>

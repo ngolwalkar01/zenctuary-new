@@ -241,6 +241,54 @@
       "type": "number",
       "default": 64
     },
+    "contactTriggerBorderWidth": {
+      "type": "number",
+      "default": 3
+    },
+    "contactTriggerBorderColor": {
+      "type": "string",
+      "default": "#D8B355"
+    },
+    "contactTriggerIcons": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "type": "string"
+          },
+          "x": {
+            "type": "number"
+          },
+          "y": {
+            "type": "number"
+          },
+          "size": {
+            "type": "number"
+          }
+        }
+      },
+      "default": [
+        {
+          "type": "phone",
+          "x": 38,
+          "y": 34,
+          "size": 18
+        },
+        {
+          "type": "email",
+          "x": 63,
+          "y": 34,
+          "size": 18
+        },
+        {
+          "type": "whatsapp",
+          "x": 50,
+          "y": 62,
+          "size": 18
+        }
+      ]
+    },
     "contactActionBg": {
       "type": "string",
       "default": "#3F3E3E"

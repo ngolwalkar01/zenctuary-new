@@ -76,6 +76,7 @@ export default function Edit( { attributes, setAttributes } ) {
         iconAnim = 'fade', iconAnimDur = 1.0, iconAnimDel = 0.1,
         showTagsRow = true, tagsItems = [], tagsColor = '#D8B355', tagsBottomOffset = 60, tagsMobileBottomOffset = 80, tagsGap = 24, tagsFontSize = 18, tagsBulletSize = 18, tagsBulletMobileSize = 18, tagsFontWeight = '500', tagsTextTransform = 'uppercase', tagsLetterSpacing = 0.05,
         showContactBundle = true, contactRightOffset = 40, contactBottomOffset = 40, contactTriggerBg = '#D8B355', contactTriggerColor = '#3F3E3E', contactTriggerSize = 64,
+        contactTriggerBorderWidth = 3, contactTriggerBorderColor = '#D8B355', contactTriggerIcons = [],
         contactActionBg = '#3F3E3E', contactActionBorder = '#D8B355', contactActionColor = '#D8B355', contactActionGap = 12, contactActions = []
     } = attributes || {};
 
@@ -317,8 +318,50 @@ export default function Edit( { attributes, setAttributes } ) {
                             <Divider />
                             <h3 style={{ fontSize:'12px',textTransform:'uppercase',color:'#888',margin:'0 0 8px' }}>Trigger Button</h3>
                             <RangeControl label="Size" value={ contactTriggerSize } min={40} max={100} step={2} onChange={ v => setAttributes({ contactTriggerSize: v }) } />
+                            <RangeControl label="Border Width" value={ contactTriggerBorderWidth } min={0} max={12} step={1} onChange={ v => setAttributes({ contactTriggerBorderWidth: v }) } />
                             <ColorRow label="Background" value={ contactTriggerBg } onChange={ v => setAttributes({ contactTriggerBg: v }) } />
+                            <ColorRow label="Border Color" value={ contactTriggerBorderColor } onChange={ v => setAttributes({ contactTriggerBorderColor: v }) } />
                             <ColorRow label="Icon Color" value={ contactTriggerColor } onChange={ v => setAttributes({ contactTriggerColor: v }) } />
+
+                            <Divider />
+                            <h3 style={{ fontSize:'12px',textTransform:'uppercase',color:'#888',margin:'0 0 8px' }}>Trigger Icons</h3>
+                            <div style={{ background: '#1e1e1e', padding: '12px', borderRadius: '4px' }}>
+                                { (contactTriggerIcons || []).map((icon, idx) => (
+                                    <div key={idx} style={{ padding: '8px', background: '#2e2e2e', marginBottom: '8px', borderRadius: '4px' }}>
+                                        <SelectControl
+                                            label="Icon"
+                                            value={ icon.type || 'email' }
+                                            options={[
+                                                { label: 'Email', value: 'email' },
+                                                { label: 'Phone', value: 'phone' },
+                                                { label: 'Whatsapp', value: 'whatsapp' }
+                                            ]}
+                                            onChange={ v => setObjAttrParams(contactTriggerIcons, idx, 'type', v, 'contactTriggerIcons') }
+                                        />
+                                        <RangeControl label="Horizontal Position (%)" value={ icon.x ?? 50 } min={0} max={100} step={1} onChange={ v => setObjAttrParams(contactTriggerIcons, idx, 'x', v, 'contactTriggerIcons') } />
+                                        <RangeControl label="Vertical Position (%)" value={ icon.y ?? 50 } min={0} max={100} step={1} onChange={ v => setObjAttrParams(contactTriggerIcons, idx, 'y', v, 'contactTriggerIcons') } />
+                                        <RangeControl label="Icon Size (px)" value={ icon.size ?? 18 } min={10} max={40} step={1} onChange={ v => setObjAttrParams(contactTriggerIcons, idx, 'size', v, 'contactTriggerIcons') } />
+                                        <Button
+                                            isDestructive
+                                            variant="link"
+                                            onClick={() => {
+                                                const nextIcons = [...(contactTriggerIcons || [])];
+                                                nextIcons.splice(idx, 1);
+                                                setAttributes({ contactTriggerIcons: nextIcons });
+                                            }}
+                                        >
+                                            Remove Icon
+                                        </Button>
+                                    </div>
+                                )) }
+                                <Button
+                                    variant="secondary"
+                                    onClick={() => setAttributes({ contactTriggerIcons: [...(contactTriggerIcons || []), { type: 'email', x: 50, y: 50, size: 18 }] })}
+                                    style={{ width: '100%', justifyContent: 'center' }}
+                                >
+                                    + Add Trigger Icon
+                                </Button>
+                            </div>
 
                             <Divider />
                             <h3 style={{ fontSize:'12px',textTransform:'uppercase',color:'#888',margin:'0 0 8px' }}>Action Buttons</h3>
@@ -457,10 +500,30 @@ export default function Edit( { attributes, setAttributes } ) {
                     <div style={{
                         width: `${contactTriggerSize}px`, height: `${contactTriggerSize}px`, borderRadius: '50%',
                         background: contactTriggerBg, color: contactTriggerColor,
+                        border: `${contactTriggerBorderWidth}px solid ${contactTriggerBorderColor}`,
                         display: 'flex', alignItems: 'center', justifyContent: 'center',
-                        boxShadow: '0 4px 12px rgba(0,0,0,0.15)'
+                        boxShadow: '0 4px 12px rgba(0,0,0,0.15)',
+                        position: 'relative'
                     }}>
-                        { ICONS.trigger }
+                        { (contactTriggerIcons || []).map((icon, i) => (
+                            <span
+                                key={ i }
+                                className="zh-trigger-icon-preview"
+                                style={{
+                                    position: 'absolute',
+                                    left: `${icon.x ?? 50}%`,
+                                    top: `${icon.y ?? 50}%`,
+                                    transform: 'translate(-50%, -50%)',
+                                    display: 'flex',
+                                    alignItems: 'center',
+                                    justifyContent: 'center',
+                                    width: `${icon.size ?? 18}px`,
+                                    height: `${icon.size ?? 18}px`
+                                }}
+                            >
+                                { ICONS[icon.type] || ICONS.email }
+                            </span>
+                        )) }
                     </div>
 
                 </div>

@@ -211,7 +211,7 @@
     border-radius: 50%;
     background: var(--zh-contact-trig-bg, #D8B355);
     color: var(--zh-contact-trig-c, #3F3E3E);
-    border: none;
+    border: var(--zh-contact-trig-bw, 3px) solid var(--zh-contact-trig-bd, #D8B355);
     outline: none;
     cursor: pointer;
     display: flex;
@@ -222,37 +222,27 @@
 }
 
 .zh-ctrigger-icons {
-    display: grid;
-    grid-template-areas:
-        "phone email"
-        ". whatsapp";
-    justify-items: center;
-    align-items: center;
-    gap: 3px;
+    position: relative;
+    width: 100%;
+    height: 100%;
 }
 
 .zh-ctrigger-icon {
+    position: absolute;
+    left: var(--zh-ctrigger-x, 50%);
+    top: var(--zh-ctrigger-y, 50%);
+    transform: translate(-50%, -50%);
     display: inline-flex;
     align-items: center;
     justify-content: center;
+    width: var(--zh-ctrigger-size, calc(var(--zh-contact-trig-sz, 64px) * 0.26));
+    height: var(--zh-ctrigger-size, calc(var(--zh-contact-trig-sz, 64px) * 0.26));
 }
 
 .zh-ctrigger-icon svg {
     display: block;
-    width: calc(var(--zh-contact-trig-sz, 64px) * 0.26);
-    height: calc(var(--zh-contact-trig-sz, 64px) * 0.26);
-}
-
-.zh-ctrigger-icon--phone {
-    grid-area: phone;
-}
-
-.zh-ctrigger-icon--email {
-    grid-area: email;
-}
-
-.zh-ctrigger-icon--whatsapp {
-    grid-area: whatsapp;
+    width: 100%;
+    height: 100%;
 }
 
 .zenctuary-hero__contact-trigger:hover {
@@ -271,6 +261,11 @@
     display: block;
     width: calc(var(--zh-contact-trig-sz, 64px) * 0.42);
     height: calc(var(--zh-contact-trig-sz, 64px) * 0.42);
+}
+
+.zh-trigger-icon-preview svg {
+    width: 100%;
+    height: 100%;
 }
 
 /* 5. Entrance Animations (Intersection Observer) */
