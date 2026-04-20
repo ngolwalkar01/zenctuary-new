@@ -117,9 +117,14 @@ function zenctuary_ajax_register() {
         }
 
         // Phone (WooCommerce Billing Key)
-        $country_code = isset( $_POST['country_code'] ) ? sanitize_text_field( $_POST['country_code'] ) : '';
         $phone_number = isset( $_POST['phone'] ) ? sanitize_text_field( $_POST['phone'] ) : '';
-        $full_phone   = trim( "$country_code $phone_number" );
+        // If the phone number already starts with '+', it's already an international full number
+        if ( strpos( $phone_number, '+' ) === 0 ) {
+            $full_phone = $phone_number;
+        } else {
+            $country_code = isset( $_POST['country_code'] ) ? sanitize_text_field( $_POST['country_code'] ) : '';
+            $full_phone   = trim( "$country_code $phone_number" );
+        }
         update_user_meta( $user_id, 'billing_phone', $full_phone );
 
         // Profile Details

@@ -39,6 +39,22 @@ function zenctuary_enqueue_assets(): void {
 		ZENCTUARY_THEME_VERSION
 	);
 
+	// Intl-Tel-Input (International Phone Support)
+	wp_enqueue_style(
+		'intl-tel-input',
+		'https://cdn.jsdelivr.net/npm/intl-tel-input@23.0.10/build/css/intlTelInput.css',
+		array(),
+		'23.0.10'
+	);
+
+	wp_enqueue_script(
+		'intl-tel-input',
+		'https://cdn.jsdelivr.net/npm/intl-tel-input@23.0.10/build/js/intlTelInput.min.js',
+		array(),
+		'23.0.10',
+		true
+	);
+
 	wp_enqueue_script(
 		'zenctuary-theme',
 		ZENCTUARY_THEME_URI . '/assets/js/theme.js',
@@ -50,7 +66,7 @@ function zenctuary_enqueue_assets(): void {
 	wp_enqueue_script(
 		'zenctuary-auth',
 		ZENCTUARY_THEME_URI . '/assets/js/auth.js',
-		array(),
+		array( 'intl-tel-input' ),
 		ZENCTUARY_THEME_VERSION,
 		true
 	);

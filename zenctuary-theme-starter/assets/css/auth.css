@@ -377,25 +377,67 @@ body.zen-modal-open {
 }
 
 /* Phone Field Group */
-.zen-phone-input-group {
-    display: flex;
-    gap: 0;
-    align-items: stretch;
+/* Intl-Tel-Input Refinements */
+.iti {
+    width: 100%;
+    display: block;
 }
 
-.zen-phone-code {
-    width: 90px;
-    border-right: none !important;
-    border-top-right-radius: 0 !important;
-    border-bottom-right-radius: 0 !important;
-    padding: 18px 10px !important;
-    text-align: center;
+.iti__country-list {
+    background-color: #2D2D2D !important;
+    border: 1px solid rgba(255, 255, 255, 0.2) !important;
+    border-radius: 12px !important;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5) !important;
+    z-index: 10001 !important; /* Above modal */
+    padding: 10px 0 !important;
 }
 
-.zen-phone-input-group .zen-input:not(.zen-phone-code) {
-    border-top-left-radius: 0 !important;
-    border-bottom-left-radius: 0 !important;
-    flex: 1;
+.iti__country {
+    padding: 12px 15px !important;
+    transition: background-color 0.2s ease;
+}
+
+.iti__country:hover, 
+.iti__country.iti__highlight {
+    background-color: rgba(216, 179, 85, 0.2) !important;
+}
+
+.iti__country-name {
+    color: var(--wp--preset--color--primary-beige) !important;
+    font-size: 14px !important;
+}
+
+.iti__dial-code {
+    color: rgba(255, 255, 255, 0.5) !important;
+    font-size: 13px !important;
+}
+
+.iti__flag-container {
+    padding: 2px !important;
+}
+
+.iti--separate-dial-code .iti__selected-dial-code {
+    color: var(--wp--preset--color--primary-beige) !important;
+    margin-left: 8px !important;
+}
+
+.iti__arrow {
+    border-top-color: var(--wp--preset--color--primary-gold) !important;
+}
+
+.iti__arrow--up {
+    border-bottom-color: var(--wp--preset--color--primary-gold) !important;
+}
+
+/* Ensure searchable input (if enabled) looks correct */
+.iti__search-input {
+    background: #1a1a1a !important;
+    border: 1px solid rgba(255, 255, 255, 0.1) !important;
+    color: white !important;
+    margin: 5px 10px !important;
+    padding: 10px !important;
+    border-radius: 8px !important;
+    width: calc(100% - 20px) !important;
 }
 
 /* Select Styling */

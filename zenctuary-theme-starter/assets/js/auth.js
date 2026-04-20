@@ -10,11 +10,26 @@ window.zenctuaryAuth = (function() {
 
     let isInitialized = false;
 
+    let itiInstance = null;
+
     /**
      * Initialize the global event listeners (Delegated)
      */
     function init() {
         if (isInitialized) return;
+
+        // Initialize Phone Field (Signup Only)
+        const phoneInput = document.getElementById('zen-reg-phone');
+        if (phoneInput && typeof window.intlTelInput !== 'undefined') {
+            itiInstance = window.intlTelInput(phoneInput, {
+                initialCountry: 'de',
+                separateDialCode: true,
+                utilsScript: 'https://cdn.jsdelivr.net/npm/intl-tel-input@23.0.10/build/js/utils.js',
+                autoPlaceholder: 'polite',
+                preferredCountries: ['de', 'us', 'gb', 'fr'],
+                dropdownContainer: document.body
+            });
+        }
 
         // --- GLOBAL CLICK DELEGATION ---
         document.addEventListener('click', function(e) {
@@ -189,14 +204,45 @@ window.zenctuaryAuth = (function() {
         const submitBtn = form.querySelector('button[type="submit"]');
         if (!submitBtn || !errorContainer) return;
 
-        const formData = new FormData(form);
-
         // Reset UI
         errorContainer.textContent = '';
+        
+        // --- CUSTOM VALIDATION ---
+        
+        // 1. Phone validation (Registration only)
+        if (form.id === 'zen-register-form' && itiInstance) {
+            const phoneInput = form.querySelector('#zen-reg-phone');
+            if (phoneInput && phoneInput.value.trim() !== '') {
+                if (!itiInstance.isValidNumber()) {
+                    errorContainer.textContent = 'Please enter a valid phone number.';
+                    return;
+                }
+            }
+        }
+
+        // 2. Password Match (Registration only)
+        if (form.id === 'zen-register-form') {
+            const pass = form.querySelector('#zen-reg-password').value;
+            const confirm = form.querySelector('#zen-reg-confirm-password').value;
+            if (pass !== confirm) {
+                errorContainer.textContent = 'Passwords do not match.';
+                return;
+            }
+        }
+
+        const formData = new FormData(form);
+
+        // --- DATA PREPARATION ---
+
+        // Append full phone number if registration
+        if (form.id === 'zen-register-form' && itiInstance) {
+            formData.set('phone', itiInstance.getNumber());
+        }
+
         submitBtn.disabled = true;
         submitBtn.classList.add('is-loading');
 
-        // Prepare data
+        // Prepare data for WordPress
         formData.append('action', action);
         formData.append('security', zenctuaryAuthData.nonce);
 
