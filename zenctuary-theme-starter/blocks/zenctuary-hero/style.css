@@ -390,13 +390,6 @@
         line-height: 1;
     }
 
-    .zen-fire-ice .zenctuary-hero__tagline-wrapper {
-        display: none !important;
-    }
-
-    .zen-fire-ice .zenctuary-hero__title-icon-text-row > div:first-child {
-        justify-content: center;
-    }
 }
 
 /* Keep taglines hidden by default, but allow the Fire & Ice hero to show it. */
@@ -427,4 +420,14 @@
 .zen-fire-ice .zenctuary-hero__title-icon-text-row > div:first-child {
     display: flex;
     justify-content: flex-end;
+}
+
+@media (max-width: 768px) {
+    .zen-fire-ice .zenctuary-hero__tagline-wrapper {
+        display: none !important;
+    }
+
+    .zen-fire-ice .zenctuary-hero__title-icon-text-row > div:first-child {
+        justify-content: center;
+    }
 }
