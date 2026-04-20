@@ -233,10 +233,11 @@
 }
 
 .zen-checkbox-label input {
-    width: 20px;
-    height: 20px;
-    margin-top: 0;
+    width: 24px;
+    height: 24px;
+    margin-top: -2px; /* Slight adjustment to center with first line of text */
     accent-color: var(--wp--preset--color--primary-gold);
+    cursor: pointer;
 }
 
 .zen-checkbox-label span {
