@@ -175,10 +175,13 @@
     color: rgba(255, 255, 255, 0.3);
 }
 
-.zen-input:focus {
-    outline: none;
-    border-color: #d8b354;
-    /* Background color remains unchanged as per request */
+/* High-specificity focus styles to override global defaults */
+#zenctuary-auth-modal .zen-input:focus,
+#zenctuary-auth-modal .zen-select:focus {
+    outline: none !important;
+    border-color: #d8b354 !important;
+    background-color: #2d2d2d !important; /* Keep original background */
+    box-shadow: none !important; /* Remove any global shadows */
 }
 
 /* Input Icons */
