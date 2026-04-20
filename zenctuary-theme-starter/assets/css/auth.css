@@ -7,7 +7,7 @@
     --zen-modal-z-index: 9999;
 }
 
-/* Modal Overlay */
+/* Modal Overlay (Backdrop Only) */
 .zen-modal-overlay {
     position: fixed;
     top: 0;
@@ -23,10 +23,6 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    overflow-y: auto;
-    /* Enable vertical scroll */
-    padding: 60px 24px;
-    /* Give breathing space at top and bottom */
     z-index: var(--zen-modal-z-index);
 
     /* Visibility Control */
@@ -42,17 +38,17 @@
     pointer-events: auto;
 }
 
-/* Close Button (Fixed Top-Right Corner of Viewport) */
+/* Close Button (Inside Card - Top Right) */
 .zen-modal-close {
-    position: fixed;
-    top: 40px;
-    right: 40px;
+    position: absolute;
+    top: 30px;
+    right: 30px;
     background: none;
     border: none;
     color: rgba(255, 255, 255, 0.5);
     cursor: pointer;
-    padding: 0;
-    z-index: 10000;
+    padding: 10px;
+    z-index: 10010; /* Above card content */
     transition: color 0.3s ease, transform 0.3s ease;
 }
 
@@ -415,19 +411,19 @@ body.zen-modal-open {
     /* Ensure phone dropdown is not clipped */
 }
 
-/* Global Back Button Positioning */
+/* Back Button (Inside Card - Top Left) */
 .zen-modal-back {
     display: none;
     /* Hidden by default */
-    position: fixed;
-    top: -23px;
-    left: -136px;
+    position: absolute;
+    top: 30px;
+    left: 30px;
     background: none;
     border: none;
     color: rgba(255, 255, 255, 0.5);
     cursor: pointer;
     padding: 10px;
-    z-index: 10000;
+    z-index: 10010; /* Above card content */
     transition: color 0.3s ease, transform 0.3s ease;
 }
 
