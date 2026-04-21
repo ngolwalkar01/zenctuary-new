@@ -38,6 +38,8 @@ export default function save({ attributes }) {
         phoneTextColor,
         phoneTextSize,
         phoneSpacing,
+        leftWidth,
+        rightWidth,
     } = attributes;
 
     const blockProps = useBlockProps.save({
@@ -50,12 +52,13 @@ export default function save({ attributes }) {
             paddingLeft: blockPadding.left,
             '--zen-contact-gap': columnGap,
             gap: columnGap,
+            alignItems: 'flex-start',
         },
     });
 
     return (
         <div {...blockProps}>
-            <div className="zen-contact-form-side">
+            <div className="zen-contact-form-side" style={{ width: `${leftWidth}%` }}>
                 <div className="zen-contact-form-inner" style={{
                     padding: formPadding,
                     border: `${formBorderWidth} solid ${formBorderColor}`,
@@ -66,7 +69,7 @@ export default function save({ attributes }) {
                 </div>
             </div>
 
-            <div className="zen-contact-content-side">
+            <div className="zen-contact-content-side" style={{ width: `${rightWidth}%` }}>
                 <RichText.Content
                     tagName="h2"
                     className="zen-contact-heading"

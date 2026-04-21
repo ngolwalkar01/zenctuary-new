@@ -57,6 +57,8 @@ export default function Edit({ attributes, setAttributes }) {
         phoneTextColor,
         phoneTextSize,
         phoneSpacing,
+        leftWidth,
+        rightWidth,
     } = attributes;
 
     const blockProps = useBlockProps({
@@ -69,6 +71,7 @@ export default function Edit({ attributes, setAttributes }) {
             paddingLeft: blockPadding.left,
             '--zen-contact-gap': columnGap,
             gap: columnGap,
+            alignItems: 'flex-start',
         },
     });
 
@@ -125,6 +128,13 @@ export default function Edit({ attributes, setAttributes }) {
                         label={__('Left/Right Padding', 'zenctuary')}
                         value={blockPadding.left}
                         onChange={(value) => setAttributes({ blockPadding: { ...blockPadding, left: value, right: value } })}
+                    />
+                    <RangeControl
+                        label={__('Left Section Width (%)', 'zenctuary')}
+                        value={leftWidth}
+                        onChange={(value) => setAttributes({ leftWidth: value, rightWidth: 100 - value })}
+                        min={10}
+                        max={90}
                     />
                 </PanelBody>
 
@@ -302,7 +312,7 @@ export default function Edit({ attributes, setAttributes }) {
             </InspectorControls>
 
             <div {...blockProps}>
-                <div className="zen-contact-form-side">
+                <div className="zen-contact-form-side" style={{ width: `${leftWidth}%` }}>
                     <div className="zen-contact-form-inner" style={{
                         padding: formPadding,
                         border: `${formBorderWidth} solid ${formBorderColor}`,
@@ -320,7 +330,7 @@ export default function Edit({ attributes, setAttributes }) {
                     </div>
                 </div>
 
-                <div className="zen-contact-content-side">
+                <div className="zen-contact-content-side" style={{ width: `${rightWidth}%` }}>
                     <RichText
                         tagName="h2"
                         className="zen-contact-heading"

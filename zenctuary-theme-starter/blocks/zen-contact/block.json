@@ -54,7 +54,9 @@
     "phoneIconSize": { "type": "string", "default": "24px" },
     "phoneTextColor": { "type": "string", "default": "#ffffff" },
     "phoneTextSize": { "type": "string", "default": "16px" },
-    "phoneSpacing": { "type": "string", "default": "20px" }
+    "phoneSpacing": { "type": "string", "default": "20px" },
+    "leftWidth": { "type": "number", "default": 70 },
+    "rightWidth": { "type": "number", "default": 30 }
   },
   "textdomain": "zenctuary",
   "editorScript": "file:./index.js",

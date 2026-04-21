@@ -1,17 +1,15 @@
 .wp-block-zenctuary-zen-contact {
   display: flex;
   flex-direction: row;
-  align-items: stretch;
+  align-items: flex-start; // Align both sections to the top
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
   width: 100%;
   box-sizing: border-box;
 
-  // Left Section: Form (70%)
+  // Left Section: Form
   .zen-contact-form-side {
-    flex: 0 0 calc(70% - var(--zen-contact-gap, 30px) / 2);
-    width: calc(70% - var(--zen-contact-gap, 30px) / 2);
     box-sizing: border-box;
 
     .zen-contact-form-inner {
@@ -20,13 +18,11 @@
     }
   }
 
-  // Right Section: Content (30%)
+  // Right Section: Content
   .zen-contact-content-side {
-    flex: 0 0 calc(30% - var(--zen-contact-gap, 30px) / 2);
-    width: calc(30% - var(--zen-contact-gap, 30px) / 2);
     display: flex;
     flex-direction: column;
-    justify-content: center; // Centered as seen in design
+    justify-content: flex-start; // Start from top
     box-sizing: border-box;
 
     .zen-contact-heading {
