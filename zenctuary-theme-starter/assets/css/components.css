@@ -1766,6 +1766,9 @@ input[type="checkbox"] {
   border: none;
   border-radius: 30px;
   cursor: pointer;
+  background-color: #d8b355;
+  color: #3f3e3d;
+  font-weight: 800;
 }
 
 /* CF7 wrapper fix */
