@@ -65,6 +65,7 @@
     opacity: 0;
     transform: translateY(36px);
   }
+
   to {
     opacity: 1;
     transform: translateY(0);
@@ -72,24 +73,24 @@
 }
 
 /* All direct children except headings start hidden */
-.zen-reveal > *:not(h1, h2, h3, h4, h5, h6, [data-no-reveal]) {
+.zen-reveal>*:not(h1, h2, h3, h4, h5, h6, [data-no-reveal]) {
   opacity: 0;
   transform: translateY(36px);
   transition:
-    opacity  0.65s cubic-bezier(0.22, 1, 0.36, 1),
+    opacity 0.65s cubic-bezier(0.22, 1, 0.36, 1),
     transform 0.65s cubic-bezier(0.22, 1, 0.36, 1);
   will-change: opacity, transform;
 }
 
 /* JS adds .is-visible when section enters viewport */
-.zen-reveal.is-visible > *:not(h1, h2, h3, h4, h5, h6, [data-no-reveal]) {
+.zen-reveal.is-visible>*:not(h1, h2, h3, h4, h5, h6, [data-no-reveal]) {
   opacity: 1;
   transform: translateY(0);
 }
 
 /* Respect user preference for reduced motion */
 @media (prefers-reduced-motion: reduce) {
-  .zen-reveal > *:not(h1, h2, h3, h4, h5, h6, [data-no-reveal]) {
+  .zen-reveal>*:not(h1, h2, h3, h4, h5, h6, [data-no-reveal]) {
     opacity: 1 !important;
     transform: none !important;
     transition: none !important;
@@ -123,29 +124,29 @@
   box-shadow: none !important;
 }
 
-.zen-site-header .zen-container > .wp-block-site-logo {
+.zen-site-header .zen-container>.wp-block-site-logo {
   flex: 0 0 auto;
 }
 
-.zen-site-header .zen-container > .wp-block-navigation {
+.zen-site-header .zen-container>.wp-block-navigation {
   align-items: center;
   display: flex;
   flex: 1 1 auto;
   justify-content: center;
 }
 
-.zen-site-header .zen-container > .wp-block-group:last-child {
+.zen-site-header .zen-container>.wp-block-group:last-child {
   align-items: center;
   display: flex;
   flex: 0 0 auto;
   gap: 18px;
 }
 
-.zen-site-header .zen-container > .wp-block-group:last-child .wpml-ls-legacy-dropdown {
+.zen-site-header .zen-container>.wp-block-group:last-child .wpml-ls-legacy-dropdown {
   flex: 0 0 auto;
 }
 
-.zen-site-header .zen-container > .wp-block-group:last-child .wp-block-buttons {
+.zen-site-header .zen-container>.wp-block-group:last-child .wp-block-buttons {
   flex: 0 0 auto;
 }
 
@@ -270,9 +271,9 @@
 }
 
 li.wp-social-link.has-primary-grey-color.has-primary-gold-background-color.zen-square.wp-block-social-link {
-    border-radius: 10px !important;
-    padding: 5px;
-    margin: 0 10px;
+  border-radius: 10px !important;
+  padding: 5px;
+  margin: 0 10px;
 }
 
 @media (max-width: 768px) {
@@ -1264,6 +1265,7 @@ input[type="checkbox"] {
 }
 
 @keyframes zen-contact-gallery-fade {
+
   0%,
   20% {
     opacity: 0;
@@ -1349,27 +1351,27 @@ input[type="checkbox"] {
     gap: 12px;
   }
 
-  .zen-site-header .zen-container > .wp-block-navigation {
+  .zen-site-header .zen-container>.wp-block-navigation {
     flex: 0 0 auto;
     margin-left: 0;
     order: 3;
   }
 
-  .zen-site-header .zen-container > .wp-block-group:last-child {
+  .zen-site-header .zen-container>.wp-block-group:last-child {
     gap: 12px;
     margin-left: auto;
     order: 2;
   }
 
-  .zen-site-header .zen-container > .wp-block-group:last-child .wp-block-buttons {
+  .zen-site-header .zen-container>.wp-block-group:last-child .wp-block-buttons {
     display: none;
   }
 
-  .zen-site-header .zen-container > .wp-block-navigation .wp-block-navigation__responsive-container-open {
+  .zen-site-header .zen-container>.wp-block-navigation .wp-block-navigation__responsive-container-open {
     padding: 0;
   }
 
-  .zen-site-header .zen-container > .wp-block-navigation .wp-block-navigation__responsive-container-content {
+  .zen-site-header .zen-container>.wp-block-navigation .wp-block-navigation__responsive-container-content {
     align-items: flex-start;
     gap: 18px;
   }
@@ -1407,12 +1409,12 @@ input[type="checkbox"] {
     align-items: center;
   }
 
-  .wp-block-navigation__responsive-container .has-child > .wp-block-navigation-item__content {
+  .wp-block-navigation__responsive-container .has-child>.wp-block-navigation-item__content {
     flex: 1 1 auto;
     width: auto;
   }
 
-  .wp-block-navigation__responsive-container .has-child > .wp-block-navigation-submenu__toggle {
+  .wp-block-navigation__responsive-container .has-child>.wp-block-navigation-submenu__toggle {
     align-items: center;
     display: inline-flex !important;
     justify-content: center;
@@ -1425,7 +1427,7 @@ input[type="checkbox"] {
     visibility: visible !important;
   }
 
-  .wp-block-navigation__responsive-container .has-child > .wp-block-navigation-submenu__toggle::before {
+  .wp-block-navigation__responsive-container .has-child>.wp-block-navigation-submenu__toggle::before {
     border-left: 5px solid transparent;
     border-right: 5px solid transparent;
     border-top: 7px solid currentColor;
@@ -1436,8 +1438,8 @@ input[type="checkbox"] {
     width: 0;
   }
 
-  .wp-block-navigation__responsive-container .has-child.is-submenu-open > .wp-block-navigation-submenu__toggle::before,
-  .wp-block-navigation__responsive-container .has-child > .wp-block-navigation-submenu__toggle[aria-expanded="true"]::before {
+  .wp-block-navigation__responsive-container .has-child.is-submenu-open>.wp-block-navigation-submenu__toggle::before,
+  .wp-block-navigation__responsive-container .has-child>.wp-block-navigation-submenu__toggle[aria-expanded="true"]::before {
     transform: rotate(180deg);
   }
 
@@ -1457,8 +1459,8 @@ input[type="checkbox"] {
     display: none !important;
   }
 
-  .wp-block-navigation__responsive-container .has-child.is-submenu-open > .wp-block-navigation__submenu-container,
-  .wp-block-navigation__responsive-container .has-child > .wp-block-navigation-submenu__toggle[aria-expanded="true"] + .wp-block-navigation__submenu-container {
+  .wp-block-navigation__responsive-container .has-child.is-submenu-open>.wp-block-navigation__submenu-container,
+  .wp-block-navigation__responsive-container .has-child>.wp-block-navigation-submenu__toggle[aria-expanded="true"]+.wp-block-navigation__submenu-container {
     display: block;
   }
 
@@ -1502,7 +1504,7 @@ input[type="checkbox"] {
   /**
     Telex Dual Image plugin css
   **/
-   .telex-dual-image-fade__pair {
+  .telex-dual-image-fade__pair {
     flex-direction: column;
   }
 
@@ -1517,6 +1519,7 @@ input[type="checkbox"] {
   .zep-panel__hotspots--right {
     display: none !important;
   }
+
   /**
     Telex Dual Image plugin css
   **/
@@ -1525,13 +1528,13 @@ input[type="checkbox"] {
     gap: 10px;
   }
 
-  .zen-site-header .zen-container > .wp-block-site-logo img,
-  .zen-site-header .zen-container > .wp-block-site-logo .custom-logo {
+  .zen-site-header .zen-container>.wp-block-site-logo img,
+  .zen-site-header .zen-container>.wp-block-site-logo .custom-logo {
     max-width: 140px;
     width: auto;
   }
 
-  .zen-site-header .zen-container > .wp-block-group:last-child {
+  .zen-site-header .zen-container>.wp-block-group:last-child {
     gap: 10px;
   }
 
@@ -1698,18 +1701,86 @@ input[type="checkbox"] {
     padding-bottom: var(--zen-space-180);
     padding-left: var(--zen-space-25);
     padding-right: var(--zen-space-25);
-}
+  }
 
-.zen-image-row .wp-block-image img {
+  .zen-image-row .wp-block-image img {
     width: 100%;
-}
+  }
 
 }
 
 @media (min-width: 1025px) {
+
   .wp-block-navigation__responsive-container,
   .wp-block-navigation__responsive-container .wp-block-navigation__responsive-dialog {
     background: transparent !important;
     box-shadow: none !important;
+  }
+}
+
+
+/* -zen-contact section, contact form 7 css */
+
+.zen-contact-form {
+  width: 100%;
+}
+
+.zen-row {
+  display: flex;
+  gap: 20px;
+  margin-bottom: 20px;
+}
+
+.zen-field {
+  display: flex;
+  flex-direction: column;
+  font-size: 14px;
+}
+
+.zen-half {
+  width: 50%;
+}
+
+.zen-full {
+  width: 100%;
+}
+
+.zen-field input,
+.zen-field textarea {
+  margin-top: 6px;
+  padding: 12px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  width: 100%;
+  outline: none;
+}
+
+.zen-field textarea {
+  min-height: 140px;
+  resize: none;
+}
+
+.zen-submit input[type="submit"] {
+  width: 100%;
+  padding: 14px;
+  border: none;
+  border-radius: 30px;
+  cursor: pointer;
+}
+
+/* CF7 wrapper fix */
+.wpcf7-form-control-wrap {
+  display: block;
+  width: 100%;
+}
+
+/* Mobile */
+@media (max-width: 768px) {
+  .zen-row {
+    flex-direction: column;
+  }
+
+  .zen-half {
+    width: 100%;
   }
 }
