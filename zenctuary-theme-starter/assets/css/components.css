@@ -347,6 +347,18 @@ li.wp-social-link.has-primary-grey-color.has-primary-gold-background-color.zen-s
   padding: 8px 10px 8px 0px;
 }
 
+.zen-site-header .zen-auth-trigger .wp-block-button__link,
+.zen-site-header .zen-auth-trigger.wp-block-button .wp-block-button__link {
+  border: 2px solid #9A9A9A !important;
+}
+
+.zen-site-header .zen-auth-trigger .wp-block-button__link svg,
+.zen-site-header .zen-auth-trigger.wp-block-button .wp-block-button__link svg {
+  width: 22px;
+  height: 22px;
+  flex: 0 0 22px;
+}
+
 .wp-block-navigation__responsive-container .wp-block-navigation__responsive-container-content {
   gap: 23px;
 }
