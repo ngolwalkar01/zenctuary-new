@@ -22,8 +22,23 @@ document.addEventListener('DOMContentLoaded', () => {
       return;
     }
 
-    const getDirectChild = (parent, className) =>
-      Array.from(parent.children).find((child) => child.classList.contains(className));
+    const getSubmenuParts = (item) => {
+      if (!item) {
+        return { toggle: null, submenu: null };
+      }
+
+      const directChildren = Array.from(item.children);
+      const toggle =
+        directChildren.find((child) => child.classList.contains('wp-block-navigation-submenu__toggle')) ||
+        item.querySelector(':scope > .wp-block-navigation-submenu__toggle') ||
+        item.querySelector('.wp-block-navigation-submenu__toggle');
+      const submenu =
+        directChildren.find((child) => child.classList.contains('wp-block-navigation__submenu-container')) ||
+        item.querySelector(':scope > .wp-block-navigation__submenu-container') ||
+        item.querySelector('.wp-block-navigation__submenu-container');
+
+      return { toggle, submenu };
+    };
 
     const getResponsiveContainers = () =>
       document.querySelectorAll('.zen-site-header .wp-block-navigation__responsive-container');
@@ -37,8 +52,7 @@ document.addEventListener('DOMContentLoaded', () => {
       const parentItems = responsiveContainer.querySelectorAll('.has-child');
 
       parentItems.forEach((item) => {
-        const toggle = getDirectChild(item, 'wp-block-navigation-submenu__toggle');
-        const submenu = getDirectChild(item, 'wp-block-navigation__submenu-container');
+        const { toggle, submenu } = getSubmenuParts(item);
 
         if (!toggle || !submenu) {
           return;
@@ -73,7 +87,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
       const responsiveContainer = toggle.closest('.wp-block-navigation__responsive-container');
       const item = toggle.closest('.has-child');
-      const submenu = item ? getDirectChild(item, 'wp-block-navigation__submenu-container') : null;
+      const { submenu } = getSubmenuParts(item);
 
       if (!responsiveContainer || !item || !submenu) {
         return;
