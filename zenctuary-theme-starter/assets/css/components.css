@@ -199,8 +199,8 @@
 .wp-block-navigation .wp-block-navigation__submenu-container {
   background: #545454 !important;
   border: 0 !important;
-  border-radius: 8px;
-  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.28);
+  border-radius: 0;
+  box-shadow: none;
   padding: 12px 14px;
 }
 
@@ -1392,19 +1392,23 @@ input[type="checkbox"] {
   .wp-block-navigation__responsive-container .has-child {
     display: flex;
     flex-wrap: wrap;
+    align-items: center;
   }
 
   .wp-block-navigation__responsive-container .has-child > .wp-block-navigation-item__content {
     flex: 1 1 auto;
+    width: auto;
   }
 
   .wp-block-navigation__responsive-container .has-child > .wp-block-navigation-submenu__toggle {
     align-items: center;
     display: inline-flex !important;
     justify-content: center;
+    align-self: center;
+    flex: 0 0 auto;
     margin-left: auto;
-    min-width: 28px;
-    padding: 0 0 0 12px;
+    min-width: 20px;
+    padding: 0 0 0 8px;
     color: var(--wp--preset--color--primary-beige, #F6F2EA) !important;
     visibility: visible !important;
   }
@@ -1430,6 +1434,7 @@ input[type="checkbox"] {
     border-radius: 0;
     box-shadow: none;
     display: none;
+    flex-basis: 100%;
     margin: 10px 0 0;
     padding: 0 0 0 18px;
     position: static !important;
