@@ -1,0 +1,108 @@
+.wp-block-zenctuary-zen-contact {
+  display: flex;
+  flex-direction: row;
+  align-items: stretch;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  width: 100%;
+  box-sizing: border-box;
+
+  // Left Section: Form (70%)
+  .zen-contact-form-side {
+    flex: 0 0 calc(70% - var(--zen-contact-gap, 30px) / 2);
+    width: calc(70% - var(--zen-contact-gap, 30px) / 2);
+    box-sizing: border-box;
+
+    .zen-contact-form-inner {
+      height: 100%;
+      box-sizing: border-box;
+    }
+  }
+
+  // Right Section: Content (30%)
+  .zen-contact-content-side {
+    flex: 0 0 calc(30% - var(--zen-contact-gap, 30px) / 2);
+    width: calc(30% - var(--zen-contact-gap, 30px) / 2);
+    display: flex;
+    flex-direction: column;
+    justify-content: center; // Centered as seen in design
+    box-sizing: border-box;
+
+    .zen-contact-heading {
+      margin: 0 0 24px 0;
+      padding: 0;
+      text-transform: uppercase;
+    }
+
+    .zen-contact-paragraph {
+      margin: 0 0 32px 0;
+      padding: 0;
+      line-height: 1.6;
+    }
+
+    .zen-contact-info-rows {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .zen-contact-info-row {
+      display: flex;
+      align-items: center;
+
+      .zen-contact-icon {
+        flex-shrink: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 6px; // Rounded as seen in design
+        background-color: var(--zen-color-gold, #d8b354);
+        padding: 6px;
+        transition: transform 0.2s ease;
+
+        img {
+          width: 100%;
+          height: 100%;
+          object-fit: contain;
+          display: block;
+        }
+
+        svg {
+          width: 100%;
+          height: 100%;
+          display: block;
+        }
+      }
+
+      .zen-contact-text {
+        margin: 0;
+        line-height: 1.4;
+      }
+    }
+  }
+
+  // Mobile Stacking
+  @media (max-width: 781px) {
+    flex-direction: column !important;
+    padding-left: 20px !important;
+    padding-right: 20px !important;
+
+    .zen-contact-form-side,
+    .zen-contact-content-side {
+      flex: 0 0 100% !important;
+      width: 100% !important;
+      margin-bottom: 40px;
+    }
+
+    .zen-contact-content-side {
+      margin-bottom: 0;
+    }
+  }
+}
+
+// Editor Specific Adjustments
+.is-selected .wp-block-zenctuary-zen-contact,
+.has-child-selected .wp-block-zenctuary-zen-contact {
+  // Add subtle border or indicator if needed when selected
+}
