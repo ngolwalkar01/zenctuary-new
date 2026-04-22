@@ -131,6 +131,7 @@
 .zenctuary-hero__tags-list li {
     font-size: var(--zh-tags-fs, 18px);
     font-weight: var(--zh-tags-fw, 500);
+    font-style: italic;
     text-transform: var(--zh-tags-tt, uppercase);
     letter-spacing: var(--zh-tags-ls, 0.05em);
     color: var(--zh-tags-c, #D8B355);
@@ -157,7 +158,6 @@
     font-size: var(--zh-tags-bullet-size, 18px);
     line-height: 1;
     color: inherit;
-    opacity: 0.6;
 }
 
 /* 4. Floating Contact Bundle */
