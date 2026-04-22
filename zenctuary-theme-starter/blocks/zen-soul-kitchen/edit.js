@@ -25,21 +25,94 @@ export default function Edit( { attributes, setAttributes } ) {
 		headingFontWeight,
 		headingAlignment,
 		selectedTags,
+		activeTagId,
+		categoryMeta,
+		categoryStyles,
+		productStyles,
 		inactiveStyles,
 		activeStyles,
 	} = attributes;
 
 	const blockProps = useBlockProps();
 
-	// Fetch Product Tags
+	// Active Tag Logic
+	const currentTagId = activeTagId || ( selectedTags.length > 0 ? selectedTags[ 0 ].id : 0 );
+
+	// Fetch Product Tags (for the filter buttons)
 	const allTags = useSelect( ( select ) => {
 		return select( 'core' ).getEntityRecords( 'taxonomy', 'product_tag', { per_page: -1 } );
 	}, [] );
+
+	// Fetch Products for the Active Tag
+	const products = useSelect( ( select ) => {
+		if ( ! currentTagId ) return [];
+		return select( 'core' ).getEntityRecords( 'postType', 'product', {
+			per_page: -1,
+			product_tag: currentTagId,
+		} );
+	}, [ currentTagId ] );
+
+	// Fetch Categories
+	const allCategories = useSelect( ( select ) => {
+		return select( 'core' ).getEntityRecords( 'taxonomy', 'product_cat', { per_page: -1 } );
+	}, [] );
+
+	const groupedData = useMemo( () => {
+		if ( ! products || ! allCategories ) return [];
+
+		const groups = [];
+		products.forEach( ( product ) => {
+			const productCats = product.categories || [];
+			productCats.forEach( ( cat ) => {
+				let group = groups.find( ( g ) => g.id === cat.id );
+				if ( ! group ) {
+					const categoryInfo = allCategories.find( ( c ) => c.id === cat.id );
+					if ( categoryInfo ) {
+						group = {
+							id: cat.id,
+							name: categoryInfo.name,
+							products: [],
+						};
+						groups.push( group );
+					}
+				}
+				if ( group && ! group.products.find( ( p ) => p.id === product.id ) ) {
+					group.products.push( product );
+				}
+			} );
+		} );
+
+		return groups.sort( ( a, b ) => a.name.localeCompare( b.name ) );
+	}, [ products, allCategories ] );
 
 	const tagOptions = useMemo( () => {
 		if ( ! allTags ) return [];
 		return allTags.map( ( tag ) => tag.name );
 	}, [ allTags ] );
+
+	const updateCategoryStyle = ( key, value ) => {
+		setAttributes( {
+			categoryStyles: { ...categoryStyles, [ key ]: value },
+		} );
+	};
+
+	const updateProductStyle = ( key, value ) => {
+		setAttributes( {
+			productStyles: { ...productStyles, [ key ]: value },
+		} );
+	};
+
+	const updateCategoryMeta = ( catId, key, value ) => {
+		setAttributes( {
+			categoryMeta: {
+				...categoryMeta,
+				[ catId ]: {
+					...( categoryMeta[ catId ] || {} ),
+					[ key ]: value,
+				},
+			},
+		} );
+	};
 
 	const onTagsChange = ( tokens ) => {
 		const newSelectedTags = tokens.map( ( token ) => {
@@ -201,6 +274,133 @@ export default function Edit( { attributes, setAttributes } ) {
 						] }
 					/>
 				</PanelBody>
+
+				<PanelBody title={ __( 'Category Styling', 'zenctuary' ) } initialOpen={ false }>
+					<PanelColorSettings
+						title={ __( 'Category Title', 'zenctuary' ) }
+						initialOpen={ false }
+						colorSettings={ [
+							{
+								value: categoryStyles.titleColor,
+								onChange: ( val ) => updateCategoryStyle( 'titleColor', val ),
+								label: __( 'Title Color', 'zenctuary' ),
+							},
+						] }
+					/>
+					<UnitControl
+						label={ __( 'Title Font Size', 'zenctuary' ) }
+						value={ categoryStyles.titleFontSize }
+						onChange={ ( val ) => updateCategoryStyle( 'titleFontSize', val ) }
+					/>
+					<SelectControl
+						label={ __( 'Title Font Weight', 'zenctuary' ) }
+						value={ categoryStyles.titleFontWeight }
+						options={ [
+							{ label: 'Normal', value: '400' },
+							{ label: 'Bold', value: '700' },
+						] }
+						onChange={ ( val ) => updateCategoryStyle( 'titleFontWeight', val ) }
+					/>
+
+					<PanelColorSettings
+						title={ __( 'Category Description', 'zenctuary' ) }
+						initialOpen={ false }
+						colorSettings={ [
+							{
+								value: categoryStyles.descColor,
+								onChange: ( val ) => updateCategoryStyle( 'descColor', val ),
+								label: __( 'Description Color', 'zenctuary' ),
+							},
+						] }
+					/>
+					<UnitControl
+						label={ __( 'Description Font Size', 'zenctuary' ) }
+						value={ categoryStyles.descFontSize }
+						onChange={ ( val ) => updateCategoryStyle( 'descFontSize', val ) }
+					/>
+
+					<PanelColorSettings
+						title={ __( 'Category Price Text', 'zenctuary' ) }
+						initialOpen={ false }
+						colorSettings={ [
+							{
+								value: categoryStyles.priceColor,
+								onChange: ( val ) => updateCategoryStyle( 'priceColor', val ),
+								label: __( 'Price Color', 'zenctuary' ),
+							},
+						] }
+					/>
+				</PanelBody>
+
+				<PanelBody title={ __( 'Category Content Overrides', 'zenctuary' ) } initialOpen={ false }>
+					{ groupedData.map( ( group ) => (
+						<div key={ group.id } style={ { marginBottom: '20px', borderBottom: '1px solid #eee' } }>
+							<p style={ { fontWeight: 'bold' } }>{ group.name }</p>
+							<TextControl
+								label={ __( 'Custom Price Text', 'zenctuary' ) }
+								value={ categoryMeta[ group.id ]?.priceText || '' }
+								placeholder={ __( 'e.g. 10.00€', 'zenctuary' ) }
+								onChange={ ( val ) => updateCategoryMeta( group.id, 'priceText', val ) }
+							/>
+							<TextControl
+								label={ __( 'Manual Description', 'zenctuary' ) }
+								value={ categoryMeta[ group.id ]?.description || '' }
+								onChange={ ( val ) => updateCategoryMeta( group.id, 'description', val ) }
+							/>
+						</div>
+					) ) }
+				</PanelBody>
+
+				<PanelBody title={ __( 'Product Styling', 'zenctuary' ) } initialOpen={ false }>
+					<PanelColorSettings
+						title={ __( 'Product Name', 'zenctuary' ) }
+						initialOpen={ false }
+						colorSettings={ [
+							{
+								value: productStyles.nameColor,
+								onChange: ( val ) => updateProductStyle( 'nameColor', val ),
+								label: __( 'Name Color', 'zenctuary' ),
+							},
+						] }
+					/>
+					<UnitControl
+						label={ __( 'Name Font Size', 'zenctuary' ) }
+						value={ productStyles.nameFontSize }
+						onChange={ ( val ) => updateProductStyle( 'nameFontSize', val ) }
+					/>
+					<PanelColorSettings
+						title={ __( 'Product Description', 'zenctuary' ) }
+						initialOpen={ false }
+						colorSettings={ [
+							{
+								value: productStyles.descColor,
+								onChange: ( val ) => updateProductStyle( 'descColor', val ),
+								label: __( 'Description Color', 'zenctuary' ),
+							},
+						] }
+					/>
+					<UnitControl
+						label={ __( 'Description Font Size', 'zenctuary' ) }
+						value={ productStyles.descFontSize }
+						onChange={ ( val ) => updateProductStyle( 'descFontSize', val ) }
+					/>
+					<PanelColorSettings
+						title={ __( 'Attribute + Price Styling', 'zenctuary' ) }
+						initialOpen={ false }
+						colorSettings={ [
+							{
+								value: productStyles.metaColor,
+								onChange: ( val ) => updateProductStyle( 'metaColor', val ),
+								label: __( 'Color', 'zenctuary' ),
+							},
+						] }
+					/>
+					<UnitControl
+						label={ __( 'Font Size', 'zenctuary' ) }
+						value={ productStyles.metaFontSize }
+						onChange={ ( val ) => updateProductStyle( 'metaFontSize', val ) }
+					/>
+				</PanelBody>
 			</InspectorControls>
 
 			<RichText
@@ -218,14 +418,14 @@ export default function Edit( { attributes, setAttributes } ) {
 			/>
 
 			<div className="zen-soul-kitchen__filters" style={ { textAlign: headingAlignment, display: 'flex', gap: '10px', flexWrap: 'wrap', marginTop: '20px' } }>
-				{ selectedTags.length > 0 ? selectedTags.map( ( tag, index ) => {
-					// Preview: first button is active, others are inactive
-					const isActive = index === 0;
+				{ selectedTags.length > 0 ? selectedTags.map( ( tag ) => {
+					const isActive = currentTagId === tag.id;
 					const styles = isActive ? activeStyles : inactiveStyles;
 					return (
 						<span
 							key={ tag.id }
 							className={ `zen-soul-kitchen__filter-button ${ isActive ? 'is-active' : '' }` }
+							onClick={ () => setAttributes( { activeTagId: tag.id } ) }
 							style={ {
 								display: 'inline-block',
 								padding: '10px 20px',
@@ -246,6 +446,94 @@ export default function Edit( { attributes, setAttributes } ) {
 					<div style={ { padding: '10px', border: '1px dashed #ccc', color: '#999' } }>
 						{ __( 'No tags selected. Please select tags in the inspector.', 'zenctuary' ) }
 					</div>
+				) }
+			</div>
+
+			<div className="zen-soul-kitchen__menu-content" style={ { marginTop: '40px' } }>
+				{ groupedData.length > 0 ? groupedData.map( ( group ) => (
+					<section key={ group.id } className="zen-soul-kitchen__category" style={ { marginBottom: '40px' } }>
+						{ /* ROW 1: CATEGORY HEADER */ }
+						<div className="zen-soul-kitchen__category-header" style={ { display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', borderBottom: '1px solid #eee', paddingBottom: '10px' } }>
+							<h3 style={ { 
+								margin: 0, 
+								color: categoryStyles.titleColor,
+								fontSize: categoryStyles.titleFontSize,
+								fontWeight: categoryStyles.titleFontWeight
+							} }>
+								{ group.name }
+							</h3>
+							<span style={ { 
+								color: categoryStyles.priceColor,
+								fontSize: categoryStyles.priceFontSize,
+								textAlign: 'right'
+							} }>
+								{ categoryMeta[ group.id ]?.priceText || '' }
+							</span>
+						</div>
+
+						{ /* ROW 2: CATEGORY DESCRIPTION */ }
+						{ categoryMeta[ group.id ]?.description && (
+							<p className="zen-soul-kitchen__category-description" style={ {
+								marginTop: '10px',
+								color: categoryStyles.descColor,
+								fontSize: categoryStyles.descFontSize,
+								fontWeight: categoryStyles.descFontWeight
+							} }>
+								{ categoryMeta[ group.id ].description }
+							</p>
+						) }
+
+						{ /* ROW 3 & 4 & 5: PRODUCTS */ }
+						<div className="zen-soul-kitchen__products" style={ { marginTop: '20px' } }>
+							{ group.products.map( ( product ) => {
+								const shortDesc = product.short_description?.rendered || '';
+								// Extract price from price_html
+								const priceHtml = product.price_html || '';
+								const price = priceHtml.replace( /<\/?[^>]+(>|$)/g, "" );
+								
+								return (
+									<article key={ product.id } className="zen-soul-kitchen__product" style={ { marginBottom: '20px' } }>
+										{ /* ROW 3: PRODUCT NAME */ }
+										<h4 style={ {
+											margin: 0,
+											color: productStyles.nameColor,
+											fontSize: productStyles.nameFontSize,
+											fontWeight: productStyles.nameFontWeight
+										} }>
+											{ product.title?.rendered }
+										</h4>
+
+										{ /* ROW 4: PRODUCT DESCRIPTION */ }
+										{ shortDesc && (
+											<div className="zen-soul-kitchen__product-description" 
+												style={ {
+													marginTop: '5px',
+													color: productStyles.descColor,
+													fontSize: productStyles.descFontSize
+												} }
+												dangerouslySetInnerHTML={ { __html: shortDesc } } 
+											/>
+										) }
+
+										{ /* ROW 5: CONDITIONAL ROW */ }
+										<div className="zen-soul-kitchen__product-meta" style={ {
+											marginTop: '5px',
+											color: productStyles.metaColor,
+											fontSize: productStyles.metaFontSize
+										} }>
+											{ price ? (
+												<span>{ price }</span>
+											) : (
+												shortDesc && <div dangerouslySetInnerHTML={ { __html: shortDesc } } />
+											) }
+										</div>
+									</article>
+								);
+							} ) }
+						</div>
+					</section>
+				) ) : (
+					<p>{ __( 'No products found for this filter.', 'zenctuary' ) }</p>
 				) }
 			</div>
 		</div>

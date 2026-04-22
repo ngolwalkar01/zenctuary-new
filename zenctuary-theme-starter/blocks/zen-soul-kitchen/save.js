@@ -10,6 +10,9 @@ export default function save( { attributes } ) {
 		selectedTags,
 		inactiveStyles,
 		activeStyles,
+		categoryStyles,
+		productStyles,
+		categoryMeta,
 	} = attributes;
 
 	const blockProps = useBlockProps.save();
@@ -38,14 +41,13 @@ export default function save( { attributes } ) {
 				} }
 			>
 				{ selectedTags.length > 0 && selectedTags.map( ( tag, index ) => {
-					// Frontend logic for active state will be handled in later steps
-					// For now, we render them with the saved styles
 					const isActive = index === 0;
 					const styles = isActive ? activeStyles : inactiveStyles;
 					return (
 						<button
 							key={ tag.id }
 							className={ `zen-soul-kitchen__filter-button ${ isActive ? 'is-active' : '' }` }
+							data-tag-id={ tag.id }
 							data-slug={ tag.slug }
 							style={ {
 								display: 'inline-block',
@@ -65,6 +67,10 @@ export default function save( { attributes } ) {
 					);
 				} ) }
 			</div>
+
+			{ /* The actual menu content will be rendered dynamically on the frontend in later steps */ }
+			{ /* For now, we provide the container */ }
+			<div className="zen-soul-kitchen__menu-content" style={ { marginTop: '40px' } }></div>
 		</div>
 	);
 }

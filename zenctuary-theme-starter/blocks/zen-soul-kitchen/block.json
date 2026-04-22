@@ -38,6 +38,41 @@
 			"type": "array",
 			"default": []
 		},
+		"activeTagId": {
+			"type": "number",
+			"default": 0
+		},
+		"categoryMeta": {
+			"type": "object",
+			"default": {}
+		},
+		"categoryStyles": {
+			"type": "object",
+			"default": {
+				"titleColor": "",
+				"titleFontSize": "",
+				"titleFontWeight": "700",
+				"descColor": "",
+				"descFontSize": "",
+				"descFontWeight": "400",
+				"priceColor": "",
+				"priceFontSize": ""
+			}
+		},
+		"productStyles": {
+			"type": "object",
+			"default": {
+				"nameColor": "",
+				"nameFontSize": "",
+				"nameFontWeight": "700",
+				"descColor": "",
+				"descFontSize": "",
+				"shortDescColor": "",
+				"shortDescFontSize": "",
+				"metaColor": "",
+				"metaFontSize": ""
+			}
+		},
 		"inactiveStyles": {
 			"type": "object",
 			"default": {
