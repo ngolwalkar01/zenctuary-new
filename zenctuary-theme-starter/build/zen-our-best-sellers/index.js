@@ -10,6 +10,7 @@
 	const InspectorControls = blockEditor.InspectorControls;
 	const PanelBody = components.PanelBody;
 	const Button = components.Button;
+	const RangeControl = components.RangeControl;
 	const SelectControl = components.SelectControl;
 	const ToggleControl = components.ToggleControl;
 	const BaseControl = components.BaseControl;
@@ -47,6 +48,44 @@
 			el( UnitControl, { label: __( 'Right', 'zenctuary' ), value: nextValue.right, onChange: function ( sideValue ) { updateSide( 'right', sideValue ); } } ),
 			el( UnitControl, { label: __( 'Bottom', 'zenctuary' ), value: nextValue.bottom, onChange: function ( sideValue ) { updateSide( 'bottom', sideValue ); } } ),
 			el( UnitControl, { label: __( 'Left', 'zenctuary' ), value: nextValue.left, onChange: function ( sideValue ) { updateSide( 'left', sideValue ); } } )
+		);
+	}
+
+	function renderTypographyControls( config ) {
+		return el(
+			BaseControl,
+			{ label: config.label },
+			el( UnitControl, {
+				label: __( 'Font Size', 'zenctuary' ),
+				value: String( config.fontSize || 16 ) + 'px',
+				onChange: function ( value ) {
+					config.onFontSizeChange( parseInt( value, 10 ) || 0 );
+				}
+			} ),
+			el( SelectControl, {
+				label: __( 'Font Weight', 'zenctuary' ),
+				value: config.fontWeight,
+				options: [
+					{ label: '300', value: '300' },
+					{ label: '400', value: '400' },
+					{ label: '500', value: '500' },
+					{ label: '600', value: '600' },
+					{ label: '700', value: '700' }
+				],
+				onChange: config.onFontWeightChange
+			} ),
+			el( TextControl, {
+				label: __( 'Line Height', 'zenctuary' ),
+				value: String( config.lineHeight || '' ),
+				onChange: function ( value ) {
+					config.onLineHeightChange( parseFloat( value ) || 0 );
+				}
+			} ),
+			el( TextControl, {
+				label: __( 'Color', 'zenctuary' ),
+				value: config.color || '',
+				onChange: config.onColorChange
+			} )
 		);
 	}
 
@@ -286,6 +325,38 @@
 			className: 'is-editor-preview',
 			style: Object.assign(
 				{},
+				{
+					'--zen-best-sellers-gap-x': ( attributes.horizontalGap || 50 ) + 'px',
+					'--zen-best-sellers-gap-y': ( attributes.verticalGap || 48 ) + 'px',
+					'--zen-best-sellers-heading-size': ( attributes.headingFontSize || 36 ) + 'px',
+					'--zen-best-sellers-heading-weight': attributes.headingFontWeight || '700',
+					'--zen-best-sellers-heading-line-height': String( attributes.headingLineHeight || 1.1 ),
+					'--zen-best-sellers-heading-color': attributes.headingColor || '#d8b355',
+					'--zen-best-sellers-title-size': ( attributes.titleFontSize || 18 ) + 'px',
+					'--zen-best-sellers-title-weight': attributes.titleFontWeight || '700',
+					'--zen-best-sellers-title-line-height': String( attributes.titleLineHeight || 1.3 ),
+					'--zen-best-sellers-title-color': attributes.titleColor || '#d8b355',
+					'--zen-best-sellers-ingredients-label-size': ( attributes.ingredientsLabelFontSize || 18 ) + 'px',
+					'--zen-best-sellers-ingredients-label-weight': attributes.ingredientsLabelFontWeight || '600',
+					'--zen-best-sellers-ingredients-label-line-height': String( attributes.ingredientsLabelLineHeight || 1.2 ),
+					'--zen-best-sellers-ingredients-label-color': attributes.ingredientsLabelColor || '#ffffff',
+					'--zen-best-sellers-ingredients-size': ( attributes.ingredientsFontSize || 16 ) + 'px',
+					'--zen-best-sellers-ingredients-weight': attributes.ingredientsFontWeight || '400',
+					'--zen-best-sellers-ingredients-line-height': String( attributes.ingredientsLineHeight || 1.55 ),
+					'--zen-best-sellers-ingredients-color': attributes.ingredientsColor || 'rgba(246, 242, 234, 0.92)',
+					'--zen-best-sellers-price-size': ( attributes.priceFontSize || 24 ) + 'px',
+					'--zen-best-sellers-price-weight': attributes.priceFontWeight || '700',
+					'--zen-best-sellers-price-line-height': String( attributes.priceLineHeight || 1.2 ),
+					'--zen-best-sellers-price-color': attributes.priceColor || '#d8b355',
+					'--zen-best-sellers-quantity-size': ( attributes.quantityFontSize || 15 ) + 'px',
+					'--zen-best-sellers-quantity-weight': attributes.quantityFontWeight || '700',
+					'--zen-best-sellers-quantity-line-height': String( attributes.quantityLineHeight || 1.4 ),
+					'--zen-best-sellers-quantity-color': attributes.quantityColor || '#d8b355',
+					'--zen-best-sellers-description-size': ( attributes.descriptionFontSize || 16 ) + 'px',
+					'--zen-best-sellers-description-weight': attributes.descriptionFontWeight || '400',
+					'--zen-best-sellers-description-line-height': String( attributes.descriptionLineHeight || 1.55 ),
+					'--zen-best-sellers-description-color': attributes.descriptionColor || 'rgba(246, 242, 234, 0.7)'
+				},
 				getSpacingStyle( attributes.sectionPadding, 'padding' ),
 				getSpacingStyle( attributes.sectionMargin, 'margin' )
 			),
@@ -423,6 +494,8 @@
 					PanelBody,
 					{ title: __( 'Block Layout', 'zenctuary' ), initialOpen: true },
 					el( ToggleControl, { label: __( 'Show Heading', 'zenctuary' ), checked: !! attributes.showHeading, onChange: function ( value ) { setAttributes( { showHeading: value } ); } } ),
+					el( RangeControl, { label: __( 'Horizontal Gap', 'zenctuary' ), value: attributes.horizontalGap || 50, min: 0, max: 120, step: 2, onChange: function ( value ) { setAttributes( { horizontalGap: value } ); } } ),
+					el( RangeControl, { label: __( 'Vertical Gap', 'zenctuary' ), value: attributes.verticalGap || 48, min: 0, max: 120, step: 2, onChange: function ( value ) { setAttributes( { verticalGap: value } ); } } ),
 					renderFourSideControls( __( 'Padding', 'zenctuary' ), attributes.sectionPadding, function ( value ) { setAttributes( { sectionPadding: value } ); } ),
 					renderFourSideControls( __( 'Margin', 'zenctuary' ), attributes.sectionMargin, function ( value ) { setAttributes( { sectionMargin: value } ); } )
 				),
@@ -488,7 +561,88 @@
 								);
 							} )
 					  )
-					: null
+					: null,
+				el(
+					PanelBody,
+					{ title: __( 'Typography', 'zenctuary' ), initialOpen: false },
+					renderTypographyControls( {
+						label: __( 'Heading', 'zenctuary' ),
+						fontSize: attributes.headingFontSize,
+						fontWeight: attributes.headingFontWeight,
+						lineHeight: attributes.headingLineHeight,
+						color: attributes.headingColor,
+						onFontSizeChange: function ( value ) { setAttributes( { headingFontSize: value } ); },
+						onFontWeightChange: function ( value ) { setAttributes( { headingFontWeight: value } ); },
+						onLineHeightChange: function ( value ) { setAttributes( { headingLineHeight: value } ); },
+						onColorChange: function ( value ) { setAttributes( { headingColor: value } ); }
+					} ),
+					renderTypographyControls( {
+						label: __( 'Product Title', 'zenctuary' ),
+						fontSize: attributes.titleFontSize,
+						fontWeight: attributes.titleFontWeight,
+						lineHeight: attributes.titleLineHeight,
+						color: attributes.titleColor,
+						onFontSizeChange: function ( value ) { setAttributes( { titleFontSize: value } ); },
+						onFontWeightChange: function ( value ) { setAttributes( { titleFontWeight: value } ); },
+						onLineHeightChange: function ( value ) { setAttributes( { titleLineHeight: value } ); },
+						onColorChange: function ( value ) { setAttributes( { titleColor: value } ); }
+					} ),
+					renderTypographyControls( {
+						label: __( 'Ingredients Label', 'zenctuary' ),
+						fontSize: attributes.ingredientsLabelFontSize,
+						fontWeight: attributes.ingredientsLabelFontWeight,
+						lineHeight: attributes.ingredientsLabelLineHeight,
+						color: attributes.ingredientsLabelColor,
+						onFontSizeChange: function ( value ) { setAttributes( { ingredientsLabelFontSize: value } ); },
+						onFontWeightChange: function ( value ) { setAttributes( { ingredientsLabelFontWeight: value } ); },
+						onLineHeightChange: function ( value ) { setAttributes( { ingredientsLabelLineHeight: value } ); },
+						onColorChange: function ( value ) { setAttributes( { ingredientsLabelColor: value } ); }
+					} ),
+					renderTypographyControls( {
+						label: __( 'Ingredients Text', 'zenctuary' ),
+						fontSize: attributes.ingredientsFontSize,
+						fontWeight: attributes.ingredientsFontWeight,
+						lineHeight: attributes.ingredientsLineHeight,
+						color: attributes.ingredientsColor,
+						onFontSizeChange: function ( value ) { setAttributes( { ingredientsFontSize: value } ); },
+						onFontWeightChange: function ( value ) { setAttributes( { ingredientsFontWeight: value } ); },
+						onLineHeightChange: function ( value ) { setAttributes( { ingredientsLineHeight: value } ); },
+						onColorChange: function ( value ) { setAttributes( { ingredientsColor: value } ); }
+					} ),
+					renderTypographyControls( {
+						label: __( 'Price', 'zenctuary' ),
+						fontSize: attributes.priceFontSize,
+						fontWeight: attributes.priceFontWeight,
+						lineHeight: attributes.priceLineHeight,
+						color: attributes.priceColor,
+						onFontSizeChange: function ( value ) { setAttributes( { priceFontSize: value } ); },
+						onFontWeightChange: function ( value ) { setAttributes( { priceFontWeight: value } ); },
+						onLineHeightChange: function ( value ) { setAttributes( { priceLineHeight: value } ); },
+						onColorChange: function ( value ) { setAttributes( { priceColor: value } ); }
+					} ),
+					renderTypographyControls( {
+						label: __( 'Quantity', 'zenctuary' ),
+						fontSize: attributes.quantityFontSize,
+						fontWeight: attributes.quantityFontWeight,
+						lineHeight: attributes.quantityLineHeight,
+						color: attributes.quantityColor,
+						onFontSizeChange: function ( value ) { setAttributes( { quantityFontSize: value } ); },
+						onFontWeightChange: function ( value ) { setAttributes( { quantityFontWeight: value } ); },
+						onLineHeightChange: function ( value ) { setAttributes( { quantityLineHeight: value } ); },
+						onColorChange: function ( value ) { setAttributes( { quantityColor: value } ); }
+					} ),
+					renderTypographyControls( {
+						label: __( 'Description', 'zenctuary' ),
+						fontSize: attributes.descriptionFontSize,
+						fontWeight: attributes.descriptionFontWeight,
+						lineHeight: attributes.descriptionLineHeight,
+						color: attributes.descriptionColor,
+						onFontSizeChange: function ( value ) { setAttributes( { descriptionFontSize: value } ); },
+						onFontWeightChange: function ( value ) { setAttributes( { descriptionFontWeight: value } ); },
+						onLineHeightChange: function ( value ) { setAttributes( { descriptionLineHeight: value } ); },
+						onColorChange: function ( value ) { setAttributes( { descriptionColor: value } ); }
+					} )
+				)
 			),
 			el(
 				'section',
@@ -526,6 +680,38 @@
 		const blockProps = useBlockProps.save( {
 			style: Object.assign(
 				{},
+				{
+					'--zen-best-sellers-gap-x': ( attributes.horizontalGap || 50 ) + 'px',
+					'--zen-best-sellers-gap-y': ( attributes.verticalGap || 48 ) + 'px',
+					'--zen-best-sellers-heading-size': ( attributes.headingFontSize || 36 ) + 'px',
+					'--zen-best-sellers-heading-weight': attributes.headingFontWeight || '700',
+					'--zen-best-sellers-heading-line-height': String( attributes.headingLineHeight || 1.1 ),
+					'--zen-best-sellers-heading-color': attributes.headingColor || '#d8b355',
+					'--zen-best-sellers-title-size': ( attributes.titleFontSize || 18 ) + 'px',
+					'--zen-best-sellers-title-weight': attributes.titleFontWeight || '700',
+					'--zen-best-sellers-title-line-height': String( attributes.titleLineHeight || 1.3 ),
+					'--zen-best-sellers-title-color': attributes.titleColor || '#d8b355',
+					'--zen-best-sellers-ingredients-label-size': ( attributes.ingredientsLabelFontSize || 18 ) + 'px',
+					'--zen-best-sellers-ingredients-label-weight': attributes.ingredientsLabelFontWeight || '600',
+					'--zen-best-sellers-ingredients-label-line-height': String( attributes.ingredientsLabelLineHeight || 1.2 ),
+					'--zen-best-sellers-ingredients-label-color': attributes.ingredientsLabelColor || '#ffffff',
+					'--zen-best-sellers-ingredients-size': ( attributes.ingredientsFontSize || 16 ) + 'px',
+					'--zen-best-sellers-ingredients-weight': attributes.ingredientsFontWeight || '400',
+					'--zen-best-sellers-ingredients-line-height': String( attributes.ingredientsLineHeight || 1.55 ),
+					'--zen-best-sellers-ingredients-color': attributes.ingredientsColor || 'rgba(246, 242, 234, 0.92)',
+					'--zen-best-sellers-price-size': ( attributes.priceFontSize || 24 ) + 'px',
+					'--zen-best-sellers-price-weight': attributes.priceFontWeight || '700',
+					'--zen-best-sellers-price-line-height': String( attributes.priceLineHeight || 1.2 ),
+					'--zen-best-sellers-price-color': attributes.priceColor || '#d8b355',
+					'--zen-best-sellers-quantity-size': ( attributes.quantityFontSize || 15 ) + 'px',
+					'--zen-best-sellers-quantity-weight': attributes.quantityFontWeight || '700',
+					'--zen-best-sellers-quantity-line-height': String( attributes.quantityLineHeight || 1.4 ),
+					'--zen-best-sellers-quantity-color': attributes.quantityColor || '#d8b355',
+					'--zen-best-sellers-description-size': ( attributes.descriptionFontSize || 16 ) + 'px',
+					'--zen-best-sellers-description-weight': attributes.descriptionFontWeight || '400',
+					'--zen-best-sellers-description-line-height': String( attributes.descriptionLineHeight || 1.55 ),
+					'--zen-best-sellers-description-color': attributes.descriptionColor || 'rgba(246, 242, 234, 0.7)'
+				},
 				getSpacingStyle( attributes.sectionPadding, 'padding' ),
 				getSpacingStyle( attributes.sectionMargin, 'margin' )
 			),
@@ -564,6 +750,36 @@
 			showHeading: { type: 'boolean', default: true },
 			sectionPadding: { type: 'object', default: defaultSpacing() },
 			sectionMargin: { type: 'object', default: defaultSpacing() },
+			horizontalGap: { type: 'number', default: 50 },
+			verticalGap: { type: 'number', default: 48 },
+			headingFontSize: { type: 'number', default: 36 },
+			headingFontWeight: { type: 'string', default: '700' },
+			headingLineHeight: { type: 'number', default: 1.1 },
+			headingColor: { type: 'string', default: '#d8b355' },
+			titleFontSize: { type: 'number', default: 18 },
+			titleFontWeight: { type: 'string', default: '700' },
+			titleLineHeight: { type: 'number', default: 1.3 },
+			titleColor: { type: 'string', default: '#d8b355' },
+			ingredientsLabelFontSize: { type: 'number', default: 18 },
+			ingredientsLabelFontWeight: { type: 'string', default: '600' },
+			ingredientsLabelLineHeight: { type: 'number', default: 1.2 },
+			ingredientsLabelColor: { type: 'string', default: '#ffffff' },
+			ingredientsFontSize: { type: 'number', default: 16 },
+			ingredientsFontWeight: { type: 'string', default: '400' },
+			ingredientsLineHeight: { type: 'number', default: 1.55 },
+			ingredientsColor: { type: 'string', default: 'rgba(246, 242, 234, 0.92)' },
+			priceFontSize: { type: 'number', default: 24 },
+			priceFontWeight: { type: 'string', default: '700' },
+			priceLineHeight: { type: 'number', default: 1.2 },
+			priceColor: { type: 'string', default: '#d8b355' },
+			quantityFontSize: { type: 'number', default: 15 },
+			quantityFontWeight: { type: 'string', default: '700' },
+			quantityLineHeight: { type: 'number', default: 1.4 },
+			quantityColor: { type: 'string', default: '#d8b355' },
+			descriptionFontSize: { type: 'number', default: 16 },
+			descriptionFontWeight: { type: 'string', default: '400' },
+			descriptionLineHeight: { type: 'number', default: 1.55 },
+			descriptionColor: { type: 'string', default: 'rgba(246, 242, 234, 0.7)' },
 			selectedProductIds: { type: 'array', default: [] },
 			selectedProducts: { type: 'array', default: [] }
 		},
