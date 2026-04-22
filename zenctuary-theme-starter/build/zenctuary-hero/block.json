@@ -208,13 +208,33 @@
     "tagsItems": {
       "type": "array",
       "items": {
-        "type": "string"
+        "type": "object",
+        "properties": {
+          "text": {
+            "type": "string"
+          },
+          "url": {
+            "type": "string"
+          }
+        }
       },
       "default": [
-        "CLASSES",
-        "SPA",
-        "CAFE",
-        "COMMUNITY"
+        {
+          "text": "CLASSES",
+          "url": ""
+        },
+        {
+          "text": "SPA",
+          "url": ""
+        },
+        {
+          "text": "CAFE",
+          "url": ""
+        },
+        {
+          "text": "COMMUNITY",
+          "url": ""
+        }
       ]
     },
     "showContactBundle": {

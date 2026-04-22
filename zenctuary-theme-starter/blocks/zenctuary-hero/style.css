@@ -138,6 +138,18 @@
     align-items: center;
 }
 
+.zenctuary-hero__tag-link {
+    color: inherit;
+    text-decoration: none;
+}
+
+.zenctuary-hero__tag-link:hover,
+.zenctuary-hero__tag-link:focus-visible,
+.zenctuary-hero__tag-link:visited {
+    color: inherit;
+    text-decoration: none;
+}
+
 /* Generate dots between items */
 .zenctuary-hero__tags-list li:not(:last-child)::after {
     content: "\2022";

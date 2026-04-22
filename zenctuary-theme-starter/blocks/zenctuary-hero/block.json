@@ -71,8 +71,19 @@
     "tagsLetterSpacing": { "type": "number", "default": 0.05 },
     "tagsItems": {
       "type": "array",
-      "items": { "type": "string" },
-      "default": ["CLASSES", "SPA", "CAFE", "COMMUNITY"]
+      "items": {
+        "type": "object",
+        "properties": {
+          "text": { "type": "string" },
+          "url": { "type": "string" }
+        }
+      },
+      "default": [
+        { "text": "CLASSES", "url": "" },
+        { "text": "SPA", "url": "" },
+        { "text": "CAFE", "url": "" },
+        { "text": "COMMUNITY", "url": "" }
+      ]
     },
 
     "showContactBundle": { "type": "boolean", "default": true },

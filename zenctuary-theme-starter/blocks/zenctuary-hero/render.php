@@ -34,6 +34,29 @@ if ( ! function_exists( 'zh_anim_attrs' ) ) {
     }
 }
 
+if ( ! function_exists( 'zh_normalize_tag_item' ) ) {
+    function zh_normalize_tag_item( $tag ) {
+        if ( is_string( $tag ) ) {
+            return [
+                'text' => $tag,
+                'url'  => '',
+            ];
+        }
+
+        if ( is_array( $tag ) ) {
+            return [
+                'text' => isset( $tag['text'] ) ? (string) $tag['text'] : '',
+                'url'  => isset( $tag['url'] ) ? (string) $tag['url'] : '',
+            ];
+        }
+
+        return [
+            'text' => '',
+            'url'  => '',
+        ];
+    }
+}
+
 $vars = [
     '--zh-bg-overlay-c:'   . $bg_overlay_c,
     '--zh-bg-overlay-op:'  . $bg_overlay_op,
@@ -167,8 +190,22 @@ if ( ! function_exists( 'zh_format_link' ) ) {
     <?php if ( $show_tags && !empty($tags_items) ) : ?>
     <div class="zenctuary-hero__tags-wrapper">
         <ul class="zenctuary-hero__tags-list">
-            <?php foreach ( $tags_items as $tag ) : ?>
-                <li><?php echo esc_html($tag); ?></li>
+            <?php foreach ( $tags_items as $tag ) :
+                $normalized_tag = zh_normalize_tag_item( $tag );
+                $tag_text = trim( $normalized_tag['text'] );
+                $tag_url  = trim( $normalized_tag['url'] );
+
+                if ( '' === $tag_text ) {
+                    continue;
+                }
+            ?>
+                <li>
+                    <?php if ( '' !== $tag_url ) : ?>
+                        <a class="zenctuary-hero__tag-link" href="<?php echo esc_url( $tag_url ); ?>"><?php echo esc_html( $tag_text ); ?></a>
+                    <?php else : ?>
+                        <span class="zenctuary-hero__tag-link"><?php echo esc_html( $tag_text ); ?></span>
+                    <?php endif; ?>
+                </li>
             <?php endforeach; ?>
         </ul>
     </div>

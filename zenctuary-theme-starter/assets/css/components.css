@@ -291,6 +291,15 @@ li.wp-social-link.has-primary-grey-color.has-primary-gold-background-color.zen-s
    BUTTONS
    ========================================== */
 
+header .zen-btn .wp-element-button.wp-block-button__link{
+ border: var(--zen-border-width) solid #9A9A9A !important;
+}
+
+header .zen-btn .wp-element-button.wp-block-button__link svg{
+width: 24px;
+height: 24px;
+}
+
 .zen-btn,
 .wp-element-button,
 .wp-block-button__link {

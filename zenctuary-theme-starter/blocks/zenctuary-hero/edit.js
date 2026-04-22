@@ -60,6 +60,21 @@ const ANIMATION_OPTIONS = [
     { label: 'Zoom In', value: 'zoom-in' }
 ];
 
+function normalizeTagItem( tag ) {
+    if ( typeof tag === 'string' ) {
+        return { text: tag, url: '' };
+    }
+
+    if ( tag && typeof tag === 'object' ) {
+        return {
+            text: tag.text || '',
+            url: tag.url || ''
+        };
+    }
+
+    return { text: '', url: '' };
+}
+
 export default function Edit( { attributes, setAttributes } ) {
     const {
         bgImageUrl = '', bgImageId = 0, bgOverlayColor = '#000000', bgOverlayOpacity = 0.4,
@@ -276,21 +291,39 @@ export default function Edit( { attributes, setAttributes } ) {
                     { showTagsRow && (
                         <>
                             <div style={{ background: '#1e1e1e', padding: '12px', borderRadius: '4px', marginBottom: '16px' }}>
-                                { (tagsItems || []).map((item, index) => (
-                                    <div key={index} style={{ display: 'flex', gap: '8px', marginBottom: '8px' }}>
-                                        <TextControl value={item || ''} onChange={v => {
-                                            const newTags = [...(tagsItems || [])];
-                                            newTags[index] = v;
-                                            setAttributes({ tagsItems: newTags });
-                                        }} style={{ flex: 1, marginBottom: 0 }} />
+                                { (tagsItems || []).map((item, index) => {
+                                    const normalizedTag = normalizeTagItem( item );
+                                    return (
+                                    <div key={index} style={{ display: 'grid', gridTemplateColumns: '1fr auto', gap: '8px', marginBottom: '12px', alignItems: 'end' }}>
+                                        <div style={{ display: 'grid', gap: '8px' }}>
+                                            <TextControl
+                                                label="Tag Text"
+                                                value={normalizedTag.text}
+                                                onChange={v => {
+                                                    const newTags = [...(tagsItems || [])];
+                                                    newTags[index] = { ...normalizedTag, text: v };
+                                                    setAttributes({ tagsItems: newTags });
+                                                }}
+                                            />
+                                            <TextControl
+                                                label="Tag Link"
+                                                value={normalizedTag.url}
+                                                onChange={v => {
+                                                    const newTags = [...(tagsItems || [])];
+                                                    newTags[index] = { ...normalizedTag, url: v };
+                                                    setAttributes({ tagsItems: newTags });
+                                                }}
+                                                placeholder="https://example.com"
+                                            />
+                                        </div>
                                         <Button isDestructive variant="secondary" onClick={() => {
                                             const newTags = [...(tagsItems || [])];
                                             newTags.splice(index, 1);
                                             setAttributes({ tagsItems: newTags });
                                         }}>✖</Button>
                                     </div>
-                                ))}
-                                <Button variant="secondary" onClick={() => setAttributes({ tagsItems: [...(tagsItems || []), 'NEW TAG'] })} style={{ width: '100%', justifyContent: 'center' }}>+ Add Tag</Button>
+                                )})}
+                                <Button variant="secondary" onClick={() => setAttributes({ tagsItems: [...(tagsItems || []), { text: 'NEW TAG', url: '' }] })} style={{ width: '100%', justifyContent: 'center' }}>+ Add Tag</Button>
                             </div>
 
                             <RangeControl label="Bottom Offset (Desktop)" value={ tagsBottomOffset } min={0} max={200} step={4} onChange={ v => setAttributes({ tagsBottomOffset: v }) } />
@@ -466,7 +499,15 @@ export default function Edit( { attributes, setAttributes } ) {
                     <ul style={{ listStyle: 'none', margin: 0, padding: 0, display: 'flex', flexWrap: 'wrap', justifyContent: 'center', gap: `${tagsGap}px` }}>
                         { (tagsItems || []).map((tag, i) => (
                             <li key={i} style={{ display: 'flex', alignItems: 'center', fontSize: `${tagsFontSize}px`, fontWeight: tagsFontWeight, textTransform: tagsTextTransform, letterSpacing: `${tagsLetterSpacing}em`, color: tagsColor }}>
-                                { tag }
+                                { normalizeTagItem( tag ).url ? (
+                                    <a
+                                        href={ normalizeTagItem( tag ).url }
+                                        onClick={ e => e.preventDefault() }
+                                        style={{ color: 'inherit', textDecoration: 'none' }}
+                                    >
+                                        { normalizeTagItem( tag ).text }
+                                    </a>
+                                ) : normalizeTagItem( tag ).text }
                                 { i < (tagsItems || []).length - 1 && (
                                     <span style={{ marginLeft: `${tagsGap}px`, opacity: 0.6 }}>•</span>
                                 )}
