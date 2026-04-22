@@ -1,0 +1,63 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "zenctuary/zen-soul-kitchen",
+	"version": "0.1.0",
+	"title": "Zen Soul Kitchen",
+	"category": "widgets",
+	"icon": "food",
+	"description": "A customizable menu block with tag-based filtering.",
+	"supports": {
+		"html": false,
+		"anchor": true,
+		"align": [ "wide", "full" ]
+	},
+	"textdomain": "zenctuary",
+	"attributes": {
+		"heading": {
+			"type": "string",
+			"default": "SOUL KITCHEN MENU"
+		},
+		"headingColor": {
+			"type": "string",
+			"default": ""
+		},
+		"headingFontSize": {
+			"type": "string",
+			"default": ""
+		},
+		"headingFontWeight": {
+			"type": "string",
+			"default": "700"
+		},
+		"headingAlignment": {
+			"type": "string",
+			"default": "left"
+		},
+		"selectedTags": {
+			"type": "array",
+			"default": []
+		},
+		"inactiveStyles": {
+			"type": "object",
+			"default": {
+				"backgroundColor": "",
+				"textColor": "",
+				"fontWeight": "400",
+				"borderColor": "",
+				"borderWidth": "1px",
+				"borderRadius": "25px"
+			}
+		},
+		"activeStyles": {
+			"type": "object",
+			"default": {
+				"backgroundColor": "#d9b35c",
+				"textColor": "#000000",
+				"borderColor": "#d9b35c"
+			}
+		}
+	},
+	"editorScript": "file:./index.js",
+	"style": "file:./style-index.css"
+}
