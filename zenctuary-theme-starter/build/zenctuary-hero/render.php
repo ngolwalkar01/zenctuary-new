@@ -57,6 +57,27 @@ if ( ! function_exists( 'zh_normalize_tag_item' ) ) {
     }
 }
 
+if ( ! function_exists( 'zh_contact_icon_markup' ) ) {
+    function zh_contact_icon_markup( $item, $icons ) {
+        if ( ! is_array( $item ) ) {
+            return $icons['email'] ?? '';
+        }
+
+        $custom_icon_url = isset( $item['customIconUrl'] ) ? trim( (string) $item['customIconUrl'] ) : '';
+
+        if ( '' !== $custom_icon_url ) {
+            return sprintf(
+                '<img src="%1$s" alt="" loading="lazy" decoding="async" />',
+                esc_url( $custom_icon_url )
+            );
+        }
+
+        $type = isset( $item['type'] ) ? (string) $item['type'] : 'email';
+
+        return $icons[ $type ] ?? ( $icons['email'] ?? '' );
+    }
+}
+
 $vars = [
     '--zh-bg-overlay-c:'   . $bg_overlay_c,
     '--zh-bg-overlay-op:'  . $bg_overlay_op,
@@ -217,19 +238,18 @@ if ( ! function_exists( 'zh_format_link' ) ) {
         <div class="zenctuary-hero__contact-actions" id="<?php echo esc_attr( $contact_actions_id ); ?>" aria-hidden="true">
             <?php foreach ( $contact_acts as $act ) : 
                 $t = esc_attr($act['type'] ?? 'email');
-                $icon = $icons[$t] ?? $icons['email'];
+                $icon = zh_contact_icon_markup( $act, $icons );
             ?>
                 <a href="<?php echo zh_format_link($t, $act['value'] ?? ''); ?>" class="zenctuary-hero__contact-btn">
                     <span class="zh-cbtn-label"><?php echo esc_html($act['label'] ?? ''); ?></span>
-                    <span class="zh-cbtn-icon"><?php echo $icon; ?></span>
+                    <span class="zh-cbtn-icon"><?php echo $icon; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></span>
                 </a>
             <?php endforeach; ?>
         </div>
         <button class="zenctuary-hero__contact-trigger" aria-label="<?php esc_attr_e('Open contact options', 'zenctuary'); ?>" aria-expanded="false" aria-controls="<?php echo esc_attr( $contact_actions_id ); ?>">
             <span class="zh-ctrigger-icons" aria-hidden="true">
                 <?php foreach ( $contact_trigger_icons as $trigger_icon ) :
-                    $icon_type = esc_attr( $trigger_icon['type'] ?? 'email' );
-                    $icon_svg  = $icons[ $icon_type ] ?? $icons['email'];
+                    $icon_svg  = zh_contact_icon_markup( $trigger_icon, $icons );
                     $icon_x    = isset( $trigger_icon['x'] ) ? floatval( $trigger_icon['x'] ) : 50;
                     $icon_y    = isset( $trigger_icon['y'] ) ? floatval( $trigger_icon['y'] ) : 50;
                     $icon_size = isset( $trigger_icon['size'] ) ? absint( $trigger_icon['size'] ) : 18;

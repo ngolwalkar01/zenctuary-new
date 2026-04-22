@@ -277,6 +277,12 @@
           "type": {
             "type": "string"
           },
+          "customIconUrl": {
+            "type": "string"
+          },
+          "customIconId": {
+            "type": "number"
+          },
           "x": {
             "type": "number"
           },
@@ -332,6 +338,12 @@
         "properties": {
           "type": {
             "type": "string"
+          },
+          "customIconUrl": {
+            "type": "string"
+          },
+          "customIconId": {
+            "type": "number"
           },
           "label": {
             "type": "string"

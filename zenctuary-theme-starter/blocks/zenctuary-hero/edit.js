@@ -75,6 +75,20 @@ function normalizeTagItem( tag ) {
     return { text: '', url: '' };
 }
 
+function renderBundleIcon( item ) {
+    if ( item?.customIconUrl ) {
+        return (
+            <img
+                src={ item.customIconUrl }
+                alt=""
+                style={{ width: '100%', height: '100%', objectFit: 'contain' }}
+            />
+        );
+    }
+
+    return ICONS[ item?.type ] || ICONS.email;
+}
+
 export default function Edit( { attributes, setAttributes } ) {
     const {
         bgImageUrl = '', bgImageId = 0, bgOverlayColor = '#000000', bgOverlayOpacity = 0.4,
@@ -371,6 +385,38 @@ export default function Edit( { attributes, setAttributes } ) {
                                             ]}
                                             onChange={ v => setObjAttrParams(contactTriggerIcons, idx, 'type', v, 'contactTriggerIcons') }
                                         />
+                                        { icon.customIconUrl ? (
+                                            <div style={{ display: 'flex', gap: '8px', alignItems: 'center', marginBottom: '12px' }}>
+                                                <img src={ icon.customIconUrl } alt="" style={{ width: '40px', height: '40px', objectFit: 'contain', background: '#333', padding: '4px', borderRadius: '4px' }} />
+                                                <Button
+                                                    isDestructive
+                                                    variant="secondary"
+                                                    onClick={() => {
+                                                        const nextIcons = [...(contactTriggerIcons || [])];
+                                                        nextIcons[idx] = { ...nextIcons[idx], customIconUrl: '', customIconId: 0 };
+                                                        setAttributes({ contactTriggerIcons: nextIcons });
+                                                    }}
+                                                >
+                                                    Remove Custom Icon
+                                                </Button>
+                                            </div>
+                                        ) : null }
+                                        <MediaUploadCheck>
+                                            <MediaUpload
+                                                allowedTypes={ [ 'image' ] }
+                                                value={ icon.customIconId || 0 }
+                                                onSelect={ ( media ) => {
+                                                    const nextIcons = [...(contactTriggerIcons || [])];
+                                                    nextIcons[idx] = { ...nextIcons[idx], customIconUrl: media.url, customIconId: media.id || 0 };
+                                                    setAttributes({ contactTriggerIcons: nextIcons });
+                                                } }
+                                                render={ ( { open } ) => (
+                                                    <Button variant="secondary" onClick={ open } style={{ width: '100%', justifyContent: 'center', marginBottom: '12px' }}>
+                                                        { icon.customIconUrl ? 'Replace Custom Icon' : '+ Upload Custom Icon' }
+                                                    </Button>
+                                                ) }
+                                            />
+                                        </MediaUploadCheck>
                                         <RangeControl label="Horizontal Position (%)" value={ icon.x ?? 50 } min={0} max={100} step={1} onChange={ v => setObjAttrParams(contactTriggerIcons, idx, 'x', v, 'contactTriggerIcons') } />
                                         <RangeControl label="Vertical Position (%)" value={ icon.y ?? 50 } min={0} max={100} step={1} onChange={ v => setObjAttrParams(contactTriggerIcons, idx, 'y', v, 'contactTriggerIcons') } />
                                         <RangeControl label="Icon Size (px)" value={ icon.size ?? 18 } min={10} max={40} step={1} onChange={ v => setObjAttrParams(contactTriggerIcons, idx, 'size', v, 'contactTriggerIcons') } />
@@ -389,7 +435,7 @@ export default function Edit( { attributes, setAttributes } ) {
                                 )) }
                                 <Button
                                     variant="secondary"
-                                    onClick={() => setAttributes({ contactTriggerIcons: [...(contactTriggerIcons || []), { type: 'email', x: 50, y: 50, size: 18 }] })}
+                                    onClick={() => setAttributes({ contactTriggerIcons: [...(contactTriggerIcons || []), { type: 'email', customIconUrl: '', customIconId: 0, x: 50, y: 50, size: 18 }] })}
                                     style={{ width: '100%', justifyContent: 'center' }}
                                 >
                                     + Add Trigger Icon
@@ -409,6 +455,38 @@ export default function Edit( { attributes, setAttributes } ) {
                                 { (contactActions || []).map((act, idx) => (
                                     <div key={idx} style={{ padding: '8px', background: '#2e2e2e', marginBottom: '8px', borderRadius: '4px' }}>
                                         <SelectControl label="Type" value={act.type || 'email'} options={[{label:'Email',value:'email'},{label:'Phone',value:'phone'},{label:'Whatsapp',value:'whatsapp'}]} onChange={v => setObjAttrParams(contactActions, idx, 'type', v, 'contactActions')} />
+                                        { act.customIconUrl ? (
+                                            <div style={{ display: 'flex', gap: '8px', alignItems: 'center', marginBottom: '12px' }}>
+                                                <img src={ act.customIconUrl } alt="" style={{ width: '40px', height: '40px', objectFit: 'contain', background: '#333', padding: '4px', borderRadius: '4px' }} />
+                                                <Button
+                                                    isDestructive
+                                                    variant="secondary"
+                                                    onClick={() => {
+                                                        const newActs = [...(contactActions || [])];
+                                                        newActs[idx] = { ...newActs[idx], customIconUrl: '', customIconId: 0 };
+                                                        setAttributes({ contactActions: newActs });
+                                                    }}
+                                                >
+                                                    Remove Custom Icon
+                                                </Button>
+                                            </div>
+                                        ) : null }
+                                        <MediaUploadCheck>
+                                            <MediaUpload
+                                                allowedTypes={ [ 'image' ] }
+                                                value={ act.customIconId || 0 }
+                                                onSelect={ ( media ) => {
+                                                    const newActs = [...(contactActions || [])];
+                                                    newActs[idx] = { ...newActs[idx], customIconUrl: media.url, customIconId: media.id || 0 };
+                                                    setAttributes({ contactActions: newActs });
+                                                } }
+                                                render={ ( { open } ) => (
+                                                    <Button variant="secondary" onClick={ open } style={{ width: '100%', justifyContent: 'center', marginBottom: '12px' }}>
+                                                        { act.customIconUrl ? 'Replace Custom Icon' : '+ Upload Custom Icon' }
+                                                    </Button>
+                                                ) }
+                                            />
+                                        </MediaUploadCheck>
                                         <TextControl label="Label Text" value={act.label || ''} onChange={v => setObjAttrParams(contactActions, idx, 'label', v, 'contactActions')} />
                                         <TextControl label="Value (email/phone num)" value={act.value || ''} onChange={v => setObjAttrParams(contactActions, idx, 'value', v, 'contactActions')} />
                                         <Button isDestructive variant="link" onClick={() => {
@@ -418,7 +496,7 @@ export default function Edit( { attributes, setAttributes } ) {
                                         }}>Remove Action</Button>
                                     </div>
                                 ))}
-                                <Button variant="secondary" onClick={() => setAttributes({ contactActions: [...(contactActions || []), { type: 'email', label: 'New Action', value: '' }] })} style={{ width: '100%', justifyContent: 'center' }}>+ Add Action</Button>
+                                <Button variant="secondary" onClick={() => setAttributes({ contactActions: [...(contactActions || []), { type: 'email', customIconUrl: '', customIconId: 0, label: 'New Action', value: '' }] })} style={{ width: '100%', justifyContent: 'center' }}>+ Add Action</Button>
                             </div>
                         </>
                     )}
@@ -531,7 +609,7 @@ export default function Edit( { attributes, setAttributes } ) {
                                     borderRadius: '999px', padding: '10px 14px 10px 20px', fontSize: '15px', fontWeight: 500
                                 }}>
                                     <span>{ act.label }</span>
-                                    <span style={{ display: 'flex' }}>{ ICONS[act.type] || ICONS.email }</span>
+                                    <span style={{ display: 'flex', width: '24px', height: '24px' }}>{ renderBundleIcon( act ) }</span>
                                 </div>
                             ))}
                         </div>
@@ -562,7 +640,7 @@ export default function Edit( { attributes, setAttributes } ) {
                                     height: `${icon.size ?? 18}px`
                                 }}
                             >
-                                { ICONS[icon.type] || ICONS.email }
+                                { renderBundleIcon( icon ) }
                             </span>
                         )) }
                     </div>
