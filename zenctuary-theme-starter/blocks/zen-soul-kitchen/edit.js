@@ -44,32 +44,45 @@ export default function Edit( { attributes, setAttributes } ) {
 	}, [] );
 
 	// Fetch Products for the Active Tag
-	const products = useSelect( ( select ) => {
-		if ( ! currentTagId ) return [];
-		return select( 'core' ).getEntityRecords( 'postType', 'product', {
+	const { products, isLoadingProducts } = useSelect( ( select ) => {
+		if ( ! currentTagId ) return { products: [], isLoadingProducts: false };
+		const query = {
 			per_page: -1,
 			product_tag: currentTagId,
-		} );
+		};
+		return {
+			products: select( 'core' ).getEntityRecords( 'postType', 'product', query ) || [],
+			isLoadingProducts: select( 'core' ).isResolving( 'getEntityRecords', [ 'postType', 'product', query ] ),
+		};
 	}, [ currentTagId ] );
 
 	// Fetch Categories
-	const allCategories = useSelect( ( select ) => {
-		return select( 'core' ).getEntityRecords( 'taxonomy', 'product_cat', { per_page: -1 } );
+	const { allCategories, isLoadingCategories } = useSelect( ( select ) => {
+		const query = { per_page: -1 };
+		return {
+			allCategories: select( 'core' ).getEntityRecords( 'taxonomy', 'product_cat', query ) || [],
+			isLoadingCategories: select( 'core' ).isResolving( 'getEntityRecords', [ 'taxonomy', 'product_cat', query ] ),
+		};
 	}, [] );
 
+	const isLoading = isLoadingProducts || isLoadingCategories;
+
 	const groupedData = useMemo( () => {
-		if ( ! products || ! allCategories ) return [];
+		if ( isLoading || ! products || ! allCategories ) return [];
 
 		const groups = [];
 		products.forEach( ( product ) => {
+			// WC REST API returns product.categories as an array of objects: [{ id, name, slug }]
+			// But sometimes custom endpoints or layers might return just IDs.
 			const productCats = product.categories || [];
-			productCats.forEach( ( cat ) => {
-				let group = groups.find( ( g ) => g.id === cat.id );
+			productCats.forEach( ( catOrId ) => {
+				const catId = typeof catOrId === 'object' ? catOrId.id : catOrId;
+				let group = groups.find( ( g ) => g.id === catId );
 				if ( ! group ) {
-					const categoryInfo = allCategories.find( ( c ) => c.id === cat.id );
+					const categoryInfo = allCategories.find( ( c ) => c.id === catId );
 					if ( categoryInfo ) {
 						group = {
-							id: cat.id,
+							id: catId,
 							name: categoryInfo.name,
 							products: [],
 						};
@@ -83,7 +96,7 @@ export default function Edit( { attributes, setAttributes } ) {
 		} );
 
 		return groups.sort( ( a, b ) => a.name.localeCompare( b.name ) );
-	}, [ products, allCategories ] );
+	}, [ products, allCategories, isLoading ] );
 
 	const tagOptions = useMemo( () => {
 		if ( ! allTags ) return [];
@@ -450,7 +463,9 @@ export default function Edit( { attributes, setAttributes } ) {
 			</div>
 
 			<div className="zen-soul-kitchen__menu-content" style={ { marginTop: '40px' } }>
-				{ groupedData.length > 0 ? groupedData.map( ( group ) => (
+				{ isLoading ? (
+					<p>{ __( 'Loading products and categories...', 'zenctuary' ) }</p>
+				) : groupedData.length > 0 ? groupedData.map( ( group ) => (
 					<section key={ group.id } className="zen-soul-kitchen__category" style={ { marginBottom: '40px' } }>
 						{ /* ROW 1: CATEGORY HEADER */ }
 						<div className="zen-soul-kitchen__category-header" style={ { display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', borderBottom: '1px solid #eee', paddingBottom: '10px' } }>
