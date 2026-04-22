@@ -349,15 +349,19 @@ li.wp-social-link.has-primary-grey-color.has-primary-gold-background-color.zen-s
 }
 
 .zen-site-header .zen-auth-trigger .wp-block-button__link,
-.zen-site-header .zen-auth-trigger.wp-block-button .wp-block-button__link {
-  border: 2px solid #9A9A9A !important;
+.zen-site-header .zen-auth-trigger.wp-block-button .wp-block-button__link,
+.zen-site-header .wp-block-button.zen-auth-trigger > .wp-block-button__link {
+  border-width: 2px !important;
+  border-style: solid !important;
+  border-color: #9A9A9A !important;
 }
 
 .zen-site-header .zen-auth-trigger .wp-block-button__link svg,
-.zen-site-header .zen-auth-trigger.wp-block-button .wp-block-button__link svg {
-  width: 22px;
-  height: 22px;
-  flex: 0 0 22px;
+.zen-site-header .zen-auth-trigger.wp-block-button .wp-block-button__link svg,
+.zen-site-header .wp-block-button.zen-auth-trigger > .wp-block-button__link svg {
+  width: 22px !important;
+  height: 22px !important;
+  flex: 0 0 22px !important;
 }
 
 .wp-block-navigation__responsive-container .wp-block-navigation__responsive-container-content {
