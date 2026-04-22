@@ -35,6 +35,44 @@
 		"sectionMargin": {
 			"type": "object",
 			"default": { "top": "0px", "right": "0px", "bottom": "0px", "left": "0px" }
+		},
+		"headingColor": {
+			"type": "string",
+			"default": ""
+		},
+		"headingFontSize": {
+			"type": "string",
+			"default": ""
+		},
+		"headingFontWeight": {
+			"type": "string",
+			"default": "700"
+		},
+		"headingAlignment": {
+			"type": "string",
+			"default": "left"
+		},
+		"selectedTags": {
+			"type": "array",
+			"default": []
+		},
+		"buttonStyles": {
+			"type": "object",
+			"default": {
+				"normal": {
+					"backgroundColor": "",
+					"textColor": "",
+					"fontWeight": "400",
+					"borderColor": "",
+					"borderWidth": "1px",
+					"borderRadius": "25px"
+				},
+				"active": {
+					"backgroundColor": "#d9b35c",
+					"textColor": "#000000",
+					"borderColor": "#d9b35c"
+				}
+			}
 		}
 	},
 	"supports": {

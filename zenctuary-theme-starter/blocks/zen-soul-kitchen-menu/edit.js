@@ -1,7 +1,22 @@
-import { InspectorControls, useBlockProps } from '@wordpress/block-editor';
-import { Button, PanelBody, Spinner, TextControl, __experimentalUnitControl as UnitControl } from '@wordpress/components';
+import { 
+	InspectorControls, 
+	useBlockProps, 
+	AlignmentToolbar, 
+	PanelColorSettings 
+} from '@wordpress/block-editor';
+import { 
+	Button, 
+	PanelBody, 
+	Spinner, 
+	TextControl, 
+	__experimentalUnitControl as UnitControl,
+	FormTokenField,
+	SelectControl,
+	FontSizePicker
+} from '@wordpress/components';
 import { useEffect, useMemo, useState } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
+import { useSelect } from '@wordpress/data';
 import apiFetch from '@wordpress/api-fetch';
 
 const FILTERS = [
@@ -157,9 +172,62 @@ function CategorySection( { category, settings } ) {
 }
 
 export default function Edit( { attributes, setAttributes } ) {
+	const {
+		heading,
+		headingColor,
+		headingFontSize,
+		headingFontWeight,
+		headingAlignment,
+		selectedTags,
+		buttonStyles,
+		sectionPadding,
+		sectionMargin,
+		activeFilter,
+	} = attributes;
+
 	const [ products, setProducts ] = useState( [] );
 	const [ isLoading, setIsLoading ] = useState( true );
 	const [ errorMessage, setErrorMessage ] = useState( '' );
+
+	// Fetch Product Tags
+	const allTags = useSelect( ( select ) => {
+		return select( 'core' ).getEntityRecords( 'taxonomy', 'product_tag', { per_page: -1 } );
+	}, [] );
+
+	const tagOptions = useMemo( () => {
+		if ( ! allTags ) return [];
+		return allTags.map( ( tag ) => tag.name );
+	}, [ allTags ] );
+
+	const onTagsChange = ( tokens ) => {
+		const newSelectedTags = tokens.map( ( token ) => {
+			const tag = allTags.find( ( t ) => t.name === token );
+			if ( ! tag ) return null;
+
+			const existing = selectedTags.find( ( st ) => st.id === tag.id );
+			return existing || { id: tag.id, slug: tag.slug, label: tag.name };
+		} ).filter( Boolean );
+
+		setAttributes( { selectedTags: newSelectedTags } );
+	};
+
+	const updateTagLabel = ( index, newLabel ) => {
+		const newTags = [ ...selectedTags ];
+		newTags[ index ] = { ...newTags[ index ], label: newLabel };
+		setAttributes( { selectedTags: newTags } );
+	};
+
+	const updateButtonStyle = ( state, key, value ) => {
+		setAttributes( {
+			buttonStyles: {
+				...buttonStyles,
+				[ state ]: {
+					...( buttonStyles[ state ] || {} ),
+					[ key ]: value,
+				},
+			},
+		} );
+	};
 	const activeFilter = attributes.activeFilter || 'drinks';
 	const activeFilterConfig = FILTERS.find( ( filter ) => filter.key === activeFilter ) || FILTERS[ 0 ];
 	const activeTagSlug = attributes[ activeFilterConfig.slugAttribute ];
@@ -217,42 +285,188 @@ export default function Edit( { attributes, setAttributes } ) {
 	return (
 		<>
 			<InspectorControls>
-				<PanelBody title={ __( 'Block Layout', 'zenctuary' ) }>
-					<TextControl label={ __( 'Heading', 'zenctuary' ) } value={ attributes.heading } onChange={ ( heading ) => setAttributes( { heading } ) } />
-					<FourSideControls label={ __( 'Padding', 'zenctuary' ) } value={ attributes.sectionPadding } onChange={ ( sectionPadding ) => setAttributes( { sectionPadding } ) } />
-					<FourSideControls label={ __( 'Margin', 'zenctuary' ) } value={ attributes.sectionMargin } onChange={ ( sectionMargin ) => setAttributes( { sectionMargin } ) } />
+				<PanelBody title={ __( 'Heading Settings', 'zenctuary' ) }>
+					<TextControl
+						label={ __( 'Heading Text', 'zenctuary' ) }
+						value={ heading }
+						onChange={ ( val ) => setAttributes( { heading: val } ) }
+					/>
+					<PanelColorSettings
+						title={ __( 'Heading Color', 'zenctuary' ) }
+						initialOpen={ false }
+						colorSettings={ [
+							{
+								value: headingColor,
+								onChange: ( val ) => setAttributes( { headingColor: val } ),
+								label: __( 'Color', 'zenctuary' ),
+							},
+						] }
+					/>
+					<UnitControl
+						label={ __( 'Font Size', 'zenctuary' ) }
+						value={ headingFontSize }
+						onChange={ ( val ) => setAttributes( { headingFontSize: val } ) }
+					/>
+					<SelectControl
+						label={ __( 'Font Weight', 'zenctuary' ) }
+						value={ headingFontWeight }
+						options={ [
+							{ label: 'Normal', value: '400' },
+							{ label: 'Medium', value: '500' },
+							{ label: 'Semi Bold', value: '600' },
+							{ label: 'Bold', value: '700' },
+							{ label: 'Extra Bold', value: '800' },
+						] }
+						onChange={ ( val ) => setAttributes( { headingFontWeight: val } ) }
+					/>
+					<div className="components-base-control">
+						<span className="components-base-control__label">{ __( 'Alignment', 'zenctuary' ) }</span>
+						<AlignmentToolbar
+							value={ headingAlignment }
+							onChange={ ( val ) => setAttributes( { headingAlignment: val } ) }
+						/>
+					</div>
 				</PanelBody>
+
 				<PanelBody title={ __( 'Filter Settings', 'zenctuary' ) } initialOpen={ false }>
-					<TextControl label={ __( 'Drinks tag slug', 'zenctuary' ) } value={ attributes.drinksTagSlug } onChange={ ( drinksTagSlug ) => setAttributes( { drinksTagSlug } ) } />
-					<TextControl label={ __( 'Food tag slug', 'zenctuary' ) } value={ attributes.foodTagSlug } onChange={ ( foodTagSlug ) => setAttributes( { foodTagSlug } ) } />
+					<FormTokenField
+						label={ __( 'Select Tags', 'zenctuary' ) }
+						value={ selectedTags.map( ( t ) => t.label ) }
+						suggestions={ tagOptions }
+						onChange={ onTagsChange }
+					/>
+					{ selectedTags.length > 0 && (
+						<div className="zen-soul-menu__tag-labels">
+							<p className="components-base-control__label">{ __( 'Edit Tag Labels', 'zenctuary' ) }</p>
+							{ selectedTags.map( ( tag, index ) => (
+								<TextControl
+									key={ tag.id }
+									label={ sprintf( __( 'Label for %s', 'zenctuary' ), tag.slug ) }
+									value={ tag.label }
+									onChange={ ( val ) => updateTagLabel( index, val ) }
+								/>
+							) ) }
+						</div>
+					) }
 				</PanelBody>
-				<PanelBody title={ __( 'Category Settings', 'zenctuary' ) } initialOpen={ true }>
-					{ categories.length ? categories.map( ( category ) => {
-						const settings = attributes.categorySettings?.[ category.id ] || {};
-						return (
-							<div className="zen-soul-menu__category-settings" key={ category.id }>
-								<p className="zen-soul-menu__category-settings-title">{ category.name }</p>
-								<TextControl label={ __( 'Right-side text', 'zenctuary' ) } value={ settings.metaText || '' } placeholder="40ml / 2,50 €" onChange={ ( value ) => updateCategorySetting( category.id, 'metaText', value ) } />
-								<TextControl label={ __( 'Description override', 'zenctuary' ) } value={ settings.description || '' } onChange={ ( value ) => updateCategorySetting( category.id, 'description', value ) } />
-							</div>
-						);
-					} ) : <p>{ __( 'No categories found for the active filter.', 'zenctuary' ) }</p> }
+
+				<PanelBody title={ __( 'Button Styles (Normal)', 'zenctuary' ) } initialOpen={ false }>
+					<PanelColorSettings
+						title={ __( 'Colors', 'zenctuary' ) }
+						initialOpen={ true }
+						colorSettings={ [
+							{
+								value: buttonStyles.normal?.backgroundColor,
+								onChange: ( val ) => updateButtonStyle( 'normal', 'backgroundColor', val ),
+								label: __( 'Background Color', 'zenctuary' ),
+							},
+							{
+								value: buttonStyles.normal?.textColor,
+								onChange: ( val ) => updateButtonStyle( 'normal', 'textColor', val ),
+								label: __( 'Text Color', 'zenctuary' ),
+							},
+							{
+								value: buttonStyles.normal?.borderColor,
+								onChange: ( val ) => updateButtonStyle( 'normal', 'borderColor', val ),
+								label: __( 'Border Color', 'zenctuary' ),
+							},
+						] }
+					/>
+					<SelectControl
+						label={ __( 'Font Weight', 'zenctuary' ) }
+						value={ buttonStyles.normal?.fontWeight }
+						options={ [
+							{ label: 'Normal', value: '400' },
+							{ label: 'Medium', value: '500' },
+							{ label: 'Semi Bold', value: '600' },
+							{ label: 'Bold', value: '700' },
+						] }
+						onChange={ ( val ) => updateButtonStyle( 'normal', 'fontWeight', val ) }
+					/>
+					<UnitControl
+						label={ __( 'Border Width', 'zenctuary' ) }
+						value={ buttonStyles.normal?.borderWidth }
+						onChange={ ( val ) => updateButtonStyle( 'normal', 'borderWidth', val ) }
+					/>
+					<UnitControl
+						label={ __( 'Border Radius', 'zenctuary' ) }
+						value={ buttonStyles.normal?.borderRadius }
+						onChange={ ( val ) => updateButtonStyle( 'normal', 'borderRadius', val ) }
+					/>
+				</PanelBody>
+
+				<PanelBody title={ __( 'Button Styles (Active)', 'zenctuary' ) } initialOpen={ false }>
+					<PanelColorSettings
+						title={ __( 'Active State Colors', 'zenctuary' ) }
+						initialOpen={ true }
+						colorSettings={ [
+							{
+								value: buttonStyles.active?.backgroundColor,
+								onChange: ( val ) => updateButtonStyle( 'active', 'backgroundColor', val ),
+								label: __( 'Background Color', 'zenctuary' ),
+							},
+							{
+								value: buttonStyles.active?.textColor,
+								onChange: ( val ) => updateButtonStyle( 'active', 'textColor', val ),
+								label: __( 'Text Color', 'zenctuary' ),
+							},
+							{
+								value: buttonStyles.active?.borderColor,
+								onChange: ( val ) => updateButtonStyle( 'active', 'borderColor', val ),
+								label: __( 'Border Color', 'zenctuary' ),
+							},
+						] }
+					/>
+				</PanelBody>
+
+				<PanelBody title={ __( 'Block Spacing', 'zenctuary' ) } initialOpen={ false }>
+					<FourSideControls label={ __( 'Padding', 'zenctuary' ) } value={ sectionPadding } onChange={ ( val ) => setAttributes( { sectionPadding: val } ) } />
+					<FourSideControls label={ __( 'Margin', 'zenctuary' ) } value={ sectionMargin } onChange={ ( val ) => setAttributes( { sectionMargin: val } ) } />
 				</PanelBody>
 			</InspectorControls>
 
 			<section { ...blockProps }>
-				<h2 className="zen-soul-menu__heading">{ attributes.heading || __( 'Soul Kitchen Menu', 'zenctuary' ) }</h2>
-				<div className="zen-soul-menu__filters" role="group" aria-label={ __( 'Menu filters', 'zenctuary' ) }>
-					{ FILTERS.map( ( filter ) => (
-						<Button
-							key={ filter.key }
-							className={ `zen-soul-menu__filter-button${ activeFilter === filter.key ? ' is-active' : '' }` }
-							onClick={ () => setAttributes( { activeFilter: filter.key } ) }
-							aria-pressed={ activeFilter === filter.key }
-						>
-							{ filter.label }
-						</Button>
-					) ) }
+				<h2 
+					className="zen-soul-menu__heading"
+					style={ {
+						color: headingColor,
+						fontSize: headingFontSize,
+						fontWeight: headingFontWeight,
+						textAlign: headingAlignment,
+					} }
+				>
+					{ heading || __( 'Soul Kitchen Menu', 'zenctuary' ) }
+				</h2>
+
+				<div 
+					className="zen-soul-menu__filters" 
+					role="group" 
+					aria-label={ __( 'Menu filters', 'zenctuary' ) }
+					style={ { textAlign: headingAlignment } }
+				>
+					{ selectedTags.length > 0 ? selectedTags.map( ( tag, index ) => {
+						const isActive = index === 0; // Just for preview
+						const styles = isActive ? buttonStyles.active : buttonStyles.normal;
+						return (
+							<Button
+								key={ tag.id }
+								className={ `zen-soul-menu__filter-button${ isActive ? ' is-active' : '' }` }
+								style={ {
+									backgroundColor: styles?.backgroundColor,
+									color: styles?.textColor,
+									borderColor: styles?.borderColor,
+									borderWidth: isActive ? undefined : styles?.borderWidth,
+									borderRadius: isActive ? undefined : styles?.borderRadius,
+									fontWeight: isActive ? undefined : styles?.fontWeight,
+									borderStyle: 'solid',
+								} }
+							>
+								{ tag.label }
+							</Button>
+						);
+					} ) : (
+						<p className="zen-soul-menu__notice">{ __( 'Please select tags in the inspector.', 'zenctuary' ) }</p>
+					) }
 				</div>
 				{ isLoading && <div className="zen-soul-menu__notice"><Spinner /> { __( 'Loading menu products...', 'zenctuary' ) }</div> }
 				{ errorMessage && <p className="zen-soul-menu__notice">{ errorMessage }</p> }

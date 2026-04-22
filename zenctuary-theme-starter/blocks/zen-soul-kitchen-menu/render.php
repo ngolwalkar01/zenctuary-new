@@ -9,20 +9,30 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-$heading           = isset( $attributes['heading'] ) ? $attributes['heading'] : __( 'Soul Kitchen Menu', 'zenctuary' );
-$active_filter     = isset( $attributes['activeFilter'] ) ? $attributes['activeFilter'] : 'drinks';
-$drinks_tag_slug   = isset( $attributes['drinksTagSlug'] ) ? sanitize_title( $attributes['drinksTagSlug'] ) : 'drinks';
-$food_tag_slug     = isset( $attributes['foodTagSlug'] ) ? sanitize_title( $attributes['foodTagSlug'] ) : 'food';
-$category_settings = isset( $attributes['categorySettings'] ) && is_array( $attributes['categorySettings'] ) ? $attributes['categorySettings'] : array();
+$heading            = isset( $attributes['heading'] ) ? $attributes['heading'] : __( 'Soul Kitchen Menu', 'zenctuary' );
+$heading_color      = isset( $attributes['headingColor'] ) ? $attributes['headingColor'] : '';
+$heading_font_size  = isset( $attributes['headingFontSize'] ) ? $attributes['headingFontSize'] : '';
+$heading_font_weight = isset( $attributes['headingFontWeight'] ) ? $attributes['headingFontWeight'] : '700';
+$heading_alignment   = isset( $attributes['headingAlignment'] ) ? $attributes['headingAlignment'] : 'left';
+$selected_tags      = isset( $attributes['selectedTags'] ) && is_array( $attributes['selectedTags'] ) ? $attributes['selectedTags'] : array();
+$button_styles      = isset( $attributes['buttonStyles'] ) && is_array( $attributes['buttonStyles'] ) ? $attributes['buttonStyles'] : array();
+
+$active_filter     = isset( $attributes['activeFilter'] ) ? $attributes['activeFilter'] : '';
+if ( empty( $active_filter ) && ! empty( $selected_tags ) ) {
+	$active_filter = $selected_tags[0]['slug'];
+}
+
 $section_padding   = isset( $attributes['sectionPadding'] ) && is_array( $attributes['sectionPadding'] ) ? $attributes['sectionPadding'] : array();
 $section_margin    = isset( $attributes['sectionMargin'] ) && is_array( $attributes['sectionMargin'] ) ? $attributes['sectionMargin'] : array();
-$spacing_style     = '';
 
+// Unique ID for scoped styles
+$block_id = 'zen-soul-menu-' . substr( md5( serialize( $attributes ) ), 0, 8 );
+
+$spacing_style     = '';
 foreach ( array( 'top', 'right', 'bottom', 'left' ) as $side ) {
 	if ( isset( $section_padding[ $side ] ) && '' !== $section_padding[ $side ] ) {
 		$spacing_style .= sprintf( 'padding-%1$s:%2$s;', $side, esc_attr( $section_padding[ $side ] ) );
 	}
-
 	if ( isset( $section_margin[ $side ] ) && '' !== $section_margin[ $side ] ) {
 		$spacing_style .= sprintf( 'margin-%1$s:%2$s;', $side, esc_attr( $section_margin[ $side ] ) );
 	}
@@ -30,9 +40,56 @@ foreach ( array( 'top', 'right', 'bottom', 'left' ) as $side ) {
 
 $wrapper_attributes = get_block_wrapper_attributes(
 	array(
+		'id'    => $block_id,
+		'class' => 'zen-soul-menu',
 		'style' => $spacing_style,
 	)
 );
+
+// Generate Dynamic Styles
+$dynamic_css = '';
+
+// Heading Styles
+$heading_styles = array();
+if ( $heading_color ) $heading_styles[] = 'color:' . $heading_color;
+if ( $heading_font_size ) $heading_styles[] = 'font-size:' . $heading_font_size;
+if ( $heading_font_weight ) $heading_styles[] = 'font-weight:' . $heading_font_weight;
+if ( $heading_alignment ) $heading_styles[] = 'text-align:' . $heading_alignment;
+
+if ( ! empty( $heading_styles ) ) {
+	$dynamic_css .= '#' . $block_id . ' .zen-soul-menu__heading {' . implode( ';', $heading_styles ) . ';}';
+}
+
+// Button Normal Styles
+$normal_styles = isset( $button_styles['normal'] ) ? $button_styles['normal'] : array();
+$btn_normal_css = array();
+if ( ! empty( $normal_styles['backgroundColor'] ) ) $btn_normal_css[] = 'background-color:' . $normal_styles['backgroundColor'];
+if ( ! empty( $normal_styles['textColor'] ) ) $btn_normal_css[] = 'color:' . $normal_styles['textColor'];
+if ( ! empty( $normal_styles['borderColor'] ) ) $btn_normal_css[] = 'border-color:' . $normal_styles['borderColor'];
+if ( ! empty( $normal_styles['borderWidth'] ) ) $btn_normal_css[] = 'border-width:' . $normal_styles['borderWidth'];
+if ( ! empty( $normal_styles['borderRadius'] ) ) $btn_normal_css[] = 'border-radius:' . $normal_styles['borderRadius'];
+if ( ! empty( $normal_styles['fontWeight'] ) ) $btn_normal_css[] = 'font-weight:' . $normal_styles['fontWeight'];
+$btn_normal_css[] = 'border-style: solid;';
+
+if ( ! empty( $btn_normal_css ) ) {
+	$dynamic_css .= '#' . $block_id . ' .zen-soul-menu__filter-button {' . implode( ';', $btn_normal_css ) . ';}';
+}
+
+// Button Active Styles
+$active_styles = isset( $button_styles['active'] ) ? $button_styles['active'] : array();
+$btn_active_css = array();
+if ( ! empty( $active_styles['backgroundColor'] ) ) $btn_active_css[] = 'background-color:' . $active_styles['backgroundColor'];
+if ( ! empty( $active_styles['textColor'] ) ) $btn_active_css[] = 'color:' . $active_styles['textColor'];
+if ( ! empty( $active_styles['borderColor'] ) ) $btn_active_css[] = 'border-color:' . $active_styles['borderColor'];
+
+if ( ! empty( $btn_active_css ) ) {
+	$dynamic_css .= '#' . $block_id . ' .zen-soul-menu__filter-button.is-active {' . implode( ';', $btn_active_css ) . ';}';
+}
+
+// Filter row alignment
+if ( $heading_alignment ) {
+	$dynamic_css .= '#' . $block_id . ' .zen-soul-menu__filters { text-align:' . $heading_alignment . '; }';
+}
 
 if ( ! class_exists( 'WooCommerce' ) || ! function_exists( 'wc_get_products' ) ) {
 	?>
@@ -175,17 +232,37 @@ if ( ! function_exists( 'zenctuary_soul_menu_get_groups' ) ) {
 	}
 }
 
-$filters = array(
-	'drinks' => array(
-		'label' => __( 'Drinks', 'zenctuary' ),
-		'slug'  => $drinks_tag_slug,
-	),
-	'food'   => array(
-		'label' => __( 'Food', 'zenctuary' ),
-		'slug'  => $food_tag_slug,
-	),
-);
+$filters = array();
+if ( ! empty( $selected_tags ) ) {
+	foreach ( $selected_tags as $tag ) {
+		$filters[ $tag['slug'] ] = array(
+			'label' => $tag['label'],
+			'slug'  => $tag['slug'],
+		);
+	}
+} else {
+	// Fallback to old behavior if no tags selected yet
+	$drinks_tag_slug   = isset( $attributes['drinksTagSlug'] ) ? sanitize_title( $attributes['drinksTagSlug'] ) : 'drinks';
+	$food_tag_slug     = isset( $attributes['foodTagSlug'] ) ? sanitize_title( $attributes['foodTagSlug'] ) : 'food';
+	$filters = array(
+		'drinks' => array(
+			'label' => __( 'Drinks', 'zenctuary' ),
+			'slug'  => $drinks_tag_slug,
+		),
+		'food'   => array(
+			'label' => __( 'Food', 'zenctuary' ),
+			'slug'  => $food_tag_slug,
+		),
+	);
+	if ( empty( $active_filter ) ) {
+		$active_filter = 'drinks';
+	}
+}
 ?>
+
+<?php if ( ! empty( $dynamic_css ) ) : ?>
+	<style><?php echo $dynamic_css; /* phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped */ ?></style>
+<?php endif; ?>
 
 <section <?php echo $wrapper_attributes; /* phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped */ ?> data-active-filter="<?php echo esc_attr( $active_filter ); ?>">
 	<h2 class="zen-soul-menu__heading"><?php echo esc_html( $heading ); ?></h2>
