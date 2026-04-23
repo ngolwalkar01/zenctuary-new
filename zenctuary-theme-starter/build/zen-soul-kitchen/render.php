@@ -20,14 +20,19 @@ $inactive_styles   = $attributes['inactiveStyles'] ?? [];
 $active_styles     = $attributes['activeStyles'] ?? [];
 $heading_alignment = $attributes['headingAlignment'] ?? 'left';
 
-// Determine the tag to fetch products for (defaults to first selected tag)
+// Determine all tag IDs for fetching
+$all_selected_tag_ids = array_map( function( $t ) {
+	return $t['id'];
+}, $selected_tags );
+
+// Determine current tag to show initially
 $current_tag_id = $active_tag_id;
 if ( ! $current_tag_id && ! empty( $selected_tags ) ) {
 	$current_tag_id = $selected_tags[0]['id'];
 }
 
 $products_query = [];
-if ( $current_tag_id ) {
+if ( ! empty( $all_selected_tag_ids ) ) {
 	$args = [
 		'post_type'      => 'product',
 		'posts_per_page' => -1,
@@ -36,7 +41,8 @@ if ( $current_tag_id ) {
 			[
 				'taxonomy' => 'product_tag',
 				'field'    => 'term_id',
-				'terms'    => $current_tag_id,
+				'terms'    => $all_selected_tag_ids,
+				'operator' => 'IN',
 			],
 		],
 	];
@@ -44,12 +50,20 @@ if ( $current_tag_id ) {
 	$products_query = $query->posts;
 }
 
-// Group products by category
+// Group products by category and record their tags
 $grouped_data = [];
 if ( ! empty( $products_query ) ) {
 	foreach ( $products_query as $product_post ) {
 		$product_id = $product_post->ID;
 		$cats       = get_the_terms( $product_id, 'product_cat' );
+		$tags       = get_the_terms( $product_id, 'product_tag' );
+		
+		$product_tag_ids = [];
+		if ( $tags && ! is_wp_error( $tags ) ) {
+			foreach ( $tags as $t ) {
+				$product_tag_ids[] = $t->term_id;
+			}
+		}
 
 		if ( $cats && ! is_wp_error( $cats ) ) {
 			foreach ( $cats as $cat ) {
@@ -60,7 +74,7 @@ if ( ! empty( $products_query ) ) {
 						'products' => [],
 					];
 				}
-				// Get WC Product object for data
+				
 				if ( function_exists( 'wc_get_product' ) ) {
 					$product_obj = wc_get_product( $product_id );
 					if ( $product_obj ) {
@@ -69,6 +83,7 @@ if ( ! empty( $products_query ) ) {
 							'title'             => get_the_title( $product_id ),
 							'short_description' => $product_obj->get_short_description(),
 							'price_html'        => $product_obj->get_price_html(),
+							'tag_ids'           => $product_tag_ids,
 						];
 					}
 				}
@@ -85,7 +100,7 @@ uasort(
 	}
 );
 
-$wrapper_attributes = get_block_wrapper_attributes();
+$wrapper_attributes = get_block_wrapper_attributes( [ 'class' => 'zen-soul-kitchen' ] );
 ?>
 
 <div <?php echo $wrapper_attributes; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>>
@@ -111,18 +126,28 @@ $wrapper_attributes = get_block_wrapper_attributes();
 				$is_active = ( (int) $current_tag_id === (int) $tag_data['id'] );
 				$styles    = $is_active ? $active_styles : $inactive_styles;
 				?>
-				<span class="zen-soul-kitchen__filter-button <?php echo $is_active ? 'is-active' : ''; ?>" style="
-					display: inline-block;
-					padding: 10px 24px;
-					background-color: <?php echo esc_attr( $styles['backgroundColor'] ?? '' ); ?>;
-					color: <?php echo esc_attr( $styles['textColor'] ?? '' ); ?>;
-					border-color: <?php echo esc_attr( $styles['borderColor'] ?? '' ); ?>;
-					border-width: <?php echo esc_attr( $is_active ? '1px' : ( $styles['borderWidth'] ?? '1px' ) ); ?>;
-					border-radius: <?php echo esc_attr( $is_active ? '25px' : ( $styles['borderRadius'] ?? '25px' ) ); ?>;
-					font-weight: <?php echo esc_attr( $is_active ? '700' : ( $styles['fontWeight'] ?? '400' ) ); ?>;
-					border-style: solid;
-					cursor: pointer;
-				">
+				<span 
+					class="zen-soul-kitchen__filter-button <?php echo $is_active ? 'is-active' : ''; ?>" 
+					data-tag-id="<?php echo esc_attr( $tag_data['id'] ); ?>"
+					data-active-bg="<?php echo esc_attr( $active_styles['backgroundColor'] ?? '' ); ?>"
+					data-active-color="<?php echo esc_attr( $active_styles['textColor'] ?? '' ); ?>"
+					data-active-border="<?php echo esc_attr( $active_styles['borderColor'] ?? '' ); ?>"
+					data-inactive-bg="<?php echo esc_attr( $inactive_styles['backgroundColor'] ?? '' ); ?>"
+					data-inactive-color="<?php echo esc_attr( $inactive_styles['textColor'] ?? '' ); ?>"
+					data-inactive-border="<?php echo esc_attr( $inactive_styles['borderColor'] ?? '' ); ?>"
+					style="
+						display: inline-block;
+						padding: 10px 24px;
+						background-color: <?php echo esc_attr( $styles['backgroundColor'] ?? '' ); ?>;
+						color: <?php echo esc_attr( $styles['textColor'] ?? '' ); ?>;
+						border-color: <?php echo esc_attr( $styles['borderColor'] ?? '' ); ?>;
+						border-width: <?php echo esc_attr( $is_active ? '1px' : ( $styles['borderWidth'] ?? '1px' ) ); ?>;
+						border-radius: <?php echo esc_attr( $is_active ? '25px' : ( $styles['borderRadius'] ?? '25px' ) ); ?>;
+						font-weight: <?php echo esc_attr( $is_active ? '700' : ( $styles['fontWeight'] ?? '400' ) ); ?>;
+						border-style: solid;
+						cursor: pointer;
+					"
+				>
 					<?php echo esc_html( $tag_data['label'] ?? '' ); ?>
 				</span>
 			<?php endforeach; ?>
@@ -131,8 +156,21 @@ $wrapper_attributes = get_block_wrapper_attributes();
 
 	<div class="zen-soul-kitchen__menu-content" style="margin-top: 40px;">
 		<?php if ( ! empty( $grouped_data ) ) : ?>
-			<?php foreach ( $grouped_data as $cat_id => $group ) : ?>
-				<section class="zen-soul-kitchen__category" style="margin-bottom: 40px;">
+			<?php foreach ( $grouped_data as $cat_id => $group ) : 
+				// Check if this category has ANY product matching the current tag
+				$has_initial_products = false;
+				foreach ( $group['products'] as $p ) {
+					if ( in_array( (int) $current_tag_id, $p['tag_ids'] ) ) {
+						$has_initial_products = true;
+						break;
+					}
+				}
+			?>
+				<section 
+					class="zen-soul-kitchen__category" 
+					data-category-id="<?php echo esc_attr( $cat_id ); ?>"
+					style="margin-bottom: 40px; display: <?php echo $has_initial_products ? 'block' : 'none'; ?>;"
+				>
 					<div class="zen-soul-kitchen__category-header" style="display: flex; justify-content: space-between; align-items: baseline; border-bottom: 1px solid #eee; padding-bottom: 10px;">
 						<h3 style="
 							margin: 0;
@@ -161,8 +199,14 @@ $wrapper_attributes = get_block_wrapper_attributes();
 					<?php endif; ?>
 
 					<div class="zen-soul-kitchen__products" style="margin-top: 20px;">
-						<?php foreach ( $group['products'] as $product ) : ?>
-							<article class="zen-soul-kitchen__product" style="margin-bottom: 20px;">
+						<?php foreach ( $group['products'] as $product ) : 
+							$is_visible = in_array( (int) $current_tag_id, $product['tag_ids'] );
+						?>
+							<article 
+								class="zen-soul-kitchen__product" 
+								data-tags="<?php echo esc_attr( implode( ',', $product['tag_ids'] ) ); ?>"
+								style="margin-bottom: 20px; display: <?php echo $is_visible ? 'block' : 'none'; ?>;"
+							>
 								<h4 style="
 									margin: 0;
 									color: <?php echo esc_attr( $product_styles['nameColor'] ?? '' ); ?>;
