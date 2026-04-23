@@ -236,7 +236,7 @@ $wrapper_attributes = get_block_wrapper_attributes( [ 'class' => 'zen-soul-kitch
 								data-tags="<?php echo esc_attr( implode( ',', $product['tag_ids'] ) ); ?>"
 								style="margin-bottom: 20px; display: <?php echo $is_visible ? 'block' : 'none'; ?>;"
 							>
-								{ /* ROW 3: PRODUCT NAME */ }
+								<?php // ROW 3: PRODUCT NAME ?>
 								<h4 style="
 									margin: 0;
 									color: <?php echo esc_attr( $product_styles['nameColor'] ?? '' ); ?>;
@@ -246,7 +246,7 @@ $wrapper_attributes = get_block_wrapper_attributes( [ 'class' => 'zen-soul-kitch
 									<?php echo esc_html( $product['title'] ); ?>
 								</h4>
 
-								{ /* ROW 4: PRODUCT DESCRIPTION */ }
+								<?php // ROW 4: PRODUCT DESCRIPTION ?>
 								<?php if ( ! empty( $product['display_description'] ) ) : ?>
 									<div class="zen-soul-kitchen__product-description" style="
 										margin-top: 5px;
@@ -257,7 +257,7 @@ $wrapper_attributes = get_block_wrapper_attributes( [ 'class' => 'zen-soul-kitch
 									</div>
 								<?php endif; ?>
 
-								{ /* ROW 5: ATTRIBUTE + PRICE ROW */ }
+								<?php // ROW 5: ATTRIBUTE + PRICE ROW ?>
 								<?php 
 								$price_label = wp_strip_all_tags( $product['price_html'] );
 								$attr_label  = $product['attribute_string'];

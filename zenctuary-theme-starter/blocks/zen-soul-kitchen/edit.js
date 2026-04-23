@@ -85,6 +85,7 @@ export default function Edit( { attributes, setAttributes } ) {
 						group = {
 							id: catId,
 							name: categoryInfo.name,
+							description: categoryInfo.description,
 							products: [],
 						};
 						groups.push( group );
@@ -488,25 +489,35 @@ export default function Edit( { attributes, setAttributes } ) {
 						</div>
 
 						{ /* ROW 2: CATEGORY DESCRIPTION */ }
-						{ categoryMeta[ group.id ]?.description && (
-							<p className="zen-soul-kitchen__category-description" style={ {
+						{ ( categoryMeta[ group.id ]?.description || group.description ) && (
+							<div className="zen-soul-kitchen__category-description" style={ {
 								marginTop: '10px',
 								color: categoryStyles.descColor,
 								fontSize: categoryStyles.descFontSize,
-								fontWeight: categoryStyles.descFontWeight
+								fontWeight: categoryStyles.descFontWeight || '400'
 							} }>
-								{ categoryMeta[ group.id ].description }
-							</p>
+								{ categoryMeta[ group.id ]?.description || group.description }
+							</div>
 						) }
 
 						{ /* ROW 3 & 4 & 5: PRODUCTS */ }
 						<div className="zen-soul-kitchen__products" style={ { marginTop: '20px' } }>
 							{ group.products.map( ( product ) => {
-								const shortDesc = product.short_description?.rendered || '';
-								// Extract price from price_html
-								const priceHtml = product.price_html || '';
-								const price = priceHtml.replace( /<\/?[^>]+(>|$)/g, "" );
+								const displayDesc = product.excerpt?.rendered || product.content?.rendered || '';
 								
+								// Price extraction
+								const priceHtml = product.price_html || '';
+								const priceLabel = priceHtml.replace( /<\/?[^>]+(>|$)/g, "" );
+								
+								// Attributes in REST are usually in .attributes array
+								const attrString = ( product.attributes || [] )
+									.map( attr => attr.options ? attr.options.join(', ') : '' )
+									.filter( Boolean )
+									.join(' / ');
+
+								const metaParts = [ attrString, priceLabel ].filter( Boolean );
+								const metaString = metaParts.join(' / ');
+
 								return (
 									<article key={ product.id } className="zen-soul-kitchen__product" style={ { marginBottom: '20px' } }>
 										{ /* ROW 3: PRODUCT NAME */ }
@@ -520,29 +531,27 @@ export default function Edit( { attributes, setAttributes } ) {
 										</h4>
 
 										{ /* ROW 4: PRODUCT DESCRIPTION */ }
-										{ shortDesc && (
+										{ displayDesc && (
 											<div className="zen-soul-kitchen__product-description" 
 												style={ {
 													marginTop: '5px',
 													color: productStyles.descColor,
 													fontSize: productStyles.descFontSize
 												} }
-												dangerouslySetInnerHTML={ { __html: shortDesc } } 
+												dangerouslySetInnerHTML={ { __html: displayDesc } } 
 											/>
 										) }
 
-										{ /* ROW 5: CONDITIONAL ROW */ }
-										<div className="zen-soul-kitchen__product-meta" style={ {
-											marginTop: '5px',
-											color: productStyles.metaColor,
-											fontSize: productStyles.metaFontSize
-										} }>
-											{ price ? (
-												<span>{ price }</span>
-											) : (
-												shortDesc && <div dangerouslySetInnerHTML={ { __html: shortDesc } } />
-											) }
-										</div>
+										{ /* ROW 5: ATTRIBUTE + PRICE ROW */ }
+										{ metaString && (
+											<div className="zen-soul-kitchen__product-meta" style={ {
+												marginTop: '5px',
+												color: productStyles.metaColor,
+												fontSize: productStyles.metaFontSize
+											} }>
+												<span>{ metaString }</span>
+											</div>
+										) }
 									</article>
 								);
 							} ) }
