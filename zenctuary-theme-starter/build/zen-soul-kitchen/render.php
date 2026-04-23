@@ -69,20 +69,44 @@ if ( ! empty( $products_query ) ) {
 			foreach ( $cats as $cat ) {
 				if ( ! isset( $grouped_data[ $cat->term_id ] ) ) {
 					$grouped_data[ $cat->term_id ] = [
-						'id'       => $cat->term_id,
-						'name'     => $cat->name,
-						'products' => [],
+						'id'          => $cat->term_id,
+						'name'        => $cat->name,
+						'description' => term_description( $cat->term_id, 'product_cat' ),
+						'products'    => [],
 					];
 				}
 				
 				if ( function_exists( 'wc_get_product' ) ) {
 					$product_obj = wc_get_product( $product_id );
 					if ( $product_obj ) {
+						// Description Priority: Short -> Full
+						$short_desc = $product_obj->get_short_description();
+						$display_desc = ! empty( $short_desc ) ? $short_desc : $product_obj->get_description();
+
+						// Metadata (Attributes)
+						$attributes_list = [];
+						foreach ( $product_obj->get_attributes() as $attribute ) {
+							if ( $attribute->get_visible() ) {
+								$options = $attribute->get_options();
+								if ( $attribute->is_taxonomy() ) {
+									$values = array_map( function( $id ) use ( $attribute ) {
+										$term = get_term( $id, $attribute->get_name() );
+										return $term ? $term->name : '';
+									}, $options );
+									$attributes_list[] = implode( ', ', array_filter( $values ) );
+								} else {
+									$attributes_list[] = implode( ', ', $options );
+								}
+							}
+						}
+						$attr_string = implode( ' / ', array_filter( $attributes_list ) );
+
 						$grouped_data[ $cat->term_id ]['products'][] = [
 							'id'                => $product_id,
 							'title'             => get_the_title( $product_id ),
-							'short_description' => $product_obj->get_short_description(),
+							'display_description' => $display_desc,
 							'price_html'        => $product_obj->get_price_html(),
+							'attribute_string'  => $attr_string,
 							'tag_ids'           => $product_tag_ids,
 						];
 					}
@@ -188,14 +212,19 @@ $wrapper_attributes = get_block_wrapper_attributes( [ 'class' => 'zen-soul-kitch
 						</span>
 					</div>
 
-					<?php if ( ! empty( $category_meta[ $cat_id ]['description'] ) ) : ?>
-						<p class="zen-soul-kitchen__category-description" style="
+					<?php 
+					// Row 2: Category Description (Priority: Manual Override -> Taxonomy Description)
+					$cat_desc = ! empty( $category_meta[ $cat_id ]['description'] ) ? $category_meta[ $cat_id ]['description'] : $group['description'];
+					if ( ! empty( $cat_desc ) ) : 
+					?>
+						<div class="zen-soul-kitchen__category-description" style="
 							margin-top: 10px;
 							color: <?php echo esc_attr( $category_styles['descColor'] ?? '' ); ?>;
 							font-size: <?php echo esc_attr( $category_styles['descFontSize'] ?? '' ); ?>;
+							font-weight: <?php echo esc_attr( $category_styles['descFontWeight'] ?? '400' ); ?>;
 						">
-							<?php echo esc_html( $category_meta[ $cat_id ]['description'] ); ?>
-						</p>
+							<?php echo wp_kses_post( $cat_desc ); ?>
+						</div>
 					<?php endif; ?>
 
 					<div class="zen-soul-kitchen__products" style="margin-top: 20px;">
@@ -207,6 +236,7 @@ $wrapper_attributes = get_block_wrapper_attributes( [ 'class' => 'zen-soul-kitch
 								data-tags="<?php echo esc_attr( implode( ',', $product['tag_ids'] ) ); ?>"
 								style="margin-bottom: 20px; display: <?php echo $is_visible ? 'block' : 'none'; ?>;"
 							>
+								{ /* ROW 3: PRODUCT NAME */ }
 								<h4 style="
 									margin: 0;
 									color: <?php echo esc_attr( $product_styles['nameColor'] ?? '' ); ?>;
@@ -216,28 +246,34 @@ $wrapper_attributes = get_block_wrapper_attributes( [ 'class' => 'zen-soul-kitch
 									<?php echo esc_html( $product['title'] ); ?>
 								</h4>
 
-								<?php if ( ! empty( $product['short_description'] ) ) : ?>
+								{ /* ROW 4: PRODUCT DESCRIPTION */ }
+								<?php if ( ! empty( $product['display_description'] ) ) : ?>
 									<div class="zen-soul-kitchen__product-description" style="
 										margin-top: 5px;
 										color: <?php echo esc_attr( $product_styles['descColor'] ?? '' ); ?>;
 										font-size: <?php echo esc_attr( $product_styles['descFontSize'] ?? '' ); ?>;
 									">
-										<?php echo wp_kses_post( $product['short_description'] ); ?>
+										<?php echo wp_kses_post( $product['display_description'] ); ?>
 									</div>
 								<?php endif; ?>
 
-								<div class="zen-soul-kitchen__product-meta" style="
-									margin-top: 5px;
-									color: <?php echo esc_attr( $product_styles['metaColor'] ?? '' ); ?>;
-									font-size: <?php echo esc_attr( $product_styles['metaFontSize'] ?? '' ); ?>;
-								">
-									<?php
-									$price = wp_strip_all_tags( $product['price_html'] );
-									if ( $price ) :
-										?>
-										<span><?php echo esc_html( $price ); ?></span>
-									<?php endif; ?>
-								</div>
+								{ /* ROW 5: ATTRIBUTE + PRICE ROW */ }
+								<?php 
+								$price_label = wp_strip_all_tags( $product['price_html'] );
+								$attr_label  = $product['attribute_string'];
+								$meta_parts  = array_filter( [ $attr_label, $price_label ] );
+								$meta_string = implode( ' / ', $meta_parts );
+
+								if ( ! empty( $meta_parts ) ) :
+								?>
+									<div class="zen-soul-kitchen__product-meta" style="
+										margin-top: 5px;
+										color: <?php echo esc_attr( $product_styles['metaColor'] ?? '' ); ?>;
+										font-size: <?php echo esc_attr( $product_styles['metaFontSize'] ?? '' ); ?>;
+									">
+										<span><?php echo esc_html( $meta_string ); ?></span>
+									</div>
+								<?php endif; ?>
 							</article>
 						<?php endforeach; ?>
 					</div>
