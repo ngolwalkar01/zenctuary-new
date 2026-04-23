@@ -503,13 +503,14 @@ export default function Edit( { attributes, setAttributes } ) {
 						{ /* ROW 3 & 4 & 5: PRODUCTS */ }
 						<div className="zen-soul-kitchen__products" style={ { marginTop: '20px' } }>
 							{ group.products.map( ( product ) => {
-								const displayDesc = product.excerpt?.rendered || product.content?.rendered || '';
+								const fullDesc = product.content?.rendered || '';
+								const shortDesc = product.excerpt?.rendered || '';
 								
 								// Price extraction
 								const priceHtml = product.price_html || '';
 								const priceLabel = priceHtml.replace( /<\/?[^>]+(>|$)/g, "" );
 								
-								// Attributes in REST are usually in .attributes array
+								// Attributes
 								const attrString = ( product.attributes || [] )
 									.map( attr => attr.options ? attr.options.join(', ') : '' )
 									.filter( Boolean )
@@ -520,7 +521,7 @@ export default function Edit( { attributes, setAttributes } ) {
 
 								return (
 									<article key={ product.id } className="zen-soul-kitchen__product" style={ { marginBottom: '20px' } }>
-										{ /* ROW 3: PRODUCT NAME */ }
+										{ /* ROW 1: PRODUCT NAME */ }
 										<h4 style={ {
 											margin: 0,
 											color: productStyles.nameColor,
@@ -530,19 +531,31 @@ export default function Edit( { attributes, setAttributes } ) {
 											{ product.title?.rendered }
 										</h4>
 
-										{ /* ROW 4: PRODUCT DESCRIPTION */ }
-										{ displayDesc && (
+										{ /* ROW 2: PRODUCT DESCRIPTION (FULL) */ }
+										{ fullDesc && (
 											<div className="zen-soul-kitchen__product-description" 
 												style={ {
 													marginTop: '5px',
 													color: productStyles.descColor,
 													fontSize: productStyles.descFontSize
 												} }
-												dangerouslySetInnerHTML={ { __html: displayDesc } } 
+												dangerouslySetInnerHTML={ { __html: fullDesc } } 
 											/>
 										) }
 
-										{ /* ROW 5: ATTRIBUTE + PRICE ROW */ }
+										{ /* ROW 3: PRODUCT SHORT DESCRIPTION */ }
+										{ shortDesc && (
+											<div className="zen-soul-kitchen__product-short-description" 
+												style={ {
+													marginTop: '5px',
+													color: productStyles.descColor,
+													fontSize: productStyles.descFontSize
+												} }
+												dangerouslySetInnerHTML={ { __html: shortDesc } } 
+											/>
+										) }
+
+										{ /* ROW 4: ATTRIBUTE + PRICE ROW */ }
 										{ metaString && (
 											<div className="zen-soul-kitchen__product-meta" style={ {
 												marginTop: '5px',
