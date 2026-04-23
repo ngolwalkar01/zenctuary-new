@@ -53,10 +53,6 @@ export default function Edit( { attributes, setAttributes } ) {
 		const records = select( 'core' ).getEntityRecords( 'postType', 'product', query );
 		const isResolving = select( 'core' ).isResolving( 'getEntityRecords', [ 'postType', 'product', query ] );
 		
-		console.log( 'DEBUG: currentTagId:', currentTagId );
-		console.log( 'DEBUG: query:', query );
-		console.log( 'DEBUG: products fetched:', records );
-		
 		return {
 			products: records || [],
 			isLoadingProducts: isResolving,
@@ -74,46 +70,14 @@ export default function Edit( { attributes, setAttributes } ) {
 
 	const isLoading = isLoadingProducts || isLoadingCategories;
 
-	// RAW DEBUG: Test fetching with apiFetch to see exact REST response
-	const { useEffect } = wp.element;
-	const apiFetch = wp.apiFetch;
-	useEffect( () => {
-		if ( ! currentTagId ) return;
-		console.log( 'DEBUG: API FETCH START for tag:', currentTagId );
-		// Try product_tag parameter
-		apiFetch( { path: `/wp/v2/product?product_tag=${currentTagId}&per_page=10` } )
-			.then( ( res ) => console.log( 'DEBUG: Raw API Response (product_tag):', res ) )
-			.catch( ( err ) => {
-				console.log( 'DEBUG: API Error (product_tag):', err );
-				// Try tag parameter (standard for some setups)
-				apiFetch( { path: `/wp/v2/product?tag=${currentTagId}&per_page=10` } )
-					.then( ( res ) => console.log( 'DEBUG: Raw API Response (tag):', res ) )
-					.catch( ( e ) => console.log( 'DEBUG: API Error (tag):', e ) );
-			} );
-	}, [ currentTagId ] );
-
 	const groupedData = useMemo( () => {
-		if ( isLoading || ! products || ! allCategories ) return [];
-
-		console.log( 'DEBUG: Starting grouping for', products.length, 'products' );
+		if ( isLoading || ! products || ! allCategories || products.length === 0 ) return [];
 
 		const groups = [];
 		products.forEach( ( product ) => {
-			// Try both 'categories' (WC REST) and 'product_cat' (WP REST)
-			const productCats = product.categories || product.product_cat || [];
+			const productCats = product.product_cat || [];
 			
-			if ( productCats.length === 0 ) {
-				let uncatGroup = groups.find( ( g ) => g.id === 'uncategorized' );
-				if ( ! uncatGroup ) {
-					uncatGroup = { id: 'uncategorized', name: 'Other', products: [] };
-					groups.push( uncatGroup );
-				}
-				uncatGroup.products.push( product );
-				return;
-			}
-
-			productCats.forEach( ( catOrId ) => {
-				const catId = typeof catOrId === 'object' ? catOrId.id : catOrId;
+			productCats.forEach( ( catId ) => {
 				let group = groups.find( ( g ) => g.id === catId );
 				if ( ! group ) {
 					const categoryInfo = allCategories.find( ( c ) => c.id === catId );
@@ -124,16 +88,6 @@ export default function Edit( { attributes, setAttributes } ) {
 							products: [],
 						};
 						groups.push( group );
-					} else {
-						// Fallback if category info not found but ID exists
-						let uncatGroup = groups.find( ( g ) => g.id === 'uncategorized' );
-						if ( ! uncatGroup ) {
-							uncatGroup = { id: 'uncategorized', name: 'Other', products: [] };
-							groups.push( uncatGroup );
-						}
-						if ( ! uncatGroup.products.find( p => p.id === product.id ) ) {
-							uncatGroup.products.push( product );
-						}
 					}
 				}
 				if ( group && ! group.products.find( ( p ) => p.id === product.id ) ) {
@@ -142,7 +96,6 @@ export default function Edit( { attributes, setAttributes } ) {
 			} );
 		} );
 
-		console.log( 'DEBUG: Final grouped data:', groups );
 		return groups.sort( ( a, b ) => a.name.localeCompare( b.name ) );
 	}, [ products, allCategories, isLoading ] );
 
@@ -511,18 +464,6 @@ export default function Edit( { attributes, setAttributes } ) {
 			</div>
 
 			<div className="zen-soul-kitchen__menu-content" style={ { marginTop: '40px' } }>
-				{ /* DEBUG SECTION */ }
-				<div style={ { padding: '20px', background: '#f0f0f0', border: '1px solid #ccc', marginBottom: '20px' } }>
-					<h3>DEBUG: All Fetched Products ({ products.length })</h3>
-					{ products.length === 0 ? <p>No products returned by getEntityRecords.</p> : (
-						<ul>
-							{ products.map( p => (
-								<li key={ p.id }>{ p.title?.rendered } (IDs: { (p.categories || []).map(c => c.id || c).join(',') })</li>
-							) ) }
-						</ul>
-					) }
-				</div>
-
 				{ isLoading ? (
 					<p>{ __( 'Loading products and categories...', 'zenctuary' ) }</p>
 				) : groupedData.length > 0 ? groupedData.map( ( group ) => (
