@@ -224,14 +224,14 @@ $wrapper_attributes = get_block_wrapper_attributes( [ 'class' => 'zen-soul-kitch
 						</div>
 					<?php endif; ?>
 
-					<div class="zen-soul-kitchen__products" style="margin-top: 20px;">
+					<div class="zen-soul-kitchen__products zen-products-grid" style="margin-top: 20px;">
 						<?php foreach ( $group['products'] as $product ) : 
 							$is_visible = in_array( (int) $current_tag_id, $product['tag_ids'] );
 						?>
 							<article 
-								class="zen-soul-kitchen__product" 
+								class="zen-soul-kitchen__product zen-product-card" 
 								data-tags="<?php echo esc_attr( implode( ',', $product['tag_ids'] ) ); ?>"
-								style="margin-bottom: 20px; display: <?php echo $is_visible ? 'block' : 'none'; ?>;"
+								style="display: <?php echo $is_visible ? 'flex' : 'none'; ?>;"
 							>
 								<?php // ROW 1: PRODUCT NAME ?>
 								<h4 style="

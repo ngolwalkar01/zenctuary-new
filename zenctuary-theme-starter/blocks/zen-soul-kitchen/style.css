@@ -18,3 +18,31 @@
 .zen-soul-kitchen__filter-button:focus-visible {
     box-shadow: 0 0 0 2px rgba(0,0,0,0.2);
 }
+
+/* 3-Column Grid Layout */
+.zen-products-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 30px;
+    margin-top: 20px;
+}
+
+.zen-product-card {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+/* Responsive Grid */
+@media (max-width: 1024px) {
+    .zen-products-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 767px) {
+    .zen-products-grid {
+        grid-template-columns: 1fr;
+    }
+}
+

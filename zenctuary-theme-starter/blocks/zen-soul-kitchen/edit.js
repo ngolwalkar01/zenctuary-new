@@ -567,7 +567,7 @@ export default function Edit( { attributes, setAttributes } ) {
 						) }
 
 						{ /* ROW 3 & 4 & 5: PRODUCTS */ }
-						<div className="zen-soul-kitchen__products" style={ { marginTop: '20px' } }>
+						<div className="zen-soul-kitchen__products zen-products-grid" style={ { marginTop: '20px' } }>
 							{ group.products.map( ( product ) => {
 								const fullDesc = product.content?.rendered || '';
 								const shortDesc = product.excerpt?.rendered || '';
@@ -586,7 +586,7 @@ export default function Edit( { attributes, setAttributes } ) {
 								const metaString = metaParts.join(' / ');
 
 								return (
-									<article key={ product.id } className="zen-soul-kitchen__product" style={ { marginBottom: '20px' } }>
+									<article key={ product.id } className="zen-soul-kitchen__product zen-product-card">
 										{ /* ROW 1: PRODUCT NAME */ }
 										<h4 style={ {
 											margin: 0,
