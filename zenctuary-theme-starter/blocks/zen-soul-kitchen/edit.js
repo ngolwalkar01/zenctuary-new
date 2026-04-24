@@ -508,10 +508,11 @@ export default function Edit( { attributes, setAttributes } ) {
 								
 								// Price extraction
 								const priceHtml = product.price_html || '';
-								const priceLabel = priceHtml.replace( /<\/?[^>]+(>|$)/g, "" );
+								const priceLabel = priceHtml ? priceHtml.replace( /<\/?[^>]+(>|$)/g, "" ) : '';
 								
 								// Attributes
-								const attrString = ( product.attributes || [] )
+								const attributesToUse = product.zen_attributes || product.attributes || [];
+								const attrString = attributesToUse
 									.map( attr => attr.options ? attr.options.join(', ') : '' )
 									.filter( Boolean )
 									.join(' / ');
