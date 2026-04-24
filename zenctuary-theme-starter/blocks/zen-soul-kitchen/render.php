@@ -192,7 +192,7 @@ $wrapper_attributes = get_block_wrapper_attributes( [ 'class' => 'zen-soul-kitch
 					data-category-id="<?php echo esc_attr( $cat_id ); ?>"
 					style="margin-bottom: 40px; display: <?php echo $has_initial_products ? 'block' : 'none'; ?>;"
 				>
-					<div class="zen-soul-kitchen__category-header" style="display: flex; justify-content: space-between; align-items: baseline; border-bottom: 1px solid #eee; padding-bottom: 10px;">
+					<div class="zen-soul-kitchen__category-header" style="display: flex; justify-content: space-between; align-items: baseline; padding-bottom: 10px;">
 						<h3 style="
 							margin: 0;
 							color: <?php echo esc_attr( $category_styles['titleColor'] ?? '' ); ?>;
@@ -224,67 +224,85 @@ $wrapper_attributes = get_block_wrapper_attributes( [ 'class' => 'zen-soul-kitch
 						</div>
 					<?php endif; ?>
 
-					<div class="zen-soul-kitchen__products zen-products-grid" style="margin-top: 20px;">
-						<?php foreach ( $group['products'] as $product ) : 
-							$is_visible = in_array( (int) $current_tag_id, $product['tag_ids'] );
-						?>
-							<article 
-								class="zen-soul-kitchen__product zen-product-card" 
-								data-tags="<?php echo esc_attr( implode( ',', $product['tag_ids'] ) ); ?>"
-								style="display: <?php echo $is_visible ? 'flex' : 'none'; ?>;"
-							>
-								<?php // ROW 1: PRODUCT NAME ?>
-								<h4 style="
-									margin: 0;
-									color: <?php echo esc_attr( $product_styles['nameColor'] ?? '' ); ?>;
-									font-size: <?php echo esc_attr( $product_styles['nameFontSize'] ?? '' ); ?>;
-									font-weight: <?php echo esc_attr( $product_styles['nameFontWeight'] ?? '700' ); ?>;
-								">
-									<?php echo esc_html( $product['title'] ); ?>
-								</h4>
-
-								<?php // ROW 2: PRODUCT DESCRIPTION ?>
-								<?php if ( ! empty( $product['description'] ) ) : ?>
-									<div class="zen-soul-kitchen__product-description" style="
-										margin-top: 5px;
-										color: <?php echo esc_attr( $product_styles['descColor'] ?? '' ); ?>;
-										font-size: <?php echo esc_attr( $product_styles['descFontSize'] ?? '' ); ?>;
+					<?php 
+					// Group products into chunks of 3
+					$product_chunks = array_chunk( $group['products'], 3 );
+					foreach ( $product_chunks as $chunk_index => $row_products ) : 
+						// Check if the current row has any visible products
+						$has_visible_products = false;
+						foreach ( $row_products as $product ) {
+							if ( in_array( (int) $current_tag_id, $product['tag_ids'] ) ) {
+								$has_visible_products = true;
+								break;
+							}
+						}
+					?>
+						<div class="zen-soul-kitchen__products zen-products-grid" style="margin-top: 20px; display: <?php echo $has_visible_products ? 'grid' : 'none'; ?>;">
+							<?php foreach ( $row_products as $product ) : 
+								$is_visible = in_array( (int) $current_tag_id, $product['tag_ids'] );
+							?>
+								<article 
+									class="zen-soul-kitchen__product zen-product-card" 
+									data-tags="<?php echo esc_attr( implode( ',', $product['tag_ids'] ) ); ?>"
+									style="display: <?php echo $is_visible ? 'flex' : 'none'; ?>;"
+								>
+									<?php // ROW 1: PRODUCT NAME ?>
+									<h4 style="
+										margin: 0;
+										color: <?php echo esc_attr( $product_styles['nameColor'] ?? '' ); ?>;
+										font-size: <?php echo esc_attr( $product_styles['nameFontSize'] ?? '' ); ?>;
+										font-weight: <?php echo esc_attr( $product_styles['nameFontWeight'] ?? '700' ); ?>;
 									">
-										<?php echo wp_kses_post( $product['description'] ); ?>
-									</div>
-								<?php endif; ?>
+										<?php echo esc_html( $product['title'] ); ?>
+									</h4>
 
-								<?php // ROW 3: PRODUCT SHORT DESCRIPTION ?>
-								<?php if ( ! empty( $product['short_description'] ) ) : ?>
-									<div class="zen-soul-kitchen__product-short-description" style="
-										margin-top: 5px;
-										color: <?php echo esc_attr( $product_styles['descColor'] ?? '' ); ?>;
-										font-size: <?php echo esc_attr( $product_styles['descFontSize'] ?? '' ); ?>;
-									">
-										<?php echo wp_kses_post( $product['short_description'] ); ?>
-									</div>
-								<?php endif; ?>
+									<?php // ROW 2: PRODUCT DESCRIPTION ?>
+									<?php if ( ! empty( $product['description'] ) ) : ?>
+										<div class="zen-soul-kitchen__product-description" style="
+											margin-top: 5px;
+											color: <?php echo esc_attr( $product_styles['descColor'] ?? '' ); ?>;
+											font-size: <?php echo esc_attr( $product_styles['descFontSize'] ?? '' ); ?>;
+										">
+											<?php echo wp_kses_post( $product['description'] ); ?>
+										</div>
+									<?php endif; ?>
 
-								<?php // ROW 4: ATTRIBUTE + PRICE ROW ?>
-								<?php 
-								$price_label = wp_strip_all_tags( $product['price_html'] );
-								$attr_label  = $product['attribute_string'];
-								$meta_parts  = array_filter( [ $attr_label, $price_label ] );
-								$meta_string = implode( ' / ', $meta_parts );
+									<?php // ROW 3: PRODUCT SHORT DESCRIPTION ?>
+									<?php if ( ! empty( $product['short_description'] ) ) : ?>
+										<div class="zen-soul-kitchen__product-short-description" style="
+											margin-top: 5px;
+											color: <?php echo esc_attr( $product_styles['descColor'] ?? '' ); ?>;
+											font-size: <?php echo esc_attr( $product_styles['descFontSize'] ?? '' ); ?>;
+										">
+											<?php echo wp_kses_post( $product['short_description'] ); ?>
+										</div>
+									<?php endif; ?>
 
-								if ( ! empty( $meta_parts ) ) :
-								?>
-									<div class="zen-soul-kitchen__product-meta" style="
-										margin-top: 5px;
-										color: <?php echo esc_attr( $product_styles['metaColor'] ?? '' ); ?>;
-										font-size: <?php echo esc_attr( $product_styles['metaFontSize'] ?? '' ); ?>;
-									">
-										<span><?php echo esc_html( $meta_string ); ?></span>
-									</div>
-								<?php endif; ?>
-							</article>
-						<?php endforeach; ?>
-					</div>
+									<?php // ROW 4: ATTRIBUTE + PRICE ROW ?>
+									<?php 
+									$price_label = wp_strip_all_tags( $product['price_html'] );
+									$attr_label  = $product['attribute_string'];
+									$meta_parts  = array_filter( [ $attr_label, $price_label ] );
+									$meta_string = implode( ' / ', $meta_parts );
+
+									if ( ! empty( $meta_parts ) ) :
+									?>
+										<div class="zen-soul-kitchen__product-meta" style="
+											margin-top: 5px;
+											color: <?php echo esc_attr( $product_styles['metaColor'] ?? '' ); ?>;
+											font-size: <?php echo esc_attr( $product_styles['metaFontSize'] ?? '' ); ?>;
+										">
+											<span><?php echo esc_html( $meta_string ); ?></span>
+										</div>
+									<?php endif; ?>
+								</article>
+							<?php endforeach; ?>
+						</div>
+
+						<?php if ( $chunk_index < count( $product_chunks ) - 1 ) : ?>
+							<hr class="zen-soul-kitchen__row-separator" />
+						<?php endif; ?>
+					<?php endforeach; ?>
 				</section>
 			<?php endforeach; ?>
 		<?php else : ?>

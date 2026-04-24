@@ -536,7 +536,7 @@ export default function Edit( { attributes, setAttributes } ) {
 				) : groupedData.length > 0 ? groupedData.map( ( group ) => (
 					<section key={ group.id } className="zen-soul-kitchen__category" style={ { marginBottom: '40px' } }>
 						{ /* ROW 1: CATEGORY HEADER */ }
-						<div className="zen-soul-kitchen__category-header" style={ { display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', borderBottom: '1px solid #eee', paddingBottom: '10px' } }>
+						<div className="zen-soul-kitchen__category-header" style={ { display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', paddingBottom: '10px' } }>
 							<h3 style={ { 
 								margin: 0, 
 								color: categoryStyles.titleColor,
@@ -566,75 +566,89 @@ export default function Edit( { attributes, setAttributes } ) {
 							</div>
 						) }
 
-						{ /* ROW 3 & 4 & 5: PRODUCTS */ }
-						<div className="zen-soul-kitchen__products zen-products-grid" style={ { marginTop: '20px' } }>
-							{ group.products.map( ( product ) => {
-								const fullDesc = product.content?.rendered || '';
-								const shortDesc = product.excerpt?.rendered || '';
-								
-								// Price extraction
-								const priceHtml = product.price_html || '';
-								const priceLabel = priceHtml.replace( /<\/?[^>]+(>|$)/g, "" );
-								
-								// Attributes
-								const attrString = ( product.attributes || [] )
-									.map( attr => attr.options ? attr.options.join(', ') : '' )
-									.filter( Boolean )
-									.join(' / ');
+						{ /* ROW 3 & 4 & 5: PRODUCTS IN CHUNKS */ }
+						{ ( () => {
+							const productChunks = [];
+							for ( let i = 0; i < group.products.length; i += 3 ) {
+								productChunks.push( group.products.slice( i, i + 3 ) );
+							}
 
-								const metaParts = [ attrString, priceLabel ].filter( Boolean );
-								const metaString = metaParts.join(' / ');
+							return productChunks.map( ( rowProducts, rowIndex ) => (
+								<div key={ rowIndex }>
+									<div className="zen-soul-kitchen__products zen-products-grid" style={ { marginTop: '20px' } }>
+										{ rowProducts.map( ( product ) => {
+											const fullDesc = product.content?.rendered || '';
+											const shortDesc = product.excerpt?.rendered || '';
+											
+											// Price extraction
+											const priceHtml = product.price_html || '';
+											const priceLabel = priceHtml.replace( /<\/?[^>]+(>|$)/g, "" );
+											
+											// Attributes
+											const attrString = ( product.attributes || [] )
+												.map( attr => attr.options ? attr.options.join(', ') : '' )
+												.filter( Boolean )
+												.join(' / ');
 
-								return (
-									<article key={ product.id } className="zen-soul-kitchen__product zen-product-card">
-										{ /* ROW 1: PRODUCT NAME */ }
-										<h4 style={ {
-											margin: 0,
-											color: productStyles.nameColor,
-											fontSize: productStyles.nameFontSize,
-											fontWeight: productStyles.nameFontWeight
-										} }>
-											{ product.title?.rendered }
-										</h4>
+											const metaParts = [ attrString, priceLabel ].filter( Boolean );
+											const metaString = metaParts.join(' / ');
 
-										{ /* ROW 2: PRODUCT DESCRIPTION (FULL) */ }
-										{ fullDesc && (
-											<div className="zen-soul-kitchen__product-description" 
-												style={ {
-													marginTop: '5px',
-													color: productStyles.descColor,
-													fontSize: productStyles.descFontSize
-												} }
-												dangerouslySetInnerHTML={ { __html: fullDesc } } 
-											/>
-										) }
+											return (
+												<article key={ product.id } className="zen-soul-kitchen__product zen-product-card">
+													{ /* ROW 1: PRODUCT NAME */ }
+													<h4 style={ {
+														margin: 0,
+														color: productStyles.nameColor,
+														fontSize: productStyles.nameFontSize,
+														fontWeight: productStyles.nameFontWeight
+													} }>
+														{ product.title?.rendered }
+													</h4>
 
-										{ /* ROW 3: PRODUCT SHORT DESCRIPTION */ }
-										{ shortDesc && (
-											<div className="zen-soul-kitchen__product-short-description" 
-												style={ {
-													marginTop: '5px',
-													color: productStyles.descColor,
-													fontSize: productStyles.descFontSize
-												} }
-												dangerouslySetInnerHTML={ { __html: shortDesc } } 
-											/>
-										) }
+													{ /* ROW 2: PRODUCT DESCRIPTION (FULL) */ }
+													{ fullDesc && (
+														<div className="zen-soul-kitchen__product-description" 
+															style={ {
+																marginTop: '5px',
+																color: productStyles.descColor,
+																fontSize: productStyles.descFontSize
+															} }
+															dangerouslySetInnerHTML={ { __html: fullDesc } } 
+														/>
+													) }
 
-										{ /* ROW 4: ATTRIBUTE + PRICE ROW */ }
-										{ metaString && (
-											<div className="zen-soul-kitchen__product-meta" style={ {
-												marginTop: '5px',
-												color: productStyles.metaColor,
-												fontSize: productStyles.metaFontSize
-											} }>
-												<span>{ metaString }</span>
-											</div>
-										) }
-									</article>
-								);
-							} ) }
-						</div>
+													{ /* ROW 3: PRODUCT SHORT DESCRIPTION */ }
+													{ shortDesc && (
+														<div className="zen-soul-kitchen__product-short-description" 
+															style={ {
+																marginTop: '5px',
+																color: productStyles.descColor,
+																fontSize: productStyles.descFontSize
+															} }
+															dangerouslySetInnerHTML={ { __html: shortDesc } } 
+														/>
+													) }
+
+													{ /* ROW 4: ATTRIBUTE + PRICE ROW */ }
+													{ metaString && (
+														<div className="zen-soul-kitchen__product-meta" style={ {
+															marginTop: '5px',
+															color: productStyles.metaColor,
+															fontSize: productStyles.metaFontSize
+														} }>
+															<span>{ metaString }</span>
+														</div>
+													) }
+												</article>
+											);
+										} ) }
+									</div>
+									{ rowIndex < productChunks.length - 1 && (
+										<hr className="zen-soul-kitchen__row-separator" />
+									) }
+								</div>
+							) );
+						} )() }
 					</section>
 				) ) : (
 					<p>{ __( 'No products found for this filter.', 'zenctuary' ) }</p>
