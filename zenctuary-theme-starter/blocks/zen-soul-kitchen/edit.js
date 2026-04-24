@@ -15,7 +15,7 @@ import {
 } from '@wordpress/components';
 import { useSelect } from '@wordpress/data';
 import { __, sprintf } from '@wordpress/i18n';
-import { useMemo } from '@wordpress/element';
+import { useEffect, useMemo } from '@wordpress/element';
 
 export default function Edit( { attributes, setAttributes } ) {
 	const {
@@ -99,6 +99,72 @@ export default function Edit( { attributes, setAttributes } ) {
 
 		return groups.sort( ( a, b ) => a.name.localeCompare( b.name ) );
 	}, [ products, allCategories, isLoading ] );
+
+	useEffect( () => {
+		if ( ! Array.isArray( products ) || products.length === 0 ) {
+			return;
+		}
+
+		const firstProduct = products[ 0 ];
+		const firstKeys = firstProduct ? Object.keys( firstProduct ) : [];
+		const hasPriceField =
+			!! firstProduct?.price_html ||
+			!! firstProduct?.regular_price ||
+			!! firstProduct?.price ||
+			!! firstProduct?.prices;
+		const hasAttributesField = Array.isArray( firstProduct?.attributes ) && firstProduct.attributes.length > 0;
+
+		// eslint-disable-next-line no-console
+		console.groupCollapsed( '[zen-soul-kitchen] Product payload debug' );
+		// eslint-disable-next-line no-console
+		console.log( 'Query source: getEntityRecords(postType, product, { per_page: -1, product_tag: currentTagId })' );
+		// eslint-disable-next-line no-console
+		console.log( 'Current tag id:', currentTagId );
+		// eslint-disable-next-line no-console
+		console.log( 'First product full object:', firstProduct );
+		// eslint-disable-next-line no-console
+		console.log( 'First product keys:', firstKeys );
+		// eslint-disable-next-line no-console
+		console.log( 'Price present on first product?', hasPriceField );
+		// eslint-disable-next-line no-console
+		console.log( 'Attributes present on first product?', hasAttributesField );
+		// eslint-disable-next-line no-console
+		console.log( 'Raw first product price candidates:', {
+			price_html: firstProduct?.price_html,
+			regular_price: firstProduct?.regular_price,
+			price: firstProduct?.price,
+			prices: firstProduct?.prices,
+		} );
+		// eslint-disable-next-line no-console
+		console.log( 'Raw first product attributes value:', firstProduct?.attributes );
+
+		const kaffeCategory = ( allCategories || [] ).find(
+			( cat ) => String( cat?.slug || '' ).toLowerCase() === 'kaffe' || String( cat?.name || '' ).toLowerCase() === 'kaffe'
+		);
+		const kaffeProducts = kaffeCategory
+			? products.filter( ( product ) => Array.isArray( product?.product_cat ) && product.product_cat.includes( kaffeCategory.id ) )
+			: [];
+
+		// eslint-disable-next-line no-console
+		console.log( 'Kaffe category object:', kaffeCategory || null );
+		// eslint-disable-next-line no-console
+		console.log( 'Kaffe products count in current payload:', kaffeProducts.length );
+		if ( kaffeProducts.length > 0 ) {
+			// eslint-disable-next-line no-console
+			console.log( 'First Kaffe product full object:', kaffeProducts[ 0 ] );
+			// eslint-disable-next-line no-console
+			console.log( 'First Kaffe product fields:', {
+				price_html: kaffeProducts[ 0 ]?.price_html,
+				regular_price: kaffeProducts[ 0 ]?.regular_price,
+				price: kaffeProducts[ 0 ]?.price,
+				prices: kaffeProducts[ 0 ]?.prices,
+				attributes: kaffeProducts[ 0 ]?.attributes,
+			} );
+		}
+
+		// eslint-disable-next-line no-console
+		console.groupEnd();
+	}, [ products, allCategories, currentTagId ] );
 
 	const tagOptions = useMemo( () => {
 		if ( ! allTags ) return [];
