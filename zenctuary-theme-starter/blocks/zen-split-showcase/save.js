@@ -4,6 +4,8 @@ const DEFAULT_HEADING_COLOR = 'var(--wp--preset--color--primary)';
 const DEFAULT_TEXT_COLOR = '#ffffff';
 const DEFAULT_PARAGRAPH_FONT_SIZE = 18;
 const DEFAULT_PARAGRAPH_FONT_WEIGHT = '400';
+const DEFAULT_BUTTON_GAP = 14;
+const DEFAULT_BUTTON_ICON_SIZE = 18;
 
 const spacingStyle = ( value = {}, property ) => ( {
 	[ `${ property }Top` ]: value.top || '0px',
@@ -37,6 +39,32 @@ const normalizeParagraphs = ( paragraphs, legacyParagraph, legacyTypography = {}
 	return [ { text: legacyParagraph || '', ...fallbackTypography } ];
 };
 
+const getDefaultButton = ( overrides = {} ) => ( {
+	text: 'Book your class',
+	actionType: 'link',
+	url: '#',
+	showIcon: true,
+	iconType: 'arrow',
+	customIconUrl: '',
+	popupImageUrl: '',
+	...overrides,
+} );
+
+const normalizeButtons = ( buttons, legacy = {} ) => {
+	if ( Array.isArray( buttons ) && buttons.length ) {
+		return buttons.map( ( item ) => getDefaultButton( item ) );
+	}
+
+	return [
+		getDefaultButton( {
+			text: legacy.buttonText || 'Book your class',
+			url: legacy.buttonUrl || '#',
+			showIcon: legacy.showArrow ?? true,
+			iconType: 'arrow',
+		} ),
+	];
+};
+
 function CheckIcon() {
 	return (
 		<svg viewBox="0 0 16 16" aria-hidden="true" focusable="false">
@@ -52,6 +80,39 @@ function ArrowIcon() {
 		</svg>
 	);
 }
+
+function PlusIcon() {
+	return (
+		<svg viewBox="0 0 18 18" aria-hidden="true" focusable="false">
+			<path d="M8 3h2v5h5v2h-5v5H8v-5H3V8h5z" />
+		</svg>
+	);
+}
+
+function ExternalIcon() {
+	return (
+		<svg viewBox="0 0 18 18" aria-hidden="true" focusable="false">
+			<path d="M10 3h5v5h-2V6.41l-5.29 5.3-1.42-1.42 5.3-5.29H10V3z" />
+			<path d="M4 4h4v2H6v6h6v-2h2v4H4V4z" />
+		</svg>
+	);
+}
+
+const getIconMarkup = ( button, iconSize ) => {
+	if ( button.iconType === 'custom' && button.customIconUrl ) {
+		return <img src={ button.customIconUrl } alt="" loading="lazy" decoding="async" style={ { width: `${ iconSize }px`, height: `${ iconSize }px`, objectFit: 'contain' } } />;
+	}
+
+	if ( button.iconType === 'plus' ) {
+		return <PlusIcon />;
+	}
+
+	if ( button.iconType === 'external' ) {
+		return <ExternalIcon />;
+	}
+
+	return <ArrowIcon />;
+};
 
 export default function save( { attributes } ) {
 	const {
@@ -71,6 +132,8 @@ export default function save( { attributes } ) {
 		paragraphFontWeight,
 		buttonText,
 		buttonUrl,
+		buttons,
+		buttonGap,
 		buttonTextColor,
 		buttonBackgroundColor,
 		buttonBorderColor,
@@ -81,6 +144,7 @@ export default function save( { attributes } ) {
 		buttonPadding,
 		showArrow,
 		arrowPosition,
+		buttonIconSize,
 		images,
 		animationSpeed,
 		imageWidth,
@@ -95,7 +159,12 @@ export default function save( { attributes } ) {
 		color: paragraphColor,
 		fontWeight: paragraphFontWeight,
 	} );
+	const hasExplicitButtons = Array.isArray( buttons ) && buttons.length > 0;
+	const safeButtons = normalizeButtons( buttons, { buttonText, buttonUrl, showArrow } );
 	const safeImages = Array.isArray( images ) ? images : [];
+	const hasPopupButtons = safeButtons.some(
+		( item ) => item.actionType === 'popup-image' && item.popupImageUrl
+	);
 
 	const blockProps = useBlockProps.save( {
 		className: `zen-split-showcase${ reverseLayout ? ' is-reversed' : '' }`,
@@ -105,7 +174,7 @@ export default function save( { attributes } ) {
 		},
 	} );
 
-	const buttonStyle = {
+	const sharedButtonStyle = {
 		color: buttonTextColor,
 		backgroundColor: buttonBackgroundColor,
 		borderColor: buttonBorderColor,
@@ -114,6 +183,26 @@ export default function save( { attributes } ) {
 		...( buttonFontSize ? { fontSize: `${ buttonFontSize }px` } : {} ),
 		...( buttonFontWeight ? { fontWeight: buttonFontWeight } : {} ),
 		...spacingStyle( buttonPadding, 'padding' ),
+	};
+
+	const renderButtonLink = ( item, index ) => {
+		const iconEnabled = item.showIcon ?? showArrow ?? true;
+		const icon = iconEnabled ? getIconMarkup( item, buttonIconSize || DEFAULT_BUTTON_ICON_SIZE ) : null;
+
+		return (
+			<a
+				key={ index }
+				className={ `zen-split-showcase__button is-arrow-${ arrowPosition }` }
+				href={ item.actionType === 'popup-image' ? ( item.popupImageUrl || '#' ) : ( item.url || '#' ) }
+				style={ sharedButtonStyle }
+				data-button-action={ item.actionType || 'link' }
+				data-popup-image={ item.popupImageUrl || '' }
+			>
+				{ iconEnabled && ( arrowPosition === 'left' || arrowPosition === 'top' ) && <span className="zen-split-showcase__button-icon" style={ { width: `${ buttonIconSize || DEFAULT_BUTTON_ICON_SIZE }px`, height: `${ buttonIconSize || DEFAULT_BUTTON_ICON_SIZE }px` } }>{ icon }</span> }
+				<RichText.Content tagName="span" value={ item.text } />
+				{ iconEnabled && ( arrowPosition === 'right' || arrowPosition === 'bottom' ) && <span className="zen-split-showcase__button-icon" style={ { width: `${ buttonIconSize || DEFAULT_BUTTON_ICON_SIZE }px`, height: `${ buttonIconSize || DEFAULT_BUTTON_ICON_SIZE }px` } }>{ icon }</span> }
+			</a>
+		);
 	};
 
 	return (
@@ -162,11 +251,19 @@ export default function save( { attributes } ) {
 							) ) }
 						</div>
 
-						<a className={ `zen-split-showcase__button is-arrow-${ arrowPosition }` } href={ buttonUrl || '#' } style={ buttonStyle }>
-							{ showArrow && ( arrowPosition === 'left' || arrowPosition === 'top' ) && <span className="zen-split-showcase__button-icon"><ArrowIcon /></span> }
-							<RichText.Content tagName="span" value={ buttonText } />
-							{ showArrow && ( arrowPosition === 'right' || arrowPosition === 'bottom' ) && <span className="zen-split-showcase__button-icon"><ArrowIcon /></span> }
-						</a>
+						{ ! hasExplicitButtons ? (
+							<a className={ `zen-split-showcase__button is-arrow-${ arrowPosition }` } href={ buttonUrl || '#' } style={ sharedButtonStyle }>
+								{ showArrow && ( arrowPosition === 'left' || arrowPosition === 'top' ) && <span className="zen-split-showcase__button-icon"><ArrowIcon /></span> }
+								<RichText.Content tagName="span" value={ buttonText } />
+								{ showArrow && ( arrowPosition === 'right' || arrowPosition === 'bottom' ) && <span className="zen-split-showcase__button-icon"><ArrowIcon /></span> }
+							</a>
+						) : safeButtons.length === 1 ? (
+							renderButtonLink( safeButtons[ 0 ], 0 )
+						) : (
+							<div className="zen-split-showcase__buttons" style={ { gap: `${ buttonGap || DEFAULT_BUTTON_GAP }px` } }>
+								{ safeButtons.map( renderButtonLink ) }
+							</div>
+						) }
 					</div>
 				</div>
 
@@ -183,6 +280,18 @@ export default function save( { attributes } ) {
 					</div>
 				</div>
 			</div>
+
+			{ hasPopupButtons ? (
+				<div className="zen-split-showcase__lightbox" hidden>
+					<button className="zen-split-showcase__lightbox-close" type="button" aria-label="Close image popup">
+						×
+					</button>
+					<div className="zen-split-showcase__lightbox-backdrop"></div>
+					<div className="zen-split-showcase__lightbox-dialog" role="dialog" aria-modal="true">
+						<img className="zen-split-showcase__lightbox-image" src="" alt="" />
+					</div>
+				</div>
+			) : null }
 		</section>
 	);
 }

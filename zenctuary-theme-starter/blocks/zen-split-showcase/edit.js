@@ -33,12 +33,26 @@ const ARROW_POSITION_OPTIONS = [
 	{ label: 'Bottom', value: 'bottom' },
 ];
 
+const BUTTON_ACTION_OPTIONS = [
+	{ label: 'Link', value: 'link' },
+	{ label: 'Image Popup', value: 'popup-image' },
+];
+
+const BUTTON_ICON_OPTIONS = [
+	{ label: 'Arrow', value: 'arrow' },
+	{ label: 'Plus', value: 'plus' },
+	{ label: 'External', value: 'external' },
+	{ label: 'Custom Upload', value: 'custom' },
+];
+
 const DEFAULT_HEADING_COLOR = 'var(--wp--preset--color--primary)';
 const DEFAULT_TEXT_COLOR = '#ffffff';
 const DEFAULT_PARAGRAPH_FONT_SIZE = 18;
 const DEFAULT_PARAGRAPH_FONT_WEIGHT = '400';
 const DEFAULT_BUTTON_FONT_SIZE = 16;
 const DEFAULT_BUTTON_FONT_WEIGHT = '700';
+const DEFAULT_BUTTON_GAP = 14;
+const DEFAULT_BUTTON_ICON_SIZE = 18;
 
 const spacingStyle = ( value = {}, property ) => ( {
 	[ `${ property }Top` ]: value.top || '0px',
@@ -70,6 +84,34 @@ const normalizeParagraphs = ( paragraphs, legacyParagraph, legacyTypography = {}
 	}
 
 	return [ { text: legacyParagraph || '', ...fallbackTypography } ];
+};
+
+const getDefaultButton = ( overrides = {} ) => ( {
+	text: 'Book your class',
+	actionType: 'link',
+	url: '#',
+	showIcon: true,
+	iconType: 'arrow',
+	customIconUrl: '',
+	customIconId: 0,
+	popupImageUrl: '',
+	popupImageId: 0,
+	...overrides,
+} );
+
+const normalizeButtons = ( buttons, legacy = {} ) => {
+	if ( Array.isArray( buttons ) && buttons.length ) {
+		return buttons.map( ( item ) => getDefaultButton( item ) );
+	}
+
+	return [
+		getDefaultButton( {
+			text: legacy.buttonText || 'Book your class',
+			url: legacy.buttonUrl || '#',
+			showIcon: legacy.showArrow ?? true,
+			iconType: 'arrow',
+		} ),
+	];
 };
 
 function SpacingControls( { label, value = {}, onChange } ) {
@@ -114,6 +156,39 @@ function ArrowIcon() {
 	);
 }
 
+function PlusIcon() {
+	return (
+		<svg viewBox="0 0 18 18" aria-hidden="true" focusable="false">
+			<path d="M8 3h2v5h5v2h-5v5H8v-5H3V8h5z" />
+		</svg>
+	);
+}
+
+function ExternalIcon() {
+	return (
+		<svg viewBox="0 0 18 18" aria-hidden="true" focusable="false">
+			<path d="M10 3h5v5h-2V6.41l-5.29 5.3-1.42-1.42 5.3-5.29H10V3z" />
+			<path d="M4 4h4v2H6v6h6v-2h2v4H4V4z" />
+		</svg>
+	);
+}
+
+const getIconMarkup = ( button, iconSize ) => {
+	if ( button.iconType === 'custom' && button.customIconUrl ) {
+		return <img src={ button.customIconUrl } alt="" style={ { width: `${ iconSize }px`, height: `${ iconSize }px`, objectFit: 'contain' } } />;
+	}
+
+	if ( button.iconType === 'plus' ) {
+		return <PlusIcon />;
+	}
+
+	if ( button.iconType === 'external' ) {
+		return <ExternalIcon />;
+	}
+
+	return <ArrowIcon />;
+};
+
 export default function Edit( { attributes, setAttributes } ) {
 	const {
 		reverseLayout,
@@ -132,6 +207,8 @@ export default function Edit( { attributes, setAttributes } ) {
 		paragraphFontWeight,
 		buttonText,
 		buttonUrl,
+		buttons,
+		buttonGap,
 		buttonTextColor,
 		buttonBackgroundColor,
 		buttonBorderColor,
@@ -142,6 +219,7 @@ export default function Edit( { attributes, setAttributes } ) {
 		buttonPadding,
 		showArrow,
 		arrowPosition,
+		buttonIconSize,
 		images,
 		animationSpeed,
 		imageWidth,
@@ -156,6 +234,7 @@ export default function Edit( { attributes, setAttributes } ) {
 		color: paragraphColor,
 		fontWeight: paragraphFontWeight,
 	} );
+	const safeButtons = normalizeButtons( buttons, { buttonText, buttonUrl, showArrow } );
 	const safeImages = Array.isArray( images ) ? images : [];
 	const [ activeImage, setActiveImage ] = useState( 0 );
 	const [ selectedParagraphIndex, setSelectedParagraphIndex ] = useState( 0 );
@@ -179,6 +258,12 @@ export default function Edit( { attributes, setAttributes } ) {
 			setSelectedParagraphIndex( Math.max( safeParagraphs.length - 1, 0 ) );
 		}
 	}, [ selectedParagraphIndex, safeParagraphs.length ] );
+
+	useEffect( () => {
+		if ( ! Array.isArray( buttons ) || ! buttons.length ) {
+			setAttributes( { buttons: safeButtons } );
+		}
+	}, [] );
 
 	const blockProps = useBlockProps( {
 		className: `zen-split-showcase${ reverseLayout ? ' is-reversed' : '' }`,
@@ -246,6 +331,30 @@ export default function Edit( { attributes, setAttributes } ) {
 		} );
 	};
 
+	const updateButton = ( buttonIndex, key, value ) => {
+		setAttributes( {
+			buttons: safeButtons.map( ( item, index ) => (
+				index === buttonIndex ? { ...item, [ key ]: value } : item
+			) ),
+		} );
+	};
+
+	const addButton = () => {
+		setAttributes( {
+			buttons: [
+				...safeButtons,
+				getDefaultButton(),
+			],
+		} );
+	};
+
+	const removeButton = ( buttonIndex ) => {
+		const nextButtons = safeButtons.filter( ( item, index ) => index !== buttonIndex );
+		setAttributes( {
+			buttons: nextButtons.length ? nextButtons : [ getDefaultButton() ],
+		} );
+	};
+
 	const selectImages = ( selectedImages ) => {
 		const normalizedImages = ( Array.isArray( selectedImages ) ? selectedImages : [ selectedImages ] )
 			.filter( Boolean )
@@ -264,7 +373,7 @@ export default function Edit( { attributes, setAttributes } ) {
 		} );
 	};
 
-	const buttonStyle = {
+	const sharedButtonStyle = {
 		color: buttonTextColor,
 		backgroundColor: buttonBackgroundColor,
 		borderColor: buttonBorderColor,
@@ -326,11 +435,35 @@ export default function Edit( { attributes, setAttributes } ) {
 					<ColorPalette value={ selectedParagraph?.color || DEFAULT_TEXT_COLOR } onChange={ ( value ) => updateParagraphTypography( 'color', value || DEFAULT_TEXT_COLOR ) } />
 				</PanelBody>
 
-				<PanelBody title={ __( 'Button', 'zenctuary' ) } initialOpen={ false }>
-					<TextControl label={ __( 'Button URL', 'zenctuary' ) } value={ buttonUrl } onChange={ ( value ) => setAttributes( { buttonUrl: value } ) } />
-					<ToggleControl label={ __( 'Show Arrow Icon', 'zenctuary' ) } checked={ showArrow } onChange={ ( value ) => setAttributes( { showArrow: value } ) } />
+				<PanelBody title={ __( 'Buttons', 'zenctuary' ) } initialOpen={ false }>
+					<RangeControl
+						label={ __( 'Buttons Gap', 'zenctuary' ) }
+						value={ buttonGap || DEFAULT_BUTTON_GAP }
+						onChange={ ( value ) => setAttributes( { buttonGap: value } ) }
+						min={ 0 }
+						max={ 40 }
+					/>
+					<ToggleControl
+						label={ __( 'Show Icons', 'zenctuary' ) }
+						checked={ showArrow }
+						onChange={ ( value ) => {
+							setAttributes( { showArrow: value } );
+							setAttributes( {
+								buttons: safeButtons.map( ( item ) => ( { ...item, showIcon: value } ) ),
+							} );
+						} }
+					/>
 					{ showArrow && (
-						<SelectControl label={ __( 'Arrow Position', 'zenctuary' ) } value={ arrowPosition } options={ ARROW_POSITION_OPTIONS } onChange={ ( value ) => setAttributes( { arrowPosition: value } ) } />
+						<>
+							<SelectControl label={ __( 'Icon Position', 'zenctuary' ) } value={ arrowPosition } options={ ARROW_POSITION_OPTIONS } onChange={ ( value ) => setAttributes( { arrowPosition: value } ) } />
+							<RangeControl
+								label={ __( 'Icon Size', 'zenctuary' ) }
+								value={ buttonIconSize || DEFAULT_BUTTON_ICON_SIZE }
+								onChange={ ( value ) => setAttributes( { buttonIconSize: value } ) }
+								min={ 10 }
+								max={ 40 }
+							/>
+						</>
 					) }
 					<p className="components-base-control__label">{ __( 'Text Color', 'zenctuary' ) }</p>
 					<ColorPalette value={ buttonTextColor } onChange={ ( value ) => setAttributes( { buttonTextColor: value || '#ffffff' } ) } />
@@ -344,6 +477,116 @@ export default function Edit( { attributes, setAttributes } ) {
 					<RangeControl label={ __( 'Font Size', 'zenctuary' ) } value={ buttonFontSize || DEFAULT_BUTTON_FONT_SIZE } onChange={ ( value ) => setAttributes( { buttonFontSize: value } ) } min={ 12 } max={ 32 } />
 					<SelectControl label={ __( 'Font Weight', 'zenctuary' ) } value={ buttonFontWeight || DEFAULT_BUTTON_FONT_WEIGHT } options={ FONT_WEIGHT_OPTIONS } onChange={ ( value ) => setAttributes( { buttonFontWeight: value } ) } />
 					<SpacingControls label={ __( 'Padding', 'zenctuary' ) } value={ buttonPadding } onChange={ ( value ) => setAttributes( { buttonPadding: value } ) } />
+
+					<div className="zen-split-showcase-image-list">
+						{ safeButtons.map( ( button, index ) => (
+							<div className="zen-split-showcase-image-list__item zen-split-showcase-image-list__item--button" key={ index }>
+								<div style={ { gridColumn: '1 / -1', padding: '12px', border: '1px solid #d9d9d9', borderRadius: '8px' } }>
+									<TextControl
+										label={ `${ __( 'Button', 'zenctuary' ) } ${ index + 1 } ${ __( 'Text', 'zenctuary' ) }` }
+										value={ button.text }
+										onChange={ ( value ) => updateButton( index, 'text', value ) }
+									/>
+									<SelectControl
+										label={ __( 'Action', 'zenctuary' ) }
+										value={ button.actionType || 'link' }
+										options={ BUTTON_ACTION_OPTIONS }
+										onChange={ ( value ) => updateButton( index, 'actionType', value ) }
+									/>
+									{ ( button.actionType || 'link' ) === 'link' ? (
+										<TextControl
+											label={ __( 'Link URL', 'zenctuary' ) }
+											value={ button.url || '' }
+											onChange={ ( value ) => updateButton( index, 'url', value ) }
+										/>
+									) : (
+										<div style={ { marginBottom: '12px' } }>
+											<MediaUploadCheck>
+												<MediaUpload
+													onSelect={ ( image ) => updateButton( index, 'popupImageUrl', image?.url || '' ) || updateButton( index, 'popupImageId', image?.id || 0 ) }
+													allowedTypes={ [ 'image' ] }
+													value={ button.popupImageId || 0 }
+													render={ ( { open } ) => (
+														<Button variant="secondary" onClick={ open }>
+															{ button.popupImageUrl ? __( 'Replace Popup Image', 'zenctuary' ) : __( 'Upload Popup Image', 'zenctuary' ) }
+														</Button>
+													) }
+												/>
+											</MediaUploadCheck>
+											{ button.popupImageUrl ? (
+												<div style={ { marginTop: '10px', display: 'flex', alignItems: 'center', gap: '10px' } }>
+													<img src={ button.popupImageUrl } alt="" style={ { width: '64px', height: '64px', objectFit: 'cover', borderRadius: '8px' } } />
+													<Button
+														variant="tertiary"
+														isDestructive
+														onClick={ () => {
+															updateButton( index, 'popupImageUrl', '' );
+															updateButton( index, 'popupImageId', 0 );
+														} }
+													>
+														{ __( 'Remove Popup Image', 'zenctuary' ) }
+													</Button>
+												</div>
+											) : null }
+										</div>
+									) }
+									<ToggleControl
+										label={ __( 'Show Icon', 'zenctuary' ) }
+										checked={ button.showIcon ?? showArrow ?? true }
+										onChange={ ( value ) => updateButton( index, 'showIcon', value ) }
+									/>
+									{ ( button.showIcon ?? showArrow ?? true ) && (
+										<>
+											<SelectControl
+												label={ __( 'Icon Type', 'zenctuary' ) }
+												value={ button.iconType || 'arrow' }
+												options={ BUTTON_ICON_OPTIONS }
+												onChange={ ( value ) => updateButton( index, 'iconType', value ) }
+											/>
+											{ ( button.iconType || 'arrow' ) === 'custom' ? (
+												<div style={ { marginBottom: '12px' } }>
+													<MediaUploadCheck>
+														<MediaUpload
+															onSelect={ ( image ) => updateButton( index, 'customIconUrl', image?.url || '' ) || updateButton( index, 'customIconId', image?.id || 0 ) }
+															allowedTypes={ [ 'image' ] }
+															value={ button.customIconId || 0 }
+															render={ ( { open } ) => (
+																<Button variant="secondary" onClick={ open }>
+																	{ button.customIconUrl ? __( 'Replace Custom Icon', 'zenctuary' ) : __( 'Upload Custom Icon', 'zenctuary' ) }
+																</Button>
+															) }
+														/>
+													</MediaUploadCheck>
+													{ button.customIconUrl ? (
+														<div style={ { marginTop: '10px', display: 'flex', alignItems: 'center', gap: '10px' } }>
+															<img src={ button.customIconUrl } alt="" style={ { width: '40px', height: '40px', objectFit: 'contain', borderRadius: '4px' } } />
+															<Button
+																variant="tertiary"
+																isDestructive
+																onClick={ () => {
+																	updateButton( index, 'customIconUrl', '' );
+																	updateButton( index, 'customIconId', 0 );
+																} }
+															>
+																{ __( 'Remove Custom Icon', 'zenctuary' ) }
+															</Button>
+														</div>
+													) : null }
+												</div>
+											) : null }
+										</>
+									) }
+									<Button variant="tertiary" isDestructive onClick={ () => removeButton( index ) }>
+										{ __( 'Remove Button', 'zenctuary' ) }
+									</Button>
+								</div>
+							</div>
+						) ) }
+					</div>
+
+					<Button variant="secondary" onClick={ addButton }>
+						{ __( 'Add Button', 'zenctuary' ) }
+					</Button>
 				</PanelBody>
 
 				<PanelBody title={ __( 'Images', 'zenctuary' ) } initialOpen={ false }>
@@ -445,17 +688,32 @@ export default function Edit( { attributes, setAttributes } ) {
 								</Button>
 							</div>
 
-							<a className={ `zen-split-showcase__button is-arrow-${ arrowPosition }` } href={ buttonUrl || '#' } style={ buttonStyle } onClick={ ( event ) => event.preventDefault() }>
-								{ showArrow && ( arrowPosition === 'left' || arrowPosition === 'top' ) && <span className="zen-split-showcase__button-icon"><ArrowIcon /></span> }
-								<RichText
-									tagName="span"
-									value={ buttonText }
-									onChange={ ( value ) => setAttributes( { buttonText: value } ) }
-									placeholder={ __( 'Button text', 'zenctuary' ) }
-									allowedFormats={ [ 'core/bold', 'core/italic' ] }
-								/>
-								{ showArrow && ( arrowPosition === 'right' || arrowPosition === 'bottom' ) && <span className="zen-split-showcase__button-icon"><ArrowIcon /></span> }
-							</a>
+							<div className="zen-split-showcase__buttons" style={ { gap: `${ buttonGap || DEFAULT_BUTTON_GAP }px` } }>
+								{ safeButtons.map( ( button, index ) => {
+									const iconEnabled = button.showIcon ?? showArrow ?? true;
+									const icon = iconEnabled ? getIconMarkup( button, buttonIconSize || DEFAULT_BUTTON_ICON_SIZE ) : null;
+
+									return (
+										<a
+											key={ index }
+											className={ `zen-split-showcase__button is-arrow-${ arrowPosition }` }
+											href={ button.actionType === 'popup-image' ? button.popupImageUrl || '#' : ( button.url || '#' ) }
+											style={ sharedButtonStyle }
+											onClick={ ( event ) => event.preventDefault() }
+										>
+											{ iconEnabled && ( arrowPosition === 'left' || arrowPosition === 'top' ) && <span className="zen-split-showcase__button-icon" style={ { width: `${ buttonIconSize || DEFAULT_BUTTON_ICON_SIZE }px`, height: `${ buttonIconSize || DEFAULT_BUTTON_ICON_SIZE }px` } }>{ icon }</span> }
+											<RichText
+												tagName="span"
+												value={ button.text }
+												onChange={ ( value ) => updateButton( index, 'text', value ) }
+												placeholder={ __( 'Button text', 'zenctuary' ) }
+												allowedFormats={ [ 'core/bold', 'core/italic' ] }
+											/>
+											{ iconEnabled && ( arrowPosition === 'right' || arrowPosition === 'bottom' ) && <span className="zen-split-showcase__button-icon" style={ { width: `${ buttonIconSize || DEFAULT_BUTTON_ICON_SIZE }px`, height: `${ buttonIconSize || DEFAULT_BUTTON_ICON_SIZE }px` } }>{ icon }</span> }
+										</a>
+									);
+								} ) }
+							</div>
 						</div>
 					</div>
 

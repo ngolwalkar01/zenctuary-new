@@ -86,6 +86,14 @@
       "type": "string",
       "default": "#"
     },
+    "buttons": {
+      "type": "array",
+      "default": []
+    },
+    "buttonGap": {
+      "type": "number",
+      "default": 14
+    },
     "buttonTextColor": {
       "type": "string",
       "default": "#ffffff"
@@ -128,6 +136,10 @@
     "arrowPosition": {
       "type": "string",
       "default": "right"
+    },
+    "buttonIconSize": {
+      "type": "number",
+      "default": 18
     },
     "images": {
       "type": "array",
