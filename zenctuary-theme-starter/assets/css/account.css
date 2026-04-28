@@ -1,6 +1,7 @@
 .zen-account-page-active,
 html:has(.zen-account-page-active) {
 	background:
+		linear-gradient(125deg, rgba(19, 24, 20, 0.92), rgba(216, 179, 85, 0.16) 52%, rgba(246, 242, 234, 0.18)),
 		radial-gradient(circle at 18% 82%, rgba(216, 179, 85, 0.28), transparent 24%),
 		radial-gradient(circle at 82% 12%, rgba(216, 179, 85, 0.2), transparent 20%),
 		var(--wp--preset--color--primary-grey);
@@ -8,6 +9,7 @@ html:has(.zen-account-page-active) {
 
 body.zen-account-page-active {
 	background:
+		linear-gradient(125deg, rgba(19, 24, 20, 0.92), rgba(216, 179, 85, 0.16) 52%, rgba(246, 242, 234, 0.18)),
 		radial-gradient(circle at 18% 82%, rgba(216, 179, 85, 0.28), transparent 24%),
 		radial-gradient(circle at 82% 12%, rgba(216, 179, 85, 0.2), transparent 20%),
 		var(--wp--preset--color--primary-grey);
@@ -82,8 +84,7 @@ body.zen-account-page-active {
 }
 
 .zen-account-shell__panel {
-	background:
-		linear-gradient(125deg, rgba(19, 24, 20, 0.92), rgba(216, 179, 85, 0.16) 52%, rgba(246, 242, 234, 0.18));
+	background: transparent;
 	border-radius: 32px;
 	display: grid;
 	grid-template-columns: 320px minmax(0, 1fr);
