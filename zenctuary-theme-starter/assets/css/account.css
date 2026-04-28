@@ -91,7 +91,7 @@ body.zen-account-page-active {
 	background: transparent;
 	border-radius: 32px;
 	display: grid;
-	grid-template-columns: 320px minmax(0, 1fr);
+	grid-template-columns: 350px minmax(0, 1fr);
 	min-height: calc(100vh - clamp(56px, 6vw, 80px));
 	overflow: hidden;
 	position: relative;
@@ -99,7 +99,6 @@ body.zen-account-page-active {
 }
 
 .zen-account-shell__sidebar {
-	border-right: 1px solid rgba(246, 242, 234, 0.18);
 	padding: 40px 28px 36px;
 }
 
