@@ -44,7 +44,11 @@ body.zen-account-page-active {
 
 .zen-account-shell {
 	min-height: 100vh;
-	padding: clamp(28px, 3vw, 40px);
+	padding: 0;
+}
+
+.woocommerce-account main .woocommerce {
+	max-width: 1200px;
 }
 
 .zen-account-shell__inner {
@@ -496,7 +500,7 @@ body.zen-account-page-active {
 @media (max-width: 767px) {
 	.zen-account-shell {
 		min-height: auto;
-		padding: 16px;
+		padding: 0;
 	}
 
 	.zen-account-shell__panel {
