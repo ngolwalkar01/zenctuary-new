@@ -48,9 +48,6 @@ function zenctuary_customize_account_menu_items( array $items ): array {
 		'edit-account'    => __( 'Personal information', 'zenctuary' ),
 		'payment-methods' => __( 'Payment methods', 'zenctuary' ),
 		'orders'          => __( 'Orders', 'zenctuary' ),
-		'downloads'       => __( 'Downloads', 'zenctuary' ),
-		'edit-address'    => __( 'Addresses', 'zenctuary' ),
-		'dashboard'       => __( 'Overview', 'zenctuary' ),
 		'customer-logout' => __( 'Log-Out', 'zenctuary' ),
 	);
 
@@ -60,7 +57,9 @@ function zenctuary_customize_account_menu_items( array $items ): array {
 		}
 	}
 
-	$order    = array( 'edit-account', 'payment-methods', 'orders', 'downloads', 'edit-address', 'dashboard', 'customer-logout' );
+	unset( $items['downloads'], $items['edit-address'], $items['dashboard'] );
+
+	$order    = array( 'edit-account', 'payment-methods', 'orders', 'customer-logout' );
 	$ordered  = array();
 
 	foreach ( $order as $key ) {

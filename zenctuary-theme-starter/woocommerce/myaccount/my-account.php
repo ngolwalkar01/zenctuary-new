@@ -8,17 +8,11 @@
 defined( 'ABSPATH' ) || exit;
 
 $current_user = wp_get_current_user();
-$back_url     = wp_get_referer() ? wp_get_referer() : home_url( '/' );
 $avatar_url   = zenctuary_get_account_avatar_url( get_current_user_id() );
 ?>
 
 <section class="zen-account-shell">
 	<div class="zen-account-shell__inner">
-		<a class="zen-account-shell__back" href="<?php echo esc_url( $back_url ); ?>" data-zen-account-back>
-			<span class="zen-account-shell__back-icon" aria-hidden="true"><?php echo wp_kses_post( zenctuary_get_account_svg_icon( 'back' ) ); ?></span>
-			<span class="screen-reader-text"><?php esc_html_e( 'Go back', 'zenctuary' ); ?></span>
-		</a>
-
 		<div class="zen-account-shell__panel">
 			<aside class="zen-account-shell__sidebar">
 				<div class="zen-account-shell__profile">
