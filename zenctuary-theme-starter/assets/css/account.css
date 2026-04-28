@@ -1,0 +1,492 @@
+.zen-account-page-active {
+	background:
+		radial-gradient(circle at 18% 82%, rgba(216, 179, 85, 0.28), transparent 24%),
+		radial-gradient(circle at 82% 12%, rgba(216, 179, 85, 0.2), transparent 20%),
+		var(--wp--preset--color--primary-grey);
+}
+
+.zen-account-page-active .wp-site-blocks {
+	min-height: 100vh;
+}
+
+.zen-account-shell {
+	padding: clamp(48px, 6vw, 88px) 0;
+}
+
+.zen-account-shell__inner {
+	margin: 0 auto;
+	max-width: 1360px;
+	position: relative;
+	width: min(100%, 1360px);
+}
+
+.zen-account-shell__back {
+	align-items: center;
+	color: var(--wp--preset--color--primary-beige);
+	display: inline-flex;
+	height: 56px;
+	justify-content: center;
+	margin-bottom: 24px;
+	text-decoration: none;
+	width: 56px;
+}
+
+.zen-account-shell__back-icon {
+	align-items: center;
+	border: 2px solid rgba(246, 242, 234, 0.62);
+	border-radius: 999px;
+	display: inline-flex;
+	height: 56px;
+	justify-content: center;
+	width: 56px;
+}
+
+.zen-account-shell__back svg,
+.zen-account-nav svg,
+.zen-account-form__avatar-preview svg {
+	display: block;
+	height: 24px;
+	width: 24px;
+}
+
+.zen-account-shell__panel {
+	background:
+		linear-gradient(125deg, rgba(19, 24, 20, 0.92), rgba(216, 179, 85, 0.16) 52%, rgba(246, 242, 234, 0.18));
+	border-radius: 32px;
+	display: grid;
+	grid-template-columns: 320px minmax(0, 1fr);
+	overflow: hidden;
+	position: relative;
+}
+
+.zen-account-shell__sidebar {
+	border-right: 1px solid rgba(246, 242, 234, 0.18);
+	padding: 40px 28px 36px;
+}
+
+.zen-account-shell__profile {
+	align-items: center;
+	display: flex;
+	gap: 16px;
+	margin-bottom: 32px;
+}
+
+.zen-account-shell__avatar-wrap {
+	flex: 0 0 auto;
+}
+
+.zen-account-shell__avatar {
+	border-radius: 999px;
+	display: block;
+	height: 56px;
+	object-fit: cover;
+	width: 56px;
+}
+
+.zen-account-shell__avatar--placeholder {
+	align-items: center;
+	background: rgba(246, 242, 234, 0.08);
+	display: inline-flex;
+	justify-content: center;
+}
+
+.zen-account-shell__profile-text {
+	display: grid;
+	gap: 4px;
+}
+
+.zen-account-shell__profile-name {
+	color: var(--wp--preset--color--primary-beige);
+	font: 600 18px/1.2 var(--wp--preset--font-family--montserrat);
+}
+
+.zen-account-shell__profile-email {
+	color: rgba(246, 242, 234, 0.74);
+	font-size: 14px;
+}
+
+.zen-account-nav {
+	display: grid;
+	gap: 12px;
+	list-style: none;
+	margin: 0;
+	padding: 0;
+}
+
+.zen-account-nav a {
+	align-items: center;
+	background: rgba(84, 84, 84, 0.62);
+	border: 2px solid rgba(246, 242, 234, 0.22);
+	border-radius: 14px;
+	color: var(--wp--preset--color--primary-beige);
+	display: grid;
+	font: 500 15px/1.2 var(--wp--preset--font-family--dm-sans);
+	gap: 12px;
+	grid-template-columns: 20px minmax(0, 1fr) 20px;
+	min-height: 54px;
+	padding: 14px 16px;
+	text-decoration: none;
+	transition: border-color 0.2s ease, color 0.2s ease, background-color 0.2s ease;
+}
+
+.zen-account-nav li.is-active a,
+.zen-account-nav a:hover,
+.zen-account-nav a:focus-visible {
+	background: rgba(84, 84, 84, 0.9);
+	border-color: var(--wp--preset--color--primary-gold);
+	color: var(--wp--preset--color--primary-gold);
+	outline: none;
+}
+
+.zen-account-nav__icon,
+.zen-account-nav__chevron {
+	align-items: center;
+	display: inline-flex;
+	justify-content: center;
+}
+
+.zen-account-nav__icon svg {
+	height: 18px;
+	width: 18px;
+}
+
+.zen-account-nav__chevron svg {
+	height: 16px;
+	width: 16px;
+}
+
+.zen-account-shell__content {
+	min-width: 0;
+	padding: 40px 28px 36px;
+}
+
+.zen-account-shell__content-scroll {
+	max-height: min(76vh, 860px);
+	overflow: auto;
+	padding-right: 16px;
+	scrollbar-color: var(--wp--preset--color--primary-gold) transparent;
+	scrollbar-width: thin;
+}
+
+.zen-account-shell__content-scroll::-webkit-scrollbar {
+	width: 8px;
+}
+
+.zen-account-shell__content-scroll::-webkit-scrollbar-thumb {
+	background: var(--wp--preset--color--primary-gold);
+	border-radius: 999px;
+}
+
+.zen-account-shell__content .woocommerce-error,
+.zen-account-shell__content .woocommerce-info,
+.zen-account-shell__content .woocommerce-message {
+	background: rgba(84, 84, 84, 0.72);
+	border: 1px solid rgba(216, 179, 85, 0.5);
+	border-radius: 16px;
+	color: var(--wp--preset--color--primary-beige);
+	margin: 0 0 20px;
+	padding: 16px 18px;
+}
+
+.zen-account-form,
+.zen-account-shell__content .woocommerce-Addresses,
+.zen-account-shell__content .woocommerce-orders-table,
+.zen-account-shell__content .woocommerce-MyAccount-downloads,
+.zen-account-shell__content .woocommerce-PaymentMethods,
+.zen-account-shell__content .woocommerce-table--order-downloads,
+.zen-account-shell__content .woocommerce-order-details,
+.zen-account-shell__content .woocommerce-customer-details,
+.zen-account-shell__content .woocommerce-address-fields {
+	color: var(--wp--preset--color--primary-beige);
+}
+
+.zen-account-form__header {
+	margin-bottom: 24px;
+}
+
+.zen-account-form__eyebrow {
+	color: rgba(246, 242, 234, 0.72);
+	font-size: 15px;
+	letter-spacing: 0.04em;
+	margin: 0 0 8px;
+	text-transform: uppercase;
+}
+
+.zen-account-form__title,
+.zen-account-shell__content h2,
+.zen-account-shell__content h3 {
+	color: var(--wp--preset--color--primary-beige);
+	font-family: var(--wp--preset--font-family--montserrat);
+	font-size: clamp(30px, 3vw, 40px);
+	font-weight: 600;
+	line-height: 1.05;
+	margin: 0 0 24px;
+}
+
+.zen-account-form__section-title {
+	color: var(--wp--preset--color--primary-gold);
+	font-family: var(--wp--preset--font-family--montserrat);
+	font-size: 18px;
+	font-weight: 600;
+	margin: 0 0 20px;
+}
+
+.zen-account-form__grid {
+	display: grid;
+	gap: 18px;
+	grid-template-columns: repeat(2, minmax(0, 1fr));
+	margin-bottom: 24px;
+}
+
+.zen-account-form__grid--profile {
+	grid-template-columns: 1fr;
+}
+
+.zen-account-form__field {
+	display: grid;
+	gap: 10px;
+}
+
+.zen-account-form__field--full,
+.zen-account-form__field--avatar {
+	grid-column: 1 / -1;
+}
+
+.zen-account-form__field--address {
+	grid-column: span 1;
+}
+
+.zen-account-form__field--number {
+	max-width: 140px;
+}
+
+.zen-account-form__label {
+	color: var(--wp--preset--color--primary-beige);
+	font-size: 14px;
+	font-weight: 500;
+}
+
+.zen-account-form input:not([type="checkbox"]):not([type="file"]),
+.zen-account-form select,
+.zen-account-shell__content textarea,
+.zen-account-shell__content .select2-selection {
+	background: rgba(63, 62, 62, 0.94);
+	border: 2px solid rgba(246, 242, 234, 0.22);
+	border-radius: 10px;
+	box-shadow: none;
+	color: var(--wp--preset--color--primary-beige);
+	font-size: 16px;
+	min-height: 48px;
+	padding: 12px 14px;
+	width: 100%;
+}
+
+.zen-account-form input::placeholder,
+.zen-account-shell__content textarea::placeholder {
+	color: rgba(246, 242, 234, 0.44);
+}
+
+.zen-account-form input:focus,
+.zen-account-form select:focus,
+.zen-account-shell__content textarea:focus {
+	border-color: var(--wp--preset--color--primary-gold);
+	outline: none;
+}
+
+.zen-account-form__avatar-group {
+	align-items: center;
+	display: flex;
+	gap: 18px;
+}
+
+.zen-account-form__avatar-preview {
+	align-items: center;
+	background: rgba(63, 62, 62, 0.94);
+	border: 2px solid rgba(246, 242, 234, 0.22);
+	border-radius: 999px;
+	display: inline-flex;
+	flex: 0 0 auto;
+	height: 72px;
+	justify-content: center;
+	overflow: hidden;
+	width: 72px;
+}
+
+.zen-account-form__avatar-preview img {
+	display: block;
+	height: 100%;
+	object-fit: cover;
+	width: 100%;
+}
+
+.zen-account-form__avatar-actions {
+	display: grid;
+	gap: 12px;
+}
+
+.zen-account-form__upload-button,
+.zen-account-form__submit,
+.zen-account-shell__content .woocommerce-button,
+.zen-account-shell__content .button {
+	align-items: center;
+	background: rgba(84, 84, 84, 0.72);
+	border: 2px solid rgba(246, 242, 234, 0.4);
+	border-radius: 14px;
+	color: var(--wp--preset--color--primary-beige);
+	cursor: pointer;
+	display: inline-flex;
+	font: 500 16px/1 var(--wp--preset--font-family--dm-sans);
+	justify-content: center;
+	min-height: 48px;
+	padding: 12px 20px;
+	text-decoration: none;
+	transition: border-color 0.2s ease, background-color 0.2s ease, color 0.2s ease;
+}
+
+.zen-account-form__upload-button:hover,
+.zen-account-form__submit:hover,
+.zen-account-shell__content .woocommerce-button:hover,
+.zen-account-shell__content .button:hover,
+.zen-account-form__upload-button:focus-visible,
+.zen-account-form__submit:focus-visible,
+.zen-account-shell__content .woocommerce-button:focus-visible,
+.zen-account-shell__content .button:focus-visible {
+	background: rgba(84, 84, 84, 0.9);
+	border-color: var(--wp--preset--color--primary-gold);
+	color: var(--wp--preset--color--primary-gold);
+	outline: none;
+}
+
+.zen-account-form input[type="file"] {
+	height: 0;
+	opacity: 0;
+	position: absolute;
+	pointer-events: none;
+	width: 0;
+}
+
+.zen-account-form__checkbox {
+	align-items: center;
+	color: rgba(246, 242, 234, 0.74);
+	display: inline-flex;
+	font-size: 14px;
+	gap: 10px;
+}
+
+.zen-account-form__checkbox input {
+	accent-color: var(--wp--preset--color--primary-gold);
+}
+
+.zen-account-form__password {
+	border-top: 1px solid rgba(246, 242, 234, 0.14);
+	margin-top: 18px;
+	padding-top: 24px;
+}
+
+.zen-account-shell__content table {
+	border-collapse: separate;
+	border-spacing: 0 12px;
+	width: 100%;
+}
+
+.zen-account-shell__content table thead th {
+	color: rgba(246, 242, 234, 0.72);
+	font-family: var(--wp--preset--font-family--montserrat);
+	font-size: 14px;
+	font-weight: 600;
+	letter-spacing: 0.04em;
+	text-transform: uppercase;
+}
+
+.zen-account-shell__content table tbody tr,
+.zen-account-shell__content .woocommerce-Address,
+.zen-account-shell__content .woocommerce-order-details,
+.zen-account-shell__content .woocommerce-customer-details {
+	background: rgba(63, 62, 62, 0.72);
+	border: 1px solid rgba(246, 242, 234, 0.16);
+	border-radius: 18px;
+}
+
+.zen-account-shell__content table th,
+.zen-account-shell__content table td,
+.zen-account-shell__content .woocommerce-Address,
+.zen-account-shell__content .woocommerce-order-details,
+.zen-account-shell__content .woocommerce-customer-details {
+	padding: 18px;
+}
+
+.zen-account-shell__content .woocommerce-Address-title {
+	align-items: center;
+	display: flex;
+	justify-content: space-between;
+}
+
+.zen-account-shell__content .woocommerce-MyAccount-content > p:first-child {
+	margin-top: 0;
+}
+
+.zen-account-shell__content a {
+	color: var(--wp--preset--color--primary-gold);
+}
+
+.zen-account-shell__content .woocommerce-Addresses {
+	display: grid;
+	gap: 20px;
+	grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.zen-account-shell__content .woocommerce-address-fields__field-wrapper {
+	display: grid;
+	gap: 16px;
+}
+
+@media (max-width: 1024px) {
+	.zen-account-shell__panel {
+		grid-template-columns: 1fr;
+	}
+
+	.zen-account-shell__sidebar {
+		border-bottom: 1px solid rgba(246, 242, 234, 0.18);
+		border-right: 0;
+	}
+
+	.zen-account-shell__content-scroll {
+		max-height: none;
+		overflow: visible;
+		padding-right: 0;
+	}
+}
+
+@media (max-width: 767px) {
+	.zen-account-shell {
+		padding: 24px 0 40px;
+	}
+
+	.zen-account-shell__panel {
+		border-radius: 24px;
+	}
+
+	.zen-account-shell__sidebar,
+	.zen-account-shell__content {
+		padding: 24px 20px;
+	}
+
+	.zen-account-form__grid,
+	.zen-account-shell__content .woocommerce-Addresses {
+		grid-template-columns: 1fr;
+	}
+
+	.zen-account-form__field--number {
+		max-width: none;
+	}
+
+	.zen-account-form__avatar-group {
+		align-items: flex-start;
+		flex-direction: column;
+	}
+
+	.zen-account-nav a {
+		min-height: 50px;
+		padding: 12px 14px;
+	}
+}
