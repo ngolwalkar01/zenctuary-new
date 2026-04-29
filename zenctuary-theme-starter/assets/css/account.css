@@ -99,6 +99,8 @@ body.zen-account-page-active {
 }
 
 .zen-account-shell__sidebar {
+	display: flex;
+	flex-direction: column;
 	padding: 40px 28px 36px;
 }
 
@@ -144,11 +146,19 @@ body.zen-account-page-active {
 }
 
 .zen-account-nav {
-	display: grid;
+	display: flex;
+	flex: 1 1 auto;
+	flex-direction: column;
 	gap: 12px;
 	list-style: none;
+	margin-bottom: 0;
 	margin: 0;
 	padding: 0;
+}
+
+.zen-account-nav__item--logout {
+	margin-top: auto;
+	padding-top: 28px;
 }
 
 .zen-account-nav a {
@@ -185,6 +195,13 @@ body.zen-account-page-active {
 
 .zen-account-nav__icon svg {
 	height: 18px;
+	width: 18px;
+}
+
+.zen-account-nav__custom-icon-image {
+	display: block;
+	height: 18px;
+	object-fit: contain;
 	width: 18px;
 }
 
@@ -419,6 +436,13 @@ body.zen-account-page-active {
 	border-top: 1px solid rgba(246, 242, 234, 0.14);
 	margin-top: 18px;
 	padding-top: 24px;
+}
+
+.zen-account-wallet__card {
+	background: rgba(63, 62, 62, 0.72);
+	border: 1px solid rgba(246, 242, 234, 0.16);
+	border-radius: 18px;
+	padding: 20px;
 }
 
 .zen-account-shell__content table {

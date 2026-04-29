@@ -1,0 +1,31 @@
+.zen-account-admin__media-row {
+	align-items: center;
+	display: flex;
+	gap: 12px;
+}
+
+.zen-account-admin__preview {
+	align-items: center;
+	background: #f6f2ea;
+	border: 1px solid #d0d0d0;
+	border-radius: 8px;
+	color: #545454;
+	display: inline-flex;
+	height: 56px;
+	justify-content: center;
+	min-width: 56px;
+	overflow: hidden;
+	padding: 6px;
+}
+
+.zen-account-admin__preview.is-empty {
+	min-width: 180px;
+	padding: 6px 12px;
+}
+
+.zen-account-admin__preview img {
+	display: block;
+	height: 100%;
+	object-fit: contain;
+	width: 100%;
+}

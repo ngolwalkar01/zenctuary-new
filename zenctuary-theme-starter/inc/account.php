@@ -33,6 +33,28 @@ function zenctuary_enqueue_account_assets(): void {
 	);
 }
 
+add_action( 'admin_enqueue_scripts', 'zenctuary_enqueue_account_admin_assets' );
+function zenctuary_enqueue_account_admin_assets( string $hook ): void {
+	if ( 'appearance_page_zenctuary-account-nav' !== $hook ) {
+		return;
+	}
+
+	wp_enqueue_media();
+	wp_enqueue_style(
+		'zenctuary-account-admin',
+		ZENCTUARY_THEME_URI . '/assets/css/account-admin.css',
+		array(),
+		ZENCTUARY_THEME_VERSION
+	);
+	wp_enqueue_script(
+		'zenctuary-account-admin',
+		ZENCTUARY_THEME_URI . '/assets/js/account-admin.js',
+		array( 'jquery' ),
+		ZENCTUARY_THEME_VERSION,
+		true
+	);
+}
+
 add_filter( 'body_class', 'zenctuary_account_body_class' );
 function zenctuary_account_body_class( array $classes ): array {
 	if ( function_exists( 'is_account_page' ) && is_account_page() ) {
@@ -42,14 +64,112 @@ function zenctuary_account_body_class( array $classes ): array {
 	return $classes;
 }
 
+add_action( 'admin_menu', 'zenctuary_register_account_nav_admin_page' );
+function zenctuary_register_account_nav_admin_page(): void {
+	add_theme_page(
+		__( 'Account Navigation', 'zenctuary' ),
+		__( 'Account Navigation', 'zenctuary' ),
+		'manage_options',
+		'zenctuary-account-nav',
+		'zenctuary_render_account_nav_admin_page'
+	);
+}
+
+add_action( 'admin_init', 'zenctuary_register_account_nav_settings' );
+function zenctuary_register_account_nav_settings(): void {
+	register_setting(
+		'zenctuary_account_nav',
+		'zenctuary_account_nav_icons',
+		array(
+			'type'              => 'array',
+			'sanitize_callback' => 'zenctuary_sanitize_account_nav_icons',
+			'default'           => array(),
+		)
+	);
+}
+
+function zenctuary_sanitize_account_nav_icons( $value ): array {
+	$value = is_array( $value ) ? $value : array();
+	$keys  = array( 'edit-account', 'payment-methods', 'orders', 'wallet', 'customer-logout' );
+	$clean = array();
+
+	foreach ( $keys as $key ) {
+		$clean[ $key ] = isset( $value[ $key ] ) ? absint( $value[ $key ] ) : 0;
+	}
+
+	return $clean;
+}
+
+function zenctuary_render_account_nav_admin_page(): void {
+	$icons = get_option( 'zenctuary_account_nav_icons', array() );
+	$items = array(
+		'edit-account'    => __( 'Personal Information', 'zenctuary' ),
+		'payment-methods' => __( 'Payment Methods', 'zenctuary' ),
+		'orders'          => __( 'Bookings', 'zenctuary' ),
+		'wallet'          => __( 'Wallet', 'zenctuary' ),
+		'customer-logout' => __( 'Logout', 'zenctuary' ),
+	);
+	?>
+	<div class="wrap zen-account-admin">
+		<h1><?php esc_html_e( 'Account Navigation Icons', 'zenctuary' ); ?></h1>
+		<form method="post" action="options.php">
+			<?php settings_fields( 'zenctuary_account_nav' ); ?>
+			<table class="form-table" role="presentation">
+				<tbody>
+				<?php foreach ( $items as $key => $label ) : ?>
+					<?php
+					$attachment_id = isset( $icons[ $key ] ) ? absint( $icons[ $key ] ) : 0;
+					$image_url     = $attachment_id ? wp_get_attachment_image_url( $attachment_id, 'thumbnail' ) : '';
+					?>
+					<tr>
+						<th scope="row"><?php echo esc_html( $label ); ?></th>
+						<td>
+							<div class="zen-account-admin__media-row" data-target="zenctuary-account-nav-icon-<?php echo esc_attr( $key ); ?>">
+								<div class="zen-account-admin__preview<?php echo $image_url ? '' : ' is-empty'; ?>">
+									<?php if ( $image_url ) : ?>
+										<img src="<?php echo esc_url( $image_url ); ?>" alt="">
+									<?php else : ?>
+										<span><?php esc_html_e( 'No icon selected', 'zenctuary' ); ?></span>
+									<?php endif; ?>
+								</div>
+								<input type="hidden" id="zenctuary-account-nav-icon-<?php echo esc_attr( $key ); ?>" name="zenctuary_account_nav_icons[<?php echo esc_attr( $key ); ?>]" value="<?php echo esc_attr( $attachment_id ); ?>">
+								<button type="button" class="button zen-account-admin__select"><?php esc_html_e( 'Select icon', 'zenctuary' ); ?></button>
+								<button type="button" class="button zen-account-admin__remove"><?php esc_html_e( 'Remove', 'zenctuary' ); ?></button>
+							</div>
+						</td>
+					</tr>
+				<?php endforeach; ?>
+				</tbody>
+			</table>
+			<?php submit_button(); ?>
+		</form>
+	</div>
+	<?php
+}
+
+function zenctuary_find_wallet_menu_key( array $items ): string {
+	foreach ( array_keys( $items ) as $key ) {
+		if ( false !== strpos( $key, 'wallet' ) ) {
+			return (string) $key;
+		}
+	}
+
+	return '';
+}
+
 add_filter( 'woocommerce_account_menu_items', 'zenctuary_customize_account_menu_items', 20 );
 function zenctuary_customize_account_menu_items( array $items ): array {
+	$wallet_key = zenctuary_find_wallet_menu_key( $items );
 	$labels = array(
 		'edit-account'    => __( 'Personal information', 'zenctuary' ),
 		'payment-methods' => __( 'Payment methods', 'zenctuary' ),
-		'orders'          => __( 'Orders', 'zenctuary' ),
+		'orders'          => __( 'Bookings', 'zenctuary' ),
 		'customer-logout' => __( 'Log-Out', 'zenctuary' ),
 	);
+
+	if ( $wallet_key ) {
+		$labels[ $wallet_key ] = __( 'Wallet', 'zenctuary' );
+	}
 
 	foreach ( $labels as $key => $label ) {
 		if ( isset( $items[ $key ] ) ) {
@@ -57,19 +177,25 @@ function zenctuary_customize_account_menu_items( array $items ): array {
 		}
 	}
 
-	unset( $items['downloads'], $items['edit-address'], $items['dashboard'] );
+	unset( $items['downloads'], $items['edit-address'], $items['dashboard'], $items['subscriptions'] );
 
-	$order    = array( 'edit-account', 'payment-methods', 'orders', 'customer-logout' );
+	$order = array( 'edit-account', 'payment-methods', 'orders' );
+
+	if ( $wallet_key ) {
+		$order[] = $wallet_key;
+	}
+
+	$order[]   = 'customer-logout';
 	$ordered  = array();
 
 	foreach ( $order as $key ) {
 		if ( isset( $items[ $key ] ) ) {
 			$ordered[ $key ] = $items[ $key ];
-			unset( $items[ $key ] );
 		}
+		unset( $items[ $key ] );
 	}
 
-	return array_merge( $ordered, $items );
+	return $ordered;
 }
 
 function zenctuary_get_account_avatar_url( int $user_id ): string {
@@ -110,15 +236,42 @@ function zenctuary_get_account_svg_icon( string $icon ): string {
 }
 
 function zenctuary_get_account_nav_icon( string $endpoint ): string {
+	$custom_icons = get_option( 'zenctuary_account_nav_icons', array() );
+	$attachment_id = isset( $custom_icons[ $endpoint ] ) ? absint( $custom_icons[ $endpoint ] ) : 0;
+
+	if ( ! $attachment_id && false !== strpos( $endpoint, 'wallet' ) && isset( $custom_icons['wallet'] ) ) {
+		$attachment_id = absint( $custom_icons['wallet'] );
+	}
+
+	if ( $attachment_id ) {
+		$image = wp_get_attachment_image(
+			$attachment_id,
+			'thumbnail',
+			false,
+			array(
+				'class'        => 'zen-account-nav__custom-icon-image',
+				'loading'      => 'lazy',
+				'decoding'     => 'async',
+				'aria-hidden'  => 'true',
+				'alt'          => '',
+			)
+		);
+
+		if ( $image ) {
+			return $image;
+		}
+	}
+
 	$map = array(
 		'edit-account'    => 'profile',
 		'payment-methods' => 'payment',
 		'orders'          => 'orders',
-		'downloads'       => 'downloads',
-		'edit-address'    => 'address',
-		'dashboard'       => 'overview',
 		'customer-logout' => 'logout',
 	);
+
+	if ( false !== strpos( $endpoint, 'wallet' ) ) {
+		return zenctuary_get_account_svg_icon( 'payment' );
+	}
 
 	return zenctuary_get_account_svg_icon( $map[ $endpoint ] ?? 'chevron' );
 }
