@@ -3,6 +3,28 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 add_action( 'wp_enqueue_scripts', 'zenctuary_enqueue_assets' );
+function zenctuary_get_my_account_url(): string {
+	if ( function_exists( 'wc_get_page_permalink' ) ) {
+		$my_account_url = wc_get_page_permalink( 'myaccount' );
+
+		if ( $my_account_url ) {
+			return $my_account_url;
+		}
+	}
+
+	$page_id = (int) get_option( 'woocommerce_myaccount_page_id' );
+
+	if ( $page_id ) {
+		$permalink = get_permalink( $page_id );
+
+		if ( $permalink ) {
+			return $permalink;
+		}
+	}
+
+	return admin_url( 'profile.php' );
+}
+
 function zenctuary_enqueue_assets(): void {
 	wp_enqueue_style(
 		'zenctuary-google-fonts',
@@ -76,9 +98,7 @@ function zenctuary_enqueue_assets(): void {
 		'ajax_url'     => admin_url( 'admin-ajax.php' ),
 		'nonce'        => wp_create_nonce( 'zenctuary_auth_nonce' ),
 		'is_logged_in' => is_user_logged_in(),
-		'my_account_url' => function_exists( 'wc_get_page_permalink' ) ? wc_get_page_permalink( 'myaccount' ) : admin_url( 'profile.php' ),
-		'cart_url'     => function_exists( 'wc_get_cart_url' ) ? wc_get_cart_url() : '',
-		'checkout_url' => function_exists( 'wc_get_checkout_url' ) ? wc_get_checkout_url() : '',
+		'my_account_url' => zenctuary_get_my_account_url(),
 		'user_data'    => is_user_logged_in() ? array(
 			'display_name' => $current_user->display_name,
 			'user_email'   => $current_user->user_email,

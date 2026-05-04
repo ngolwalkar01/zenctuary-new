@@ -48,21 +48,10 @@ window.zenctuaryAuth = (function() {
                     case 'account':
                         window.location.href = zenctuaryAuthData.my_account_url;
                         break;
-                    case 'cart':
-                    case 'checkout':
-                        openCheckout();
-                        break;
                     case 'logout':
                         handleLogout();
                         break;
                 }
-                return;
-            }
-
-            const commerceLink = e.target.closest('a[href]');
-            if (commerceLink && isCartOrCheckoutUrl(commerceLink.href)) {
-                e.preventDefault();
-                openCheckout();
                 return;
             }
 
@@ -248,7 +237,7 @@ window.zenctuaryAuth = (function() {
                 zenctuaryAuthData.is_logged_in = true;
                 zenctuaryAuthData.user_data = result.data.user_data;
                 syncUI();
-                window.location.href = zenctuaryAuthData.my_account_url;
+                window.location.href = result.data.redirect_url || zenctuaryAuthData.my_account_url;
             } else {
                 errorContainer.textContent = result.data.message || 'An error occurred.';
             }
@@ -333,61 +322,6 @@ window.zenctuaryAuth = (function() {
     }
 
     /**
-     * Open the shared popup with the custom checkout flow loaded into it.
-     */
-    async function openCheckout() {
-        if (!zenctuaryAuthData.is_logged_in) {
-            openModal('login');
-            return;
-        }
-
-        openModal('checkout');
-
-        const root = document.getElementById('zen-checkout-flow-root');
-        if (!root) return;
-
-        root.innerHTML = '<div class="zen-checkout-loading">Loading checkout...</div>';
-
-        const formData = new FormData();
-        formData.append('action', 'zcf_render_checkout');
-        if (window.zcfCheckout && zcfCheckout.nonce) {
-            formData.append('nonce', zcfCheckout.nonce);
-        }
-
-        try {
-            const response = await fetch(zenctuaryAuthData.ajax_url, {
-                method: 'POST',
-                body: formData
-            });
-            const result = await response.json();
-
-            if (result.success && result.data && result.data.html) {
-                root.innerHTML = result.data.html;
-            } else {
-                root.innerHTML = '<div class="zen-checkout-loading">Checkout is unavailable right now.</div>';
-            }
-        } catch (error) {
-            console.error('Zenctuary Checkout Error:', error);
-            root.innerHTML = '<div class="zen-checkout-loading">Checkout is unavailable right now.</div>';
-        }
-    }
-
-    /**
-     * Detect normal Woo cart/checkout links so they can stay in the popup flow.
-     */
-    function isCartOrCheckoutUrl(url) {
-        const targets = [zenctuaryAuthData.cart_url, zenctuaryAuthData.checkout_url].filter(Boolean);
-
-        return targets.some(function(target) {
-            return normalizeUrl(url) === normalizeUrl(target);
-        });
-    }
-
-    function normalizeUrl(url) {
-        return String(url || '').replace(/\/+$/, '');
-    }
-
-    /**
      * Close the modal
      */
     function closeModal() {
@@ -406,24 +340,9 @@ window.zenctuaryAuth = (function() {
         init();
     }
 
-    if (window.jQuery) {
-        jQuery(document.body).on('added_to_cart', function() {
-            openCheckout();
-        });
-
-        jQuery(document).on('zenCheckoutFlow:close', function() {
-            closeModal();
-        });
-
-        jQuery(document).on('zenCheckoutFlow:back', function() {
-            closeModal();
-        });
-    }
-
     // Public API
     return {
         openModal: openModal,
-        openCheckout: openCheckout,
         closeModal: closeModal,
         setState: setState,
         syncUI: syncUI

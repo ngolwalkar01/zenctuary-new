@@ -31,9 +31,11 @@ function zenctuary_ajax_login() {
 	if ( is_wp_error( $user_signon ) ) {
 		wp_send_json_error( array( 'message' => $user_signon->get_error_message() ) );
 	} else {
+		wp_set_current_user( $user_signon->ID );
 		wp_send_json_success( array( 
             'message' => __( 'Login successful!', 'zenctuary' ),
             'user_id' => $user_signon->ID,
+            'redirect_url' => function_exists( 'zenctuary_get_my_account_url' ) ? zenctuary_get_my_account_url() : admin_url( 'profile.php' ),
             'user_data' => array(
                 'display_name' => $user_signon->display_name,
                 'user_email'   => $user_signon->user_email,
@@ -140,11 +142,13 @@ function zenctuary_ajax_register() {
 
         // Log the user in
         wp_set_auth_cookie( $user_id );
+        wp_set_current_user( $user_id );
         
         $user = get_userdata( $user_id );
         wp_send_json_success( array( 
             'message' => __( 'Registration successful!', 'zenctuary' ),
             'user_id' => $user_id,
+            'redirect_url' => function_exists( 'zenctuary_get_my_account_url' ) ? zenctuary_get_my_account_url() : admin_url( 'profile.php' ),
             'user_data' => array(
                 'display_name' => $user->display_name,
                 'user_email'   => $user->user_email,
