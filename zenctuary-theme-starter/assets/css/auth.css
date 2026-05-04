@@ -129,9 +129,34 @@
     max-width: 800px;
 }
 
-.zen-modal-container[data-view="login"] .zen-modal-content,
-.zen-modal-container[data-view="account"] .zen-modal-content {
+.zen-modal-container[data-view="login"] .zen-modal-content {
     max-width: 400px;
+}
+
+.zen-modal-container[data-view="checkout"] {
+    padding: 0;
+    background: transparent;
+    border: 0;
+    box-shadow: none;
+    overflow: visible;
+}
+
+.zen-modal-container[data-view="checkout"] .zen-modal-content {
+    max-width: none;
+    margin: 0;
+}
+
+.zen-modal-container[data-view="checkout"] .zen-modal-close,
+.zen-modal-container[data-view="checkout"] .zen-modal-back {
+    display: none;
+}
+
+.zen-checkout-flow-root {
+    width: 100%;
+}
+
+.zen-checkout-flow-root .zcf-shell {
+    width: 100%;
 }
 
 .zen-modal-overlay.is-active .zen-modal-container {

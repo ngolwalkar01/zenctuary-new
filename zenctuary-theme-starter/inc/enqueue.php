@@ -76,6 +76,9 @@ function zenctuary_enqueue_assets(): void {
 		'ajax_url'     => admin_url( 'admin-ajax.php' ),
 		'nonce'        => wp_create_nonce( 'zenctuary_auth_nonce' ),
 		'is_logged_in' => is_user_logged_in(),
+		'my_account_url' => function_exists( 'wc_get_page_permalink' ) ? wc_get_page_permalink( 'myaccount' ) : admin_url( 'profile.php' ),
+		'cart_url'     => function_exists( 'wc_get_cart_url' ) ? wc_get_cart_url() : '',
+		'checkout_url' => function_exists( 'wc_get_checkout_url' ) ? wc_get_checkout_url() : '',
 		'user_data'    => is_user_logged_in() ? array(
 			'display_name' => $current_user->display_name,
 			'user_email'   => $current_user->user_email,
