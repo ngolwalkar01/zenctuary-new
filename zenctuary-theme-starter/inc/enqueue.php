@@ -98,6 +98,7 @@ function zenctuary_enqueue_assets(): void {
 		'ajax_url'     => admin_url( 'admin-ajax.php' ),
 		'nonce'        => wp_create_nonce( 'zenctuary_auth_nonce' ),
 		'is_logged_in' => is_user_logged_in(),
+		'home_url'     => home_url( '/' ),
 		'my_account_url' => zenctuary_get_my_account_url(),
 		'user_data'    => is_user_logged_in() ? array(
 			'display_name' => $current_user->display_name,
