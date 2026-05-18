@@ -170,3 +170,16 @@ function zenctuary_ajax_logout() {
 }
 add_action( 'wp_ajax_zenctuary_logout', 'zenctuary_ajax_logout' );
 add_action( 'wp_ajax_nopriv_zenctuary_logout', 'zenctuary_ajax_logout' ); // Allow even if not logged in (to prevent weird states)
+
+/**
+ * Redirect all direct logout flows to the homepage.
+ *
+ * This covers native WordPress/WooCommerce logout URLs that bypass the
+ * AJAX modal handler.
+ *
+ * @return string
+ */
+function zenctuary_logout_redirect_to_home(): string {
+	return home_url( '/' );
+}
+add_filter( 'logout_redirect', 'zenctuary_logout_redirect_to_home' );
