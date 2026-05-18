@@ -32,7 +32,6 @@ function zenctuary_ajax_login() {
 		wp_send_json_error( array( 'message' => $user_signon->get_error_message() ) );
 	} else {
 		wp_set_current_user( $user_signon->ID );
-
 		wp_send_json_success( array( 
             'message' => __( 'Login successful!', 'zenctuary' ),
             'user_id' => $user_signon->ID,
@@ -166,23 +165,8 @@ add_action( 'wp_ajax_zenctuary_register', 'zenctuary_ajax_register' );
  */
 function zenctuary_ajax_logout() {
 	wp_logout();
-	wp_send_json_success(
-		array(
-			'message'      => __( 'Logged out successfully.', 'zenctuary' ),
-			'redirect_url' => home_url( '/' ),
-		)
-	);
+	wp_send_json_success( array( 'message' => __( 'Logged out successfully.', 'zenctuary' ) ) );
 	wp_die();
 }
 add_action( 'wp_ajax_zenctuary_logout', 'zenctuary_ajax_logout' );
 add_action( 'wp_ajax_nopriv_zenctuary_logout', 'zenctuary_ajax_logout' ); // Allow even if not logged in (to prevent weird states)
-
-/**
- * Keep direct WordPress/WooCommerce logout flows away from My Account.
- *
- * @return string
- */
-function zenctuary_logout_redirect_to_home(): string {
-	return home_url( '/' );
-}
-add_filter( 'logout_redirect', 'zenctuary_logout_redirect_to_home' );

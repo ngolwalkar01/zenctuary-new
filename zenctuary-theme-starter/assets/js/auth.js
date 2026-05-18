@@ -8,15 +8,7 @@
 window.zenctuaryAuth = (function() {
     'use strict';
 
-    const authData = window.zenctuaryAuthData || {
-        ajax_url: '',
-        nonce: '',
-        is_logged_in: false,
-        home_url: '/',
-        my_account_url: '/',
-        user_data: null
-    };
-
+    const postAuthRedirectKey = 'zenctuary_post_auth_redirect';
     let isInitialized = false;
 
     let itiInstance = null;
@@ -55,7 +47,7 @@ window.zenctuaryAuth = (function() {
                         openModal(action);
                         break;
                     case 'account':
-                        window.location.href = authData.my_account_url;
+                        window.location.href = zenctuaryAuthData.my_account_url;
                         break;
                     case 'logout':
                         handleLogout();
@@ -167,7 +159,7 @@ window.zenctuaryAuth = (function() {
      * Re-queries DOM every time to avoid stale references.
      */
     function syncUI() {
-        const isLoggedIn = authData.is_logged_in;
+        const isLoggedIn = zenctuaryAuthData.is_logged_in;
 
         // Update all data-auth triggers dynamically (ensures header and other triggers sync)
         const triggers = document.querySelectorAll('[data-auth="login"], [data-auth="account"]');
@@ -182,6 +174,33 @@ window.zenctuaryAuth = (function() {
                 if (label) label.textContent = 'Sign-In';
             }
         });
+    }
+
+    function getPostAuthRedirect() {
+        try {
+            return window.sessionStorage.getItem(postAuthRedirectKey) || '';
+        } catch (error) {
+            return '';
+        }
+    }
+
+    function clearPostAuthRedirect() {
+        try {
+            window.sessionStorage.removeItem(postAuthRedirectKey);
+        } catch (error) {
+            // Ignore storage access failures.
+        }
+    }
+
+    function resolvePostAuthRedirect(defaultUrl) {
+        const storedRedirect = getPostAuthRedirect();
+
+        if (storedRedirect) {
+            clearPostAuthRedirect();
+            return storedRedirect;
+        }
+
+        return defaultUrl || zenctuaryAuthData.my_account_url;
     }
 
     /**
@@ -232,10 +251,10 @@ window.zenctuaryAuth = (function() {
 
         // Prepare data for WordPress
         formData.append('action', action);
-        formData.append('security', authData.nonce);
+        formData.append('security', zenctuaryAuthData.nonce);
 
         try {
-            const response = await fetch(authData.ajax_url, {
+            const response = await fetch(zenctuaryAuthData.ajax_url, {
                 method: 'POST',
                 body: formData
             });
@@ -243,10 +262,10 @@ window.zenctuaryAuth = (function() {
             const result = await response.json();
 
             if (result.success) {
-                authData.is_logged_in = true;
-                authData.user_data = result.data.user_data;
+                zenctuaryAuthData.is_logged_in = true;
+                zenctuaryAuthData.user_data = result.data.user_data;
                 syncUI();
-                window.location.href = (result.data && result.data.redirect_url) || authData.my_account_url;
+                window.location.href = resolvePostAuthRedirect(result.data.redirect_url || zenctuaryAuthData.my_account_url);
             } else {
                 errorContainer.textContent = result.data.message || 'An error occurred.';
             }
@@ -265,10 +284,10 @@ window.zenctuaryAuth = (function() {
     async function handleLogout() {
         const formData = new FormData();
         formData.append('action', 'zenctuary_logout');
-        formData.append('security', authData.nonce);
+        formData.append('security', zenctuaryAuthData.nonce);
 
         try {
-            const response = await fetch(authData.ajax_url, {
+            const response = await fetch(zenctuaryAuthData.ajax_url, {
                 method: 'POST',
                 body: formData
             });
@@ -276,11 +295,12 @@ window.zenctuaryAuth = (function() {
             const result = await response.json();
 
             if (result.success) {
-                authData.is_logged_in = false;
-                authData.user_data = null;
+                zenctuaryAuthData.is_logged_in = false;
+                zenctuaryAuthData.user_data = null;
+                clearPostAuthRedirect();
                 syncUI();
                 setState('login');
-                window.location.href = (result.data && result.data.redirect_url) || authData.home_url || '/';
+                window.location.href = zenctuaryAuthData.home_url || '/';
                 console.log('Zenctuary Auth: Logout successful');
             }
         } catch (error) {
