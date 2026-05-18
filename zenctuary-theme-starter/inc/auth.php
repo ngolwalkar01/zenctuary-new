@@ -11,6 +11,25 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 /**
+ * Resolve a safe post-auth redirect URL.
+ *
+ * Falls back to My Account for login/register and homepage for logout when
+ * no explicit redirect is provided.
+ *
+ * @param string $default_url Safe fallback URL.
+ * @return string
+ */
+function zenctuary_resolve_auth_redirect_url( string $default_url ): string {
+	$redirect_to = isset( $_POST['redirect_to'] ) ? wp_unslash( $_POST['redirect_to'] ) : '';
+
+	if ( empty( $redirect_to ) ) {
+		return $default_url;
+	}
+
+	return wp_validate_redirect( $redirect_to, $default_url );
+}
+
+/**
  * AJAX Login Handler
  */
 function zenctuary_ajax_login() {
@@ -32,10 +51,12 @@ function zenctuary_ajax_login() {
 		wp_send_json_error( array( 'message' => $user_signon->get_error_message() ) );
 	} else {
 		wp_set_current_user( $user_signon->ID );
+		$default_redirect = function_exists( 'zenctuary_get_my_account_url' ) ? zenctuary_get_my_account_url() : admin_url( 'profile.php' );
+
 		wp_send_json_success( array( 
             'message' => __( 'Login successful!', 'zenctuary' ),
             'user_id' => $user_signon->ID,
-            'redirect_url' => function_exists( 'zenctuary_get_my_account_url' ) ? zenctuary_get_my_account_url() : admin_url( 'profile.php' ),
+            'redirect_url' => zenctuary_resolve_auth_redirect_url( $default_redirect ),
             'user_data' => array(
                 'display_name' => $user_signon->display_name,
                 'user_email'   => $user_signon->user_email,
@@ -145,10 +166,11 @@ function zenctuary_ajax_register() {
         wp_set_current_user( $user_id );
         
         $user = get_userdata( $user_id );
+        $default_redirect = function_exists( 'zenctuary_get_my_account_url' ) ? zenctuary_get_my_account_url() : admin_url( 'profile.php' );
         wp_send_json_success( array( 
             'message' => __( 'Registration successful!', 'zenctuary' ),
             'user_id' => $user_id,
-            'redirect_url' => function_exists( 'zenctuary_get_my_account_url' ) ? zenctuary_get_my_account_url() : admin_url( 'profile.php' ),
+            'redirect_url' => zenctuary_resolve_auth_redirect_url( $default_redirect ),
             'user_data' => array(
                 'display_name' => $user->display_name,
                 'user_email'   => $user->user_email,
@@ -165,8 +187,23 @@ add_action( 'wp_ajax_zenctuary_register', 'zenctuary_ajax_register' );
  */
 function zenctuary_ajax_logout() {
 	wp_logout();
-	wp_send_json_success( array( 'message' => __( 'Logged out successfully.', 'zenctuary' ) ) );
+	wp_send_json_success(
+		array(
+			'message'      => __( 'Logged out successfully.', 'zenctuary' ),
+			'redirect_url' => home_url( '/' ),
+		)
+	);
 	wp_die();
 }
 add_action( 'wp_ajax_zenctuary_logout', 'zenctuary_ajax_logout' );
 add_action( 'wp_ajax_nopriv_zenctuary_logout', 'zenctuary_ajax_logout' ); // Allow even if not logged in (to prevent weird states)
+
+/**
+ * Keep direct WordPress/WooCommerce logout flows away from My Account.
+ *
+ * @return string
+ */
+function zenctuary_logout_redirect_to_home(): string {
+	return home_url( '/' );
+}
+add_filter( 'logout_redirect', 'zenctuary_logout_redirect_to_home' );

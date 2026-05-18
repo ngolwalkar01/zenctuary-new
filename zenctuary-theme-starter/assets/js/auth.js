@@ -246,6 +246,11 @@ window.zenctuaryAuth = (function() {
             formData.set('phone', itiInstance.getNumber());
         }
 
+        const postAuthRedirect = getPostAuthRedirect();
+        if (postAuthRedirect) {
+            formData.set('redirect_to', postAuthRedirect);
+        }
+
         submitBtn.disabled = true;
         submitBtn.classList.add('is-loading');
 
@@ -300,7 +305,7 @@ window.zenctuaryAuth = (function() {
                 clearPostAuthRedirect();
                 syncUI();
                 setState('login');
-                window.location.href = zenctuaryAuthData.home_url || '/';
+                window.location.href = (result.data && result.data.redirect_url) || zenctuaryAuthData.home_url || '/';
                 console.log('Zenctuary Auth: Logout successful');
             }
         } catch (error) {
