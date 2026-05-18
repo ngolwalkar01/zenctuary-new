@@ -2,7 +2,7 @@
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
-define( 'ZENCTUARY_THEME_VERSION', '0.1.2' );
+define( 'ZENCTUARY_THEME_VERSION', '0.1.3' );
 define( 'ZENCTUARY_THEME_DIR', get_template_directory() );
 define( 'ZENCTUARY_THEME_URI', get_template_directory_uri() );
 
