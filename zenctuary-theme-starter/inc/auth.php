@@ -182,4 +182,4 @@ add_action( 'wp_ajax_nopriv_zenctuary_logout', 'zenctuary_ajax_logout' ); // All
 function zenctuary_logout_redirect_to_home(): string {
 	return home_url( '/' );
 }
-add_filter( 'logout_redirect', 'zenctuary_logout_redirect_to_home' );
+add_filter( 'logout_redirect', 'zenctuary_logout_redirect_to_home', 999 );
