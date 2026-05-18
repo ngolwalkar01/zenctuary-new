@@ -11,25 +11,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 /**
- * Resolve a safe post-auth redirect URL.
- *
- * Falls back to My Account for login/register and homepage for logout when
- * no explicit redirect is provided.
- *
- * @param string $default_url Safe fallback URL.
- * @return string
- */
-function zenctuary_resolve_auth_redirect_url( string $default_url ): string {
-	$redirect_to = isset( $_POST['redirect_to'] ) ? wp_unslash( $_POST['redirect_to'] ) : '';
-
-	if ( empty( $redirect_to ) ) {
-		return $default_url;
-	}
-
-	return wp_validate_redirect( $redirect_to, $default_url );
-}
-
-/**
  * AJAX Login Handler
  */
 function zenctuary_ajax_login() {
@@ -51,12 +32,11 @@ function zenctuary_ajax_login() {
 		wp_send_json_error( array( 'message' => $user_signon->get_error_message() ) );
 	} else {
 		wp_set_current_user( $user_signon->ID );
-		$default_redirect = function_exists( 'zenctuary_get_my_account_url' ) ? zenctuary_get_my_account_url() : admin_url( 'profile.php' );
 
 		wp_send_json_success( array( 
             'message' => __( 'Login successful!', 'zenctuary' ),
             'user_id' => $user_signon->ID,
-            'redirect_url' => zenctuary_resolve_auth_redirect_url( $default_redirect ),
+            'redirect_url' => function_exists( 'zenctuary_get_my_account_url' ) ? zenctuary_get_my_account_url() : admin_url( 'profile.php' ),
             'user_data' => array(
                 'display_name' => $user_signon->display_name,
                 'user_email'   => $user_signon->user_email,
@@ -166,11 +146,10 @@ function zenctuary_ajax_register() {
         wp_set_current_user( $user_id );
         
         $user = get_userdata( $user_id );
-        $default_redirect = function_exists( 'zenctuary_get_my_account_url' ) ? zenctuary_get_my_account_url() : admin_url( 'profile.php' );
         wp_send_json_success( array( 
             'message' => __( 'Registration successful!', 'zenctuary' ),
             'user_id' => $user_id,
-            'redirect_url' => zenctuary_resolve_auth_redirect_url( $default_redirect ),
+            'redirect_url' => function_exists( 'zenctuary_get_my_account_url' ) ? zenctuary_get_my_account_url() : admin_url( 'profile.php' ),
             'user_data' => array(
                 'display_name' => $user->display_name,
                 'user_email'   => $user->user_email,
