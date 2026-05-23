@@ -220,6 +220,24 @@ h4 {
   margin-bottom: var(--zen-space-24);
 }
 
+/* Zen coin specific global styles */
+.zen-coin-global {
+    width: 47px;
+    height: 47px;
+    font-size: 19px;
+    align-items: center;
+    background: #d8b354;
+    border: 2px solid #3f3d3d;
+    border-radius: 50%;
+    color: #3f3d3d;
+    display: inline-flex;
+    flex: 0 0 auto;
+    font-weight: 500;
+    justify-content: center;
+    line-height: 1;
+    position: relative;
+}
+
 /* ==========================================
    RESPONSIVE TYPOGRAPHY
    ========================================== */
