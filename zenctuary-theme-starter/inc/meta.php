@@ -366,6 +366,233 @@ function zenctuary_save_space_type_meta( int $term_id ): void {
 }
 
 /**
+ * Register term meta for experience_category taxonomy.
+ *
+ * Stores an image attachment ID so category images can use WordPress image
+ * sizes and remain linked to Media Library metadata.
+ */
+add_action( 'init', 'zenctuary_register_experience_category_term_meta' );
+
+function zenctuary_register_experience_category_term_meta(): void {
+	register_term_meta(
+		'experience_category',
+		'_zen_experience_category_image_id',
+		[
+			'type'              => 'integer',
+			'description'       => __( 'Image attachment ID for the experience category.', 'zenctuary' ),
+			'single'            => true,
+			'show_in_rest'      => true,
+			'sanitize_callback' => 'absint',
+			'auth_callback'     => '__return_true',
+			'default'           => 0,
+		]
+	);
+}
+
+/**
+ * Add image upload controls to experience_category term screens.
+ */
+add_action( 'experience_category_add_form_fields', 'zenctuary_experience_category_add_image_field' );
+add_action( 'experience_category_edit_form_fields', 'zenctuary_experience_category_edit_image_field' );
+add_action( 'created_experience_category', 'zenctuary_save_experience_category_meta' );
+add_action( 'edited_experience_category', 'zenctuary_save_experience_category_meta' );
+add_action( 'admin_enqueue_scripts', 'zenctuary_enqueue_experience_category_image_admin' );
+
+function zenctuary_experience_category_add_image_field(): void {
+	wp_nonce_field( 'zenctuary_save_experience_category_meta', 'zenctuary_experience_category_nonce' );
+	?>
+	<div class="form-field term-group">
+		<label for="zen_experience_category_image_id"><?php esc_html_e( 'Category Image', 'zenctuary' ); ?></label>
+		<input type="hidden" id="zen_experience_category_image_id" name="zen_experience_category_image_id" value="0" />
+		<div class="zen-term-image-preview is-empty" data-placeholder="<?php esc_attr_e( 'No image selected', 'zenctuary' ); ?>">
+			<span><?php esc_html_e( 'No image selected', 'zenctuary' ); ?></span>
+		</div>
+		<p>
+			<button type="button" class="button zen-term-image-upload"><?php esc_html_e( 'Select Image', 'zenctuary' ); ?></button>
+			<button type="button" class="button zen-term-image-remove" style="display:none;"><?php esc_html_e( 'Remove Image', 'zenctuary' ); ?></button>
+		</p>
+		<p><?php esc_html_e( 'Image used for this experience category.', 'zenctuary' ); ?></p>
+	</div>
+	<?php
+}
+
+function zenctuary_experience_category_edit_image_field( WP_Term $term ): void {
+	$image_id  = absint( get_term_meta( $term->term_id, '_zen_experience_category_image_id', true ) );
+	$image_url = $image_id ? wp_get_attachment_image_url( $image_id, 'thumbnail' ) : '';
+
+	wp_nonce_field( 'zenctuary_save_experience_category_meta', 'zenctuary_experience_category_nonce' );
+	?>
+	<tr class="form-field term-group-wrap">
+		<th scope="row"><label for="zen_experience_category_image_id"><?php esc_html_e( 'Category Image', 'zenctuary' ); ?></label></th>
+		<td>
+			<input type="hidden" id="zen_experience_category_image_id" name="zen_experience_category_image_id" value="<?php echo esc_attr( $image_id ); ?>" />
+			<div class="zen-term-image-preview<?php echo $image_url ? '' : ' is-empty'; ?>" data-placeholder="<?php esc_attr_e( 'No image selected', 'zenctuary' ); ?>">
+				<?php if ( $image_url ) : ?>
+					<img src="<?php echo esc_url( $image_url ); ?>" alt="" />
+				<?php else : ?>
+					<span><?php esc_html_e( 'No image selected', 'zenctuary' ); ?></span>
+				<?php endif; ?>
+			</div>
+			<p>
+				<button type="button" class="button zen-term-image-upload"><?php echo $image_url ? esc_html__( 'Change Image', 'zenctuary' ) : esc_html__( 'Select Image', 'zenctuary' ); ?></button>
+				<button type="button" class="button zen-term-image-remove" <?php echo $image_url ? '' : 'style="display:none;"'; ?>><?php esc_html_e( 'Remove Image', 'zenctuary' ); ?></button>
+			</p>
+			<p class="description"><?php esc_html_e( 'Image used for this experience category.', 'zenctuary' ); ?></p>
+		</td>
+	</tr>
+	<?php
+}
+
+function zenctuary_save_experience_category_meta( int $term_id ): void {
+	if ( ! isset( $_POST['zenctuary_experience_category_nonce'] ) ) {
+		return;
+	}
+
+	if ( ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['zenctuary_experience_category_nonce'] ) ), 'zenctuary_save_experience_category_meta' ) ) {
+		return;
+	}
+
+	if ( ! current_user_can( 'manage_categories' ) ) {
+		return;
+	}
+
+	$image_id = isset( $_POST['zen_experience_category_image_id'] ) ? absint( $_POST['zen_experience_category_image_id'] ) : 0;
+
+	if ( $image_id > 0 ) {
+		update_term_meta( $term_id, '_zen_experience_category_image_id', $image_id );
+		return;
+	}
+
+	delete_term_meta( $term_id, '_zen_experience_category_image_id' );
+}
+
+function zenctuary_enqueue_experience_category_image_admin( string $hook_suffix ): void {
+	if ( 'edit-tags.php' !== $hook_suffix && 'term.php' !== $hook_suffix ) {
+		return;
+	}
+
+	$screen = get_current_screen();
+	if ( ! $screen || 'experience_category' !== $screen->taxonomy ) {
+		return;
+	}
+
+	wp_enqueue_media();
+	wp_enqueue_script( 'jquery' );
+
+	wp_register_style( 'zenctuary-experience-category-admin', false, [], '1.0.0' );
+	wp_enqueue_style( 'zenctuary-experience-category-admin' );
+
+	wp_add_inline_style(
+		'zenctuary-experience-category-admin',
+		'
+		.zen-term-image-preview {
+			align-items: center;
+			background: #f6f7f7;
+			border: 1px solid #dcdcde;
+			display: flex;
+			justify-content: center;
+			margin: 8px 0;
+			min-height: 90px;
+			width: 120px;
+		}
+		.zen-term-image-preview img {
+			display: block;
+			height: auto;
+			max-height: 120px;
+			max-width: 120px;
+		}
+		.zen-term-image-preview span {
+			color: #646970;
+			font-size: 12px;
+			padding: 8px;
+			text-align: center;
+		}
+		'
+	);
+
+	wp_add_inline_script(
+		'jquery',
+		"
+		jQuery(function($) {
+			var frame;
+
+			function setPreview(container, imageUrl) {
+				var placeholder = container.data('placeholder') || 'No image selected';
+
+				if (imageUrl) {
+					container.removeClass('is-empty').html('<img src=\"' + imageUrl + '\" alt=\"\" />');
+					return;
+				}
+
+				container.addClass('is-empty').html('<span>' + placeholder + '</span>');
+			}
+
+			$(document).on('click', '.zen-term-image-upload', function(e) {
+				e.preventDefault();
+
+				var button = $(this);
+				var wrapper = button.closest('.form-field, td');
+				var input = wrapper.find('#zen_experience_category_image_id');
+				var preview = wrapper.find('.zen-term-image-preview');
+				var remove = wrapper.find('.zen-term-image-remove');
+
+				if (frame) {
+					frame.off('select');
+				}
+
+				frame = wp.media({
+					title: '" . esc_js( __( 'Select Category Image', 'zenctuary' ) ) . "',
+					button: { text: '" . esc_js( __( 'Use this image', 'zenctuary' ) ) . "' },
+					library: { type: 'image' },
+					multiple: false
+				});
+
+				frame.on('select', function() {
+					var attachment = frame.state().get('selection').first().toJSON();
+					var imageUrl = attachment.sizes && attachment.sizes.thumbnail ? attachment.sizes.thumbnail.url : attachment.url;
+
+					input.val(attachment.id);
+					setPreview(preview, imageUrl);
+					button.text('" . esc_js( __( 'Change Image', 'zenctuary' ) ) . "');
+					remove.show();
+				});
+
+				frame.open();
+			});
+
+			$(document).on('click', '.zen-term-image-remove', function(e) {
+				e.preventDefault();
+
+				var button = $(this);
+				var wrapper = button.closest('.form-field, td');
+
+				wrapper.find('#zen_experience_category_image_id').val(0);
+				setPreview(wrapper.find('.zen-term-image-preview'), '');
+				wrapper.find('.zen-term-image-upload').text('" . esc_js( __( 'Select Image', 'zenctuary' ) ) . "');
+				button.hide();
+			});
+
+			$(document).ajaxComplete(function(event, xhr, settings) {
+				if (!settings.data || settings.data.indexOf('action=add-tag') === -1) {
+					return;
+				}
+
+				var wrapper = $('#zen_experience_category_image_id').closest('.form-field');
+				if (!wrapper.length) {
+					return;
+				}
+
+				wrapper.find('#zen_experience_category_image_id').val(0);
+				setPreview(wrapper.find('.zen-term-image-preview'), '');
+				wrapper.find('.zen-term-image-upload').text('" . esc_js( __( 'Select Image', 'zenctuary' ) ) . "');
+				wrapper.find('.zen-term-image-remove').hide();
+			});
+		});
+		"
+	);
+}
+
+/**
  * Register sticky news hover content post meta.
  */
 add_action( 'init', 'zenctuary_register_news_hover_meta' );
