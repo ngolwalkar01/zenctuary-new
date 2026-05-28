@@ -33,6 +33,8 @@ window.zenctuaryAuth = (function() {
             });
         }
 
+        populateCountryStateFields();
+
         // --- GLOBAL CLICK DELEGATION ---
         document.addEventListener('click', function(e) {
             // 1. Reusable Auth Triggers (data-auth)
@@ -190,6 +192,71 @@ window.zenctuaryAuth = (function() {
         } catch (error) {
             // Ignore storage access failures.
         }
+    }
+
+    function populateCountryStateFields() {
+        const countrySelect = document.getElementById('zen-reg-country');
+        const stateSelect = document.getElementById('zen-reg-state');
+
+        if (!countrySelect || !stateSelect) return;
+
+        const countries = zenctuaryAuthData.countries || {};
+        const states = zenctuaryAuthData.states || {};
+
+        countrySelect.innerHTML = '<option value="" disabled selected>Country</option>';
+
+        Object.entries(countries).forEach(([code, name]) => {
+            const option = document.createElement('option');
+            option.value = code;
+            option.textContent = name;
+            countrySelect.appendChild(option);
+        });
+
+        const defaultCountry = zenctuaryAuthData.default_country || '';
+        if (defaultCountry && countries[defaultCountry]) {
+            countrySelect.value = defaultCountry;
+        }
+
+        function updateStates() {
+            const country = countrySelect.value;
+            const countryStates = states[country] || {};
+            const stateEntries = Array.isArray(countryStates) ? countryStates : Object.entries(countryStates);
+
+            stateSelect.innerHTML = '';
+
+            if (!stateEntries.length) {
+                const option = document.createElement('option');
+                option.value = '';
+                option.textContent = 'State';
+                option.selected = true;
+                stateSelect.appendChild(option);
+                stateSelect.required = false;
+                stateSelect.disabled = true;
+                return;
+            }
+
+            const placeholder = document.createElement('option');
+            placeholder.value = '';
+            placeholder.textContent = 'State';
+            placeholder.disabled = true;
+            placeholder.selected = true;
+            stateSelect.appendChild(placeholder);
+
+            stateEntries.forEach((entry) => {
+                const code = Array.isArray(entry) ? entry[0] : entry;
+                const name = Array.isArray(entry) ? entry[1] : entry;
+                const option = document.createElement('option');
+                option.value = code;
+                option.textContent = name;
+                stateSelect.appendChild(option);
+            });
+
+            stateSelect.required = true;
+            stateSelect.disabled = false;
+        }
+
+        countrySelect.addEventListener('change', updateStates);
+        updateStates();
     }
 
     function resolvePostAuthRedirect(defaultUrl) {

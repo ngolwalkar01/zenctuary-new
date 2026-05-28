@@ -94,12 +94,25 @@ function zenctuary_enqueue_assets(): void {
 	);
 
 	$current_user = wp_get_current_user();
+	$countries    = array();
+	$states       = array();
+	$default_country = '';
+
+	if ( function_exists( 'WC' ) && WC()->countries ) {
+		$countries       = WC()->countries->get_countries();
+		$states          = WC()->countries->get_states();
+		$default_country = WC()->countries->get_base_country();
+	}
+
 	wp_localize_script( 'zenctuary-auth', 'zenctuaryAuthData', array(
 		'ajax_url'     => admin_url( 'admin-ajax.php' ),
 		'nonce'        => wp_create_nonce( 'zenctuary_auth_nonce' ),
 		'is_logged_in' => is_user_logged_in(),
 		'home_url'     => home_url( '/' ),
 		'my_account_url' => zenctuary_get_my_account_url(),
+		'countries'    => $countries,
+		'states'       => $states,
+		'default_country' => $default_country,
 		'user_data'    => is_user_logged_in() ? array(
 			'display_name' => $current_user->display_name,
 			'user_email'   => $current_user->user_email,

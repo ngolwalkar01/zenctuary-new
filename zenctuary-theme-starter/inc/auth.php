@@ -129,10 +129,31 @@ function zenctuary_ajax_register() {
         }
         update_user_meta( $user_id, 'billing_phone', $full_phone );
 
+        $billing_country   = isset( $_POST['billing_country'] ) ? sanitize_text_field( wp_unslash( $_POST['billing_country'] ) ) : '';
+        $billing_country   = $billing_country ? $billing_country : ( isset( $_POST['country'] ) ? sanitize_text_field( wp_unslash( $_POST['country'] ) ) : '' );
+        $billing_state     = isset( $_POST['billing_state'] ) ? sanitize_text_field( wp_unslash( $_POST['billing_state'] ) ) : '';
+        $billing_address_1 = isset( $_POST['billing_address_1'] ) ? sanitize_text_field( wp_unslash( $_POST['billing_address_1'] ) ) : '';
+        $billing_address_1 = $billing_address_1 ? $billing_address_1 : ( isset( $_POST['address'] ) ? sanitize_text_field( wp_unslash( $_POST['address'] ) ) : '' );
+
+        if ( function_exists( 'WC' ) && WC()->countries ) {
+            $countries = WC()->countries->get_countries();
+            $states    = WC()->countries->get_states( $billing_country );
+
+            if ( $billing_country && ! isset( $countries[ $billing_country ] ) ) {
+                $billing_country = '';
+                $billing_state   = '';
+            }
+
+            if ( $billing_state && is_array( $states ) && ! isset( $states[ $billing_state ] ) ) {
+                $billing_state = '';
+            }
+        }
+
         // Profile Details
         update_user_meta( $user_id, 'gender', isset( $_POST['gender'] ) ? sanitize_text_field( $_POST['gender'] ) : '' );
-        update_user_meta( $user_id, 'billing_country', isset( $_POST['country'] ) ? sanitize_text_field( $_POST['country'] ) : '' );
-        update_user_meta( $user_id, 'billing_address_1', isset( $_POST['address'] ) ? sanitize_text_field( $_POST['address'] ) : '' );
+        update_user_meta( $user_id, 'billing_country', $billing_country );
+        update_user_meta( $user_id, 'billing_state', $billing_state );
+        update_user_meta( $user_id, 'billing_address_1', $billing_address_1 );
         update_user_meta( $user_id, 'billing_city', isset( $_POST['city'] ) ? sanitize_text_field( $_POST['city'] ) : '' );
         update_user_meta( $user_id, 'billing_postcode', isset( $_POST['postal_code'] ) ? sanitize_text_field( $_POST['postal_code'] ) : '' );
 
