@@ -90,7 +90,7 @@ function zenctuary_register_account_nav_settings(): void {
 
 function zenctuary_sanitize_account_nav_icons( $value ): array {
 	$value = is_array( $value ) ? $value : array();
-	$keys  = array( 'edit-account', 'payment-methods', 'orders', 'wallet', 'customer-logout' );
+	$keys  = array( 'edit-account', 'payment-methods', 'orders', 'bookings', 'wallet', 'customer-logout' );
 	$clean = array();
 
 	foreach ( $keys as $key ) {
@@ -105,7 +105,8 @@ function zenctuary_render_account_nav_admin_page(): void {
 	$items = array(
 		'edit-account'    => __( 'Personal Information', 'zenctuary' ),
 		'payment-methods' => __( 'Payment Methods', 'zenctuary' ),
-		'orders'          => __( 'Bookings', 'zenctuary' ),
+		'orders'          => __( 'Orders', 'zenctuary' ),
+		'bookings'        => __( 'Bookings', 'zenctuary' ),
 		'wallet'          => __( 'Wallet', 'zenctuary' ),
 		'customer-logout' => __( 'Logout', 'zenctuary' ),
 	);
@@ -163,7 +164,8 @@ function zenctuary_customize_account_menu_items( array $items ): array {
 	$labels = array(
 		'edit-account'    => __( 'Personal information', 'zenctuary' ),
 		'payment-methods' => __( 'Payment methods', 'zenctuary' ),
-		'orders'          => __( 'Bookings', 'zenctuary' ),
+		'orders'          => __( 'Orders', 'zenctuary' ),
+		'bookings'        => __( 'Bookings', 'zenctuary' ),
 		'customer-logout' => __( 'Log-Out', 'zenctuary' ),
 	);
 
@@ -179,7 +181,7 @@ function zenctuary_customize_account_menu_items( array $items ): array {
 
 	unset( $items['downloads'], $items['edit-address'], $items['dashboard'], $items['subscriptions'] );
 
-	$order = array( 'edit-account', 'payment-methods', 'orders' );
+	$order = array( 'edit-account', 'payment-methods', 'orders', 'bookings' );
 
 	if ( $wallet_key ) {
 		$order[] = $wallet_key;
@@ -266,6 +268,7 @@ function zenctuary_get_account_nav_icon( string $endpoint ): string {
 		'edit-account'    => 'profile',
 		'payment-methods' => 'payment',
 		'orders'          => 'orders',
+		'bookings'        => 'orders',
 		'customer-logout' => 'logout',
 	);
 
