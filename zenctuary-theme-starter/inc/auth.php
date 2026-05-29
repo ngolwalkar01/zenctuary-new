@@ -49,6 +49,127 @@ add_action( 'wp_ajax_nopriv_zenctuary_login', 'zenctuary_ajax_login' );
 add_action( 'wp_ajax_zenctuary_login', 'zenctuary_ajax_login' );
 
 /**
+ * Read a text value from posted signup data.
+ *
+ * @param string $key Posted field key.
+ * @return string
+ */
+function zenctuary_get_posted_text_field( string $key ): string {
+    return isset( $_POST[ $key ] ) ? sanitize_text_field( wp_unslash( $_POST[ $key ] ) ) : '';
+}
+
+/**
+ * Validate signup billing fields using WooCommerce address rules.
+ *
+ * @return array|WP_Error
+ */
+function zenctuary_validate_signup_billing_fields() {
+    $billing_country   = zenctuary_get_posted_text_field( 'billing_country' );
+    $billing_country   = $billing_country ? $billing_country : zenctuary_get_posted_text_field( 'country' );
+    $billing_state     = zenctuary_get_posted_text_field( 'billing_state' );
+    $billing_address_1 = zenctuary_get_posted_text_field( 'billing_address_1' );
+    $billing_address_1 = $billing_address_1 ? $billing_address_1 : zenctuary_get_posted_text_field( 'address' );
+    $billing_city      = zenctuary_get_posted_text_field( 'billing_city' );
+    $billing_city      = $billing_city ? $billing_city : zenctuary_get_posted_text_field( 'city' );
+    $billing_postcode  = zenctuary_get_posted_text_field( 'billing_postcode' );
+    $billing_postcode  = $billing_postcode ? $billing_postcode : zenctuary_get_posted_text_field( 'postal_code' );
+
+    $data = array(
+        'billing_country'   => $billing_country,
+        'billing_state'     => $billing_state,
+        'billing_address_1' => $billing_address_1,
+        'billing_city'      => $billing_city,
+        'billing_postcode'  => $billing_postcode,
+    );
+
+    $errors = new WP_Error();
+
+    if ( function_exists( 'WC' ) && WC()->countries ) {
+        $countries = WC()->countries->get_countries();
+
+        if ( '' === $billing_country ) {
+            $errors->add( 'billing_country_required', __( 'Billing Country / Region is a required field.', 'zenctuary' ) );
+        } elseif ( ! isset( $countries[ $billing_country ] ) ) {
+            $errors->add( 'billing_country_validation', __( 'Billing Country / Region is not valid.', 'zenctuary' ) );
+        }
+
+        $address_fields = WC()->countries->get_address_fields( $billing_country, 'billing_' );
+        $labels         = array(
+            'billing_address_1' => __( 'Billing Street address', 'zenctuary' ),
+            'billing_city'      => __( 'Billing Town / City', 'zenctuary' ),
+            'billing_state'     => __( 'Billing State / County', 'zenctuary' ),
+            'billing_postcode'  => __( 'Billing Postcode / ZIP', 'zenctuary' ),
+        );
+
+        foreach ( $labels as $key => $label ) {
+            if ( ! isset( $address_fields[ $key ] ) ) {
+                continue;
+            }
+
+            $required = ! empty( $address_fields[ $key ]['required'] );
+
+            if ( $required && '' === $data[ $key ] ) {
+                /* translators: %s: field label */
+                $errors->add( $key . '_required', sprintf( __( '%s is a required field.', 'woocommerce' ), $label ) );
+            }
+        }
+
+        if ( '' !== $billing_state ) {
+            $valid_states = WC()->countries->get_states( $billing_country );
+
+            if ( ! empty( $valid_states ) && is_array( $valid_states ) ) {
+                $valid_state_values = array_map( 'wc_strtoupper', array_flip( array_map( 'wc_strtoupper', $valid_states ) ) );
+                $billing_state      = wc_strtoupper( $billing_state );
+
+                if ( isset( $valid_state_values[ $billing_state ] ) ) {
+                    $billing_state = $valid_state_values[ $billing_state ];
+                }
+
+                if ( ! in_array( $billing_state, $valid_state_values, true ) ) {
+                    $errors->add(
+                        'billing_state_validation',
+                        sprintf(
+                            /* translators: 1: state field label, 2: valid states list */
+                            __( '%1$s is not valid. Please enter one of the following: %2$s', 'woocommerce' ),
+                            __( 'Billing State / County', 'zenctuary' ),
+                            implode( ', ', $valid_states )
+                        )
+                    );
+                }
+
+                $data['billing_state'] = $billing_state;
+            }
+        }
+
+        if ( '' !== $billing_postcode ) {
+            $billing_postcode = function_exists( 'wc_format_postcode' ) ? wc_format_postcode( $billing_postcode, $billing_country ) : $billing_postcode;
+
+            if ( class_exists( 'WC_Validation' ) && ! WC_Validation::is_postcode( $billing_postcode, $billing_country ) ) {
+                $postcode_message = 'IE' === $billing_country
+                    ? __( 'Please enter a valid Eircode.', 'woocommerce' )
+                    : __( 'Please enter a valid postcode / ZIP.', 'woocommerce' );
+                $errors->add( 'billing_postcode_validation', $postcode_message );
+            }
+
+            $data['billing_postcode'] = $billing_postcode;
+        }
+    } else {
+        foreach ( $data as $key => $value ) {
+            if ( '' === $value ) {
+                $errors->add( $key . '_required', __( 'Please complete all required billing address fields.', 'zenctuary' ) );
+                break;
+            }
+        }
+    }
+
+    if ( $errors->has_errors() ) {
+        return $errors;
+    }
+
+    return $data;
+}
+
+/**
  * AJAX Registration Handler
  */
 function zenctuary_ajax_register() {
@@ -80,6 +201,12 @@ function zenctuary_ajax_register() {
 
     if ( ! $terms ) {
         wp_send_json_error( array( 'message' => __( 'You must accept the terms and conditions.', 'zenctuary' ) ) );
+    }
+
+    $billing_fields = zenctuary_validate_signup_billing_fields();
+
+    if ( is_wp_error( $billing_fields ) ) {
+        wp_send_json_error( array( 'message' => $billing_fields->get_error_message() ) );
     }
 
     $username = $email; // Defaulting username to email
@@ -129,33 +256,13 @@ function zenctuary_ajax_register() {
         }
         update_user_meta( $user_id, 'billing_phone', $full_phone );
 
-        $billing_country   = isset( $_POST['billing_country'] ) ? sanitize_text_field( wp_unslash( $_POST['billing_country'] ) ) : '';
-        $billing_country   = $billing_country ? $billing_country : ( isset( $_POST['country'] ) ? sanitize_text_field( wp_unslash( $_POST['country'] ) ) : '' );
-        $billing_state     = isset( $_POST['billing_state'] ) ? sanitize_text_field( wp_unslash( $_POST['billing_state'] ) ) : '';
-        $billing_address_1 = isset( $_POST['billing_address_1'] ) ? sanitize_text_field( wp_unslash( $_POST['billing_address_1'] ) ) : '';
-        $billing_address_1 = $billing_address_1 ? $billing_address_1 : ( isset( $_POST['address'] ) ? sanitize_text_field( wp_unslash( $_POST['address'] ) ) : '' );
-
-        if ( function_exists( 'WC' ) && WC()->countries ) {
-            $countries = WC()->countries->get_countries();
-            $states    = WC()->countries->get_states( $billing_country );
-
-            if ( $billing_country && ! isset( $countries[ $billing_country ] ) ) {
-                $billing_country = '';
-                $billing_state   = '';
-            }
-
-            if ( $billing_state && is_array( $states ) && ! isset( $states[ $billing_state ] ) ) {
-                $billing_state = '';
-            }
-        }
-
         // Profile Details
         update_user_meta( $user_id, 'gender', isset( $_POST['gender'] ) ? sanitize_text_field( $_POST['gender'] ) : '' );
-        update_user_meta( $user_id, 'billing_country', $billing_country );
-        update_user_meta( $user_id, 'billing_state', $billing_state );
-        update_user_meta( $user_id, 'billing_address_1', $billing_address_1 );
-        update_user_meta( $user_id, 'billing_city', isset( $_POST['city'] ) ? sanitize_text_field( $_POST['city'] ) : '' );
-        update_user_meta( $user_id, 'billing_postcode', isset( $_POST['postal_code'] ) ? sanitize_text_field( $_POST['postal_code'] ) : '' );
+        update_user_meta( $user_id, 'billing_country', $billing_fields['billing_country'] );
+        update_user_meta( $user_id, 'billing_state', $billing_fields['billing_state'] );
+        update_user_meta( $user_id, 'billing_address_1', $billing_fields['billing_address_1'] );
+        update_user_meta( $user_id, 'billing_city', $billing_fields['billing_city'] );
+        update_user_meta( $user_id, 'billing_postcode', $billing_fields['billing_postcode'] );
 
         // Notifications
         update_user_meta( $user_id, 'zen_email_notifications', isset( $_POST['email_notifications'] ) ? 'yes' : 'no' );
