@@ -12,26 +12,92 @@ window.zenctuaryAuth = (function() {
     let isInitialized = false;
 
     let itiInstance = null;
+    let intlTelInputPromise = null;
+
+    function loadStylesheet(href) {
+        if (!href || document.querySelector(`link[href="${href}"]`)) {
+            return;
+        }
+
+        const link = document.createElement('link');
+        link.rel = 'stylesheet';
+        link.href = href;
+        document.head.appendChild(link);
+    }
+
+    function loadScript(src) {
+        if (!src) {
+            return Promise.reject(new Error('Missing script URL.'));
+        }
+
+        const existing = document.querySelector(`script[src="${src}"]`);
+        if (existing) {
+            return new Promise((resolve, reject) => {
+                if (existing.dataset.loaded === 'true') {
+                    resolve();
+                    return;
+                }
+
+                existing.addEventListener('load', resolve, { once: true });
+                existing.addEventListener('error', reject, { once: true });
+            });
+        }
+
+        return new Promise((resolve, reject) => {
+            const script = document.createElement('script');
+            script.src = src;
+            script.async = true;
+            script.onload = () => {
+                script.dataset.loaded = 'true';
+                resolve();
+            };
+            script.onerror = reject;
+            document.head.appendChild(script);
+        });
+    }
+
+    function ensurePhoneEnhancer() {
+        const phoneInput = document.getElementById('zen-reg-phone');
+        if (!phoneInput || itiInstance) {
+            return Promise.resolve();
+        }
+
+        if (typeof window.intlTelInput !== 'undefined') {
+            const assets = zenctuaryAuthData.intl_tel_input || {};
+
+            itiInstance = window.intlTelInput(phoneInput, {
+                initialCountry: 'de',
+                separateDialCode: true,
+                countrySearch: true,
+                utilsScript: assets.utils_url || '',
+                autoPlaceholder: 'polite',
+                preferredCountries: ['de', 'us', 'gb', 'fr'],
+                dropdownContainer: document.body
+            });
+
+            return Promise.resolve();
+        }
+
+        if (!intlTelInputPromise) {
+            const assets = zenctuaryAuthData.intl_tel_input || {};
+
+            loadStylesheet(assets.style_url);
+            intlTelInputPromise = loadScript(assets.script_url)
+                .then(() => ensurePhoneEnhancer())
+                .catch((error) => {
+                    intlTelInputPromise = null;
+                    console.error('Zenctuary Auth: Phone input library failed to load', error);
+                });
+        }
+
+        return intlTelInputPromise;
+    }
 
     /**
      * Initialize the global event listeners (Delegated)
      */
     function init() {
         if (isInitialized) return;
-
-        // Initialize Phone Field (Signup Only)
-        const phoneInput = document.getElementById('zen-reg-phone');
-        if (phoneInput && typeof window.intlTelInput !== 'undefined') {
-            itiInstance = window.intlTelInput(phoneInput, {
-                initialCountry: 'de',
-                separateDialCode: true,
-                countrySearch: true, // Enable searchable country list
-                utilsScript: 'https://cdn.jsdelivr.net/npm/intl-tel-input@23.0.10/build/js/utils.js',
-                autoPlaceholder: 'polite',
-                preferredCountries: ['de', 'us', 'gb', 'fr'],
-                dropdownContainer: document.body // Prevent clipping by modal
-            });
-        }
 
         populateCountryStateFields();
 
@@ -284,6 +350,10 @@ window.zenctuaryAuth = (function() {
         // --- CUSTOM VALIDATION ---
         
         // 1. Phone validation (Registration only)
+        if (form.id === 'zen-register-form') {
+            await ensurePhoneEnhancer();
+        }
+
         if (form.id === 'zen-register-form' && itiInstance) {
             const phoneInput = form.querySelector('#zen-reg-phone');
             if (phoneInput && phoneInput.value.trim() !== '') {
@@ -402,6 +472,10 @@ window.zenctuaryAuth = (function() {
         if (targetViewElement) {
             const heading = targetViewElement.querySelector('h2');
             if (heading) heading.focus();
+        }
+
+        if (state === 'signup') {
+            ensurePhoneEnhancer();
         }
     }
 

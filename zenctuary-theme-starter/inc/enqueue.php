@@ -61,22 +61,6 @@ function zenctuary_enqueue_assets(): void {
 		ZENCTUARY_THEME_VERSION
 	);
 
-	// Intl-Tel-Input (International Phone Support)
-	wp_enqueue_style(
-		'intl-tel-input',
-		'https://cdn.jsdelivr.net/npm/intl-tel-input@23.0.10/build/css/intlTelInput.css',
-		array(),
-		'23.0.10'
-	);
-
-	wp_enqueue_script(
-		'intl-tel-input',
-		'https://cdn.jsdelivr.net/npm/intl-tel-input@23.0.10/build/js/intlTelInput.min.js',
-		array(),
-		'23.0.10',
-		true
-	);
-
 	wp_enqueue_script(
 		'zenctuary-theme',
 		ZENCTUARY_THEME_URI . '/assets/js/theme.js',
@@ -88,7 +72,7 @@ function zenctuary_enqueue_assets(): void {
 	wp_enqueue_script(
 		'zenctuary-auth',
 		ZENCTUARY_THEME_URI . '/assets/js/auth.js',
-		array( 'intl-tel-input' ),
+		array(),
 		ZENCTUARY_THEME_VERSION,
 		true
 	);
@@ -110,6 +94,11 @@ function zenctuary_enqueue_assets(): void {
 		'is_logged_in' => is_user_logged_in(),
 		'home_url'     => home_url( '/' ),
 		'my_account_url' => zenctuary_get_my_account_url(),
+		'intl_tel_input' => array(
+			'style_url' => 'https://cdn.jsdelivr.net/npm/intl-tel-input@23.0.10/build/css/intlTelInput.css',
+			'script_url' => 'https://cdn.jsdelivr.net/npm/intl-tel-input@23.0.10/build/js/intlTelInput.min.js',
+			'utils_url' => 'https://cdn.jsdelivr.net/npm/intl-tel-input@23.0.10/build/js/utils.js',
+		),
 		'countries'    => $countries,
 		'states'       => $states,
 		'default_country' => $default_country,
