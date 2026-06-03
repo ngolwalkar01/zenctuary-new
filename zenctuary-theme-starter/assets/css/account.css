@@ -1,18 +1,12 @@
 .zen-account-page-active,
 html:has(.zen-account-page-active) {
-	background:
-		linear-gradient(125deg, rgba(19, 24, 20, 0.92), rgba(216, 179, 85, 0.16) 52%, rgba(246, 242, 234, 0.18)),
-		radial-gradient(circle at 18% 82%, rgba(216, 179, 85, 0.28), transparent 24%),
-		radial-gradient(circle at 82% 12%, rgba(216, 179, 85, 0.2), transparent 20%),
-		var(--wp--preset--color--primary-grey);
+	background: #111;
+	overflow: hidden;
 }
 
 body.zen-account-page-active {
-	background:
-		linear-gradient(125deg, rgba(19, 24, 20, 0.92), rgba(216, 179, 85, 0.16) 52%, rgba(246, 242, 234, 0.18)),
-		radial-gradient(circle at 18% 82%, rgba(216, 179, 85, 0.28), transparent 24%),
-		radial-gradient(circle at 82% 12%, rgba(216, 179, 85, 0.2), transparent 20%),
-		var(--wp--preset--color--primary-grey);
+	background: #111;
+	overflow: hidden;
 }
 
 .zen-account-page-active .wp-site-blocks {
@@ -40,6 +34,84 @@ body.zen-account-page-active {
 .zen-account-page-active .entry-title,
 .zen-account-page-active .woocommerce-products-header__title {
 	display: none !important;
+}
+
+.zen-account-page-active .wp-block-group.zen-container.has-global-padding.is-layout-constrained.wp-block-group-is-layout-constrained {
+	background:
+		radial-gradient(circle at 38% 102%, rgba(226, 190, 82, 0.32), transparent 30%),
+		radial-gradient(circle at 94% 6%, rgba(226, 190, 82, 0.26), transparent 24%),
+		linear-gradient(115deg, rgba(28, 32, 28, 0.96), rgba(82, 76, 65, 0.9) 60%, rgba(105, 103, 98, 0.88));
+	border-radius: 24px;
+	box-shadow: var(--zcf-shadow, 0 28px 90px rgba(0, 0, 0, 0.45));
+	left: 8%;
+	margin-bottom: 100px;
+	margin-top: 100px;
+	max-height: 49vw;
+	overflow: hidden scroll;
+	padding: 30px 44px 38px;
+	position: fixed;
+	scrollbar-color: rgba(226, 190, 82, 0.82) rgba(246, 242, 234, 0.16);
+	scrollbar-gutter: stable;
+	scrollbar-width: thin;
+	top: -9%;
+	width: min(84vw, 1480px);
+	z-index: 20;
+}
+
+.zen-account-page-active .wp-block-group.zen-container.has-global-padding.is-layout-constrained.wp-block-group-is-layout-constrained::-webkit-scrollbar {
+	width: 10px;
+}
+
+.zen-account-page-active .wp-block-group.zen-container.has-global-padding.is-layout-constrained.wp-block-group-is-layout-constrained::-webkit-scrollbar-track {
+	background: rgba(246, 242, 234, 0.14);
+	border-radius: 999px;
+}
+
+.zen-account-page-active .wp-block-group.zen-container.has-global-padding.is-layout-constrained.wp-block-group-is-layout-constrained::-webkit-scrollbar-thumb {
+	background: linear-gradient(180deg, rgba(226, 190, 82, 0.95), rgba(175, 136, 44, 0.92));
+	border: 2px solid rgba(28, 32, 28, 0.72);
+	border-radius: 999px;
+}
+
+.zen-account-close {
+	background: transparent;
+	border: 3px solid rgba(244, 241, 232, 0.58);
+	border-radius: 50%;
+	cursor: pointer;
+	height: 38px;
+	opacity: 0.78;
+	padding: 0;
+	position: absolute;
+	right: 30px;
+	top: 30px;
+	width: 38px;
+	z-index: 4;
+}
+
+.zen-account-close:hover,
+.zen-account-close:focus-visible {
+	opacity: 1;
+	outline: none;
+}
+
+.zen-account-close::before,
+.zen-account-close::after {
+	background: rgba(244, 241, 232, 0.72);
+	border-radius: 6px;
+	content: "";
+	height: 3px;
+	left: 8px;
+	position: absolute;
+	top: 16px;
+	width: 16px;
+}
+
+.zen-account-close::before {
+	transform: rotate(45deg);
+}
+
+.zen-account-close::after {
+	transform: rotate(-45deg);
 }
 
 .zen-account-shell {
@@ -505,6 +577,21 @@ body.zen-account-page-active {
 }
 
 @media (max-width: 1024px) {
+	.zen-account-page-active .wp-block-group.zen-container.has-global-padding.is-layout-constrained.wp-block-group-is-layout-constrained {
+		inset: 24px;
+		left: 24px;
+		margin: 0;
+		max-height: calc(100vh - 48px);
+		padding: 24px;
+		top: 24px;
+		width: auto;
+	}
+
+	.zen-account-close {
+		right: 24px;
+		top: 24px;
+	}
+
 	.zen-account-shell__panel {
 		grid-template-columns: 1fr;
 		min-height: auto;
@@ -523,6 +610,20 @@ body.zen-account-page-active {
 }
 
 @media (max-width: 767px) {
+	.zen-account-page-active .wp-block-group.zen-container.has-global-padding.is-layout-constrained.wp-block-group-is-layout-constrained {
+		border-radius: 18px;
+		inset: 14px;
+		left: 14px;
+		max-height: calc(100vh - 28px);
+		padding: 18px;
+		top: 14px;
+	}
+
+	.zen-account-close {
+		right: 18px;
+		top: 18px;
+	}
+
 	.zen-account-shell {
 		min-height: auto;
 		padding: 0;
