@@ -53,7 +53,7 @@ body.zen-account-page-active {
 	scrollbar-color: rgba(226, 190, 82, 0.82) rgba(246, 242, 234, 0.16);
 	scrollbar-gutter: stable;
 	scrollbar-width: thin;
-	top: 50%;
+	top: 40%;
 	transform: translate(-50%, -50%);
 	width: min(calc(100vw - 64px), 1480px);
 	z-index: 20;
