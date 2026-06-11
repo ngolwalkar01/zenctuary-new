@@ -46,7 +46,7 @@ body.zen-account-page-active {
 	left: 50%;
 	margin-bottom: 100px;
 	margin-top: 100px;
-	max-height: min(860px, calc(100vh - 64px));
+	max-height: min(1000px, calc(100vh - 64px));
 	overflow: hidden scroll;
 	padding: 30px 44px 38px;
 	position: fixed;
