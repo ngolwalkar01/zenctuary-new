@@ -69,6 +69,14 @@ function zenctuary_enqueue_assets(): void {
 		true
 	);
 
+	wp_localize_script( 'zenctuary-theme', 'zenctuaryThemeData', array(
+		'cart_url'   => function_exists( 'wc_get_cart_url' ) ? wc_get_cart_url() : home_url( '/' ),
+		'cart_count' => function_exists( 'WC' ) && WC()->cart ? WC()->cart->get_cart_contents_count() : 0,
+		'i18n'       => array(
+			'cart' => __( 'Cart', 'zenctuary' ),
+		),
+	) );
+
 	wp_enqueue_script(
 		'zenctuary-auth',
 		ZENCTUARY_THEME_URI . '/assets/js/auth.js',
