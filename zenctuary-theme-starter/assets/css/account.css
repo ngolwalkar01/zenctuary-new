@@ -43,18 +43,19 @@ body.zen-account-page-active {
 		linear-gradient(115deg, rgba(28, 32, 28, 0.96), rgba(82, 76, 65, 0.9) 60%, rgba(105, 103, 98, 0.88));
 	border-radius: 24px;
 	box-shadow: var(--zcf-shadow, 0 28px 90px rgba(0, 0, 0, 0.45));
-	left: 8%;
+	left: 50%;
 	margin-bottom: 100px;
 	margin-top: 100px;
-	max-height: 49vw;
+	max-height: min(860px, calc(100vh - 64px));
 	overflow: hidden scroll;
 	padding: 30px 44px 38px;
 	position: fixed;
 	scrollbar-color: rgba(226, 190, 82, 0.82) rgba(246, 242, 234, 0.16);
 	scrollbar-gutter: stable;
 	scrollbar-width: thin;
-	top: -9%;
-	width: min(84vw, 1480px);
+	top: 50%;
+	transform: translate(-50%, -50%);
+	width: min(calc(100vw - 64px), 1480px);
 	z-index: 20;
 }
 
@@ -584,6 +585,7 @@ body.zen-account-page-active {
 		max-height: calc(100vh - 48px);
 		padding: 24px;
 		top: 24px;
+		transform: none;
 		width: auto;
 	}
 
