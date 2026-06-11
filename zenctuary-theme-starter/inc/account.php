@@ -181,12 +181,13 @@ function zenctuary_customize_account_menu_items( array $items ): array {
 
 	unset( $items['downloads'], $items['edit-address'], $items['dashboard'], $items['subscriptions'] );
 
-	$order = array( 'edit-account', 'payment-methods', 'orders', 'bookings' );
+	$order = array();
 
 	if ( $wallet_key ) {
 		$order[] = $wallet_key;
 	}
 
+	$order = array_merge( $order, array( 'edit-account', 'payment-methods', 'orders', 'bookings' ) );
 	$order[]   = 'customer-logout';
 	$ordered  = array();
 
