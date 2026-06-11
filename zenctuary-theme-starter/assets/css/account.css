@@ -291,8 +291,8 @@ body.zen-account-page-active {
 }
 
 .zen-account-shell__content-scroll {
-	max-height: calc(100vh - clamp(132px, 12vw, 168px));
-	overflow: auto;
+	/*max-height: calc(100vh - clamp(132px, 12vw, 168px));
+	overflow: auto;*/
 	padding-right: 16px;
 	scrollbar-color: var(--wp--preset--color--primary-gold) transparent;
 	scrollbar-width: thin;
