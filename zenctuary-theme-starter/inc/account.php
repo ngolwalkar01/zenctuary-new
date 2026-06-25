@@ -86,6 +86,16 @@ function zenctuary_register_account_nav_settings(): void {
 			'default'           => array(),
 		)
 	);
+
+	register_setting(
+		'zenctuary_account_nav',
+		'zenctuary_account_nav_visibility',
+		array(
+			'type'              => 'array',
+			'sanitize_callback' => 'zenctuary_sanitize_account_nav_visibility',
+			'default'           => array(),
+		)
+	);
 }
 
 function zenctuary_get_account_nav_icon_items(): array {
@@ -132,6 +142,38 @@ function zenctuary_sanitize_account_nav_icons( $value ): array {
 	return $clean;
 }
 
+function zenctuary_sanitize_account_nav_visibility( $value ): array {
+	$value = is_array( $value ) ? $value : array();
+	$keys  = array_unique( array_merge( array_keys( zenctuary_get_account_nav_icon_items() ), array_keys( $value ) ) );
+	$clean = array();
+
+	foreach ( $keys as $key ) {
+		$key = sanitize_key( (string) $key );
+
+		if ( '' === $key ) {
+			continue;
+		}
+
+		$clean[ $key ] = ! empty( $value[ $key ] ) ? 'yes' : 'no';
+	}
+
+	return $clean;
+}
+
+function zenctuary_is_account_nav_endpoint_visible( string $endpoint ): bool {
+	$visibility = get_option( 'zenctuary_account_nav_visibility', array() );
+
+	if ( isset( $visibility[ $endpoint ] ) ) {
+		return 'no' !== $visibility[ $endpoint ];
+	}
+
+	if ( false !== strpos( $endpoint, 'wallet' ) && isset( $visibility['wallet'] ) ) {
+		return 'no' !== $visibility['wallet'];
+	}
+
+	return true;
+}
+
 function zenctuary_render_account_nav_admin_page(): void {
 	$icons = get_option( 'zenctuary_account_nav_icons', array() );
 	$items = zenctuary_get_account_nav_icon_items();
@@ -150,6 +192,11 @@ function zenctuary_render_account_nav_admin_page(): void {
 					<tr>
 						<th scope="row"><?php echo esc_html( $label ); ?></th>
 						<td>
+							<label class="zen-account-admin__toggle">
+								<input type="hidden" name="zenctuary_account_nav_visibility[<?php echo esc_attr( $key ); ?>]" value="0">
+								<input type="checkbox" name="zenctuary_account_nav_visibility[<?php echo esc_attr( $key ); ?>]" value="1" <?php checked( zenctuary_is_account_nav_endpoint_visible( $key ) ); ?>>
+								<span><?php esc_html_e( 'Show in My Account navigation', 'zenctuary' ); ?></span>
+							</label>
 							<div class="zen-account-admin__media-row" data-target="zenctuary-account-nav-icon-<?php echo esc_attr( $key ); ?>">
 								<div class="zen-account-admin__preview<?php echo $image_url ? '' : ' is-empty'; ?>">
 									<?php if ( $image_url ) : ?>
@@ -184,7 +231,9 @@ function zenctuary_find_wallet_menu_key( array $items ): string {
 }
 
 add_filter( 'woocommerce_account_menu_items', 'zenctuary_customize_account_menu_items', 20 );
+add_filter( 'woocommerce_account_menu_items', 'zenctuary_filter_visible_account_menu_items', 2000 );
 function zenctuary_customize_account_menu_items( array $items ): array {
+
 	$wallet_key = zenctuary_find_wallet_menu_key( $items );
 	$labels = array(
 		'edit-account'    => __( 'Personal information', 'zenctuary' ),
@@ -212,9 +261,8 @@ function zenctuary_customize_account_menu_items( array $items ): array {
 		$order[] = $wallet_key;
 	}
 
-	$order = array_merge( $order, array( 'edit-account', 'payment-methods', 'orders', 'bookings' ) );
-	$order[]   = 'customer-logout';
-	$ordered  = array();
+	$order   = array_merge( $order, array( 'edit-account', 'payment-methods', 'orders', 'bookings' ) );
+	$ordered = array();
 
 	foreach ( $order as $key ) {
 		if ( isset( $items[ $key ] ) ) {
@@ -223,7 +271,28 @@ function zenctuary_customize_account_menu_items( array $items ): array {
 		unset( $items[ $key ] );
 	}
 
+	$logout = isset( $items['customer-logout'] ) ? $items['customer-logout'] : '';
+	unset( $items['customer-logout'] );
+
+	foreach ( $items as $key => $label ) {
+		$ordered[ $key ] = $label;
+	}
+
+	if ( $logout ) {
+		$ordered['customer-logout'] = $logout;
+	}
+
 	return $ordered;
+}
+
+function zenctuary_filter_visible_account_menu_items( array $items ): array {
+	foreach ( array_keys( $items ) as $endpoint ) {
+		if ( ! zenctuary_is_account_nav_endpoint_visible( (string) $endpoint ) ) {
+			unset( $items[ $endpoint ] );
+		}
+	}
+
+	return $items;
 }
 
 function zenctuary_get_account_avatar_url( int $user_id ): string {

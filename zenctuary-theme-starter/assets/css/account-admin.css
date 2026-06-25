@@ -29,3 +29,14 @@
 	object-fit: contain;
 	width: 100%;
 }
+.zen-account-admin__toggle {
+	align-items: center;
+	display: inline-flex;
+	font-weight: 600;
+	gap: 8px;
+	margin: 0 0 12px;
+}
+
+.zen-account-admin__toggle input {
+	margin: 0;
+}
