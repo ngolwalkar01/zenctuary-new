@@ -107,6 +107,7 @@ function zenctuary_get_account_nav_icon_items(): array {
 		'wallet'          => __( 'Wallet', 'zenctuary' ),
 		'my-membership'   => __( 'My Membership', 'zenctuary' ),
 		'customer-logout' => __( 'Logout', 'zenctuary' ),
+		'chevron'         => __( 'Chevron', 'zenctuary' ),
 	);
 
 	if ( function_exists( 'wc_get_account_menu_items' ) ) {
@@ -192,11 +193,13 @@ function zenctuary_render_account_nav_admin_page(): void {
 					<tr>
 						<th scope="row"><?php echo esc_html( $label ); ?></th>
 						<td>
+							<?php if ( 'chevron' !== $key ) : ?>
 							<label class="zen-account-admin__toggle">
 								<input type="hidden" name="zenctuary_account_nav_visibility[<?php echo esc_attr( $key ); ?>]" value="0">
 								<input type="checkbox" name="zenctuary_account_nav_visibility[<?php echo esc_attr( $key ); ?>]" value="1" <?php checked( zenctuary_is_account_nav_endpoint_visible( $key ) ); ?>>
 								<span><?php esc_html_e( 'Show in My Account navigation', 'zenctuary' ); ?></span>
 							</label>
+							<?php endif; ?>
 							<div class="zen-account-admin__media-row" data-target="zenctuary-account-nav-icon-<?php echo esc_attr( $key ); ?>">
 								<div class="zen-account-admin__preview<?php echo $image_url ? '' : ' is-empty'; ?>">
 									<?php if ( $image_url ) : ?>
@@ -293,6 +296,32 @@ function zenctuary_filter_visible_account_menu_items( array $items ): array {
 	}
 
 	return $items;
+}
+
+function zenctuary_get_account_chevron_icon(): string {
+	$custom_icons  = get_option( 'zenctuary_account_nav_icons', array() );
+	$attachment_id = isset( $custom_icons['chevron'] ) ? absint( $custom_icons['chevron'] ) : 0;
+
+	if ( $attachment_id ) {
+		$image = wp_get_attachment_image(
+			$attachment_id,
+			'thumbnail',
+			false,
+			array(
+				'class'        => 'zen-account-nav__custom-icon-image zen-account-nav__custom-icon-image--chevron',
+				'loading'      => 'lazy',
+				'decoding'     => 'async',
+				'aria-hidden'  => 'true',
+				'alt'          => '',
+			)
+		);
+
+		if ( $image ) {
+			return $image;
+		}
+	}
+
+	return zenctuary_get_account_svg_icon( 'chevron' );
 }
 
 function zenctuary_get_account_avatar_url( int $user_id ): string {

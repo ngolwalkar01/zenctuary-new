@@ -15,7 +15,7 @@ defined( 'ABSPATH' ) || exit;
 			<a href="<?php echo esc_url( $url ); ?>" <?php echo wc_is_current_account_menu_item( $endpoint ) ? 'aria-current="page"' : ''; ?>>
 				<span class="zen-account-nav__icon" aria-hidden="true"><?php echo wp_kses_post( zenctuary_get_account_nav_icon( $endpoint ) ); ?></span>
 				<span class="zen-account-nav__label"><?php echo esc_html( $label ); ?></span>
-				<span class="zen-account-nav__chevron" aria-hidden="true"><?php echo wp_kses_post( zenctuary_get_account_svg_icon( 'chevron' ) ); ?></span>
+				<span class="zen-account-nav__chevron" aria-hidden="true"><?php echo wp_kses_post( zenctuary_get_account_chevron_icon() ); ?></span>
 			</a>
 		</li>
 	<?php endforeach; ?>
