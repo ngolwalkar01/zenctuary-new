@@ -285,6 +285,15 @@ body.zen-account-page-active {
     height: 12px;
 }
 
+.zen-account-nav__item--logout a {
+    border-radius: 34px !important;
+	text-align: center;
+}
+
+.zen-account-nav__item--logout a .zen-account-nav__chevron{
+	display: none;
+}
+
 .zen-account-shell__content {
 	min-width: 0;
 	padding: 40px 28px 36px;
