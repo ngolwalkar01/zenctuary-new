@@ -277,12 +277,12 @@ body.zen-account-page-active {
 	display: block;
 	height: 18px;
 	object-fit: contain;
-	width: 6px;
+	width: 18px;
 }
 
-.zen-account-nav__chevron svg {
-	height: 16px;
-	width: 16px;
+.zen-account-nav__chevron img {
+	width: 12px;
+    height: 12px;
 }
 
 .zen-account-shell__content {
