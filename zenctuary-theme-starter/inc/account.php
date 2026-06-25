@@ -88,12 +88,44 @@ function zenctuary_register_account_nav_settings(): void {
 	);
 }
 
+function zenctuary_get_account_nav_icon_items(): array {
+	$items = array(
+		'edit-account'    => __( 'Personal Information', 'zenctuary' ),
+		'payment-methods' => __( 'Payment Methods', 'zenctuary' ),
+		'orders'          => __( 'Orders', 'zenctuary' ),
+		'bookings'        => __( 'Bookings', 'zenctuary' ),
+		'wallet'          => __( 'Wallet', 'zenctuary' ),
+		'my-membership'   => __( 'My Membership', 'zenctuary' ),
+		'customer-logout' => __( 'Logout', 'zenctuary' ),
+	);
+
+	if ( function_exists( 'wc_get_account_menu_items' ) ) {
+		foreach ( wc_get_account_menu_items() as $endpoint => $label ) {
+			$endpoint = sanitize_key( (string) $endpoint );
+
+			if ( '' === $endpoint ) {
+				continue;
+			}
+
+			$items[ $endpoint ] = wp_strip_all_tags( (string) $label );
+		}
+	}
+
+	return array_filter( $items );
+}
+
 function zenctuary_sanitize_account_nav_icons( $value ): array {
 	$value = is_array( $value ) ? $value : array();
-	$keys  = array( 'edit-account', 'payment-methods', 'orders', 'bookings', 'wallet', 'customer-logout' );
+	$keys  = array_unique( array_merge( array_keys( zenctuary_get_account_nav_icon_items() ), array_keys( $value ) ) );
 	$clean = array();
 
 	foreach ( $keys as $key ) {
+		$key = sanitize_key( (string) $key );
+
+		if ( '' === $key ) {
+			continue;
+		}
+
 		$clean[ $key ] = isset( $value[ $key ] ) ? absint( $value[ $key ] ) : 0;
 	}
 
@@ -102,14 +134,7 @@ function zenctuary_sanitize_account_nav_icons( $value ): array {
 
 function zenctuary_render_account_nav_admin_page(): void {
 	$icons = get_option( 'zenctuary_account_nav_icons', array() );
-	$items = array(
-		'edit-account'    => __( 'Personal Information', 'zenctuary' ),
-		'payment-methods' => __( 'Payment Methods', 'zenctuary' ),
-		'orders'          => __( 'Orders', 'zenctuary' ),
-		'bookings'        => __( 'Bookings', 'zenctuary' ),
-		'wallet'          => __( 'Wallet', 'zenctuary' ),
-		'customer-logout' => __( 'Logout', 'zenctuary' ),
-	);
+	$items = zenctuary_get_account_nav_icon_items();
 	?>
 	<div class="wrap zen-account-admin">
 		<h1><?php esc_html_e( 'Account Navigation Icons', 'zenctuary' ); ?></h1>
@@ -232,6 +257,7 @@ function zenctuary_get_account_svg_icon( string $icon ): string {
 		'downloads' => '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M11 4h2v8h3l-4 4-4-4h3Zm-6 12h14v4H5Z" fill="currentColor"/></svg>',
 		'address' => '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2a7 7 0 0 0-7 7c0 4.8 7 13 7 13s7-8.2 7-13a7 7 0 0 0-7-7Zm0 9.5A2.5 2.5 0 1 1 14.5 9 2.5 2.5 0 0 1 12 11.5Z" fill="currentColor"/></svg>',
 		'overview' => '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 4h7v7H4Zm9 0h7v5h-7ZM4 13h5v7H4Zm7 0h9v7h-9Z" fill="currentColor"/></svg>',
+		'membership' => '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3 4 7v6c0 4.4 3.1 6.8 8 8 4.9-1.2 8-3.6 8-8V7Zm0 3.2 4.5 2.2-4.5 2.2-4.5-2.2Zm-4 5 4 2 4-2V13c0 2.4-1.4 4.1-4 5-2.6-.9-4-2.6-4-5Z" fill="currentColor"/></svg>',
 		'logout' => '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M10 4H5a1 1 0 0 0-1 1v14a1 1 0 0 0 1 1h5v-2H6V6h4Zm7.6 3.4L16.2 8.8 18.4 11H9v2h9.4l-2.2 2.2 1.4 1.4 4.6-4.6Z" fill="currentColor"/></svg>',
 	);
 
@@ -270,6 +296,7 @@ function zenctuary_get_account_nav_icon( string $endpoint ): string {
 		'payment-methods' => 'payment',
 		'orders'          => 'orders',
 		'bookings'        => 'orders',
+		'my-membership'   => 'membership',
 		'customer-logout' => 'logout',
 	);
 
