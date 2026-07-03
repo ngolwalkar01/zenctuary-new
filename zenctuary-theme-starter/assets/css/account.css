@@ -678,9 +678,19 @@ body.zen-account-page-active {
 		width: 28px;
 	}
 
+	.zen-account-shell__mobile-menu-link span::before {
+		border-bottom: 2px solid currentColor;
+		border-left: 2px solid currentColor;
+		content: "";
+		display: block;
+		height: 8px;
+		margin-left: 3px;
+		transform: rotate(45deg);
+		width: 8px;
+	}
+
 	.zen-account-shell__mobile-menu-link svg {
-		height: 16px;
-		width: 16px;
+		display: none;
 	}
 
 	.zen-account-form__grid,
