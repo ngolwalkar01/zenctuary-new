@@ -298,6 +298,82 @@ function zenctuary_filter_visible_account_menu_items( array $items ): array {
 	return $items;
 }
 
+function zenctuary_is_ongoing_booking( $booking ): bool {
+	if ( ! $booking || ! is_object( $booking ) || ! method_exists( $booking, 'get_start' ) || ! method_exists( $booking, 'get_end' ) ) {
+		return false;
+	}
+
+	$now   = current_time( 'timestamp' );
+	$start = (int) $booking->get_start();
+	$end   = (int) $booking->get_end();
+
+	return $start < $now && $end > $now;
+}
+
+add_filter( 'woocommerce_bookings_account_tables', 'zenctuary_merge_ongoing_bookings_into_today', 20 );
+function zenctuary_merge_ongoing_bookings_into_today( array $tables ): array {
+	if ( ! class_exists( 'WC_Booking_Data_Store' ) || ! function_exists( 'get_current_user_id' ) ) {
+		return $tables;
+	}
+
+	$user_id = get_current_user_id();
+
+	if ( ! $user_id ) {
+		return $tables;
+	}
+
+	$now = current_time( 'timestamp' );
+
+	$ongoing_bookings = WC_Booking_Data_Store::get_bookings_for_user(
+		$user_id,
+		array(
+			'order_by'          => 'start_date',
+			'order'             => 'ASC',
+			'date_start_before' => $now,
+			'date_end_after'    => $now,
+		)
+	);
+
+	if ( empty( $ongoing_bookings ) ) {
+		return $tables;
+	}
+
+	if ( ! isset( $tables['today'] ) ) {
+		$tables['today'] = array(
+			'header'   => __( 'Today', 'zenctuary' ),
+			'bookings' => array(),
+		);
+	}
+
+	$existing_bookings = isset( $tables['today']['bookings'] ) && is_array( $tables['today']['bookings'] )
+		? $tables['today']['bookings']
+		: array();
+
+	$merged = array();
+
+	foreach ( array_merge( $existing_bookings, $ongoing_bookings ) as $booking ) {
+		if ( ! $booking || ! method_exists( $booking, 'get_id' ) ) {
+			continue;
+		}
+
+		$merged[ $booking->get_id() ] = $booking;
+	}
+
+	uasort(
+		$merged,
+		static function ( $left, $right ): int {
+			$left_start  = method_exists( $left, 'get_start' ) ? (int) $left->get_start() : 0;
+			$right_start = method_exists( $right, 'get_start' ) ? (int) $right->get_start() : 0;
+
+			return $left_start <=> $right_start;
+		}
+	);
+
+	$tables['today']['bookings'] = array_values( $merged );
+
+	return $tables;
+}
+
 function zenctuary_get_account_chevron_icon(): string {
 	$custom_icons  = get_option( 'zenctuary_account_nav_icons', array() );
 	$attachment_id = isset( $custom_icons['chevron'] ) ? absint( $custom_icons['chevron'] ) : 0;
