@@ -95,7 +95,24 @@ if ( ! empty( $tables ) ) : ?>
 					<?php if ( in_array( 'booking-date', $columns_to_display, true ) ) : ?><td data-title="<?php esc_html_e( 'Date', 'woocommerce-bookings' ); ?>" class="booking-date" data-all-day="<?php echo esc_attr( $booking->is_all_day() ? 'yes' : 'no' ); ?>" data-timezone="<?php echo esc_attr( $booking->get_booking_timezone() ); ?>"><?php echo esc_html( $booking->get_start_date( null, '', wc_should_convert_timezone( $booking ) ) ) . ', <span class="booking-date-time">' . esc_html( $booking->get_start_date( '', null, wc_should_convert_timezone( $booking ) ) ) . '</span>' . ( $formatted_duration ? ' <span class="booking-date-duration">(' . esc_html( $formatted_duration ) . ')</span>' : '' ); ?></td><?php endif; ?>
 					<?php if ( in_array( 'booking-status', $columns_to_display, true ) ) : ?><td data-title="<?php esc_html_e( 'Status', 'woocommerce-bookings' ); ?>" class="booking-status"><span class="wc-bookings-status-label"><?php echo esc_html( $status_text ); ?></span></td><?php endif; ?>
 					<?php if ( in_array( 'booking-total', $columns_to_display, true ) ) : ?><td data-title="<?php esc_html_e( 'Total', 'woocommerce-bookings' ); ?>" class="booking-total"><?php echo wp_kses_post( wc_price( $booking->get_cost() ) ); ?></td><?php endif; ?>
-					<?php if ( in_array( 'booking-cancel', $columns_to_display, true ) ) : ?><td data-title="<?php esc_html_e( 'Cancel', 'woocommerce-bookings' ); ?>" class="booking-cancel <?php echo $cancellable ? 'cancellable' : 'not-cancellable'; ?>"><?php if ( $cancellable ) : ?><a aria-haspopup="dialog" href="<?php echo esc_url( $booking->get_cancel_url() ); ?>" role="button" class="button cancel"><?php esc_html_e( 'Cancel', 'woocommerce-bookings' ); ?></a><?php endif; ?></td><?php endif; ?>
+					<?php if ( in_array( 'booking-cancel', $columns_to_display, true ) ) : ?>
+						<td data-title="<?php esc_html_e( 'Cancel', 'woocommerce-bookings' ); ?>" class="booking-cancel <?php echo $cancellable ? 'cancellable' : 'not-cancellable'; ?>">
+							<?php if ( $cancellable ) : ?>
+								<?php $cancel_modal_id = 'zbp-booking-cancel-modal-' . $booking->get_id(); ?>
+								<a href="#<?php echo esc_attr( $cancel_modal_id ); ?>" role="button" class="button cancel" data-zbp-booking-cancel-trigger="<?php echo esc_attr( $cancel_modal_id ); ?>"><?php esc_html_e( 'Cancel', 'woocommerce-bookings' ); ?></a>
+								<div id="<?php echo esc_attr( $cancel_modal_id ); ?>" class="zbp-booking-cancel-overlay" hidden>
+									<div class="zbp-booking-cancel-dialog" role="dialog" aria-modal="true" aria-labelledby="<?php echo esc_attr( $cancel_modal_id ); ?>-title">
+										<h3 id="<?php echo esc_attr( $cancel_modal_id ); ?>-title"><?php esc_html_e( 'Cancel booking?', 'zenctuary' ); ?></h3>
+										<p><?php esc_html_e( 'Please confirm that you want to cancel this booking.', 'zenctuary' ); ?></p>
+										<div class="zbp-booking-cancel-actions">
+											<button type="button" class="button" data-zbp-booking-cancel-close><?php esc_html_e( 'Keep Booking', 'zenctuary' ); ?></button>
+											<a href="<?php echo esc_url( $booking->get_cancel_url() ); ?>" class="button cancel zbp-booking-cancel-confirm"><?php esc_html_e( 'Cancel Booking', 'woocommerce-bookings' ); ?></a>
+										</div>
+									</div>
+								</div>
+							<?php endif; ?>
+						</td>
+					<?php endif; ?>
 				</tr>
 			<?php endforeach; ?>
 			</tbody>
@@ -112,6 +129,88 @@ if ( ! empty( $tables ) ) : ?>
 
 	<?php endforeach; ?>
 
+	<style>
+		.zbp-booking-cancel-overlay {
+			align-items: center;
+			background: rgba(20, 20, 22, 0.68);
+			display: flex;
+			inset: 0;
+			justify-content: center;
+			padding: 24px;
+			position: fixed;
+			z-index: 100000;
+		}
+
+		.zbp-booking-cancel-overlay[hidden] {
+			display: none;
+		}
+
+		.zbp-booking-cancel-dialog {
+			background: #fff;
+			border-radius: 8px;
+			box-shadow: 0 24px 80px rgba(0, 0, 0, 0.28);
+			color: #242428;
+			max-width: 440px;
+			padding: 28px;
+			width: min(100%, 440px);
+		}
+
+		.zbp-booking-cancel-dialog h3 {
+			font-size: 22px;
+			line-height: 1.25;
+			margin: 0 0 12px;
+		}
+
+		.zbp-booking-cancel-dialog p {
+			color: #4b4b50;
+			font-size: 16px;
+			line-height: 1.5;
+			margin: 0 0 22px;
+		}
+
+		.zbp-booking-cancel-actions {
+			display: flex;
+			flex-wrap: wrap;
+			gap: 12px;
+			justify-content: flex-end;
+		}
+	</style>
+
+	<script>
+		document.addEventListener('DOMContentLoaded', function () {
+			document.addEventListener('click', function (event) {
+				var trigger = event.target.closest('[data-zbp-booking-cancel-trigger]');
+				var close = event.target.closest('[data-zbp-booking-cancel-close]');
+				var overlay = event.target.classList && event.target.classList.contains('zbp-booking-cancel-overlay') ? event.target : null;
+
+				if (trigger) {
+					event.preventDefault();
+					var modal = document.getElementById(trigger.getAttribute('data-zbp-booking-cancel-trigger'));
+					if (modal) {
+						modal.hidden = false;
+					}
+					return;
+				}
+
+				if (close || overlay) {
+					var modalToClose = event.target.closest('.zbp-booking-cancel-overlay');
+					if (modalToClose) {
+						modalToClose.hidden = true;
+					}
+				}
+			});
+
+			document.addEventListener('keydown', function (event) {
+				if (event.key !== 'Escape') {
+					return;
+				}
+
+				document.querySelectorAll('.zbp-booking-cancel-overlay:not([hidden])').forEach(function (modal) {
+					modal.hidden = true;
+				});
+			});
+		});
+	</script>
 <?php else : ?>
 	<div class="woocommerce-Message woocommerce-Message--info woocommerce-info">
 		<a class="woocommerce-Button button" href="<?php echo esc_url( apply_filters( 'woocommerce_return_to_shop_redirect', wc_get_page_permalink( 'shop' ) ) ); ?>"><?php esc_html_e( 'Go Shop', 'woocommerce-bookings' ); ?></a>
