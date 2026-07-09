@@ -79,10 +79,17 @@ if ( ! empty( $tables ) ) : ?>
 
 					$formatted_duration = apply_filters( '__experimental_woocommerce_bookings_get_duration', $duration . ' ' . $unit_display, $duration, $duration_unit );
 				}
-
 				$cancellable = 'cancelled' !== $booking->get_status() && 'completed' !== $booking->get_status() && ! $booking->passed_cancel_day();
 				$is_ongoing  = function_exists( 'zenctuary_is_ongoing_booking' ) && zenctuary_is_ongoing_booking( $booking );
 				$status_text = $is_ongoing ? __( 'Ongoing', 'zenctuary' ) : wc_bookings_get_status_label( $booking->get_status() );
+
+				$cbb_settings           = get_option( 'cbb_zencoin_settings', array() );
+				$cbb_settings           = is_array( $cbb_settings ) ? $cbb_settings : array();
+				$cancel_cutoff_hours    = isset( $cbb_settings['on_time_cancel_cutoff_hours'] ) ? absint( $cbb_settings['on_time_cancel_cutoff_hours'] ) : 12;
+				$booking_start_time     = method_exists( $booking, 'get_start' ) ? (int) $booking->get_start( 'edit' ) : 0;
+				$is_late_cancellation   = $cancel_cutoff_hours > 0 && $booking_start_time > 0 && ( current_time( 'timestamp' ) + ( $cancel_cutoff_hours * HOUR_IN_SECONDS ) ) > $booking_start_time;
+				$cancel_modal_title     = $is_late_cancellation ? __( 'Booking is not refundable', 'zenctuary' ) : __( 'Cancel booking?', 'zenctuary' );
+				$cancel_modal_message   = $is_late_cancellation ? __( 'This booking is no longer refundable. Do you still want to cancel?', 'zenctuary' ) : __( 'Please confirm that you want to cancel this booking.', 'zenctuary' );
 			?>
 				<tr>
 					<?php if ( in_array( 'booking-id', $columns_to_display, true ) ) : ?><th scope="row" data-title="<?php esc_html_e( 'ID', 'woocommerce-bookings' ); ?>" class="booking-id"><?php echo esc_html( $booking->get_id() ); ?></th><?php endif; ?>
@@ -102,11 +109,11 @@ if ( ! empty( $tables ) ) : ?>
 								<a href="#<?php echo esc_attr( $cancel_modal_id ); ?>" role="button" class="button zbp-booking-cancel-button" data-zbp-booking-cancel-trigger="<?php echo esc_attr( $cancel_modal_id ); ?>"><?php esc_html_e( 'Cancel', 'woocommerce-bookings' ); ?></a>
 								<div id="<?php echo esc_attr( $cancel_modal_id ); ?>" class="zbp-booking-cancel-overlay" hidden>
 									<div class="zbp-booking-cancel-dialog" role="dialog" aria-modal="true" aria-labelledby="<?php echo esc_attr( $cancel_modal_id ); ?>-title">
-										<h3 id="<?php echo esc_attr( $cancel_modal_id ); ?>-title"><?php esc_html_e( 'Cancel booking?', 'zenctuary' ); ?></h3>
-										<p><?php esc_html_e( 'Please confirm that you want to cancel this booking.', 'zenctuary' ); ?></p>
+										<h3 id="<?php echo esc_attr( $cancel_modal_id ); ?>-title"><?php echo esc_html( $cancel_modal_title ); ?></h3>
+										<p><?php echo esc_html( $cancel_modal_message ); ?></p>
 										<div class="zbp-booking-cancel-actions">
-											<button type="button" class="button" data-zbp-booking-cancel-close><?php esc_html_e( 'Keep Booking', 'zenctuary' ); ?></button>
 											<a href="<?php echo esc_url( $booking->get_cancel_url() ); ?>" class="button zbp-booking-cancel-confirm"><?php esc_html_e( 'Cancel Booking', 'woocommerce-bookings' ); ?></a>
+											<button type="button" class="button zbp-booking-cancel-keep" data-zbp-booking-cancel-close><?php esc_html_e( 'Keep Booking', 'zenctuary' ); ?></button>
 										</div>
 									</div>
 								</div>
@@ -132,7 +139,7 @@ if ( ! empty( $tables ) ) : ?>
 	<style>
 		.zbp-booking-cancel-overlay {
 			align-items: center;
-			background: rgba(20, 20, 22, 0.68);
+			background: rgba(0, 0, 0, 0.72);
 			display: flex;
 			inset: 0;
 			justify-content: center;
@@ -146,33 +153,98 @@ if ( ! empty( $tables ) ) : ?>
 		}
 
 		.zbp-booking-cancel-dialog {
-			background: #fff;
-			border-radius: 8px;
-			box-shadow: 0 24px 80px rgba(0, 0, 0, 0.28);
-			color: #242428;
-			max-width: 440px;
-			padding: 28px;
-			width: min(100%, 440px);
+			background: #3F3E3E;
+			border-radius: 12px;
+			box-shadow: 0 24px 80px rgba(0, 0, 0, 0.34);
+			color: #f6f2ea;
+			max-width: 540px;
+			padding: 48px 32px 36px;
+			text-align: center;
+			width: min(100%, 540px);
 		}
 
 		.zbp-booking-cancel-dialog h3 {
-			font-size: 22px;
+			color: #D8B355;
+			font-size: 28px;
+			font-weight: 700;
 			line-height: 1.25;
-			margin: 0 0 12px;
+			margin: 0 0 18px;
 		}
 
 		.zbp-booking-cancel-dialog p {
-			color: #4b4b50;
-			font-size: 16px;
-			line-height: 1.5;
-			margin: 0 0 22px;
+			color: #f6f2ea;
+			font-size: 20px;
+			line-height: 1.45;
+			margin: 0 0 34px;
 		}
 
 		.zbp-booking-cancel-actions {
 			display: flex;
-			flex-wrap: wrap;
-			gap: 12px;
-			justify-content: flex-end;
+			flex-direction: column;
+			gap: 34px;
+		}
+
+		.zbp-booking-cancel-actions .button,
+		.zbp-booking-cancel-actions a.button,
+		.zbp-booking-cancel-actions button.button {
+			align-items: center;
+			background: transparent;
+			border: 3px solid currentColor;
+			border-radius: 999px;
+			box-sizing: border-box;
+			display: inline-flex;
+			font-size: 24px;
+			font-weight: 700;
+			justify-content: center;
+			line-height: 1.2;
+			min-height: 88px;
+			padding: 18px 28px;
+			text-align: center;
+			text-decoration: none;
+			width: 100%;
+		}
+
+		.zbp-booking-cancel-confirm,
+		.zbp-booking-cancel-confirm:visited {
+			color: #D8B355;
+		}
+
+		.zbp-booking-cancel-keep,
+		.zbp-booking-cancel-keep:visited {
+			color: #9A9A9A;
+		}
+
+		.zbp-booking-cancel-confirm:hover,
+		.zbp-booking-cancel-confirm:focus,
+		.zbp-booking-cancel-keep:hover,
+		.zbp-booking-cancel-keep:focus {
+			background: rgba(255, 255, 255, 0.04);
+			color: currentColor;
+		}
+
+		@media (max-width: 640px) {
+			.zbp-booking-cancel-dialog {
+				padding: 34px 20px 26px;
+			}
+
+			.zbp-booking-cancel-dialog h3 {
+				font-size: 22px;
+			}
+
+			.zbp-booking-cancel-dialog p {
+				font-size: 17px;
+			}
+
+			.zbp-booking-cancel-actions {
+				gap: 20px;
+			}
+
+			.zbp-booking-cancel-actions .button,
+			.zbp-booking-cancel-actions a.button,
+			.zbp-booking-cancel-actions button.button {
+				font-size: 18px;
+				min-height: 64px;
+			}
 		}
 	</style>
 
