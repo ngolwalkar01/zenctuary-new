@@ -99,14 +99,14 @@ if ( ! empty( $tables ) ) : ?>
 						<td data-title="<?php esc_html_e( 'Cancel', 'woocommerce-bookings' ); ?>" class="booking-cancel <?php echo $cancellable ? 'cancellable' : 'not-cancellable'; ?>">
 							<?php if ( $cancellable ) : ?>
 								<?php $cancel_modal_id = 'zbp-booking-cancel-modal-' . $booking->get_id(); ?>
-								<a href="#<?php echo esc_attr( $cancel_modal_id ); ?>" role="button" class="button cancel" data-zbp-booking-cancel-trigger="<?php echo esc_attr( $cancel_modal_id ); ?>"><?php esc_html_e( 'Cancel', 'woocommerce-bookings' ); ?></a>
+								<a href="#<?php echo esc_attr( $cancel_modal_id ); ?>" role="button" class="button zbp-booking-cancel-button" data-zbp-booking-cancel-trigger="<?php echo esc_attr( $cancel_modal_id ); ?>"><?php esc_html_e( 'Cancel', 'woocommerce-bookings' ); ?></a>
 								<div id="<?php echo esc_attr( $cancel_modal_id ); ?>" class="zbp-booking-cancel-overlay" hidden>
 									<div class="zbp-booking-cancel-dialog" role="dialog" aria-modal="true" aria-labelledby="<?php echo esc_attr( $cancel_modal_id ); ?>-title">
 										<h3 id="<?php echo esc_attr( $cancel_modal_id ); ?>-title"><?php esc_html_e( 'Cancel booking?', 'zenctuary' ); ?></h3>
 										<p><?php esc_html_e( 'Please confirm that you want to cancel this booking.', 'zenctuary' ); ?></p>
 										<div class="zbp-booking-cancel-actions">
 											<button type="button" class="button" data-zbp-booking-cancel-close><?php esc_html_e( 'Keep Booking', 'zenctuary' ); ?></button>
-											<a href="<?php echo esc_url( $booking->get_cancel_url() ); ?>" class="button cancel zbp-booking-cancel-confirm"><?php esc_html_e( 'Cancel Booking', 'woocommerce-bookings' ); ?></a>
+											<a href="<?php echo esc_url( $booking->get_cancel_url() ); ?>" class="button zbp-booking-cancel-confirm"><?php esc_html_e( 'Cancel Booking', 'woocommerce-bookings' ); ?></a>
 										</div>
 									</div>
 								</div>
@@ -185,6 +185,7 @@ if ( ! empty( $tables ) ) : ?>
 
 				if (trigger) {
 					event.preventDefault();
+					event.stopImmediatePropagation();
 					var modal = document.getElementById(trigger.getAttribute('data-zbp-booking-cancel-trigger'));
 					if (modal) {
 						modal.hidden = false;
@@ -198,7 +199,7 @@ if ( ! empty( $tables ) ) : ?>
 						modalToClose.hidden = true;
 					}
 				}
-			});
+			}, true);
 
 			document.addEventListener('keydown', function (event) {
 				if (event.key !== 'Escape') {
