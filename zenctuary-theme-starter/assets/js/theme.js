@@ -30,18 +30,6 @@ document.addEventListener('DOMContentLoaded', () => {
   };
 
   const openHeaderCartPopup = () => {
-    const visibleMiniCartButton = Array.from(document.querySelectorAll(
-      '.wc-block-mini-cart__button, .wp-block-woocommerce-mini-cart button, .site-header-cart a.cart-contents'
-    )).find((button) => {
-      const style = window.getComputedStyle(button);
-      return style.display !== 'none' && style.visibility !== 'hidden';
-    });
-
-    if (visibleMiniCartButton && typeof visibleMiniCartButton.click === 'function') {
-      visibleMiniCartButton.click();
-      return true;
-    }
-
     if (window.jQuery) {
       window.jQuery(document.body).trigger('added_to_cart');
       return true;

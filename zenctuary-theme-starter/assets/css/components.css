@@ -211,12 +211,19 @@
   padding: 0 6px;
 }
 
-/* Hide WooCommerce auto-injected Header Icons */
+/* Hide WooCommerce auto-injected cart/customer UI. The theme uses its own cart trigger and popup. */
 .wc-block-mini-cart,
 .site-header-cart,
 .wp-block-woocommerce-mini-cart,
-.wp-block-woocommerce-customer-account {
+.wp-block-woocommerce-customer-account,
+.wc-block-mini-cart__drawer,
+.wc-block-mini-cart__drawer.is-mobile,
+.wc-block-components-drawer,
+.wc-block-components-drawer.is-mobile,
+.wc-block-components-drawer__screen-overlay {
   display: none !important;
+  pointer-events: none !important;
+  visibility: hidden !important;
 }
 
 
