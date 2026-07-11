@@ -5,12 +5,11 @@ document.addEventListener('DOMContentLoaded', () => {
   };
 
   const createHeaderCartButton = () => {
-    const cartUrl = window.zenctuaryThemeData?.cart_url || '/cart/';
     const label = window.zenctuaryThemeData?.i18n?.cart || 'Cart';
-    const button = document.createElement('a');
+    const button = document.createElement('button');
 
     button.className = 'zen-header-cart-trigger';
-    button.href = cartUrl;
+    button.type = 'button';
     button.setAttribute('data-zcf-open-checkout', '');
     button.setAttribute('aria-label', `${label} (${getCartCount()})`);
     button.innerHTML = `
@@ -22,6 +21,10 @@ document.addEventListener('DOMContentLoaded', () => {
       </span>
       <span class="zen-header-cart-trigger__count" data-zen-cart-count>${getCartCount()}</span>
     `;
+    button.addEventListener('click', (event) => {
+      event.preventDefault();
+      openHeaderCartPopup();
+    });
 
     return button;
   };
@@ -228,7 +231,7 @@ document.addEventListener('DOMContentLoaded', () => {
   document.addEventListener('click', (event) => {
     const cartTrigger = event.target.closest('.zen-header-cart-trigger');
 
-    if (!cartTrigger) {
+    if (!cartTrigger || event.defaultPrevented) {
       return;
     }
 

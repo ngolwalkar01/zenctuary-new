@@ -152,7 +152,9 @@
 
 .zen-header-cart-trigger {
   align-items: center;
+  background: transparent;
   border: 2px solid #9A9A9A;
+  cursor: pointer;
   border-radius: 999px;
   color: var(--wp--preset--color--primary-beige, #F6F2EA);
   display: inline-flex;
