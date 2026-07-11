@@ -65,10 +65,19 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   };
 
+  const getHeaderAccountButton = (header) => {
+    if (!header) {
+      return null;
+    }
+
+    return header.querySelector(
+      '.wp-block-buttons .wp-block-button.zen-auth-trigger, .wp-block-buttons .wp-block-button[data-auth], .wp-block-buttons .wp-block-button'
+    );
+  };
+
   const ensureHeaderCartButton = () => {
     const header = document.querySelector('.zen-site-header');
-    const accountLink = header?.querySelector('.wp-block-buttons .wp-block-button__link[href*="my-account"], .wp-block-buttons .wp-block-button__link[data-auth="account"]');
-    const accountButton = accountLink?.closest('.wp-block-button');
+    const accountButton = getHeaderAccountButton(header);
 
     if (!header || !accountButton || header.querySelector('.zen-header-cart-trigger')) {
       return;
@@ -79,7 +88,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
   const ensureMobileHeaderAccount = () => {
     const header = document.querySelector('.zen-site-header');
-    const accountLink = header?.querySelector('.wp-block-buttons .wp-block-button__link[href*="my-account"], .wp-block-buttons .wp-block-button__link[data-auth="account"]');
+    const accountButton = getHeaderAccountButton(header);
+    const accountLink = accountButton?.querySelector('.wp-block-button__link') || accountButton;
     const cartButton = header?.querySelector('.zen-header-cart-trigger');
     const responsiveContent = header?.querySelector('.wp-block-navigation__responsive-container-content');
 
