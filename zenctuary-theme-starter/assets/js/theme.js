@@ -26,6 +26,28 @@ document.addEventListener('DOMContentLoaded', () => {
     return button;
   };
 
+  const openHeaderCartPopup = () => {
+    const visibleMiniCartButton = Array.from(document.querySelectorAll(
+      '.wc-block-mini-cart__button, .wp-block-woocommerce-mini-cart button, .site-header-cart a.cart-contents'
+    )).find((button) => {
+      const style = window.getComputedStyle(button);
+      return style.display !== 'none' && style.visibility !== 'hidden';
+    });
+
+    if (visibleMiniCartButton && typeof visibleMiniCartButton.click === 'function') {
+      visibleMiniCartButton.click();
+      return true;
+    }
+
+    if (window.jQuery) {
+      window.jQuery(document.body).trigger('added_to_cart');
+      return true;
+    }
+
+    document.body.dispatchEvent(new CustomEvent('added_to_cart'));
+    return true;
+  };
+
   const updateHeaderCartCount = (count) => {
     const nextCount = Math.max(0, Number(count || 0));
 
@@ -52,7 +74,7 @@ document.addEventListener('DOMContentLoaded', () => {
       return;
     }
 
-    accountButton.insertAdjacentElement('afterend', createHeaderCartButton());
+    accountButton.insertAdjacentElement('beforebegin', createHeaderCartButton());
   };
 
   const ensureMobileHeaderAccount = () => {
@@ -192,6 +214,17 @@ document.addEventListener('DOMContentLoaded', () => {
   ensureHeaderCartButton();
   ensureMobileHeaderAccount();
   initMobileHeaderSubmenus();
+
+  document.addEventListener('click', (event) => {
+    const cartTrigger = event.target.closest('.zen-header-cart-trigger');
+
+    if (!cartTrigger) {
+      return;
+    }
+
+    event.preventDefault();
+    openHeaderCartPopup();
+  });
 
   document.addEventListener('zenctuary:cart-count-updated', (event) => {
     updateHeaderCartCount(event.detail?.count);
