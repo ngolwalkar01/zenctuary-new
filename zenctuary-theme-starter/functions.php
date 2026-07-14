@@ -19,3 +19,7 @@ require_once ZENCTUARY_THEME_DIR . '/inc/helpers/grouping.php';
 add_action('cst_action', function(){
 	echo "<p>Hello World</p>";
 });
+
+add_filter( 'zenctuary_bookings_book_class_url', function () {
+	return get_site_url( null, '/schedule/' );
+} );
