@@ -1,61 +1,4 @@
 document.addEventListener('DOMContentLoaded', () => {
-  const getCartCount = () => {
-    const count = Number(window.zenctuaryThemeData?.cart_count || 0);
-    return Number.isFinite(count) && count > 0 ? count : 0;
-  };
-
-  const createHeaderCartButton = () => {
-    const label = window.zenctuaryThemeData?.i18n?.cart || 'Cart';
-    const button = document.createElement('button');
-
-    button.className = 'zen-header-cart-trigger';
-    button.type = 'button';
-    button.setAttribute('data-zcf-open-checkout', '');
-    button.setAttribute('aria-label', `${label} (${getCartCount()})`);
-    button.innerHTML = `
-      <span class="zen-header-cart-trigger__icon" aria-hidden="true">
-        <svg viewBox="0 0 24 24" focusable="false">
-          <path d="M6.5 6.75h12.25l-1.4 7.15a2 2 0 0 1-1.96 1.6H9.12a2 2 0 0 1-1.96-1.59L5.85 4.75H3.75" />
-          <path d="M9.25 19.25h.01M16.25 19.25h.01" />
-        </svg>
-      </span>
-      <span class="zen-header-cart-trigger__count" data-zen-cart-count>${getCartCount()}</span>
-    `;
-    button.addEventListener('click', (event) => {
-      event.preventDefault();
-      openHeaderCartPopup();
-    });
-
-    return button;
-  };
-
-  const openHeaderCartPopup = () => {
-    if (window.jQuery) {
-      window.jQuery(document.body).trigger('added_to_cart');
-      return true;
-    }
-
-    document.body.dispatchEvent(new CustomEvent('added_to_cart'));
-    return true;
-  };
-
-  const updateHeaderCartCount = (count) => {
-    const nextCount = Math.max(0, Number(count || 0));
-
-    window.zenctuaryThemeData = {
-      ...(window.zenctuaryThemeData || {}),
-      cart_count: nextCount,
-    };
-
-    document.querySelectorAll('[data-zen-cart-count]').forEach((node) => {
-      node.textContent = String(nextCount);
-      node.closest('.zen-header-cart-trigger')?.setAttribute(
-        'aria-label',
-        `${window.zenctuaryThemeData?.i18n?.cart || 'Cart'} (${nextCount})`
-      );
-    });
-  };
-
   const getHeaderAccountButton = (header) => {
     if (!header) {
       return null;
@@ -66,22 +9,10 @@ document.addEventListener('DOMContentLoaded', () => {
     );
   };
 
-  const ensureHeaderCartButton = () => {
-    const header = document.querySelector('.zen-site-header');
-    const accountButton = getHeaderAccountButton(header);
-
-    if (!header || !accountButton || header.querySelector('.zen-header-cart-trigger')) {
-      return;
-    }
-
-    accountButton.insertAdjacentElement('beforebegin', createHeaderCartButton());
-  };
-
   const ensureMobileHeaderAccount = () => {
     const header = document.querySelector('.zen-site-header');
     const accountButton = getHeaderAccountButton(header);
     const accountLink = accountButton?.querySelector('.wp-block-button__link') || accountButton;
-    const cartButton = header?.querySelector('.zen-header-cart-trigger');
     const responsiveContent = header?.querySelector('.wp-block-navigation__responsive-container-content');
 
     if (!accountLink || !responsiveContent || responsiveContent.querySelector('.zen-mobile-account-entry')) {
@@ -91,10 +22,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const wrapper = document.createElement('div');
     wrapper.className = 'zen-mobile-account-entry';
     wrapper.innerHTML = accountLink.outerHTML;
-
-    if (cartButton) {
-      wrapper.appendChild(cartButton.cloneNode(true));
-    }
 
     responsiveContent.appendChild(wrapper);
   };
@@ -211,37 +138,8 @@ document.addEventListener('DOMContentLoaded', () => {
     syncAllResponsiveContainers(true);
     window.addEventListener('resize', () => syncAllResponsiveContainers());
   };
-
-  ensureHeaderCartButton();
   ensureMobileHeaderAccount();
   initMobileHeaderSubmenus();
-
-  document.addEventListener('click', (event) => {
-    const cartTrigger = event.target.closest('.zen-header-cart-trigger');
-
-    if (!cartTrigger || event.defaultPrevented) {
-      return;
-    }
-
-    event.preventDefault();
-    openHeaderCartPopup();
-  });
-
-  document.addEventListener('zenctuary:cart-count-updated', (event) => {
-    updateHeaderCartCount(event.detail?.count);
-  });
-
-  if (window.jQuery) {
-    window.jQuery(document.body).on('added_to_cart removed_from_cart wc_fragments_refreshed', () => {
-      window.setTimeout(() => {
-        const fragmentCount = document.querySelector('.wc-block-mini-cart__badge, .cart-contents-count');
-
-        if (fragmentCount) {
-          updateHeaderCartCount(fragmentCount.textContent);
-        }
-      }, 0);
-    });
-  }
 
   // Existing snippet (if any)
   document.querySelectorAll('.zen-faq__question').forEach((button) => {
