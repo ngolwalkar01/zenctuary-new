@@ -1570,6 +1570,68 @@ input[type="checkbox"] {
     width: 100%;
   }
 
+  /* Mobile navigation alignment override */
+  .wp-block-navigation__responsive-container .wp-block-navigation__responsive-container-content {
+    align-items: stretch;
+    text-align: left;
+    width: 100%;
+  }
+
+  .wp-block-navigation__responsive-container .wp-block-navigation__container,
+  .wp-block-navigation__responsive-container .wp-block-pages-list__list {
+    align-items: stretch;
+    display: flex;
+    flex-direction: column;
+    gap: 34px;
+    width: 100%;
+  }
+
+  .wp-block-navigation__responsive-container .wp-block-navigation-item,
+  .wp-block-navigation__responsive-container .wp-block-navigation-item .wp-block-navigation-item__content {
+    align-items: center;
+    justify-content: flex-start;
+    text-align: left;
+    width: 100%;
+  }
+
+  .wp-block-navigation__responsive-container .wp-block-navigation-item .wp-block-navigation-item__content {
+    display: flex;
+    padding: 0;
+  }
+
+  .wp-block-navigation__responsive-container .has-child {
+    align-items: center;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    row-gap: 16px;
+    width: 100%;
+  }
+
+  .wp-block-navigation__responsive-container .has-child > .wp-block-navigation-item__content {
+    grid-column: 1;
+    min-width: 0;
+    width: 100%;
+  }
+
+  .wp-block-navigation__responsive-container .has-child > .wp-block-navigation-submenu__toggle {
+    align-self: center;
+    grid-column: 2;
+    grid-row: 1;
+    justify-self: end;
+    margin-left: 16px;
+    padding: 0;
+  }
+
+  .wp-block-navigation__responsive-container .wp-block-navigation__submenu-container {
+    grid-column: 1 / -1;
+    margin: 0;
+  }
+
+  .zen-mobile-account-entry {
+    margin-top: 4px;
+    width: 100%;
+  }
+
   .zen-grid-4 {
     grid-template-columns: repeat(2, 1fr);
   }
