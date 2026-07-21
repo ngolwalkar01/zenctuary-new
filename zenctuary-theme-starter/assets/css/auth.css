@@ -621,3 +621,94 @@ body.zen-modal-open {
         gap: 24px;
     }
 }
+/* Mobile signup modal: keep the submit action reachable inside the viewport. */
+@media (max-width: 600px) {
+    .zen-modal-overlay:has(.zen-modal-container[data-view="signup"]) {
+        align-items: stretch;
+        height: 100dvh;
+        overflow: hidden;
+        padding: 0;
+    }
+
+    .zen-modal-container[data-view="signup"] {
+        border-radius: 0;
+        height: 100dvh;
+        margin: 0;
+        max-height: 100dvh;
+        overflow-x: hidden;
+        overflow-y: auto;
+        padding: 56px 16px calc(88px + env(safe-area-inset-bottom)) !important;
+        width: 100vw;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    .zen-modal-container[data-view="signup"] .zen-modal-content {
+        display: block;
+        margin: 0;
+        max-width: none;
+        width: 100%;
+    }
+
+    #zen-view-signup.zen-auth-view.is-active,
+    #zen-view-signup .signup-wrapper,
+    #zen-view-signup .zen-auth-form {
+        width: 100%;
+    }
+
+    #zen-view-signup .signup-wrapper {
+        padding-bottom: 24px;
+    }
+
+    #zen-view-signup .zen-auth-header {
+        margin-bottom: 18px;
+    }
+
+    #zen-view-signup .zen-auth-header h2 {
+        font-size: 28px;
+    }
+
+    #zen-view-signup .zen-auth-subheading {
+        font-size: 15px;
+    }
+
+    #zen-view-signup .zen-auth-form {
+        gap: 14px;
+        padding-bottom: max(32px, env(safe-area-inset-bottom));
+    }
+
+    #zen-view-signup .zen-form-grid {
+        gap: 14px;
+    }
+
+    #zen-view-signup .zen-input,
+    #zen-view-signup select.zen-select {
+        border-radius: 10px;
+        font-size: 15px;
+        min-height: 50px !important;
+        padding: 13px 44px 13px 16px !important;
+    }
+
+    #zen-view-signup .zen-checkbox-stack {
+        gap: 12px;
+        margin: 4px 0;
+    }
+
+    #zen-view-signup .zen-checkbox-label {
+        gap: 12px;
+        font-size: 13px;
+        line-height: 1.3;
+        margin-top: 0;
+    }
+
+    #zen-view-signup .zen-checkbox-label input {
+        height: 26px;
+        min-width: 26px;
+        width: 26px;
+    }
+
+    #zen-view-signup .zen-btn-auth--secondary {
+        margin-top: 8px;
+        min-height: 48px;
+        padding: 13px;
+    }
+}
