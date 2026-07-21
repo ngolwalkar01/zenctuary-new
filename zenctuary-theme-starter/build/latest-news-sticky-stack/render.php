@@ -304,6 +304,7 @@ $shadow_class       = $sticky_shadow ? 'has-sticky-shadow' : '';
 					$post_id      = get_the_ID();
 					$title        = get_the_title();
 					$permalink    = get_permalink();
+					$cta_url      = ! empty( $attributes['ctaUrl'] ) ? esc_url_raw( (string) $attributes['ctaUrl'] ) : $permalink;
 					$featured     = get_the_post_thumbnail_url( $post_id, 'large' );
 					$excerpt      = has_excerpt( $post_id )
 						? get_the_excerpt( $post_id )
@@ -350,7 +351,7 @@ $shadow_class       = $sticky_shadow ? 'has-sticky-shadow' : '';
 								<div class="latest-news-sticky-stack__hover-body"><?php echo wp_kses_post( $hover_body ); ?></div>
 									</div>
 								<div class="latest-news-sticky-stack__hover-cta-wrap">
-									<a class="latest-news-sticky-stack__cta latest-news-sticky-stack__cta--icon-<?php echo esc_attr( $cta_icon_position ); ?>" href="<?php echo esc_url( $permalink ); ?>">
+									<a class="latest-news-sticky-stack__cta latest-news-sticky-stack__cta--icon-<?php echo esc_attr( $cta_icon_position ); ?>" href="<?php echo esc_url( $cta_url ); ?>">
 										<?php if ( $cta_show_icon ) : ?>
 											<span class="latest-news-sticky-stack__cta-icon" aria-hidden="true"><?php echo zenctuary_latest_news_arrow_icon(); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></span>
 										<?php endif; ?>

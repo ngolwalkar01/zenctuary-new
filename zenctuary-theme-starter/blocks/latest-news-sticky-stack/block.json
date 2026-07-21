@@ -132,6 +132,7 @@
     "showMetaIcon": { "type": "boolean", "default": false },
 
     "ctaLabel": { "type": "string", "default": "Read More" },
+    "ctaUrl": { "type": "string", "default": "" },
     "ctaFontSize": { "type": "number", "default": 16 },
     "ctaFontWeight": { "type": "string", "default": "700" },
     "ctaTextColor": { "type": "string", "default": "#d8b354" },

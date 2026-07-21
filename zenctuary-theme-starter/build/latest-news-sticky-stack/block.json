@@ -472,6 +472,10 @@
       "type": "string",
       "default": "Read More"
     },
+    "ctaUrl": {
+      "type": "string",
+      "default": ""
+    },
     "ctaFontSize": {
       "type": "number",
       "default": 16

@@ -373,6 +373,12 @@ export default function Edit( { attributes, setAttributes } ) {
 					<RangeControl label={ __( 'Meta Gap', 'zenctuary' ) } value={ attributes.metaGap } onChange={ ( metaGap ) => setAttributes( { metaGap } ) } min={ 0 } max={ 30 } />
 					<ToggleControl label={ __( 'Show Meta Icon', 'zenctuary' ) } checked={ attributes.showMetaIcon } onChange={ ( showMetaIcon ) => setAttributes( { showMetaIcon } ) } />
 					<TextControl label={ __( 'CTA Label', 'zenctuary' ) } value={ attributes.ctaLabel } onChange={ ( ctaLabel ) => setAttributes( { ctaLabel } ) } />
+					<TextControl
+						label={ __( 'CTA URL', 'zenctuary' ) }
+						value={ attributes.ctaUrl }
+						onChange={ ( ctaUrl ) => setAttributes( { ctaUrl } ) }
+						help={ __( 'Optional. Leave empty to link to each post detail page.', 'zenctuary' ) }
+					/>
 					<RangeControl label={ __( 'CTA Font Size', 'zenctuary' ) } value={ attributes.ctaFontSize } onChange={ ( ctaFontSize ) => setAttributes( { ctaFontSize } ) } min={ 12 } max={ 28 } />
 					<SelectControl label={ __( 'CTA Weight', 'zenctuary' ) } value={ attributes.ctaFontWeight } options={ WEIGHTS } onChange={ ( ctaFontWeight ) => setAttributes( { ctaFontWeight } ) } />
 					<ColorControl label={ __( 'CTA Text Color', 'zenctuary' ) } value={ attributes.ctaTextColor } fallback="#d8b354" onChange={ ( ctaTextColor ) => setAttributes( { ctaTextColor } ) } />
