@@ -1635,9 +1635,9 @@ input[type="checkbox"] {
   /* Mobile submenu arrow inline alignment */
   .zen-site-header .wp-block-navigation__responsive-container .has-child {
     column-gap: 14px;
-    display: inline-grid !important;
+    display: grid !important;
     grid-template-columns: auto auto;
-    width: fit-content !important;
+    justify-content: start;
   }
 
   .zen-site-header .wp-block-navigation__responsive-container .has-child > .wp-block-navigation-item__content {
