@@ -413,3 +413,65 @@
     overflow-wrap: anywhere;
   }
 }
+/* Phone responsiveness fix: keep desktop/tablet layout intact while preventing narrow mobile columns. */
+@media (max-width: 600px) {
+  .wp-block-zenctuary-zen-our-best-sellers {
+    width: 100%;
+    max-width: 100%;
+    padding-left: clamp(20px, 5vw, 28px) !important;
+    padding-right: clamp(20px, 5vw, 28px) !important;
+  }
+
+  .wp-block-zenctuary-zen-our-best-sellers .zen-best-sellers__heading {
+    max-width: 100%;
+  }
+
+  .wp-block-zenctuary-zen-our-best-sellers .zen-best-sellers__nav {
+    padding-left: 0;
+  }
+
+  .wp-block-zenctuary-zen-our-best-sellers .zen-best-sellers__card {
+    gap: 18px;
+  }
+
+  .wp-block-zenctuary-zen-our-best-sellers .zen-best-sellers__middle {
+    grid-template-columns: 1fr;
+    gap: 16px;
+    align-items: flex-start;
+  }
+
+  .wp-block-zenctuary-zen-our-best-sellers .zen-best-sellers__image-wrap {
+    width: min(220px, 72vw);
+    height: auto;
+    aspect-ratio: 1;
+    justify-self: center;
+  }
+
+  .wp-block-zenctuary-zen-our-best-sellers .zen-best-sellers__separator {
+    display: none;
+  }
+
+  .wp-block-zenctuary-zen-our-best-sellers .zen-best-sellers__ingredients {
+    width: 100%;
+    min-height: 0;
+  }
+
+  .wp-block-zenctuary-zen-our-best-sellers .zen-best-sellers__ingredients-label {
+    margin-bottom: 8px;
+  }
+
+  .wp-block-zenctuary-zen-our-best-sellers .zen-best-sellers__ingredients-list,
+  .wp-block-zenctuary-zen-our-best-sellers .zen-best-sellers__ingredients-empty {
+    overflow-wrap: break-word;
+    word-break: normal;
+  }
+
+  .wp-block-zenctuary-zen-our-best-sellers .zen-best-sellers__bottom {
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+
+  .wp-block-zenctuary-zen-our-best-sellers .zen-best-sellers__description {
+    max-width: 100%;
+  }
+}
