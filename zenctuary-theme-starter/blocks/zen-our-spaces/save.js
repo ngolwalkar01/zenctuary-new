@@ -50,6 +50,7 @@ export default function save( { attributes } ) {
 				</div>
 				<div className="zen-our-spaces__right" style={ { gap: attributes.cardsGap } }>
 					{ cards.map( ( card, index ) => {
+						const buttonClassName = `zen-our-spaces__button zen-our-spaces__button--${ card.arrowPosition || 'right' }`;
 						const buttonStyle = {
 							color: card.buttonTextColor,
 							backgroundColor: card.buttonBackgroundColor,
@@ -107,10 +108,17 @@ export default function save( { attributes } ) {
 												...spacingStyle( card.paragraphMargin, 'margin' ),
 											} }
 										/>
-										<div className={ `zen-our-spaces__button zen-our-spaces__button--${ card.arrowPosition || 'right' }` } style={ buttonStyle }>
-											{ card.showArrow && <ArrowIcon /> }
-											<RichText.Content tagName="span" className="zen-our-spaces__button-text" value={ card.buttonText } />
-										</div>
+										{ card.buttonUrl ? (
+											<a className={ buttonClassName } href={ card.buttonUrl } style={ buttonStyle }>
+												{ card.showArrow && <ArrowIcon /> }
+												<RichText.Content tagName="span" className="zen-our-spaces__button-text" value={ card.buttonText } />
+											</a>
+										) : (
+											<div className={ buttonClassName } style={ buttonStyle }>
+												{ card.showArrow && <ArrowIcon /> }
+												<RichText.Content tagName="span" className="zen-our-spaces__button-text" value={ card.buttonText } />
+											</div>
+										) }
 									</div>
 								</div>
 							</article>

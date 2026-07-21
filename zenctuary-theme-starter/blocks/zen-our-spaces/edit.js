@@ -37,6 +37,7 @@ const DEFAULT_CARD = {
 	paragraphFontWeight: '400',
 	paragraphMargin: { top: '0px', right: '0px', bottom: '0px', left: '0px' },
 	buttonText: 'Explore space',
+	buttonUrl: '',
 	buttonBackgroundColor: 'rgba(216, 179, 84, 0.15)',
 	buttonTextColor: '#f6f2e9',
 	buttonBorderColor: '#d8b354',
@@ -223,6 +224,12 @@ export default function Edit( { attributes, setAttributes } ) {
 							<SpacingControls label="Paragraph margin" value={ selectedCard.paragraphMargin } onChange={ ( paragraphMargin ) => updateCard( selectedCardIndex, { paragraphMargin } ) } />
 
 							<TextControl label="Button text" value={ selectedCard.buttonText } onChange={ ( buttonText ) => updateCard( selectedCardIndex, { buttonText } ) } />
+							<TextControl
+								label="Button URL"
+								value={ selectedCard.buttonUrl }
+								onChange={ ( buttonUrl ) => updateCard( selectedCardIndex, { buttonUrl } ) }
+								help="Optional. Leave empty to show the button without a link."
+							/>
 							<p className="components-base-control__label">Button background</p>
 							<ColorPalette value={ selectedCard.buttonBackgroundColor } onChange={ ( buttonBackgroundColor ) => updateCard( selectedCardIndex, { buttonBackgroundColor: buttonBackgroundColor || 'transparent' } ) } />
 							<p className="components-base-control__label">Button text color</p>

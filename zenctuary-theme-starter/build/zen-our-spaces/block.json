@@ -106,6 +106,7 @@
             "left": "0px"
           },
           "buttonText": "Explore space",
+          "buttonUrl": "",
           "buttonBackgroundColor": "rgba(216, 179, 84, 0.15)",
           "buttonTextColor": "#f6f2e9",
           "buttonBorderColor": "#d8b354",
