@@ -12,18 +12,38 @@ document.addEventListener('DOMContentLoaded', () => {
   const ensureMobileHeaderAccount = () => {
     const header = document.querySelector('.zen-site-header');
     const accountButton = getHeaderAccountButton(header);
-    const accountLink = accountButton?.querySelector('.wp-block-button__link') || accountButton;
     const responsiveContent = header?.querySelector('.wp-block-navigation__responsive-container-content');
 
-    if (!accountLink || !responsiveContent || responsiveContent.querySelector('.zen-mobile-account-entry')) {
+    if (!accountButton || !responsiveContent || responsiveContent.querySelector('.zen-mobile-account-entry')) {
       return;
     }
 
     const wrapper = document.createElement('div');
     wrapper.className = 'zen-mobile-account-entry';
-    wrapper.innerHTML = accountLink.outerHTML;
+    wrapper.innerHTML = accountButton.outerHTML;
 
     responsiveContent.appendChild(wrapper);
+  };
+
+  const initMobileAccountMenuClose = () => {
+    document.addEventListener(
+      'click',
+      (event) => {
+        const trigger = event.target.closest('.zen-mobile-account-entry [data-auth], .zen-mobile-account-entry .zen-auth-trigger');
+
+        if (!trigger) {
+          return;
+        }
+
+        const responsiveContainer = trigger.closest('.wp-block-navigation__responsive-container');
+        const closeButton = responsiveContainer?.querySelector('.wp-block-navigation__responsive-container-close');
+
+        if (closeButton) {
+          closeButton.click();
+        }
+      },
+      true
+    );
   };
 
   const initMobileHeaderSubmenus = () => {
@@ -139,6 +159,7 @@ document.addEventListener('DOMContentLoaded', () => {
     window.addEventListener('resize', () => syncAllResponsiveContainers());
   };
   ensureMobileHeaderAccount();
+  initMobileAccountMenuClose();
   initMobileHeaderSubmenus();
 
   // Existing snippet (if any)
