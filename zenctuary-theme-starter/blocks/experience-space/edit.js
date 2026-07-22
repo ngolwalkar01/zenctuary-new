@@ -34,6 +34,7 @@ export default function Edit( { attributes, setAttributes } ) {
         filterTermSlug,
         primaryTaxonomy,
         accordionTaxonomy,
+        accordionFirstOpen,
         showZencoins,
         showDifficulty,
         showBookButton,
@@ -182,6 +183,12 @@ export default function Edit( { attributes, setAttributes } ) {
                         options={ TAXONOMY_OPTIONS }
                         onChange={ ( val ) => setAttributes( { accordionTaxonomy: val } ) }
                         help={ __( 'Accordion titles inside each section, e.g. Activity Type gives Yoga / Pilates.', 'zenctuary' ) }
+                    />
+                    <ToggleControl
+                        label={ __( 'Open first accordion by default', 'zenctuary' ) }
+                        checked={ accordionFirstOpen !== false }
+                        onChange={ ( val ) => setAttributes( { accordionFirstOpen: val } ) }
+                        help={ __( 'Applies to the first accordion item inside every group/subgroup section.', 'zenctuary' ) }
                     />
                 </PanelBody>
 

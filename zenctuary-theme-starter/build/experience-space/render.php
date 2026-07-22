@@ -15,6 +15,7 @@ $filter_taxonomy    = sanitize_key( $attributes['filterTaxonomy']    ?? 'experie
 $filter_term_slug   = sanitize_key( $attributes['filterTermSlug']    ?? '' );
 $primary_taxonomy   = sanitize_key( $attributes['primaryTaxonomy']   ?? 'space_type' );
 $accordion_taxonomy = sanitize_key( $attributes['accordionTaxonomy'] ?? 'activity_type' );
+$accordion_first_open = (bool) ( $attributes['accordionFirstOpen'] ?? true );
 $show_zencoins      = (bool) ( $attributes['showZencoins']    ?? true );
 $show_difficulty    = (bool) ( $attributes['showDifficulty']  ?? true );
 $show_book_btn      = (bool) ( $attributes['showBookButton']  ?? true );
@@ -251,12 +252,13 @@ $inline_styles = '
                 $activity_term     = $activity_group['term'];
                 $activity_products = $activity_group['products'];
                 $is_first          = ( array_key_first( $sub_groups ) === $activity_slug );
+                $is_open           = $accordion_first_open && $is_first;
             ?>
 
-            <div class="zen-accordion-item <?php echo $is_first ? 'zen-accordion-item--open' : ''; ?>"
+            <div class="zen-accordion-item <?php echo $is_open ? 'zen-accordion-item--open' : ''; ?>"
                  data-activity="<?php echo esc_attr( $activity_slug ); ?>">
 
-                <button class="zen-accordion-header" aria-expanded="<?php echo $is_first ? 'true' : 'false'; ?>">
+                <button class="zen-accordion-header" aria-expanded="<?php echo $is_open ? 'true' : 'false'; ?>">
                     <span class="zen-accordion-title"><?php echo esc_html( $activity_term->name ); ?></span>
                     <span class="zen-accordion-icon" aria-hidden="true">
                         <span class="zen-accordion-icon--minus">&#8212;</span>
@@ -264,7 +266,7 @@ $inline_styles = '
                     </span>
                 </button>
 
-                <div class="zen-accordion-panel" <?php echo ! $is_first ? 'hidden' : ''; ?>>
+                <div class="zen-accordion-panel" <?php echo ! $is_open ? 'hidden' : ''; ?>>
                     <div class="zen-class-cards-grid">
                         <?php foreach ( $activity_products as $product ) :
                             $meta      = get_experience_meta( $product->ID );

@@ -24,6 +24,10 @@
       "type": "string",
       "default": "activity_type"
     },
+    "accordionFirstOpen": {
+      "type": "boolean",
+      "default": true
+    },
     "showZencoins": {
       "type": "boolean",
       "default": true
