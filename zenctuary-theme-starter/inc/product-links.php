@@ -93,8 +93,85 @@ function zenctuary_get_product_link_target_url(): string {
 	return $url ? (string) $url : '';
 }
 
+/**
+ * Track purchase blocks whose product buttons must keep their native WooCommerce URLs.
+ *
+ * @param mixed      $pre_render   Pre-rendered content. Null means WordPress should render normally.
+ * @param array      $parsed_block Parsed block data.
+ * @param WP_Block|null $parent_block Parent block instance.
+ * @return mixed
+ */
+function zenctuary_track_product_link_excluded_block_start( $pre_render, array $parsed_block, $parent_block = null ) {
+	if ( null !== $pre_render ) {
+		return $pre_render;
+	}
+
+	$block_name = isset( $parsed_block['blockName'] ) ? (string) $parsed_block['blockName'] : '';
+
+	if ( zenctuary_is_product_link_excluded_block( $block_name ) ) {
+		$GLOBALS['zenctuary_product_link_exclusion_depth'] = zenctuary_get_product_link_exclusion_depth() + 1;
+	}
+
+	return $pre_render;
+}
+add_filter( 'pre_render_block', 'zenctuary_track_product_link_excluded_block_start', PHP_INT_MAX, 3 );
+
+/**
+ * Stop tracking purchase block product-link exclusions after the block renders.
+ *
+ * @param string $block_content Rendered block content.
+ * @param array  $parsed_block  Parsed block data.
+ * @return string
+ */
+function zenctuary_track_product_link_excluded_block_end( string $block_content, array $parsed_block ): string {
+	$block_name = isset( $parsed_block['blockName'] ) ? (string) $parsed_block['blockName'] : '';
+
+	if ( zenctuary_is_product_link_excluded_block( $block_name ) ) {
+		$GLOBALS['zenctuary_product_link_exclusion_depth'] = max( 0, zenctuary_get_product_link_exclusion_depth() - 1 );
+	}
+
+	return $block_content;
+}
+add_filter( 'render_block', 'zenctuary_track_product_link_excluded_block_end', 0, 2 );
+
+/**
+ * Check whether a block should keep native WooCommerce product links.
+ *
+ * @param string $block_name Block name.
+ * @return bool
+ */
+function zenctuary_is_product_link_excluded_block( string $block_name ): bool {
+	$excluded_blocks = apply_filters(
+		'zenctuary_product_link_excluded_blocks',
+		array(
+			'zen-purchase-blocks/membership-plans',
+			'zen-purchase-blocks/zencoin-packages',
+			'zen-purchase-blocks/drop-ins',
+		)
+	);
+
+	return in_array( $block_name, (array) $excluded_blocks, true );
+}
+
+/**
+ * Get the current excluded block render depth.
+ *
+ * @return int
+ */
+function zenctuary_get_product_link_exclusion_depth(): int {
+	return isset( $GLOBALS['zenctuary_product_link_exclusion_depth'] ) ? max( 0, (int) $GLOBALS['zenctuary_product_link_exclusion_depth'] ) : 0;
+}
+
+/**
+ * Check whether the current render stack is inside an excluded purchase block.
+ *
+ * @return bool
+ */
+function zenctuary_is_rendering_product_link_excluded_block(): bool {
+	return zenctuary_get_product_link_exclusion_depth() > 0;
+}
 function zenctuary_should_replace_product_permalink(): bool {
-	if ( is_admin() || wp_doing_ajax() ) {
+	if ( is_admin() || wp_doing_ajax() || zenctuary_is_rendering_product_link_excluded_block() ) {
 		return false;
 	}
 
