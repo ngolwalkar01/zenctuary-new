@@ -554,8 +554,8 @@
 }
 
 @media (hover: none) {
-  .latest-news-sticky-stack__card:hover,
-  .latest-news-sticky-stack__card:focus-within {
+  .latest-news-sticky-stack__card:not(.is-expanded):hover,
+  .latest-news-sticky-stack__card:not(.is-expanded):focus-within {
     &::after {
       border-color: transparent;
     }
@@ -747,7 +747,7 @@
       position: absolute;
       right: 0;
       top: 0;
-      z-index: 3;
+      z-index: 6;
     }
 
     &__mobile-open {
