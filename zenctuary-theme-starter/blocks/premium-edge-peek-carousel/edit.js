@@ -27,6 +27,17 @@ const PRESET_COLORS = [
 	{ name: 'Olive', color: '#4d5a47' },
 ];
 
+const FONT_FAMILIES = [
+	{
+		label: __( 'Montserrat', 'zenctuary' ),
+		value: 'var(--wp--preset--font-family--montserrat)',
+	},
+	{
+		label: __( 'DM Sans', 'zenctuary' ),
+		value: 'var(--wp--preset--font-family--dm-sans)',
+	},
+];
+
 function createDefaultCard() {
 	return {
 		imageId: 0,
@@ -197,6 +208,11 @@ export default function Edit( { attributes, setAttributes } ) {
 			'--premium-edge-peek-heading-weight': attributes.headingFontWeight || '700',
 			'--premium-edge-peek-heading-line-height': attributes.headingLineHeight || '0.98',
 			'--premium-edge-peek-heading-color': attributes.headingColor || '#171717',
+			'--premium-edge-peek-subheading-family': attributes.subheadingFontFamily || 'var(--wp--preset--font-family--dm-sans)',
+			'--premium-edge-peek-subheading-size': attributes.subheadingFontSize || '1rem',
+			'--premium-edge-peek-subheading-weight': attributes.subheadingFontWeight || '400',
+			'--premium-edge-peek-subheading-line-height': attributes.subheadingLineHeight || '1.6',
+			'--premium-edge-peek-subheading-color': attributes.subheadingColor || 'rgba(23, 23, 23, 0.72)',
 			'--premium-edge-peek-card-title-size': attributes.cardTitleFontSize || 'clamp(1.5rem, 2.4vw, 2rem)',
 			'--premium-edge-peek-card-title-weight': attributes.cardTitleFontWeight || '700',
 			'--premium-edge-peek-card-title-line-height': attributes.cardTitleLineHeight || '1.04',
@@ -266,6 +282,16 @@ export default function Edit( { attributes, setAttributes } ) {
 					<p className="components-base-control__label">{ __( 'Title Color', 'zenctuary' ) }</p>
 					<ColorPalette colors={ PRESET_COLORS } value={ attributes.headingColor } onChange={ ( value ) => setAttributes( { headingColor: value || '#171717' } ) } />
 					<TextControl label={ __( 'Custom Title Color', 'zenctuary' ) } value={ attributes.headingColor } onChange={ ( value ) => setAttributes( { headingColor: value || '#171717' } ) } />
+				</PanelBody>
+
+				<PanelBody title={ __( 'Subheading Typography', 'zenctuary' ) } initialOpen={ false }>
+					<SelectControl label={ __( 'Subheading Font Family', 'zenctuary' ) } value={ attributes.subheadingFontFamily } options={ FONT_FAMILIES } onChange={ ( value ) => setAttributes( { subheadingFontFamily: value } ) } />
+					<TextControl label={ __( 'Subheading Font Size', 'zenctuary' ) } value={ attributes.subheadingFontSize } onChange={ ( value ) => setAttributes( { subheadingFontSize: value || '1rem' } ) } />
+					<TextControl label={ __( 'Subheading Font Weight', 'zenctuary' ) } value={ attributes.subheadingFontWeight } onChange={ ( value ) => setAttributes( { subheadingFontWeight: value || '400' } ) } />
+					<TextControl label={ __( 'Subheading Line Height', 'zenctuary' ) } value={ attributes.subheadingLineHeight } onChange={ ( value ) => setAttributes( { subheadingLineHeight: value || '1.6' } ) } />
+					<p className="components-base-control__label">{ __( 'Subheading Color', 'zenctuary' ) }</p>
+					<ColorPalette colors={ PRESET_COLORS } value={ attributes.subheadingColor } onChange={ ( value ) => setAttributes( { subheadingColor: value || 'rgba(23, 23, 23, 0.72)' } ) } />
+					<TextControl label={ __( 'Custom Subheading Color', 'zenctuary' ) } value={ attributes.subheadingColor } onChange={ ( value ) => setAttributes( { subheadingColor: value || 'rgba(23, 23, 23, 0.72)' } ) } />
 				</PanelBody>
 
 				<PanelBody title={ __( 'Carousel Settings', 'zenctuary' ) } initialOpen={ false }>

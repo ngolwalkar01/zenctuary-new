@@ -69,9 +69,11 @@
     .premium-edge-peek-carousel__subheading {
         margin: 14px 0 0;
         max-width: 640px;
-        color: rgba(23, 23, 23, 0.72);
-        font-size: 1rem;
-        line-height: 1.6;
+        color: var(--premium-edge-peek-subheading-color, rgba(23, 23, 23, 0.72));
+        font-family: var(--premium-edge-peek-subheading-family, var(--wp--preset--font-family--dm-sans, "DM Sans", sans-serif));
+        font-size: var(--premium-edge-peek-subheading-size, 1rem);
+        font-weight: var(--premium-edge-peek-subheading-weight, 400);
+        line-height: var(--premium-edge-peek-subheading-line-height, 1.6);
     }
 
     .premium-edge-peek-carousel__nav {

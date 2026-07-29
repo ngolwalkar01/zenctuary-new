@@ -11,6 +11,11 @@
   "attributes": {
     "heading": { "type": "string", "default": "Explore What Moves You" },
     "subheading": { "type": "string", "default": "Curated classes and rituals designed to keep the strip in motion." },
+    "subheadingFontFamily": { "type": "string", "default": "var(--wp--preset--font-family--dm-sans)" },
+    "subheadingFontSize": { "type": "string", "default": "1rem" },
+    "subheadingFontWeight": { "type": "string", "default": "400" },
+    "subheadingLineHeight": { "type": "string", "default": "1.6" },
+    "subheadingColor": { "type": "string", "default": "rgba(23, 23, 23, 0.72)" },
     "contentMaxWidth": { "type": "number", "default": 1320 },
     "backgroundColor": { "type": "string", "default": "#f4efe7" },
     "headingMaxWidth": { "type": "number", "default": 760 },
