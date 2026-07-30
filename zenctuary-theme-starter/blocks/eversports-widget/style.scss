@@ -18,7 +18,7 @@
 }
 
 .zen-eversports-widget__inner {
-	width: min(100%, var(--zen-eversports-content-width, 100%));
+	width: min(100%, var(--zen-eversports-content-width, var(--wp--style--global--wide-size, 1280px)));
 	min-height: var(--zen-eversports-min-height, 720px);
 	margin: 0 auto;
 }

@@ -17,7 +17,7 @@
 		"sectionPaddingRight": { "type": "string", "default": "24px" },
 		"sectionPaddingBottom": { "type": "string", "default": "72px" },
 		"sectionPaddingLeft": { "type": "string", "default": "24px" },
-		"contentMaxWidth": { "type": "string", "default": "100%" },
+		"contentMaxWidth": { "type": "string", "default": "var(--wp--style--global--wide-size, 1280px)" },
 		"widgetMinHeight": { "type": "string", "default": "720px" },
 		"showPlaceholderDetails": { "type": "boolean", "default": true }
 	},

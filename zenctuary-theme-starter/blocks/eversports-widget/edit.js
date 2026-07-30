@@ -9,7 +9,7 @@ const getStyle = ( attributes ) => ( {
 	'--zen-eversports-pr': attributes.sectionPaddingRight,
 	'--zen-eversports-pb': attributes.sectionPaddingBottom,
 	'--zen-eversports-pl': attributes.sectionPaddingLeft,
-	'--zen-eversports-content-width': attributes.contentMaxWidth,
+	'--zen-eversports-content-width': attributes.contentMaxWidth || 'var(--wp--style--global--wide-size, 1280px)',
 	'--zen-eversports-min-height': attributes.widgetMinHeight,
 } );
 
@@ -42,7 +42,7 @@ export default function Edit( { attributes, setAttributes } ) {
 					/>
 				</PanelBody>
 				<PanelBody title={ __( 'Layout', 'zenctuary' ) } initialOpen={ false }>
-					<UnitControl label={ __( 'Content max width', 'zenctuary' ) } value={ attributes.contentMaxWidth } onChange={ ( contentMaxWidth ) => setAttributes( { contentMaxWidth: contentMaxWidth || '100%' } ) } />
+					<UnitControl label={ __( 'Widget width', 'zenctuary' ) } value={ attributes.contentMaxWidth } onChange={ ( contentMaxWidth ) => setAttributes( { contentMaxWidth: contentMaxWidth || 'var(--wp--style--global--wide-size, 1280px)' } ) } />
 					<UnitControl label={ __( 'Widget min height', 'zenctuary' ) } value={ attributes.widgetMinHeight } onChange={ ( widgetMinHeight ) => setAttributes( { widgetMinHeight: widgetMinHeight || '0px' } ) } />
 					<UnitControl label={ __( 'Padding top', 'zenctuary' ) } value={ attributes.sectionPaddingTop } onChange={ ( sectionPaddingTop ) => setAttributes( { sectionPaddingTop: sectionPaddingTop || '0px' } ) } />
 					<UnitControl label={ __( 'Padding right', 'zenctuary' ) } value={ attributes.sectionPaddingRight } onChange={ ( sectionPaddingRight ) => setAttributes( { sectionPaddingRight: sectionPaddingRight || '0px' } ) } />

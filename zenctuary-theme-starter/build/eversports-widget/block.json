@@ -49,7 +49,7 @@
     },
     "contentMaxWidth": {
       "type": "string",
-      "default": "100%"
+      "default": "var(--wp--style--global--wide-size, 1280px)"
     },
     "widgetMinHeight": {
       "type": "string",
