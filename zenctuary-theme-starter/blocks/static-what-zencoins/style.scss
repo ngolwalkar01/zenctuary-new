@@ -1,0 +1,230 @@
+.wp-block-zenctuary-static-what-zencoins {
+	box-sizing: border-box;
+	width: 100%;
+	background: var(--zen-static-zencoins-bg, #3f3d3d);
+	color: #f1eee7;
+
+	* {
+		box-sizing: border-box;
+	}
+
+	&.alignfull {
+		width: 100vw;
+		margin-left: calc(50% - 50vw);
+		margin-right: calc(50% - 50vw);
+	}
+}
+
+.zen-static-zencoins__inner {
+	display: grid;
+	grid-template-columns: repeat(2, minmax(0, 1fr));
+	column-gap: var(--zen-static-zencoins-column-gap, 120px);
+	row-gap: 54px;
+	align-items: start;
+	width: min(100%, var(--zen-static-zencoins-max-width, 1200px));
+	margin: 0 auto;
+}
+
+.zen-static-zencoins__left,
+.zen-static-zencoins__right {
+	min-width: 0;
+}
+
+.zen-static-zencoins__heading-row {
+	display: flex;
+	align-items: center;
+	flex-wrap: nowrap;
+	gap: 18px;
+	margin: 0 0 34px;
+}
+
+.zen-static-zencoins__heading,
+.zen-static-zencoins__section-title,
+.zen-static-zencoins__intro,
+.zen-static-zencoins__description {
+	margin-top: 0;
+}
+
+.zen-static-zencoins__heading {
+	flex: 0 1 auto;
+	margin-bottom: 0;
+	text-transform: uppercase;
+	white-space: nowrap;
+}
+
+.zen-static-zencoins__intro {
+	max-width: 650px;
+	margin-bottom: 0;
+}
+
+.zen-static-zencoins__panel {
+	width: 100%;
+	min-width: 0;
+	border-color: var(--zen-static-zencoins-panel-border-color, #f1eee7);
+	background: var(--zen-static-zencoins-panel-bg, transparent);
+	border-style: solid;
+	border-width: var(--zen-static-zencoins-panel-border-width, 2px);
+	border-radius: var(--zen-static-zencoins-panel-radius, 22px);
+}
+
+.zen-static-zencoins__conversion {
+	display: flex;
+	align-items: center;
+	flex-wrap: wrap;
+	gap: 14px;
+	text-transform: uppercase;
+}
+
+.zen-static-zencoins__divider {
+	display: block;
+	width: 100%;
+	border-top: var(--zen-static-zencoins-divider-thickness, 3px) solid var(--zen-static-zencoins-divider-color, #949494);
+	margin: var(--zen-static-zencoins-divider-spacing, 42px) 0;
+}
+
+.zen-static-zencoins__sections {
+	display: flex;
+	flex-direction: column;
+}
+
+.zen-static-zencoins__section-top {
+	display: grid;
+	grid-template-columns: minmax(0, 1fr) auto;
+	gap: 24px;
+	align-items: center;
+}
+
+.zen-static-zencoins__section-title {
+	margin-bottom: 0;
+	text-transform: uppercase;
+}
+
+.zen-static-zencoins__price {
+	display: inline-flex;
+	align-items: center;
+	justify-content: flex-end;
+	gap: 12px;
+	white-space: nowrap;
+}
+
+.zen-static-zencoins__price-label {
+	text-transform: uppercase;
+}
+
+.zen-static-zencoins__description {
+	margin: 34px 0 0;
+}
+
+.zen-static-zencoins-coin {
+	position: relative;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	flex: 0 0 auto;
+	color: var(--zen-static-zencoins-coin-text, #3f3d3d);
+	background: var(--zen-static-zencoins-coin-bg, #d8b354);
+	border: var(--zen-static-zencoins-coin-border-width, 2px) solid var(--zen-static-zencoins-coin-border, #3f3d3d);
+	border-radius: 50%;
+	font-weight: 500;
+	line-height: 1;
+}
+
+.zen-static-zencoins-coin__ring {
+	position: absolute;
+	inset: var(--zen-static-zencoins-coin-ring-inset, 6px);
+	border: var(--zen-static-zencoins-coin-border-width, 2px) solid var(--zen-static-zencoins-coin-border, #3f3d3d);
+	border-radius: 50%;
+	pointer-events: none;
+}
+
+.zen-static-zencoins-coin__value {
+	position: relative;
+	z-index: 1;
+	color: var(--zen-static-zencoins-coin-text, #3f3d3d);
+	font-weight: inherit;
+}
+
+.zen-static-zencoins-coin-stack {
+	display: inline-flex;
+	align-items: center;
+	flex: 0 0 auto;
+	isolation: isolate;
+}
+
+.zen-static-zencoins-coin-stack__coin {
+	margin-left: var(--zen-static-zencoins-overlap, -16px);
+
+	&:first-child {
+		margin-left: 0;
+	}
+
+	@for $i from 1 through 12 {
+		&:nth-child(#{$i}) {
+			z-index: $i;
+		}
+	}
+}
+
+.zen-static-zencoins-actions {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 8px;
+	margin: 12px 0;
+}
+
+@media (max-width: 1200px) {
+	.wp-block-zenctuary-static-what-zencoins {
+		padding-left: 48px !important;
+		padding-right: 48px !important;
+	}
+
+	.zen-static-zencoins__inner {
+		column-gap: clamp(44px, 6vw, var(--zen-static-zencoins-column-gap, 120px));
+	}
+}
+
+@media (max-width: 900px) {
+	.zen-static-zencoins__inner {
+		grid-template-columns: 1fr;
+		row-gap: 54px;
+	}
+
+	.zen-static-zencoins__panel {
+		max-width: 760px;
+	}
+}
+
+@media (max-width: 767px) {
+	.wp-block-zenctuary-static-what-zencoins {
+		padding: 56px 18px !important;
+	}
+
+	.zen-static-zencoins__heading-row {
+		flex-direction: column;
+		gap: 14px;
+		text-align: center;
+	}
+
+	.zen-static-zencoins__heading {
+		font-size: clamp(24px, 8vw, 36px) !important;
+		white-space: normal;
+	}
+
+	.zen-static-zencoins__intro {
+		text-align: center;
+	}
+
+	.zen-static-zencoins__panel {
+		padding: 26px 20px !important;
+	}
+
+	.zen-static-zencoins__section-top {
+		grid-template-columns: 1fr;
+		gap: 14px;
+	}
+
+	.zen-static-zencoins__price {
+		justify-content: flex-start;
+		white-space: normal;
+	}
+}
