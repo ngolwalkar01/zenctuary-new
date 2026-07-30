@@ -93,6 +93,10 @@
 			"type": "number",
 			"default": -19
 		},
+		"headingIntroSpacing": {
+			"type": "number",
+			"default": 34
+		},
 		"introText": {
 			"type": "string",
 			"default": "To train at Zenctuary, you need “Zencoins.” This is our own currency, which allows you to book your courses, workshops & Events flexibly. You purchase the desired credit package and are then free to decide how you want to use your Zencoins."

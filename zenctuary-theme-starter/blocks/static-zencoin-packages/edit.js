@@ -126,6 +126,7 @@ function BlockView( { attributes, setAttributes, setSelectedPackageIndex } ) {
 			'--zen-static-packages-content-width': attributes.contentMaxWidth,
 			'--zen-static-packages-header-width': attributes.headerMaxWidth,
 			'--zen-static-packages-header-bottom': `${ attributes.headerBottomSpacing }px`,
+			'--zen-static-packages-heading-intro-spacing': `${ attributes.headingIntroSpacing }px`,
 			'--zen-static-packages-gap': `${ attributes.cardsGap }px`,
 			'--zen-static-packages-card-width': attributes.cardWidth,
 			'--zen-static-packages-card-min-height': attributes.cardMinHeight,
@@ -235,7 +236,8 @@ export default function Edit( { attributes, setAttributes } ) {
 					<UnitControl label={ __( 'Left padding', 'zenctuary' ) } value={ attributes.sectionPaddingLeft } onChange={ ( sectionPaddingLeft ) => setAttributes( { sectionPaddingLeft: sectionPaddingLeft || '0px' } ) } />
 					<UnitControl label={ __( 'Content max width', 'zenctuary' ) } value={ attributes.contentMaxWidth } onChange={ ( contentMaxWidth ) => setAttributes( { contentMaxWidth: contentMaxWidth || '1240px' } ) } />
 					<UnitControl label={ __( 'Header max width', 'zenctuary' ) } value={ attributes.headerMaxWidth } onChange={ ( headerMaxWidth ) => setAttributes( { headerMaxWidth: headerMaxWidth || '840px' } ) } />
-					<RangeControl label={ __( 'Header bottom spacing', 'zenctuary' ) } value={ attributes.headerBottomSpacing } onChange={ ( headerBottomSpacing ) => setAttributes( { headerBottomSpacing } ) } min={ 0 } max={ 120 } />
+					<RangeControl label={ __( 'Heading/subtext spacing', 'zenctuary' ) } value={ attributes.headingIntroSpacing } onChange={ ( headingIntroSpacing ) => setAttributes( { headingIntroSpacing } ) } min={ 0 } max={ 120 } />
+					<RangeControl label={ __( 'Header/cards spacing', 'zenctuary' ) } value={ attributes.headerBottomSpacing } onChange={ ( headerBottomSpacing ) => setAttributes( { headerBottomSpacing } ) } min={ 0 } max={ 120 } />
 					<RangeControl label={ __( 'Cards gap', 'zenctuary' ) } value={ attributes.cardsGap } onChange={ ( cardsGap ) => setAttributes( { cardsGap } ) } min={ 8 } max={ 90 } />
 				</PanelBody>
 				<TypographyControls title={ __( 'Heading typography', 'zenctuary' ) } prefix="heading" attributes={ attributes } setAttributes={ setAttributes } colorDefault="#d8b354" />

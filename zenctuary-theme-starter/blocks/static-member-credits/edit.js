@@ -138,6 +138,7 @@ function BlockView( { attributes, setAttributes, selectCard, selectSection } ) {
 			'--zen-static-member-credits-content-width': attributes.contentMaxWidth,
 			'--zen-static-member-credits-header-width': attributes.headerMaxWidth,
 			'--zen-static-member-credits-header-bottom': `${ attributes.headerBottomSpacing }px`,
+			'--zen-static-member-credits-heading-intro-spacing': `${ attributes.headingIntroSpacing }px`,
 			'--zen-static-member-credits-columns-desktop': attributes.cardsPerRowDesktop,
 			'--zen-static-member-credits-columns-tablet': attributes.cardsPerRowTablet,
 			'--zen-static-member-credits-columns-mobile': attributes.cardsPerRowMobile,
@@ -265,7 +266,8 @@ export default function Edit( { attributes, setAttributes } ) {
 					<UnitControl label={ __( 'Left padding', 'zenctuary' ) } value={ attributes.sectionPaddingLeft } onChange={ ( sectionPaddingLeft ) => setAttributes( { sectionPaddingLeft: sectionPaddingLeft || '0px' } ) } />
 					<UnitControl label={ __( 'Content max width', 'zenctuary' ) } value={ attributes.contentMaxWidth } onChange={ ( contentMaxWidth ) => setAttributes( { contentMaxWidth: contentMaxWidth || '1240px' } ) } />
 					<UnitControl label={ __( 'Header max width', 'zenctuary' ) } value={ attributes.headerMaxWidth } onChange={ ( headerMaxWidth ) => setAttributes( { headerMaxWidth: headerMaxWidth || '820px' } ) } />
-					<RangeControl label={ __( 'Header bottom spacing', 'zenctuary' ) } value={ attributes.headerBottomSpacing } onChange={ ( headerBottomSpacing ) => setAttributes( { headerBottomSpacing } ) } min={ 0 } max={ 160 } />
+					<RangeControl label={ __( 'Heading/subtext spacing', 'zenctuary' ) } value={ attributes.headingIntroSpacing } onChange={ ( headingIntroSpacing ) => setAttributes( { headingIntroSpacing } ) } min={ 0 } max={ 160 } />
+					<RangeControl label={ __( 'Header/cards spacing', 'zenctuary' ) } value={ attributes.headerBottomSpacing } onChange={ ( headerBottomSpacing ) => setAttributes( { headerBottomSpacing } ) } min={ 0 } max={ 160 } />
 				</PanelBody>
 				<TypographyControls title={ __( 'Main title typography', 'zenctuary' ) } prefix="heading" attributes={ attributes } setAttributes={ setAttributes } colorDefault="#d8b354" />
 				<PanelBody title={ __( 'Main title layout', 'zenctuary' ) } initialOpen={ false }>

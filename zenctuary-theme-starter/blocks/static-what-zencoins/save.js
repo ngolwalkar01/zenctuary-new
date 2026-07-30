@@ -65,6 +65,7 @@ export default function save( { attributes } ) {
 			'--zen-static-zencoins-bg': attributes.backgroundColor,
 			'--zen-static-zencoins-max-width': attributes.contentMaxWidth,
 			'--zen-static-zencoins-column-gap': `${ attributes.columnGap }px`,
+			'--zen-static-zencoins-heading-intro-spacing': `${ attributes.headingIntroSpacing }px`,
 			'--zen-static-zencoins-panel-border-color': attributes.panelBorderColor,
 			'--zen-static-zencoins-panel-bg': attributes.panelBackgroundColor,
 			'--zen-static-zencoins-panel-border-width': `${ attributes.panelBorderWidth }px`,

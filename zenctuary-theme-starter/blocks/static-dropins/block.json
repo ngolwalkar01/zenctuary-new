@@ -24,6 +24,7 @@
 		"headingLineHeight": { "type": "string", "default": "1" },
 		"headingLetterSpacing": { "type": "string", "default": "0.03em" },
 		"headingColor": { "type": "string", "default": "#d8b354" },
+		"headingIntroSpacing": { "type": "number", "default": 52 },
 		"intro": { "type": "string", "default": "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum." },
 		"introFontFamily": { "type": "string", "default": "var(--wp--preset--font-family--dm-sans)" },
 		"introFontSize": { "type": "string", "default": "22px" },

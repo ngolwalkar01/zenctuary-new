@@ -33,7 +33,7 @@
 }
 
 .zen-static-member-credits__heading {
-	margin-bottom: 26px;
+	margin-bottom: var(--zen-static-member-credits-heading-intro-spacing, 26px);
 	text-transform: uppercase;
 }
 

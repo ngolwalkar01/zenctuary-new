@@ -35,6 +35,7 @@ export default function save( { attributes } ) {
 			'--zen-static-packages-content-width': attributes.contentMaxWidth,
 			'--zen-static-packages-header-width': attributes.headerMaxWidth,
 			'--zen-static-packages-header-bottom': `${ attributes.headerBottomSpacing }px`,
+			'--zen-static-packages-heading-intro-spacing': `${ attributes.headingIntroSpacing }px`,
 			'--zen-static-packages-gap': `${ attributes.cardsGap }px`,
 			'--zen-static-packages-card-width': attributes.cardWidth,
 			'--zen-static-packages-card-min-height': attributes.cardMinHeight,

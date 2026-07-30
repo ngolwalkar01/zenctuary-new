@@ -30,6 +30,7 @@
 		"headingLineHeight": { "type": "string", "default": "1.1" },
 		"headingLetterSpacing": { "type": "string", "default": "0.04em" },
 		"headingColor": { "type": "string", "default": "#d8b354" },
+		"headingIntroSpacing": { "type": "number", "default": 14 },
 		"intro": { "type": "string", "default": "The more Zencoins you buy at once, the less each one costs. Use them for any Class or Fire & Ice session, whenever it suits you." },
 		"introFontFamily": { "type": "string", "default": "var(--wp--preset--font-family--dm-sans)" },
 		"introFontSize": { "type": "string", "default": "18px" },

@@ -35,7 +35,7 @@
 	align-items: center;
 	flex-wrap: nowrap;
 	gap: 18px;
-	margin: 0 0 34px;
+	margin: 0 0 var(--zen-static-zencoins-heading-intro-spacing, 34px);
 }
 
 .zen-static-zencoins__heading,

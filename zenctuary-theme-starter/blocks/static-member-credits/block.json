@@ -25,6 +25,7 @@
 		"headingLineHeight": { "type": "string", "default": "1.12" },
 		"headingLetterSpacing": { "type": "string", "default": "0.04em" },
 		"headingColor": { "type": "string", "default": "#d8b354" },
+		"headingIntroSpacing": { "type": "number", "default": 26 },
 		"intro": { "type": "string", "default": "To train at Zenctuary, you need Zencoins. This is our own currency, which allows you to book your courses and workshops flexibly. You purchase the desired credit package and are then free to decide how you want to use your credits." },
 		"introFontFamily": { "type": "string", "default": "var(--wp--preset--font-family--dm-sans)" },
 		"introFontSize": { "type": "string", "default": "20px" },

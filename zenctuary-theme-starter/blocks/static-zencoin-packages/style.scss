@@ -34,7 +34,7 @@
 }
 
 .zen-static-packages__heading {
-	margin-bottom: 14px;
+	margin-bottom: var(--zen-static-packages-heading-intro-spacing, 14px);
 	text-transform: uppercase;
 }
 

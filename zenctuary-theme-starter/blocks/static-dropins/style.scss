@@ -34,7 +34,7 @@
 }
 
 .zen-static-dropins__heading {
-	margin-bottom: 52px;
+	margin-bottom: var(--zen-static-dropins-heading-intro-spacing, 52px);
 	text-transform: uppercase;
 }
 

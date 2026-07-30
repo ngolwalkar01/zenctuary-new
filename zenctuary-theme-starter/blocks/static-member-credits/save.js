@@ -27,6 +27,7 @@ export default function save( { attributes } ) {
 			'--zen-static-member-credits-content-width': attributes.contentMaxWidth,
 			'--zen-static-member-credits-header-width': attributes.headerMaxWidth,
 			'--zen-static-member-credits-header-bottom': `${ attributes.headerBottomSpacing }px`,
+			'--zen-static-member-credits-heading-intro-spacing': `${ attributes.headingIntroSpacing }px`,
 			'--zen-static-member-credits-columns-desktop': attributes.cardsPerRowDesktop,
 			'--zen-static-member-credits-columns-tablet': attributes.cardsPerRowTablet,
 			'--zen-static-member-credits-columns-mobile': attributes.cardsPerRowMobile,

@@ -130,6 +130,7 @@ function BlockView( { attributes, setAttributes, setSelectedSectionIndex } ) {
 			'--zen-static-zencoins-bg': attributes.backgroundColor,
 			'--zen-static-zencoins-max-width': attributes.contentMaxWidth,
 			'--zen-static-zencoins-column-gap': `${ attributes.columnGap }px`,
+			'--zen-static-zencoins-heading-intro-spacing': `${ attributes.headingIntroSpacing }px`,
 			'--zen-static-zencoins-panel-border-color': attributes.panelBorderColor,
 			'--zen-static-zencoins-panel-bg': attributes.panelBackgroundColor,
 			'--zen-static-zencoins-panel-border-width': `${ attributes.panelBorderWidth }px`,
@@ -325,6 +326,7 @@ export default function Edit( { attributes, setAttributes } ) {
 					<UnitControl label={ __( 'Left padding', 'zenctuary' ) } value={ attributes.sectionPaddingLeft } onChange={ ( value ) => setAttributes( { sectionPaddingLeft: value || '0px' } ) } />
 					<UnitControl label={ __( 'Content max width', 'zenctuary' ) } value={ attributes.contentMaxWidth } onChange={ ( value ) => setAttributes( { contentMaxWidth: value || '1200px' } ) } />
 					<RangeControl label={ __( 'Column gap', 'zenctuary' ) } value={ attributes.columnGap } onChange={ ( value ) => setAttributes( { columnGap: value } ) } min={ 20 } max={ 220 } />
+					<RangeControl label={ __( 'Heading/text spacing', 'zenctuary' ) } value={ attributes.headingIntroSpacing } onChange={ ( headingIntroSpacing ) => setAttributes( { headingIntroSpacing } ) } min={ 0 } max={ 120 } />
 				</PanelBody>
 
 				<TypographyControls title={ __( 'Left heading typography', 'zenctuary' ) } prefix="heading" attributes={ attributes } setAttributes={ setAttributes } colorDefault="#d8b354" />
@@ -349,7 +351,7 @@ export default function Edit( { attributes, setAttributes } ) {
 					{ attributes.showButtonIcon && <RangeControl label={ __( 'Icon size', 'zenctuary' ) } value={ attributes.buttonIconSize } onChange={ ( buttonIconSize ) => setAttributes( { buttonIconSize } ) } min={ 10 } max={ 64 } /> }
 					{ attributes.showButtonIcon && <RangeControl label={ __( 'Icon gap', 'zenctuary' ) } value={ attributes.buttonIconGap } onChange={ ( buttonIconGap ) => setAttributes( { buttonIconGap } ) } min={ 0 } max={ 40 } /> }
 					<UnitControl label={ __( 'Button width', 'zenctuary' ) } value={ attributes.buttonWidth } onChange={ ( buttonWidth ) => setAttributes( { buttonWidth: buttonWidth || 'auto' } ) } />
-					<UnitControl label={ __( 'Top margin', 'zenctuary' ) } value={ attributes.buttonMarginTop } onChange={ ( buttonMarginTop ) => setAttributes( { buttonMarginTop: buttonMarginTop || '0px' } ) } />
+					<UnitControl label={ __( 'Intro/button spacing', 'zenctuary' ) } value={ attributes.buttonMarginTop } onChange={ ( buttonMarginTop ) => setAttributes( { buttonMarginTop: buttonMarginTop || '0px' } ) } />
 					<UnitControl label={ __( 'Border radius', 'zenctuary' ) } value={ attributes.buttonBorderRadius } onChange={ ( buttonBorderRadius ) => setAttributes( { buttonBorderRadius: buttonBorderRadius || '0px' } ) } />
 					<RangeControl label={ __( 'Border width', 'zenctuary' ) } value={ attributes.buttonBorderWidth } onChange={ ( buttonBorderWidth ) => setAttributes( { buttonBorderWidth } ) } min={ 0 } max={ 8 } />
 					<UnitControl label={ __( 'Padding top', 'zenctuary' ) } value={ attributes.buttonPaddingTop } onChange={ ( buttonPaddingTop ) => setAttributes( { buttonPaddingTop: buttonPaddingTop || '0px' } ) } />
