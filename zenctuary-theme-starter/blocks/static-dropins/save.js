@@ -68,6 +68,8 @@ export default function save( { attributes } ) {
 			'--zen-static-dropins-button-pb': attributes.buttonPaddingBottom,
 			'--zen-static-dropins-button-pl': attributes.buttonPaddingLeft,
 			'--zen-static-dropins-button-mt': attributes.buttonMarginTop,
+			'--zen-static-dropins-button-width': attributes.buttonWidth,
+			'--zen-static-dropins-button-min-height': attributes.buttonMinHeight,
 			'--zen-static-dropins-button-icon-size': `${ attributes.buttonIconSize }px`,
 			'--zen-static-dropins-button-icon-gap': `${ attributes.buttonIconGap }px`,
 			'--zen-static-dropins-button-icon-color': attributes.buttonIconColor,

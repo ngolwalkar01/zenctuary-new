@@ -407,6 +407,14 @@
       "type": "string",
       "default": "30px"
     },
+    "buttonWidth": {
+      "type": "string",
+      "default": "100%"
+    },
+    "buttonMinHeight": {
+      "type": "string",
+      "default": "auto"
+    },
     "showButtonIcon": {
       "type": "boolean",
       "default": false

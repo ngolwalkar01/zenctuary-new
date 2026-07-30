@@ -156,7 +156,8 @@
 	align-items: center;
 	justify-content: center;
 	gap: var(--zen-static-dropins-button-icon-gap, 12px);
-	width: 100%;
+	width: var(--zen-static-dropins-button-width, 100%);
+	min-height: var(--zen-static-dropins-button-min-height, auto);
 	margin-top: var(--zen-static-dropins-button-mt, 42px);
 	padding: var(--zen-static-dropins-button-pt, 28px) var(--zen-static-dropins-button-pr, 32px) var(--zen-static-dropins-button-pb, 28px) var(--zen-static-dropins-button-pl, 32px);
 	border: var(--zen-static-dropins-button-border-width, 2px) solid var(--zen-static-dropins-button-border, #d8b354);

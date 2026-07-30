@@ -137,7 +137,8 @@
 	align-items: center;
 	justify-content: center;
 	gap: var(--zen-static-packages-button-icon-gap, 10px);
-	width: 100%;
+	width: var(--zen-static-packages-button-width, 100%);
+	min-height: var(--zen-static-packages-button-min-height, auto);
 	margin-top: var(--zen-static-packages-button-mt, 30px);
 	padding: var(--zen-static-packages-button-pt, 14px) var(--zen-static-packages-button-pr, 24px) var(--zen-static-packages-button-pb, 14px) var(--zen-static-packages-button-pl, 24px);
 	border: var(--zen-static-packages-button-border-width, 2px) solid var(--zen-static-packages-button-border, #d8b354);

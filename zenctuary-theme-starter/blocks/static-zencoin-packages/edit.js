@@ -159,6 +159,8 @@ function BlockView( { attributes, setAttributes, setSelectedPackageIndex } ) {
 			'--zen-static-packages-button-pb': attributes.buttonPaddingBottom,
 			'--zen-static-packages-button-pl': attributes.buttonPaddingLeft,
 			'--zen-static-packages-button-mt': attributes.buttonMarginTop,
+			'--zen-static-packages-button-width': attributes.buttonWidth,
+			'--zen-static-packages-button-min-height': attributes.buttonMinHeight,
 			'--zen-static-packages-button-icon-size': `${ attributes.buttonIconSize }px`,
 			'--zen-static-packages-button-icon-gap': `${ attributes.buttonIconGap }px`,
 			'--zen-static-packages-button-icon-color': attributes.buttonIconColor,
@@ -305,6 +307,8 @@ export default function Edit( { attributes, setAttributes } ) {
 					<ColorControl label={ __( 'Button border', 'zenctuary' ) } value={ attributes.buttonBorderColor } onChange={ ( buttonBorderColor ) => setAttributes( { buttonBorderColor: buttonBorderColor || '#d8b354' } ) } />
 					<RangeControl label={ __( 'Border width', 'zenctuary' ) } value={ attributes.buttonBorderWidth } onChange={ ( buttonBorderWidth ) => setAttributes( { buttonBorderWidth } ) } min={ 0 } max={ 8 } />
 					<UnitControl label={ __( 'Border radius', 'zenctuary' ) } value={ attributes.buttonBorderRadius } onChange={ ( buttonBorderRadius ) => setAttributes( { buttonBorderRadius: buttonBorderRadius || '0px' } ) } />
+					<UnitControl label={ __( 'Button width', 'zenctuary' ) } value={ attributes.buttonWidth } onChange={ ( buttonWidth ) => setAttributes( { buttonWidth: buttonWidth || 'auto' } ) } />
+					<UnitControl label={ __( 'Button min height', 'zenctuary' ) } value={ attributes.buttonMinHeight } onChange={ ( buttonMinHeight ) => setAttributes( { buttonMinHeight: buttonMinHeight || 'auto' } ) } />
 					<UnitControl label={ __( 'Padding top', 'zenctuary' ) } value={ attributes.buttonPaddingTop } onChange={ ( buttonPaddingTop ) => setAttributes( { buttonPaddingTop: buttonPaddingTop || '0px' } ) } />
 					<UnitControl label={ __( 'Padding right', 'zenctuary' ) } value={ attributes.buttonPaddingRight } onChange={ ( buttonPaddingRight ) => setAttributes( { buttonPaddingRight: buttonPaddingRight || '0px' } ) } />
 					<UnitControl label={ __( 'Padding bottom', 'zenctuary' ) } value={ attributes.buttonPaddingBottom } onChange={ ( buttonPaddingBottom ) => setAttributes( { buttonPaddingBottom: buttonPaddingBottom || '0px' } ) } />

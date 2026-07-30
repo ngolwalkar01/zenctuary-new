@@ -168,6 +168,8 @@ function BlockView( { attributes, setAttributes, selectCard } ) {
 			'--zen-static-dropins-button-pb': attributes.buttonPaddingBottom,
 			'--zen-static-dropins-button-pl': attributes.buttonPaddingLeft,
 			'--zen-static-dropins-button-mt': attributes.buttonMarginTop,
+			'--zen-static-dropins-button-width': attributes.buttonWidth,
+			'--zen-static-dropins-button-min-height': attributes.buttonMinHeight,
 			'--zen-static-dropins-button-icon-size': `${ attributes.buttonIconSize }px`,
 			'--zen-static-dropins-button-icon-gap': `${ attributes.buttonIconGap }px`,
 			'--zen-static-dropins-button-icon-color': attributes.buttonIconColor,
@@ -280,6 +282,10 @@ export default function Edit( { attributes, setAttributes } ) {
 					<RangeControl label={ __( 'Image height', 'zenctuary' ) } value={ attributes.imageHeight } onChange={ ( imageHeight ) => setAttributes( { imageHeight } ) } min={ 80 } max={ 360 } />
 					<ColorControl label={ __( 'Image overlay color', 'zenctuary' ) } value={ attributes.imageOverlayColor } onChange={ ( imageOverlayColor ) => setAttributes( { imageOverlayColor: imageOverlayColor || '#000000' } ) } />
 					<RangeControl label={ __( 'Image overlay opacity', 'zenctuary' ) } value={ attributes.imageOverlayOpacity } onChange={ ( imageOverlayOpacity ) => setAttributes( { imageOverlayOpacity } ) } min={ 0 } max={ 0.85 } step={ 0.05 } />
+					<UnitControl label={ __( 'Body padding top', 'zenctuary' ) } value={ attributes.bodyPaddingTop } onChange={ ( bodyPaddingTop ) => setAttributes( { bodyPaddingTop: bodyPaddingTop || '0px' } ) } />
+					<UnitControl label={ __( 'Body padding right', 'zenctuary' ) } value={ attributes.bodyPaddingRight } onChange={ ( bodyPaddingRight ) => setAttributes( { bodyPaddingRight: bodyPaddingRight || '0px' } ) } />
+					<UnitControl label={ __( 'Body padding bottom', 'zenctuary' ) } value={ attributes.bodyPaddingBottom } onChange={ ( bodyPaddingBottom ) => setAttributes( { bodyPaddingBottom: bodyPaddingBottom || '0px' } ) } />
+					<UnitControl label={ __( 'Body padding left', 'zenctuary' ) } value={ attributes.bodyPaddingLeft } onChange={ ( bodyPaddingLeft ) => setAttributes( { bodyPaddingLeft: bodyPaddingLeft || '0px' } ) } />
 				</PanelBody>
 				<TypographyControls title={ __( 'Zencoin label typography', 'zenctuary' ) } prefix="zencoinLabel" attributes={ attributes } setAttributes={ setAttributes } colorDefault="#d8b354" />
 				<PanelBody title={ __( 'Coin style', 'zenctuary' ) } initialOpen={ false }>
@@ -307,6 +313,12 @@ export default function Edit( { attributes, setAttributes } ) {
 					<ColorControl label={ __( 'Button border', 'zenctuary' ) } value={ attributes.buttonBorderColor } onChange={ ( buttonBorderColor ) => setAttributes( { buttonBorderColor: buttonBorderColor || '#d8b354' } ) } />
 					<RangeControl label={ __( 'Border width', 'zenctuary' ) } value={ attributes.buttonBorderWidth } onChange={ ( buttonBorderWidth ) => setAttributes( { buttonBorderWidth } ) } min={ 0 } max={ 8 } />
 					<UnitControl label={ __( 'Border radius', 'zenctuary' ) } value={ attributes.buttonBorderRadius } onChange={ ( buttonBorderRadius ) => setAttributes( { buttonBorderRadius: buttonBorderRadius || '0px' } ) } />
+					<UnitControl label={ __( 'Button width', 'zenctuary' ) } value={ attributes.buttonWidth } onChange={ ( buttonWidth ) => setAttributes( { buttonWidth: buttonWidth || 'auto' } ) } />
+					<UnitControl label={ __( 'Button min height', 'zenctuary' ) } value={ attributes.buttonMinHeight } onChange={ ( buttonMinHeight ) => setAttributes( { buttonMinHeight: buttonMinHeight || 'auto' } ) } />
+					<UnitControl label={ __( 'Padding top', 'zenctuary' ) } value={ attributes.buttonPaddingTop } onChange={ ( buttonPaddingTop ) => setAttributes( { buttonPaddingTop: buttonPaddingTop || '0px' } ) } />
+					<UnitControl label={ __( 'Padding right', 'zenctuary' ) } value={ attributes.buttonPaddingRight } onChange={ ( buttonPaddingRight ) => setAttributes( { buttonPaddingRight: buttonPaddingRight || '0px' } ) } />
+					<UnitControl label={ __( 'Padding bottom', 'zenctuary' ) } value={ attributes.buttonPaddingBottom } onChange={ ( buttonPaddingBottom ) => setAttributes( { buttonPaddingBottom: buttonPaddingBottom || '0px' } ) } />
+					<UnitControl label={ __( 'Padding left', 'zenctuary' ) } value={ attributes.buttonPaddingLeft } onChange={ ( buttonPaddingLeft ) => setAttributes( { buttonPaddingLeft: buttonPaddingLeft || '0px' } ) } />
 					<UnitControl label={ __( 'Top margin', 'zenctuary' ) } value={ attributes.buttonMarginTop } onChange={ ( buttonMarginTop ) => setAttributes( { buttonMarginTop: buttonMarginTop || '0px' } ) } />
 					<ToggleControl label={ __( 'Show arrow icon', 'zenctuary' ) } checked={ !! attributes.showButtonIcon } onChange={ ( showButtonIcon ) => setAttributes( { showButtonIcon } ) } />
 				</PanelBody>

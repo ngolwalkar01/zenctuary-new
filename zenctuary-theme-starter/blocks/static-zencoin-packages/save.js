@@ -68,6 +68,8 @@ export default function save( { attributes } ) {
 			'--zen-static-packages-button-pb': attributes.buttonPaddingBottom,
 			'--zen-static-packages-button-pl': attributes.buttonPaddingLeft,
 			'--zen-static-packages-button-mt': attributes.buttonMarginTop,
+			'--zen-static-packages-button-width': attributes.buttonWidth,
+			'--zen-static-packages-button-min-height': attributes.buttonMinHeight,
 			'--zen-static-packages-button-icon-size': `${ attributes.buttonIconSize }px`,
 			'--zen-static-packages-button-icon-gap': `${ attributes.buttonIconGap }px`,
 			'--zen-static-packages-button-icon-color': attributes.buttonIconColor,

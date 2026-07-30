@@ -113,6 +113,8 @@
 		"buttonPaddingBottom": { "type": "string", "default": "14px" },
 		"buttonPaddingLeft": { "type": "string", "default": "24px" },
 		"buttonMarginTop": { "type": "string", "default": "30px" },
+		"buttonWidth": { "type": "string", "default": "100%" },
+		"buttonMinHeight": { "type": "string", "default": "auto" },
 		"showButtonIcon": { "type": "boolean", "default": false },
 		"buttonIconSize": { "type": "number", "default": 20 },
 		"buttonIconGap": { "type": "number", "default": 10 },
