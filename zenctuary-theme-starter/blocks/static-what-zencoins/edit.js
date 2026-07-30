@@ -7,6 +7,7 @@ import {
 	RangeControl,
 	SelectControl,
 	TextControl,
+	ToggleControl,
 	__experimentalUnitControl as UnitControl,
 } from '@wordpress/components';
 import { useEffect, useState } from '@wordpress/element';
@@ -18,6 +19,10 @@ const FONT_FAMILIES = [
 ];
 
 const WEIGHTS = [ '300', '400', '500', '600', '700', '800', '900' ].map( ( value ) => ( { label: value, value } ) );
+const ICON_POSITIONS = [
+	{ label: 'Right', value: 'right' },
+	{ label: 'Left', value: 'left' },
+];
 const COLOR_CHOICES = [
 	{ name: 'Gold', color: '#d8b354' },
 	{ name: 'Dark grey', color: '#3f3d3d' },
@@ -108,6 +113,10 @@ function CoinStack( { coins = [], size = 52, overlap = -16, className = '', valu
 	);
 }
 
+function ArrowIcon() {
+	return <svg viewBox="0 0 18 18" aria-hidden="true" focusable="false"><path d="M9.7 3.3 15.4 9l-5.7 5.7-1.2-1.2 3.7-3.7H2.6V8.2h9.6L8.5 4.5z" /></svg>;
+}
+
 function BlockView( { attributes, setAttributes, setSelectedSectionIndex } ) {
 	const headingCoins = Array.isArray( attributes.headingCoins ) ? attributes.headingCoins : [];
 	const sections = Array.isArray( attributes.sections ) ? attributes.sections : [];
@@ -148,6 +157,23 @@ function BlockView( { attributes, setAttributes, setSelectedSectionIndex } ) {
 		letterSpacing: attributes[ `${ prefix }LetterSpacing` ],
 		color: attributes[ `${ prefix }Color` ],
 	} );
+	const buttonStyle = {
+		...textStyle( 'button' ),
+		backgroundColor: attributes.buttonBackgroundColor,
+		borderColor: attributes.buttonBorderColor,
+		borderWidth: `${ attributes.buttonBorderWidth }px`,
+		borderRadius: attributes.buttonBorderRadius,
+		paddingTop: attributes.buttonPaddingTop,
+		paddingRight: attributes.buttonPaddingRight,
+		paddingBottom: attributes.buttonPaddingBottom,
+		paddingLeft: attributes.buttonPaddingLeft,
+		marginTop: attributes.buttonMarginTop,
+		width: attributes.buttonWidth,
+		'--zen-static-zencoins-button-icon-size': `${ attributes.buttonIconSize }px`,
+		'--zen-static-zencoins-button-icon-gap': `${ attributes.buttonIconGap }px`,
+		'--zen-static-zencoins-button-icon-color': attributes.buttonIconColor,
+	};
+	const renderButtonIcon = () => <span className="zen-static-zencoins__button-icon"><ArrowIcon /></span>;
 
 	return (
 		<section { ...blockProps }>
@@ -159,7 +185,7 @@ function BlockView( { attributes, setAttributes, setSelectedSectionIndex } ) {
 							className="zen-static-zencoins__heading"
 							value={ attributes.heading }
 							onChange={ ( heading ) => setAttributes( { heading } ) }
-							style={ textStyle( 'heading' ) }
+							style={ { ...textStyle( 'heading' ), whiteSpace: attributes.headingWrap ? 'normal' : 'nowrap' } }
 							allowedFormats={ [ 'core/bold', 'core/italic' ] }
 						/>
 						<CoinStack coins={ headingCoins } size={ attributes.headingCoinSize } overlap={ attributes.headingCoinOverlap } />
@@ -172,6 +198,18 @@ function BlockView( { attributes, setAttributes, setSelectedSectionIndex } ) {
 						style={ textStyle( 'intro' ) }
 						allowedFormats={ [ 'core/bold', 'core/italic', 'core/link' ] }
 					/>
+					{ attributes.showButton && (
+						<a
+							className={ `zen-static-zencoins__button is-icon-${ attributes.buttonIconPosition || 'right' }` }
+							href={ attributes.buttonUrl || '#' }
+							style={ buttonStyle }
+							onClick={ ( event ) => event.preventDefault() }
+						>
+							{ attributes.showButtonIcon && attributes.buttonIconPosition === 'left' && renderButtonIcon() }
+							<RichText tagName="span" value={ attributes.buttonText } onChange={ ( buttonText ) => setAttributes( { buttonText } ) } allowedFormats={ [ 'core/bold', 'core/italic' ] } />
+							{ attributes.showButtonIcon && attributes.buttonIconPosition !== 'left' && renderButtonIcon() }
+						</a>
+					) }
 				</div>
 				<div className="zen-static-zencoins__right">
 					<div
@@ -290,6 +328,9 @@ export default function Edit( { attributes, setAttributes } ) {
 				</PanelBody>
 
 				<TypographyControls title={ __( 'Left heading typography', 'zenctuary' ) } prefix="heading" attributes={ attributes } setAttributes={ setAttributes } colorDefault="#d8b354" />
+				<PanelBody title={ __( 'Left heading layout', 'zenctuary' ) } initialOpen={ false }>
+					<ToggleControl label={ __( 'Allow heading to wrap', 'zenctuary' ) } checked={ !! attributes.headingWrap } onChange={ ( headingWrap ) => setAttributes( { headingWrap } ) } />
+				</PanelBody>
 				<PanelBody title={ __( 'Heading coins', 'zenctuary' ) } initialOpen={ false }>
 					<RangeControl label={ __( 'Coin size', 'zenctuary' ) } value={ attributes.headingCoinSize } onChange={ ( value ) => setAttributes( { headingCoinSize: value } ) } min={ 24 } max={ 110 } />
 					<RangeControl label={ __( 'Coin overlap', 'zenctuary' ) } value={ attributes.headingCoinOverlap } onChange={ ( value ) => setAttributes( { headingCoinOverlap: value } ) } min={ -60 } max={ 20 } />
@@ -298,6 +339,28 @@ export default function Edit( { attributes, setAttributes } ) {
 					) ) }
 				</PanelBody>
 				<TypographyControls title={ __( 'Left text typography', 'zenctuary' ) } prefix="intro" attributes={ attributes } setAttributes={ setAttributes } colorDefault="#f1eee7" />
+
+				<PanelBody title={ __( 'Left button', 'zenctuary' ) } initialOpen={ false }>
+					<ToggleControl label={ __( 'Show button', 'zenctuary' ) } checked={ !! attributes.showButton } onChange={ ( showButton ) => setAttributes( { showButton } ) } />
+					<TextControl label={ __( 'Button link', 'zenctuary' ) } value={ attributes.buttonUrl } onChange={ ( buttonUrl ) => setAttributes( { buttonUrl } ) } />
+					<ToggleControl label={ __( 'Open in new tab', 'zenctuary' ) } checked={ !! attributes.buttonOpenInNewTab } onChange={ ( buttonOpenInNewTab ) => setAttributes( { buttonOpenInNewTab } ) } />
+					<ToggleControl label={ __( 'Show arrow icon', 'zenctuary' ) } checked={ !! attributes.showButtonIcon } onChange={ ( showButtonIcon ) => setAttributes( { showButtonIcon } ) } />
+					{ attributes.showButtonIcon && <SelectControl label={ __( 'Icon position', 'zenctuary' ) } value={ attributes.buttonIconPosition } options={ ICON_POSITIONS } onChange={ ( buttonIconPosition ) => setAttributes( { buttonIconPosition } ) } /> }
+					{ attributes.showButtonIcon && <RangeControl label={ __( 'Icon size', 'zenctuary' ) } value={ attributes.buttonIconSize } onChange={ ( buttonIconSize ) => setAttributes( { buttonIconSize } ) } min={ 10 } max={ 64 } /> }
+					{ attributes.showButtonIcon && <RangeControl label={ __( 'Icon gap', 'zenctuary' ) } value={ attributes.buttonIconGap } onChange={ ( buttonIconGap ) => setAttributes( { buttonIconGap } ) } min={ 0 } max={ 40 } /> }
+					<UnitControl label={ __( 'Button width', 'zenctuary' ) } value={ attributes.buttonWidth } onChange={ ( buttonWidth ) => setAttributes( { buttonWidth: buttonWidth || 'auto' } ) } />
+					<UnitControl label={ __( 'Top margin', 'zenctuary' ) } value={ attributes.buttonMarginTop } onChange={ ( buttonMarginTop ) => setAttributes( { buttonMarginTop: buttonMarginTop || '0px' } ) } />
+					<UnitControl label={ __( 'Border radius', 'zenctuary' ) } value={ attributes.buttonBorderRadius } onChange={ ( buttonBorderRadius ) => setAttributes( { buttonBorderRadius: buttonBorderRadius || '0px' } ) } />
+					<RangeControl label={ __( 'Border width', 'zenctuary' ) } value={ attributes.buttonBorderWidth } onChange={ ( buttonBorderWidth ) => setAttributes( { buttonBorderWidth } ) } min={ 0 } max={ 8 } />
+					<UnitControl label={ __( 'Padding top', 'zenctuary' ) } value={ attributes.buttonPaddingTop } onChange={ ( buttonPaddingTop ) => setAttributes( { buttonPaddingTop: buttonPaddingTop || '0px' } ) } />
+					<UnitControl label={ __( 'Padding right', 'zenctuary' ) } value={ attributes.buttonPaddingRight } onChange={ ( buttonPaddingRight ) => setAttributes( { buttonPaddingRight: buttonPaddingRight || '0px' } ) } />
+					<UnitControl label={ __( 'Padding bottom', 'zenctuary' ) } value={ attributes.buttonPaddingBottom } onChange={ ( buttonPaddingBottom ) => setAttributes( { buttonPaddingBottom: buttonPaddingBottom || '0px' } ) } />
+					<UnitControl label={ __( 'Padding left', 'zenctuary' ) } value={ attributes.buttonPaddingLeft } onChange={ ( buttonPaddingLeft ) => setAttributes( { buttonPaddingLeft: buttonPaddingLeft || '0px' } ) } />
+					<ColorControl label={ __( 'Button background', 'zenctuary' ) } value={ attributes.buttonBackgroundColor } onChange={ ( buttonBackgroundColor ) => setAttributes( { buttonBackgroundColor: buttonBackgroundColor || '#d8b354' } ) } />
+					<ColorControl label={ __( 'Button border', 'zenctuary' ) } value={ attributes.buttonBorderColor } onChange={ ( buttonBorderColor ) => setAttributes( { buttonBorderColor: buttonBorderColor || '#3f3d3d' } ) } />
+					{ attributes.showButtonIcon && <ColorControl label={ __( 'Icon color', 'zenctuary' ) } value={ attributes.buttonIconColor } onChange={ ( buttonIconColor ) => setAttributes( { buttonIconColor: buttonIconColor || '#3f3d3d' } ) } /> }
+				</PanelBody>
+				<TypographyControls title={ __( 'Left button typography', 'zenctuary' ) } prefix="button" attributes={ attributes } setAttributes={ setAttributes } colorDefault="#3f3d3d" />
 
 				<PanelBody title={ __( 'Right panel style', 'zenctuary' ) } initialOpen={ false }>
 					<ColorControl label={ __( 'Panel background', 'zenctuary' ) } value={ attributes.panelBackgroundColor } onChange={ ( value ) => setAttributes( { panelBackgroundColor: value || 'transparent' } ) } />

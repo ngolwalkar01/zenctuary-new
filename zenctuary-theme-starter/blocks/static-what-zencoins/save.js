@@ -25,6 +25,10 @@ function CoinStack( { coins = [], size = 52, overlap = -16, className = '', valu
 	);
 }
 
+function ArrowIcon() {
+	return <svg viewBox="0 0 18 18" aria-hidden="true" focusable="false"><path d="M9.7 3.3 15.4 9l-5.7 5.7-1.2-1.2 3.7-3.7H2.6V8.2h9.6L8.5 4.5z" /></svg>;
+}
+
 export default function save( { attributes } ) {
 	const headingCoins = Array.isArray( attributes.headingCoins ) ? attributes.headingCoins : [];
 	const sections = Array.isArray( attributes.sections ) ? attributes.sections : [];
@@ -36,6 +40,25 @@ export default function save( { attributes } ) {
 		letterSpacing: attributes[ `${ prefix }LetterSpacing` ],
 		color: attributes[ `${ prefix }Color` ],
 	} );
+	const buttonStyle = {
+		...textStyle( 'button' ),
+		backgroundColor: attributes.buttonBackgroundColor,
+		borderColor: attributes.buttonBorderColor,
+		borderWidth: `${ attributes.buttonBorderWidth }px`,
+		borderRadius: attributes.buttonBorderRadius,
+		paddingTop: attributes.buttonPaddingTop,
+		paddingRight: attributes.buttonPaddingRight,
+		paddingBottom: attributes.buttonPaddingBottom,
+		paddingLeft: attributes.buttonPaddingLeft,
+		marginTop: attributes.buttonMarginTop,
+		width: attributes.buttonWidth,
+		'--zen-static-zencoins-button-icon-size': `${ attributes.buttonIconSize }px`,
+		'--zen-static-zencoins-button-icon-gap': `${ attributes.buttonIconGap }px`,
+		'--zen-static-zencoins-button-icon-color': attributes.buttonIconColor,
+	};
+	const buttonRel = attributes.buttonOpenInNewTab ? 'noopener noreferrer' : undefined;
+	const renderButtonIcon = () => <span className="zen-static-zencoins__button-icon"><ArrowIcon /></span>;
+
 	const blockProps = useBlockProps.save( {
 		className: 'zen-static-zencoins',
 		style: {
@@ -66,10 +89,23 @@ export default function save( { attributes } ) {
 			<div className="zen-static-zencoins__inner">
 				<div className="zen-static-zencoins__left">
 					<div className="zen-static-zencoins__heading-row">
-						<RichText.Content tagName="h2" className="zen-static-zencoins__heading" value={ attributes.heading } style={ textStyle( 'heading' ) } />
+						<RichText.Content tagName="h2" className="zen-static-zencoins__heading" value={ attributes.heading } style={ { ...textStyle( 'heading' ), whiteSpace: attributes.headingWrap ? 'normal' : 'nowrap' } } />
 						<CoinStack coins={ headingCoins } size={ attributes.headingCoinSize } overlap={ attributes.headingCoinOverlap } />
 					</div>
 					<RichText.Content tagName="p" className="zen-static-zencoins__intro" value={ attributes.introText } style={ textStyle( 'intro' ) } />
+					{ attributes.showButton && (
+						<a
+							className={ `zen-static-zencoins__button is-icon-${ attributes.buttonIconPosition || 'right' }` }
+							href={ attributes.buttonUrl || '#' }
+							style={ buttonStyle }
+							target={ attributes.buttonOpenInNewTab ? '_blank' : undefined }
+							rel={ buttonRel }
+						>
+							{ attributes.showButtonIcon && attributes.buttonIconPosition === 'left' && renderButtonIcon() }
+							<RichText.Content tagName="span" value={ attributes.buttonText } />
+							{ attributes.showButtonIcon && attributes.buttonIconPosition !== 'left' && renderButtonIcon() }
+						</a>
+					) }
 				</div>
 				<div className="zen-static-zencoins__right">
 					<div

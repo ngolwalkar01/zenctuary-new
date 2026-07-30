@@ -353,6 +353,110 @@
           "description": "Special Workshops and Community Events"
         }
       ]
+    },
+    "headingWrap": {
+      "type": "boolean",
+      "default": false
+    },
+    "showButton": {
+      "type": "boolean",
+      "default": true
+    },
+    "buttonText": {
+      "type": "string",
+      "default": "More about Zencoins"
+    },
+    "buttonUrl": {
+      "type": "string",
+      "default": "#"
+    },
+    "buttonOpenInNewTab": {
+      "type": "boolean",
+      "default": false
+    },
+    "buttonFontFamily": {
+      "type": "string",
+      "default": "var(--wp--preset--font-family--montserrat)"
+    },
+    "buttonFontSize": {
+      "type": "string",
+      "default": "16px"
+    },
+    "buttonFontWeight": {
+      "type": "string",
+      "default": "700"
+    },
+    "buttonLineHeight": {
+      "type": "string",
+      "default": "1"
+    },
+    "buttonLetterSpacing": {
+      "type": "string",
+      "default": "0.05em"
+    },
+    "buttonColor": {
+      "type": "string",
+      "default": "#3f3d3d"
+    },
+    "buttonBackgroundColor": {
+      "type": "string",
+      "default": "#d8b354"
+    },
+    "buttonBorderColor": {
+      "type": "string",
+      "default": "#3f3d3d"
+    },
+    "buttonBorderWidth": {
+      "type": "number",
+      "default": 1
+    },
+    "buttonBorderRadius": {
+      "type": "string",
+      "default": "999px"
+    },
+    "buttonPaddingTop": {
+      "type": "string",
+      "default": "18px"
+    },
+    "buttonPaddingRight": {
+      "type": "string",
+      "default": "34px"
+    },
+    "buttonPaddingBottom": {
+      "type": "string",
+      "default": "18px"
+    },
+    "buttonPaddingLeft": {
+      "type": "string",
+      "default": "34px"
+    },
+    "buttonMarginTop": {
+      "type": "string",
+      "default": "56px"
+    },
+    "buttonWidth": {
+      "type": "string",
+      "default": "340px"
+    },
+    "showButtonIcon": {
+      "type": "boolean",
+      "default": true
+    },
+    "buttonIconPosition": {
+      "type": "string",
+      "default": "right"
+    },
+    "buttonIconSize": {
+      "type": "number",
+      "default": 24
+    },
+    "buttonIconGap": {
+      "type": "number",
+      "default": 12
+    },
+    "buttonIconColor": {
+      "type": "string",
+      "default": "#3f3d3d"
     }
   },
   "supports": {

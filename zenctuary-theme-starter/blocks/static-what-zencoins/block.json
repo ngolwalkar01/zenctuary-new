@@ -7,94 +7,336 @@
 	"category": "design",
 	"icon": "money-alt",
 	"description": "A fully editable static clone of the Zen-What-Zencoins section.",
-	"keywords": [ "zenctuary", "zencoins", "static", "pricing", "coins" ],
+	"keywords": [
+		"zenctuary",
+		"zencoins",
+		"static",
+		"pricing",
+		"coins"
+	],
 	"attributes": {
-		"backgroundColor": { "type": "string", "default": "#3f3d3d" },
-		"sectionPaddingTop": { "type": "string", "default": "130px" },
-		"sectionPaddingRight": { "type": "string", "default": "90px" },
-		"sectionPaddingBottom": { "type": "string", "default": "130px" },
-		"sectionPaddingLeft": { "type": "string", "default": "90px" },
-		"contentMaxWidth": { "type": "string", "default": "1200px" },
-		"columnGap": { "type": "number", "default": 120 },
-
-		"heading": { "type": "string", "default": "WHAT ARE ZENCOINS?" },
-		"headingFontFamily": { "type": "string", "default": "var(--wp--preset--font-family--montserrat)" },
-		"headingFontSize": { "type": "string", "default": "36px" },
-		"headingFontWeight": { "type": "string", "default": "800" },
-		"headingLineHeight": { "type": "string", "default": "1.05" },
-		"headingLetterSpacing": { "type": "string", "default": "2px" },
-		"headingColor": { "type": "string", "default": "#d8b354" },
-		"headingCoins": { "type": "array", "default": [ { "value": "" }, { "value": "" }, { "value": "" } ] },
-		"headingCoinSize": { "type": "number", "default": 56 },
-		"headingCoinOverlap": { "type": "number", "default": -19 },
-
-		"introText": { "type": "string", "default": "To train at Zenctuary, you need “Zencoins.” This is our own currency, which allows you to book your courses, workshops & Events flexibly. You purchase the desired credit package and are then free to decide how you want to use your Zencoins." },
-		"introFontFamily": { "type": "string", "default": "var(--wp--preset--font-family--dm-sans)" },
-		"introFontSize": { "type": "string", "default": "18px" },
-		"introFontWeight": { "type": "string", "default": "400" },
-		"introLineHeight": { "type": "string", "default": "1.55" },
-		"introLetterSpacing": { "type": "string", "default": "0.04em" },
-		"introColor": { "type": "string", "default": "#f1eee7" },
-
-		"panelBorderColor": { "type": "string", "default": "#f1eee7" },
-		"panelBackgroundColor": { "type": "string", "default": "transparent" },
-		"panelBorderWidth": { "type": "number", "default": 2 },
-		"panelBorderRadius": { "type": "number", "default": 22 },
-		"panelPaddingTop": { "type": "string", "default": "34px" },
-		"panelPaddingRight": { "type": "string", "default": "44px" },
-		"panelPaddingBottom": { "type": "string", "default": "34px" },
-		"panelPaddingLeft": { "type": "string", "default": "44px" },
-
-		"coinBackgroundColor": { "type": "string", "default": "#d8b354" },
-		"coinBorderColor": { "type": "string", "default": "#3f3d3d" },
-		"coinTextColor": { "type": "string", "default": "#3f3d3d" },
-		"coinRingInset": { "type": "number", "default": 6 },
-		"coinBorderWidth": { "type": "number", "default": 2 },
-
-		"conversionCoinValue": { "type": "string", "default": "1" },
-		"conversionCoinSize": { "type": "number", "default": 56 },
-		"conversionLabel": { "type": "string", "default": "ZENCOIN =" },
-		"conversionLabelFontFamily": { "type": "string", "default": "var(--wp--preset--font-family--montserrat)" },
-		"conversionLabelFontSize": { "type": "string", "default": "18px" },
-		"conversionLabelFontWeight": { "type": "string", "default": "800" },
-		"conversionLabelLineHeight": { "type": "string", "default": "1" },
-		"conversionLabelLetterSpacing": { "type": "string", "default": "0.06em" },
-		"conversionLabelColor": { "type": "string", "default": "#d8b354" },
-		"conversionValue": { "type": "string", "default": "5 EURO" },
-		"conversionValueFontFamily": { "type": "string", "default": "var(--wp--preset--font-family--montserrat)" },
-		"conversionValueFontSize": { "type": "string", "default": "18px" },
-		"conversionValueFontWeight": { "type": "string", "default": "800" },
-		"conversionValueLineHeight": { "type": "string", "default": "1" },
-		"conversionValueLetterSpacing": { "type": "string", "default": "0.06em" },
-		"conversionValueColor": { "type": "string", "default": "#f1eee7" },
-
-		"dividerColor": { "type": "string", "default": "#949494" },
-		"dividerThickness": { "type": "number", "default": 3 },
-		"dividerSpacing": { "type": "number", "default": 42 },
-
-		"sectionTitleFontFamily": { "type": "string", "default": "var(--wp--preset--font-family--montserrat)" },
-		"sectionTitleFontSize": { "type": "string", "default": "18px" },
-		"sectionTitleFontWeight": { "type": "string", "default": "800" },
-		"sectionTitleLineHeight": { "type": "string", "default": "1.2" },
-		"sectionTitleLetterSpacing": { "type": "string", "default": "0.06em" },
-		"sectionTitleColor": { "type": "string", "default": "#f1eee7" },
-		"zencoinLabelFontFamily": { "type": "string", "default": "var(--wp--preset--font-family--montserrat)" },
-		"zencoinLabelFontSize": { "type": "string", "default": "18px" },
-		"zencoinLabelFontWeight": { "type": "string", "default": "800" },
-		"zencoinLabelLineHeight": { "type": "string", "default": "1" },
-		"zencoinLabelLetterSpacing": { "type": "string", "default": "0.06em" },
-		"zencoinLabelColor": { "type": "string", "default": "#d8b354" },
-		"zencoinValueFontSize": { "type": "string", "default": "18px" },
-		"zencoinValueFontWeight": { "type": "string", "default": "500" },
-		"sectionCoinSize": { "type": "number", "default": 50 },
-		"sectionCoinOverlap": { "type": "number", "default": -16 },
-		"descriptionFontFamily": { "type": "string", "default": "var(--wp--preset--font-family--dm-sans)" },
-		"descriptionFontSize": { "type": "string", "default": "17px" },
-		"descriptionFontWeight": { "type": "string", "default": "400" },
-		"descriptionLineHeight": { "type": "string", "default": "1.45" },
-		"descriptionLetterSpacing": { "type": "string", "default": "0.04em" },
-		"descriptionColor": { "type": "string", "default": "#b9b9b9" },
-
+		"backgroundColor": {
+			"type": "string",
+			"default": "#3f3d3d"
+		},
+		"sectionPaddingTop": {
+			"type": "string",
+			"default": "130px"
+		},
+		"sectionPaddingRight": {
+			"type": "string",
+			"default": "90px"
+		},
+		"sectionPaddingBottom": {
+			"type": "string",
+			"default": "130px"
+		},
+		"sectionPaddingLeft": {
+			"type": "string",
+			"default": "90px"
+		},
+		"contentMaxWidth": {
+			"type": "string",
+			"default": "1200px"
+		},
+		"columnGap": {
+			"type": "number",
+			"default": 120
+		},
+		"heading": {
+			"type": "string",
+			"default": "WHAT ARE ZENCOINS?"
+		},
+		"headingFontFamily": {
+			"type": "string",
+			"default": "var(--wp--preset--font-family--montserrat)"
+		},
+		"headingFontSize": {
+			"type": "string",
+			"default": "36px"
+		},
+		"headingFontWeight": {
+			"type": "string",
+			"default": "800"
+		},
+		"headingLineHeight": {
+			"type": "string",
+			"default": "1.05"
+		},
+		"headingLetterSpacing": {
+			"type": "string",
+			"default": "2px"
+		},
+		"headingColor": {
+			"type": "string",
+			"default": "#d8b354"
+		},
+		"headingCoins": {
+			"type": "array",
+			"default": [
+				{
+					"value": ""
+				},
+				{
+					"value": ""
+				},
+				{
+					"value": ""
+				}
+			]
+		},
+		"headingCoinSize": {
+			"type": "number",
+			"default": 56
+		},
+		"headingCoinOverlap": {
+			"type": "number",
+			"default": -19
+		},
+		"introText": {
+			"type": "string",
+			"default": "To train at Zenctuary, you need “Zencoins.” This is our own currency, which allows you to book your courses, workshops & Events flexibly. You purchase the desired credit package and are then free to decide how you want to use your Zencoins."
+		},
+		"introFontFamily": {
+			"type": "string",
+			"default": "var(--wp--preset--font-family--dm-sans)"
+		},
+		"introFontSize": {
+			"type": "string",
+			"default": "18px"
+		},
+		"introFontWeight": {
+			"type": "string",
+			"default": "400"
+		},
+		"introLineHeight": {
+			"type": "string",
+			"default": "1.55"
+		},
+		"introLetterSpacing": {
+			"type": "string",
+			"default": "0.04em"
+		},
+		"introColor": {
+			"type": "string",
+			"default": "#f1eee7"
+		},
+		"panelBorderColor": {
+			"type": "string",
+			"default": "#f1eee7"
+		},
+		"panelBackgroundColor": {
+			"type": "string",
+			"default": "transparent"
+		},
+		"panelBorderWidth": {
+			"type": "number",
+			"default": 2
+		},
+		"panelBorderRadius": {
+			"type": "number",
+			"default": 22
+		},
+		"panelPaddingTop": {
+			"type": "string",
+			"default": "34px"
+		},
+		"panelPaddingRight": {
+			"type": "string",
+			"default": "44px"
+		},
+		"panelPaddingBottom": {
+			"type": "string",
+			"default": "34px"
+		},
+		"panelPaddingLeft": {
+			"type": "string",
+			"default": "44px"
+		},
+		"coinBackgroundColor": {
+			"type": "string",
+			"default": "#d8b354"
+		},
+		"coinBorderColor": {
+			"type": "string",
+			"default": "#3f3d3d"
+		},
+		"coinTextColor": {
+			"type": "string",
+			"default": "#3f3d3d"
+		},
+		"coinRingInset": {
+			"type": "number",
+			"default": 6
+		},
+		"coinBorderWidth": {
+			"type": "number",
+			"default": 2
+		},
+		"conversionCoinValue": {
+			"type": "string",
+			"default": "1"
+		},
+		"conversionCoinSize": {
+			"type": "number",
+			"default": 56
+		},
+		"conversionLabel": {
+			"type": "string",
+			"default": "ZENCOIN ="
+		},
+		"conversionLabelFontFamily": {
+			"type": "string",
+			"default": "var(--wp--preset--font-family--montserrat)"
+		},
+		"conversionLabelFontSize": {
+			"type": "string",
+			"default": "18px"
+		},
+		"conversionLabelFontWeight": {
+			"type": "string",
+			"default": "800"
+		},
+		"conversionLabelLineHeight": {
+			"type": "string",
+			"default": "1"
+		},
+		"conversionLabelLetterSpacing": {
+			"type": "string",
+			"default": "0.06em"
+		},
+		"conversionLabelColor": {
+			"type": "string",
+			"default": "#d8b354"
+		},
+		"conversionValue": {
+			"type": "string",
+			"default": "5 EURO"
+		},
+		"conversionValueFontFamily": {
+			"type": "string",
+			"default": "var(--wp--preset--font-family--montserrat)"
+		},
+		"conversionValueFontSize": {
+			"type": "string",
+			"default": "18px"
+		},
+		"conversionValueFontWeight": {
+			"type": "string",
+			"default": "800"
+		},
+		"conversionValueLineHeight": {
+			"type": "string",
+			"default": "1"
+		},
+		"conversionValueLetterSpacing": {
+			"type": "string",
+			"default": "0.06em"
+		},
+		"conversionValueColor": {
+			"type": "string",
+			"default": "#f1eee7"
+		},
+		"dividerColor": {
+			"type": "string",
+			"default": "#949494"
+		},
+		"dividerThickness": {
+			"type": "number",
+			"default": 3
+		},
+		"dividerSpacing": {
+			"type": "number",
+			"default": 42
+		},
+		"sectionTitleFontFamily": {
+			"type": "string",
+			"default": "var(--wp--preset--font-family--montserrat)"
+		},
+		"sectionTitleFontSize": {
+			"type": "string",
+			"default": "18px"
+		},
+		"sectionTitleFontWeight": {
+			"type": "string",
+			"default": "800"
+		},
+		"sectionTitleLineHeight": {
+			"type": "string",
+			"default": "1.2"
+		},
+		"sectionTitleLetterSpacing": {
+			"type": "string",
+			"default": "0.06em"
+		},
+		"sectionTitleColor": {
+			"type": "string",
+			"default": "#f1eee7"
+		},
+		"zencoinLabelFontFamily": {
+			"type": "string",
+			"default": "var(--wp--preset--font-family--montserrat)"
+		},
+		"zencoinLabelFontSize": {
+			"type": "string",
+			"default": "18px"
+		},
+		"zencoinLabelFontWeight": {
+			"type": "string",
+			"default": "800"
+		},
+		"zencoinLabelLineHeight": {
+			"type": "string",
+			"default": "1"
+		},
+		"zencoinLabelLetterSpacing": {
+			"type": "string",
+			"default": "0.06em"
+		},
+		"zencoinLabelColor": {
+			"type": "string",
+			"default": "#d8b354"
+		},
+		"zencoinValueFontSize": {
+			"type": "string",
+			"default": "18px"
+		},
+		"zencoinValueFontWeight": {
+			"type": "string",
+			"default": "500"
+		},
+		"sectionCoinSize": {
+			"type": "number",
+			"default": 50
+		},
+		"sectionCoinOverlap": {
+			"type": "number",
+			"default": -16
+		},
+		"descriptionFontFamily": {
+			"type": "string",
+			"default": "var(--wp--preset--font-family--dm-sans)"
+		},
+		"descriptionFontSize": {
+			"type": "string",
+			"default": "17px"
+		},
+		"descriptionFontWeight": {
+			"type": "string",
+			"default": "400"
+		},
+		"descriptionLineHeight": {
+			"type": "string",
+			"default": "1.45"
+		},
+		"descriptionLetterSpacing": {
+			"type": "string",
+			"default": "0.04em"
+		},
+		"descriptionColor": {
+			"type": "string",
+			"default": "#b9b9b9"
+		},
 		"sections": {
 			"type": "array",
 			"default": [
@@ -111,9 +353,120 @@
 					"description": "Special Workshops and Community Events"
 				}
 			]
+		},
+		"headingWrap": {
+			"type": "boolean",
+			"default": false
+		},
+		"showButton": {
+			"type": "boolean",
+			"default": true
+		},
+		"buttonText": {
+			"type": "string",
+			"default": "More about Zencoins"
+		},
+		"buttonUrl": {
+			"type": "string",
+			"default": "#"
+		},
+		"buttonOpenInNewTab": {
+			"type": "boolean",
+			"default": false
+		},
+		"buttonFontFamily": {
+			"type": "string",
+			"default": "var(--wp--preset--font-family--montserrat)"
+		},
+		"buttonFontSize": {
+			"type": "string",
+			"default": "16px"
+		},
+		"buttonFontWeight": {
+			"type": "string",
+			"default": "700"
+		},
+		"buttonLineHeight": {
+			"type": "string",
+			"default": "1"
+		},
+		"buttonLetterSpacing": {
+			"type": "string",
+			"default": "0.05em"
+		},
+		"buttonColor": {
+			"type": "string",
+			"default": "#3f3d3d"
+		},
+		"buttonBackgroundColor": {
+			"type": "string",
+			"default": "#d8b354"
+		},
+		"buttonBorderColor": {
+			"type": "string",
+			"default": "#3f3d3d"
+		},
+		"buttonBorderWidth": {
+			"type": "number",
+			"default": 1
+		},
+		"buttonBorderRadius": {
+			"type": "string",
+			"default": "999px"
+		},
+		"buttonPaddingTop": {
+			"type": "string",
+			"default": "18px"
+		},
+		"buttonPaddingRight": {
+			"type": "string",
+			"default": "34px"
+		},
+		"buttonPaddingBottom": {
+			"type": "string",
+			"default": "18px"
+		},
+		"buttonPaddingLeft": {
+			"type": "string",
+			"default": "34px"
+		},
+		"buttonMarginTop": {
+			"type": "string",
+			"default": "56px"
+		},
+		"buttonWidth": {
+			"type": "string",
+			"default": "340px"
+		},
+		"showButtonIcon": {
+			"type": "boolean",
+			"default": true
+		},
+		"buttonIconPosition": {
+			"type": "string",
+			"default": "right"
+		},
+		"buttonIconSize": {
+			"type": "number",
+			"default": 24
+		},
+		"buttonIconGap": {
+			"type": "number",
+			"default": 12
+		},
+		"buttonIconColor": {
+			"type": "string",
+			"default": "#3f3d3d"
 		}
 	},
-	"supports": { "html": false, "anchor": true, "align": [ "wide", "full" ] },
+	"supports": {
+		"html": false,
+		"anchor": true,
+		"align": [
+			"wide",
+			"full"
+		]
+	},
 	"textdomain": "zenctuary",
 	"editorScript": "file:./index.js",
 	"style": "file:./style-index.css"
