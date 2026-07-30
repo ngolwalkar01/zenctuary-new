@@ -1,0 +1,448 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "zenctuary/static-faqs",
+  "version": "1.0.0",
+  "title": "Static FAQs",
+  "category": "design",
+  "icon": "editor-help",
+  "description": "A fully editable static FAQ section with optional tabs, split base panels, and an overlapping FAQ panel.",
+  "keywords": [
+    "zenctuary",
+    "faq",
+    "faqs",
+    "static",
+    "accordion"
+  ],
+  "attributes": {
+    "sectionBackgroundColor": {
+      "type": "string",
+      "default": "#3f3d3d"
+    },
+    "sectionPaddingTop": {
+      "type": "string",
+      "default": "0px"
+    },
+    "sectionPaddingRight": {
+      "type": "string",
+      "default": "0px"
+    },
+    "sectionPaddingBottom": {
+      "type": "string",
+      "default": "0px"
+    },
+    "sectionPaddingLeft": {
+      "type": "string",
+      "default": "0px"
+    },
+    "contentMaxWidth": {
+      "type": "string",
+      "default": "100%"
+    },
+    "baseMinHeight": {
+      "type": "string",
+      "default": "760px"
+    },
+    "leftColumnWidth": {
+      "type": "string",
+      "default": "50%"
+    },
+    "leftBackgroundColor": {
+      "type": "string",
+      "default": "#3f3d3d"
+    },
+    "rightBackgroundColor": {
+      "type": "string",
+      "default": "#2f2f2f"
+    },
+    "rightImageId": {
+      "type": "number",
+      "default": 0
+    },
+    "rightImageUrl": {
+      "type": "string",
+      "default": ""
+    },
+    "rightImageAlt": {
+      "type": "string",
+      "default": ""
+    },
+    "rightImagePosition": {
+      "type": "string",
+      "default": "center center"
+    },
+    "rightImageOverlayColor": {
+      "type": "string",
+      "default": "#000000"
+    },
+    "rightImageOverlayOpacity": {
+      "type": "number",
+      "default": 0.22
+    },
+    "panelWidth": {
+      "type": "string",
+      "default": "760px"
+    },
+    "panelOffsetTop": {
+      "type": "string",
+      "default": "88px"
+    },
+    "panelOffsetRight": {
+      "type": "string",
+      "default": "auto"
+    },
+    "panelOffsetBottom": {
+      "type": "string",
+      "default": "88px"
+    },
+    "panelOffsetLeft": {
+      "type": "string",
+      "default": "96px"
+    },
+    "panelPaddingTop": {
+      "type": "string",
+      "default": "0px"
+    },
+    "panelPaddingRight": {
+      "type": "string",
+      "default": "0px"
+    },
+    "panelPaddingBottom": {
+      "type": "string",
+      "default": "0px"
+    },
+    "panelPaddingLeft": {
+      "type": "string",
+      "default": "0px"
+    },
+    "eyebrow": {
+      "type": "string",
+      "default": "F.A.Q CATEGORIES"
+    },
+    "eyebrowWrap": {
+      "type": "boolean",
+      "default": true
+    },
+    "eyebrowFontFamily": {
+      "type": "string",
+      "default": "var(--wp--preset--font-family--montserrat)"
+    },
+    "eyebrowFontSize": {
+      "type": "string",
+      "default": "30px"
+    },
+    "eyebrowFontWeight": {
+      "type": "string",
+      "default": "800"
+    },
+    "eyebrowLineHeight": {
+      "type": "string",
+      "default": "1.1"
+    },
+    "eyebrowLetterSpacing": {
+      "type": "string",
+      "default": "0.03em"
+    },
+    "eyebrowColor": {
+      "type": "string",
+      "default": "#d8b354"
+    },
+    "eyebrowMarginBottom": {
+      "type": "string",
+      "default": "28px"
+    },
+    "enableTabs": {
+      "type": "boolean",
+      "default": true
+    },
+    "tabsGap": {
+      "type": "number",
+      "default": 12
+    },
+    "tabsMarginBottom": {
+      "type": "string",
+      "default": "32px"
+    },
+    "tabFontFamily": {
+      "type": "string",
+      "default": "var(--wp--preset--font-family--montserrat)"
+    },
+    "tabFontSize": {
+      "type": "string",
+      "default": "13px"
+    },
+    "tabFontWeight": {
+      "type": "string",
+      "default": "800"
+    },
+    "tabLineHeight": {
+      "type": "string",
+      "default": "1.1"
+    },
+    "tabLetterSpacing": {
+      "type": "string",
+      "default": "0"
+    },
+    "tabColor": {
+      "type": "string",
+      "default": "#f1eee7"
+    },
+    "tabActiveColor": {
+      "type": "string",
+      "default": "#3f3d3d"
+    },
+    "tabBackgroundColor": {
+      "type": "string",
+      "default": "transparent"
+    },
+    "tabActiveBackgroundColor": {
+      "type": "string",
+      "default": "#d8b354"
+    },
+    "tabBorderColor": {
+      "type": "string",
+      "default": "rgba(241, 238, 231, 0.72)"
+    },
+    "tabActiveBorderColor": {
+      "type": "string",
+      "default": "#d8b354"
+    },
+    "tabBorderWidth": {
+      "type": "number",
+      "default": 2
+    },
+    "tabBorderRadius": {
+      "type": "string",
+      "default": "999px"
+    },
+    "tabPaddingTop": {
+      "type": "string",
+      "default": "13px"
+    },
+    "tabPaddingRight": {
+      "type": "string",
+      "default": "20px"
+    },
+    "tabPaddingBottom": {
+      "type": "string",
+      "default": "13px"
+    },
+    "tabPaddingLeft": {
+      "type": "string",
+      "default": "20px"
+    },
+    "faqHeading": {
+      "type": "string",
+      "default": "GENERAL"
+    },
+    "faqHeadingWrap": {
+      "type": "boolean",
+      "default": true
+    },
+    "faqHeadingFontFamily": {
+      "type": "string",
+      "default": "var(--wp--preset--font-family--montserrat)"
+    },
+    "faqHeadingFontSize": {
+      "type": "string",
+      "default": "30px"
+    },
+    "faqHeadingFontWeight": {
+      "type": "string",
+      "default": "800"
+    },
+    "faqHeadingLineHeight": {
+      "type": "string",
+      "default": "1.1"
+    },
+    "faqHeadingLetterSpacing": {
+      "type": "string",
+      "default": "0.04em"
+    },
+    "faqHeadingColor": {
+      "type": "string",
+      "default": "#d8b354"
+    },
+    "faqHeadingMarginBottom": {
+      "type": "string",
+      "default": "44px"
+    },
+    "faqGap": {
+      "type": "number",
+      "default": 18
+    },
+    "faqBackgroundColor": {
+      "type": "string",
+      "default": "#3f3d3d"
+    },
+    "faqBorderColor": {
+      "type": "string",
+      "default": "rgba(241, 238, 231, 0.48)"
+    },
+    "faqBorderWidth": {
+      "type": "number",
+      "default": 2
+    },
+    "faqBorderRadius": {
+      "type": "string",
+      "default": "18px"
+    },
+    "faqPaddingTop": {
+      "type": "string",
+      "default": "18px"
+    },
+    "faqPaddingRight": {
+      "type": "string",
+      "default": "28px"
+    },
+    "faqPaddingBottom": {
+      "type": "string",
+      "default": "18px"
+    },
+    "faqPaddingLeft": {
+      "type": "string",
+      "default": "28px"
+    },
+    "faqQuestionFontFamily": {
+      "type": "string",
+      "default": "var(--wp--preset--font-family--montserrat)"
+    },
+    "faqQuestionFontSize": {
+      "type": "string",
+      "default": "15px"
+    },
+    "faqQuestionFontWeight": {
+      "type": "string",
+      "default": "800"
+    },
+    "faqQuestionLineHeight": {
+      "type": "string",
+      "default": "1.3"
+    },
+    "faqQuestionLetterSpacing": {
+      "type": "string",
+      "default": "0"
+    },
+    "faqQuestionColor": {
+      "type": "string",
+      "default": "#f1eee7"
+    },
+    "faqAnswerFontFamily": {
+      "type": "string",
+      "default": "var(--wp--preset--font-family--dm-sans)"
+    },
+    "faqAnswerFontSize": {
+      "type": "string",
+      "default": "17px"
+    },
+    "faqAnswerFontWeight": {
+      "type": "string",
+      "default": "400"
+    },
+    "faqAnswerLineHeight": {
+      "type": "string",
+      "default": "1.45"
+    },
+    "faqAnswerLetterSpacing": {
+      "type": "string",
+      "default": "0"
+    },
+    "faqAnswerColor": {
+      "type": "string",
+      "default": "#f1eee7"
+    },
+    "faqAnswerSpacing": {
+      "type": "string",
+      "default": "26px"
+    },
+    "iconSize": {
+      "type": "number",
+      "default": 30
+    },
+    "iconColor": {
+      "type": "string",
+      "default": "#f1eee7"
+    },
+    "tabs": {
+      "type": "array",
+      "default": [
+        {
+          "id": "general",
+          "label": "General"
+        },
+        {
+          "id": "first-visit",
+          "label": "First Visit"
+        },
+        {
+          "id": "memberships",
+          "label": "Memberships"
+        },
+        {
+          "id": "zencoins",
+          "label": "Zencoins"
+        },
+        {
+          "id": "cancellation",
+          "label": "Cancellation"
+        },
+        {
+          "id": "gift-cards",
+          "label": "Gift Cards"
+        }
+      ]
+    },
+    "faqs": {
+      "type": "array",
+      "default": [
+        {
+          "id": "faq-1",
+          "tabId": "general",
+          "question": "When can I pick up forgotten things?",
+          "answer": "Please contact the front desk during normal business hours to retrieve lost or forgotten items from the locker room.",
+          "defaultOpen": true
+        },
+        {
+          "id": "faq-2",
+          "tabId": "general",
+          "question": "Can I bring my dog along?",
+          "answer": "For everyone�s comfort and safety, pets are not allowed in the practice rooms.",
+          "defaultOpen": false
+        },
+        {
+          "id": "faq-3",
+          "tabId": "general",
+          "question": "Can I apply as a teacher?",
+          "answer": "Yes. Please contact the team with your background, teaching style and availability.",
+          "defaultOpen": false
+        },
+        {
+          "id": "faq-4",
+          "tabId": "general",
+          "question": "I am pregnant � Can I come to Yoga or Pilates?",
+          "answer": "Please check with your doctor first and tell the teacher before class so they can guide you safely.",
+          "defaultOpen": false
+        },
+        {
+          "id": "faq-5",
+          "tabId": "general",
+          "question": "Are you at Classpass?",
+          "answer": "Availability may vary. Please check the current partner booking tool for the latest options.",
+          "defaultOpen": false
+        }
+      ]
+    }
+  },
+  "supports": {
+    "html": false,
+    "anchor": true,
+    "align": [
+      "wide",
+      "full"
+    ]
+  },
+  "textdomain": "zenctuary",
+  "editorScript": "file:./index.js",
+  "viewScript": "file:./view.js",
+  "style": "file:./style-index.css"
+}
