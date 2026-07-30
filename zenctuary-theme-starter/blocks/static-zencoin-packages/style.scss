@@ -1,0 +1,245 @@
+.wp-block-zenctuary-static-zencoin-packages {
+	box-sizing: border-box;
+	width: 100%;
+	background: var(--zen-static-packages-bg, #3f3d3d);
+	color: #f1eee7;
+
+	* {
+		box-sizing: border-box;
+	}
+
+	&.alignfull {
+		width: 100vw;
+		margin-left: calc(50% - 50vw);
+		margin-right: calc(50% - 50vw);
+	}
+}
+
+.zen-static-packages__inner {
+	width: min(100%, var(--zen-static-packages-content-width, 1240px));
+	margin: 0 auto;
+}
+
+.zen-static-packages__header {
+	max-width: var(--zen-static-packages-header-width, 840px);
+	margin: 0 auto var(--zen-static-packages-header-bottom, 48px);
+	text-align: center;
+}
+
+.zen-static-packages__heading,
+.zen-static-packages__intro,
+.zen-static-packages__card-title,
+.zen-static-packages__validity {
+	margin-top: 0;
+}
+
+.zen-static-packages__heading {
+	margin-bottom: 14px;
+	text-transform: uppercase;
+}
+
+.zen-static-packages__intro {
+	margin-bottom: 0;
+}
+
+.zen-static-packages__grid {
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: center;
+	gap: var(--zen-static-packages-gap, 36px);
+}
+
+.zen-static-packages__card {
+	display: flex;
+	flex-direction: column;
+	width: min(100%, var(--zen-static-packages-card-width, 350px));
+	min-height: var(--zen-static-packages-card-min-height, 480px);
+	overflow: hidden;
+	background: var(--zen-static-packages-card-bg, #3f3d3d);
+	border: var(--zen-static-packages-card-border-width, 2px) solid var(--zen-static-packages-card-border, rgba(241, 238, 231, 0.56));
+	border-radius: var(--zen-static-packages-card-radius, 24px);
+}
+
+.zen-static-packages__card-top {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	min-height: var(--zen-static-packages-top-height, 86px);
+	padding: 16px 20px;
+	background: var(--zen-static-packages-top-bg, #3f3d3d);
+	border-bottom: 1px solid var(--zen-static-packages-top-border, rgba(241, 238, 231, 0.35));
+}
+
+.zen-static-packages__zencoins {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	gap: var(--zen-static-packages-zencoin-gap, 10px);
+}
+
+.zen-static-packages__zencoin-label {
+	text-transform: uppercase;
+}
+
+.zen-static-packages__card-body {
+	display: flex;
+	flex: 1;
+	flex-direction: column;
+	padding: var(--zen-static-packages-body-pt, 28px) var(--zen-static-packages-body-pr, 30px) var(--zen-static-packages-body-pb, 24px) var(--zen-static-packages-body-pl, 30px);
+}
+
+
+
+.zen-static-packages__card-title {
+	margin-bottom: 30px;
+	text-transform: uppercase;
+}
+
+.zen-static-packages__price {
+	margin-bottom: 26px;
+}
+
+.zen-static-packages__feature {
+	display: flex;
+	align-items: flex-start;
+	gap: var(--zen-static-packages-feature-icon-gap, 12px);
+	margin-bottom: 20px;
+}
+
+.zen-static-packages__feature-icon {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	flex: 0 0 auto;
+	width: var(--zen-static-packages-feature-icon-size, 24px);
+	height: var(--zen-static-packages-feature-icon-size, 24px);
+	margin-top: 0.05em;
+	color: var(--zen-static-packages-feature-icon-color, #3f3d3d);
+	background: var(--zen-static-packages-feature-icon-bg, #d8b354);
+	border-radius: 999px;
+	line-height: 0;
+
+	svg {
+		width: 68%;
+		height: 68%;
+		fill: currentColor;
+	}
+}
+
+.zen-static-packages__validity {
+	margin-bottom: 0;
+}
+
+.zen-static-packages__button {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	gap: var(--zen-static-packages-button-icon-gap, 10px);
+	width: 100%;
+	margin-top: var(--zen-static-packages-button-mt, 30px);
+	padding: var(--zen-static-packages-button-pt, 14px) var(--zen-static-packages-button-pr, 24px) var(--zen-static-packages-button-pb, 14px) var(--zen-static-packages-button-pl, 24px);
+	border: var(--zen-static-packages-button-border-width, 2px) solid var(--zen-static-packages-button-border, #d8b354);
+	border-radius: var(--zen-static-packages-button-radius, 999px);
+	background: var(--zen-static-packages-button-bg, transparent);
+	text-align: center;
+	text-decoration: none;
+	cursor: pointer;
+	transition: transform 180ms ease, opacity 180ms ease, box-shadow 180ms ease;
+
+
+	&:hover,
+	&:focus {
+		opacity: 0.96;
+		transform: translateY(-1px);
+		box-shadow: 0 12px 28px rgba(0, 0, 0, 0.22);
+	}
+}
+
+.zen-static-packages__button-icon {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	flex: 0 0 auto;
+	line-height: 0;
+	color: var(--zen-static-packages-button-icon-color, currentColor);
+
+	svg {
+		width: var(--zen-static-packages-button-icon-size, 20px);
+		height: var(--zen-static-packages-button-icon-size, 20px);
+		fill: currentColor;
+	}
+}
+
+.zen-static-packages-coin {
+	position: relative;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	flex: 0 0 auto;
+	color: var(--zen-static-packages-coin-text, #3f3d3d);
+	background: var(--zen-static-packages-coin-bg, #d8b354);
+	border: var(--zen-static-packages-coin-border-width, 2px) solid var(--zen-static-packages-coin-border, #3f3d3d);
+	border-radius: 50%;
+	line-height: 1;
+}
+
+.zen-static-packages-coin__ring {
+	position: absolute;
+	inset: var(--zen-static-packages-coin-ring-inset, 6px);
+	border: var(--zen-static-packages-coin-border-width, 2px) solid var(--zen-static-packages-coin-border, #3f3d3d);
+	border-radius: 50%;
+	pointer-events: none;
+}
+
+.zen-static-packages-coin__value {
+	position: relative;
+	z-index: 1;
+	color: var(--zen-static-packages-coin-text, #3f3d3d);
+	font-weight: inherit;
+}
+
+.zen-static-packages-actions {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 8px;
+	margin: 12px 0;
+}
+
+@media (max-width: 900px) {
+	.wp-block-zenctuary-static-zencoin-packages {
+		padding: 64px 28px !important;
+	}
+
+	.zen-static-packages__grid {
+		gap: 24px;
+	}
+}
+
+@media (max-width: 767px) {
+	.wp-block-zenctuary-static-zencoin-packages {
+		padding: 54px 18px !important;
+	}
+
+	.zen-static-packages__heading {
+		font-size: clamp(28px, 9vw, 36px) !important;
+		white-space: normal !important;
+	}
+
+	.zen-static-packages__card {
+		width: 100%;
+		min-height: 0;
+	}
+
+	.zen-static-packages__card-top {
+		justify-content: center;
+	}
+
+	.zen-static-packages__card-title {
+		font-size: clamp(28px, 8vw, 34px) !important;
+		white-space: normal !important;
+	}
+
+	.zen-static-packages__price {
+		font-size: clamp(42px, 13vw, 56px) !important;
+	}
+}
