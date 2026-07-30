@@ -93,7 +93,7 @@
     },
     "verticalAlignment": {
       "type": "string",
-      "default": "center"
+      "default": "flex-start"
     },
     "formCardBackgroundColor": {
       "type": "string",

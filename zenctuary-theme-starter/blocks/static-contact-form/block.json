@@ -28,7 +28,7 @@
 		"columnsGap": { "type": "number", "default": 64 },
 		"leftWidth": { "type": "number", "default": 62 },
 		"rightWidth": { "type": "number", "default": 38 },
-		"verticalAlignment": { "type": "string", "default": "center" },
+		"verticalAlignment": { "type": "string", "default": "flex-start" },
 		"formCardBackgroundColor": { "type": "string", "default": "rgba(63, 62, 62, 0.9)" },
 		"formCardBorderColor": { "type": "string", "default": "rgba(241, 238, 231, 0.58)" },
 		"formCardBorderWidth": { "type": "number", "default": 2 },
