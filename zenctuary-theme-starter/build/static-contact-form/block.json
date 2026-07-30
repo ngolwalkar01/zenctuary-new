@@ -1,0 +1,418 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "zenctuary/static-contact-form",
+  "version": "1.0.0",
+  "title": "Static Contact Form",
+  "category": "design",
+  "icon": "email-alt",
+  "description": "A configurable contact section with a Contact Form 7 form selector and editable contact content.",
+  "keywords": [
+    "zenctuary",
+    "contact",
+    "form",
+    "contact form 7",
+    "static"
+  ],
+  "attributes": {
+    "formId": {
+      "type": "number",
+      "default": 0
+    },
+    "formTitle": {
+      "type": "string",
+      "default": ""
+    },
+    "manualShortcode": {
+      "type": "string",
+      "default": ""
+    },
+    "backgroundImageId": {
+      "type": "number",
+      "default": 0
+    },
+    "backgroundImageUrl": {
+      "type": "string",
+      "default": ""
+    },
+    "backgroundPosition": {
+      "type": "string",
+      "default": "center center"
+    },
+    "sectionBackgroundColor": {
+      "type": "string",
+      "default": "#3f3d3d"
+    },
+    "overlayColor": {
+      "type": "string",
+      "default": "#000000"
+    },
+    "overlayOpacity": {
+      "type": "number",
+      "default": 0.28
+    },
+    "gradientStartColor": {
+      "type": "string",
+      "default": "rgba(216, 179, 84, 0.46)"
+    },
+    "gradientEndColor": {
+      "type": "string",
+      "default": "rgba(16, 29, 21, 0.88)"
+    },
+    "sectionPaddingTop": {
+      "type": "string",
+      "default": "170px"
+    },
+    "sectionPaddingRight": {
+      "type": "string",
+      "default": "120px"
+    },
+    "sectionPaddingBottom": {
+      "type": "string",
+      "default": "170px"
+    },
+    "sectionPaddingLeft": {
+      "type": "string",
+      "default": "120px"
+    },
+    "contentMaxWidth": {
+      "type": "string",
+      "default": "1280px"
+    },
+    "columnsGap": {
+      "type": "number",
+      "default": 64
+    },
+    "leftWidth": {
+      "type": "number",
+      "default": 62
+    },
+    "rightWidth": {
+      "type": "number",
+      "default": 38
+    },
+    "verticalAlignment": {
+      "type": "string",
+      "default": "center"
+    },
+    "formCardBackgroundColor": {
+      "type": "string",
+      "default": "rgba(63, 62, 62, 0.9)"
+    },
+    "formCardBorderColor": {
+      "type": "string",
+      "default": "rgba(241, 238, 231, 0.58)"
+    },
+    "formCardBorderWidth": {
+      "type": "number",
+      "default": 2
+    },
+    "formCardBorderRadius": {
+      "type": "string",
+      "default": "22px"
+    },
+    "formCardPaddingTop": {
+      "type": "string",
+      "default": "46px"
+    },
+    "formCardPaddingRight": {
+      "type": "string",
+      "default": "46px"
+    },
+    "formCardPaddingBottom": {
+      "type": "string",
+      "default": "46px"
+    },
+    "formCardPaddingLeft": {
+      "type": "string",
+      "default": "46px"
+    },
+    "formFieldGap": {
+      "type": "number",
+      "default": 20
+    },
+    "formFieldBackgroundColor": {
+      "type": "string",
+      "default": "transparent"
+    },
+    "formFieldBorderColor": {
+      "type": "string",
+      "default": "rgba(241, 238, 231, 0.58)"
+    },
+    "formFieldBorderWidth": {
+      "type": "number",
+      "default": 2
+    },
+    "formFieldBorderRadius": {
+      "type": "string",
+      "default": "7px"
+    },
+    "formFieldPaddingTop": {
+      "type": "string",
+      "default": "17px"
+    },
+    "formFieldPaddingRight": {
+      "type": "string",
+      "default": "16px"
+    },
+    "formFieldPaddingBottom": {
+      "type": "string",
+      "default": "17px"
+    },
+    "formFieldPaddingLeft": {
+      "type": "string",
+      "default": "16px"
+    },
+    "formLabelFontFamily": {
+      "type": "string",
+      "default": "var(--wp--preset--font-family--dm-sans)"
+    },
+    "formLabelFontSize": {
+      "type": "string",
+      "default": "18px"
+    },
+    "formLabelFontWeight": {
+      "type": "string",
+      "default": "400"
+    },
+    "formLabelLineHeight": {
+      "type": "string",
+      "default": "1.2"
+    },
+    "formLabelLetterSpacing": {
+      "type": "string",
+      "default": "0"
+    },
+    "formLabelColor": {
+      "type": "string",
+      "default": "#f1eee7"
+    },
+    "formInputFontFamily": {
+      "type": "string",
+      "default": "var(--wp--preset--font-family--dm-sans)"
+    },
+    "formInputFontSize": {
+      "type": "string",
+      "default": "14px"
+    },
+    "formInputFontWeight": {
+      "type": "string",
+      "default": "400"
+    },
+    "formInputLineHeight": {
+      "type": "string",
+      "default": "1.35"
+    },
+    "formInputLetterSpacing": {
+      "type": "string",
+      "default": "0"
+    },
+    "formInputColor": {
+      "type": "string",
+      "default": "#f1eee7"
+    },
+    "formPlaceholderColor": {
+      "type": "string",
+      "default": "rgba(241, 238, 231, 0.46)"
+    },
+    "submitBackgroundColor": {
+      "type": "string",
+      "default": "#d8b354"
+    },
+    "submitTextColor": {
+      "type": "string",
+      "default": "#3f3d3d"
+    },
+    "submitBorderColor": {
+      "type": "string",
+      "default": "#d8b354"
+    },
+    "submitBorderWidth": {
+      "type": "number",
+      "default": 1
+    },
+    "submitBorderRadius": {
+      "type": "string",
+      "default": "999px"
+    },
+    "submitPaddingTop": {
+      "type": "string",
+      "default": "17px"
+    },
+    "submitPaddingRight": {
+      "type": "string",
+      "default": "32px"
+    },
+    "submitPaddingBottom": {
+      "type": "string",
+      "default": "17px"
+    },
+    "submitPaddingLeft": {
+      "type": "string",
+      "default": "32px"
+    },
+    "submitMarginTop": {
+      "type": "string",
+      "default": "18px"
+    },
+    "submitFontFamily": {
+      "type": "string",
+      "default": "var(--wp--preset--font-family--montserrat)"
+    },
+    "submitFontSize": {
+      "type": "string",
+      "default": "16px"
+    },
+    "submitFontWeight": {
+      "type": "string",
+      "default": "800"
+    },
+    "submitLineHeight": {
+      "type": "string",
+      "default": "1.1"
+    },
+    "submitLetterSpacing": {
+      "type": "string",
+      "default": "0"
+    },
+    "heading": {
+      "type": "string",
+      "default": "STILL HAVE A QUESTION?"
+    },
+    "headingWrap": {
+      "type": "boolean",
+      "default": true
+    },
+    "headingFontFamily": {
+      "type": "string",
+      "default": "var(--wp--preset--font-family--montserrat)"
+    },
+    "headingFontSize": {
+      "type": "string",
+      "default": "36px"
+    },
+    "headingFontWeight": {
+      "type": "string",
+      "default": "800"
+    },
+    "headingLineHeight": {
+      "type": "string",
+      "default": "1.08"
+    },
+    "headingLetterSpacing": {
+      "type": "string",
+      "default": "0.02em"
+    },
+    "headingColor": {
+      "type": "string",
+      "default": "#d8b354"
+    },
+    "headingTextTransform": {
+      "type": "string",
+      "default": "uppercase"
+    },
+    "headingBottomSpacing": {
+      "type": "string",
+      "default": "24px"
+    },
+    "description": {
+      "type": "string",
+      "default": "Have a new summer menu in our gorgeous Spree side cafe. You can look forward to seasonal specials and daily healthy bowls."
+    },
+    "descriptionFontFamily": {
+      "type": "string",
+      "default": "var(--wp--preset--font-family--dm-sans)"
+    },
+    "descriptionFontSize": {
+      "type": "string",
+      "default": "18px"
+    },
+    "descriptionFontWeight": {
+      "type": "string",
+      "default": "400"
+    },
+    "descriptionLineHeight": {
+      "type": "string",
+      "default": "1.45"
+    },
+    "descriptionLetterSpacing": {
+      "type": "string",
+      "default": "0"
+    },
+    "descriptionColor": {
+      "type": "string",
+      "default": "#f1eee7"
+    },
+    "descriptionBottomSpacing": {
+      "type": "string",
+      "default": "34px"
+    },
+    "contactRowsGap": {
+      "type": "number",
+      "default": 20
+    },
+    "contactIconSize": {
+      "type": "number",
+      "default": 18
+    },
+    "contactIconColor": {
+      "type": "string",
+      "default": "#d8b354"
+    },
+    "contactTextFontFamily": {
+      "type": "string",
+      "default": "var(--wp--preset--font-family--dm-sans)"
+    },
+    "contactTextFontSize": {
+      "type": "string",
+      "default": "17px"
+    },
+    "contactTextFontWeight": {
+      "type": "string",
+      "default": "400"
+    },
+    "contactTextLineHeight": {
+      "type": "string",
+      "default": "1.35"
+    },
+    "contactTextLetterSpacing": {
+      "type": "string",
+      "default": "0"
+    },
+    "contactTextColor": {
+      "type": "string",
+      "default": "#f1eee7"
+    },
+    "contactRows": {
+      "type": "array",
+      "default": [
+        {
+          "id": "email",
+          "icon": "email",
+          "text": "contact@company.com",
+          "url": "mailto:contact@company.com",
+          "openInNewTab": false
+        },
+        {
+          "id": "phone",
+          "icon": "phone",
+          "text": "(123) 456 - 789",
+          "url": "tel:123456789",
+          "openInNewTab": false
+        }
+      ]
+    }
+  },
+  "supports": {
+    "html": false,
+    "anchor": true,
+    "align": [
+      "wide",
+      "full"
+    ]
+  },
+  "textdomain": "zenctuary",
+  "editorScript": "file:./index.js",
+  "style": "file:./style-index.css",
+  "render": "file:./render.php"
+}

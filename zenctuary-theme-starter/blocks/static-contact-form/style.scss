@@ -1,0 +1,299 @@
+.wp-block-zenctuary-static-contact-form,
+.zen-static-contact {
+	box-sizing: border-box;
+	position: relative;
+	width: 100%;
+	overflow: hidden;
+	padding: var(--zen-static-contact-pt, 170px) var(--zen-static-contact-pr, 120px) var(--zen-static-contact-pb, 170px) var(--zen-static-contact-pl, 120px);
+	background-color: var(--zen-static-contact-bg, #3f3d3d);
+	background-image: var(--zen-static-contact-bg-image, none);
+	background-position: var(--zen-static-contact-bg-position, center center);
+	background-size: cover;
+	color: #f1eee7;
+
+	* {
+		box-sizing: border-box;
+	}
+
+	&.alignfull {
+		width: 100vw;
+		margin-left: calc(50% - 50vw);
+		margin-right: calc(50% - 50vw);
+	}
+}
+
+.zen-static-contact__backdrop {
+	position: absolute;
+	inset: 0;
+	background:
+		linear-gradient(135deg, var(--zen-static-contact-gradient-start, rgba(216, 179, 84, 0.46)) 0%, var(--zen-static-contact-gradient-end, rgba(16, 29, 21, 0.88)) 100%),
+		var(--zen-static-contact-overlay, #000000);
+	opacity: var(--zen-static-contact-overlay-opacity, 0.28);
+	pointer-events: none;
+}
+
+.zen-static-contact__inner {
+	position: relative;
+	z-index: 1;
+	display: flex;
+	align-items: center;
+	gap: var(--zen-static-contact-gap, 64px);
+	width: min(100%, var(--zen-static-contact-content-width, 1280px));
+	margin: 0 auto;
+}
+
+.zen-static-contact__form-card {
+	flex: 0 1 var(--zen-static-contact-left-width, 62%);
+	min-width: 0;
+	padding: var(--zen-static-contact-form-pt, 46px) var(--zen-static-contact-form-pr, 46px) var(--zen-static-contact-form-pb, 46px) var(--zen-static-contact-form-pl, 46px);
+	background: var(--zen-static-contact-form-bg, rgba(63, 62, 62, 0.9));
+	border: var(--zen-static-contact-form-border-width, 2px) solid var(--zen-static-contact-form-border, rgba(241, 238, 231, 0.58));
+	border-radius: var(--zen-static-contact-form-radius, 22px);
+}
+
+.zen-static-contact__content {
+	flex: 0 1 var(--zen-static-contact-right-width, 38%);
+	min-width: 0;
+}
+
+.zen-static-contact__heading {
+	margin: 0 0 var(--zen-static-contact-heading-mb, 24px);
+}
+
+.zen-static-contact__description {
+	margin: 0 0 var(--zen-static-contact-description-mb, 34px);
+
+	p {
+		margin: 0;
+	}
+
+	p + p {
+		margin-top: 0.8em;
+	}
+}
+
+.zen-static-contact__rows {
+	display: grid;
+	gap: var(--zen-static-contact-rows-gap, 20px);
+}
+
+.zen-static-contact__row {
+	display: inline-flex;
+	align-items: center;
+	gap: 12px;
+	width: fit-content;
+	max-width: 100%;
+	color: var(--zen-static-contact-text-color, #f1eee7);
+	font-family: var(--zen-static-contact-text-family, var(--wp--preset--font-family--dm-sans));
+	font-size: var(--zen-static-contact-text-size, 17px);
+	font-weight: var(--zen-static-contact-text-weight, 400);
+	line-height: var(--zen-static-contact-text-line-height, 1.35);
+	letter-spacing: var(--zen-static-contact-text-letter, 0);
+	text-decoration: none;
+}
+
+a.zen-static-contact__row {
+	transition: color 180ms ease, opacity 180ms ease, transform 180ms ease;
+
+	&:hover,
+	&:focus {
+		color: var(--zen-static-contact-icon-color, #d8b354);
+		opacity: 0.95;
+		transform: translateX(2px);
+	}
+}
+
+.zen-static-contact__row-icon {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	flex: 0 0 auto;
+	width: var(--zen-static-contact-icon-size, 18px);
+	height: var(--zen-static-contact-icon-size, 18px);
+	color: var(--zen-static-contact-icon-color, #d8b354);
+	line-height: 0;
+
+	svg {
+		width: 100%;
+		height: 100%;
+	}
+}
+
+.zen-static-contact__empty-form,
+.zen-static-contact__selected-form {
+	margin-top: 18px;
+	color: rgba(241, 238, 231, 0.74);
+	font-size: 13px;
+	text-align: center;
+}
+
+.zen-static-contact__preview-form,
+.zen-static-contact .wpcf7-form {
+	display: grid;
+	grid-template-columns: repeat(2, minmax(0, 1fr));
+	gap: var(--zen-static-contact-field-gap, 20px);
+	margin: 0;
+}
+
+.zen-static-contact__preview-form label,
+.zen-static-contact .wpcf7-form p,
+.zen-static-contact .wpcf7-form label {
+	display: grid;
+	gap: 12px;
+	margin: 0;
+	color: var(--zen-static-contact-label-color, #f1eee7);
+	font-family: var(--zen-static-contact-label-family, var(--wp--preset--font-family--dm-sans));
+	font-size: var(--zen-static-contact-label-size, 18px);
+	font-weight: var(--zen-static-contact-label-weight, 400);
+	line-height: var(--zen-static-contact-label-line-height, 1.2);
+	letter-spacing: var(--zen-static-contact-label-letter, 0);
+}
+
+.zen-static-contact__preview-message,
+.zen-static-contact .wpcf7-form p:has(textarea),
+.zen-static-contact .wpcf7-form .zen-contact-full,
+.zen-static-contact .wpcf7-form .full-width {
+	grid-column: 1 / -1;
+}
+
+.zen-static-contact .wpcf7-form-control-wrap {
+	display: block;
+	width: 100%;
+}
+
+.zen-static-contact__preview-form input,
+.zen-static-contact__preview-form textarea,
+.zen-static-contact .wpcf7-form input:not([type="submit"]):not([type="checkbox"]):not([type="radio"]),
+.zen-static-contact .wpcf7-form textarea,
+.zen-static-contact .wpcf7-form select {
+	display: block;
+	width: 100%;
+	min-height: 58px;
+	padding: var(--zen-static-contact-field-pt, 17px) var(--zen-static-contact-field-pr, 16px) var(--zen-static-contact-field-pb, 17px) var(--zen-static-contact-field-pl, 16px);
+	border: var(--zen-static-contact-field-border-width, 2px) solid var(--zen-static-contact-field-border, rgba(241, 238, 231, 0.58));
+	border-radius: var(--zen-static-contact-field-radius, 7px);
+	outline: none;
+	background: var(--zen-static-contact-field-bg, transparent);
+	color: var(--zen-static-contact-input-color, #f1eee7);
+	font-family: var(--zen-static-contact-input-family, var(--wp--preset--font-family--dm-sans));
+	font-size: var(--zen-static-contact-input-size, 14px);
+	font-weight: var(--zen-static-contact-input-weight, 400);
+	line-height: var(--zen-static-contact-input-line-height, 1.35);
+	letter-spacing: var(--zen-static-contact-input-letter, 0);
+	box-shadow: none;
+	transition: border-color 180ms ease, box-shadow 180ms ease;
+
+	&::placeholder {
+		color: var(--zen-static-contact-placeholder-color, rgba(241, 238, 231, 0.46));
+		opacity: 1;
+	}
+
+	&:focus {
+		border-color: var(--zen-static-contact-submit-bg, #d8b354);
+		box-shadow: 0 0 0 1px var(--zen-static-contact-submit-bg, #d8b354);
+	}
+}
+
+.zen-static-contact__preview-form textarea,
+.zen-static-contact .wpcf7-form textarea {
+	min-height: 162px;
+	resize: vertical;
+}
+
+.zen-static-contact__preview-submit,
+.zen-static-contact .wpcf7-form input[type="submit"],
+.zen-static-contact .wpcf7-form button[type="submit"] {
+	grid-column: 1 / -1;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	width: 100%;
+	min-height: 52px;
+	margin-top: var(--zen-static-contact-submit-mt, 18px);
+	padding: var(--zen-static-contact-submit-pt, 17px) var(--zen-static-contact-submit-pr, 32px) var(--zen-static-contact-submit-pb, 17px) var(--zen-static-contact-submit-pl, 32px);
+	border: var(--zen-static-contact-submit-border-width, 1px) solid var(--zen-static-contact-submit-border, #d8b354);
+	border-radius: var(--zen-static-contact-submit-radius, 999px);
+	background: var(--zen-static-contact-submit-bg, #d8b354);
+	color: var(--zen-static-contact-submit-color, #3f3d3d);
+	font-family: var(--zen-static-contact-submit-family, var(--wp--preset--font-family--montserrat));
+	font-size: var(--zen-static-contact-submit-size, 16px);
+	font-weight: var(--zen-static-contact-submit-weight, 800);
+	line-height: var(--zen-static-contact-submit-line-height, 1.1);
+	letter-spacing: var(--zen-static-contact-submit-letter, 0);
+	text-align: center;
+	text-decoration: none;
+	cursor: pointer;
+	transition: transform 180ms ease, opacity 180ms ease, box-shadow 180ms ease;
+
+	&:hover,
+	&:focus {
+		opacity: 0.96;
+		transform: translateY(-1px);
+		box-shadow: 0 14px 30px rgba(0, 0, 0, 0.2);
+	}
+}
+
+.zen-static-contact .wpcf7-spinner {
+	grid-column: 1 / -1;
+	margin: 8px auto 0;
+}
+
+.zen-static-contact .wpcf7-response-output {
+	grid-column: 1 / -1;
+	margin: 14px 0 0;
+	color: var(--zen-static-contact-label-color, #f1eee7);
+}
+
+.zen-static-contact-actions {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 8px;
+}
+
+.zen-static-contact-help {
+	margin: 0 0 12px;
+	color: #8a2424;
+	font-size: 12px;
+}
+
+@media (max-width: 1024px) {
+	.wp-block-zenctuary-static-contact-form,
+	.zen-static-contact {
+		padding: clamp(72px, 10vw, var(--zen-static-contact-pt, 170px)) clamp(28px, 6vw, var(--zen-static-contact-pr, 120px));
+	}
+
+	.zen-static-contact__inner {
+		gap: clamp(36px, 6vw, var(--zen-static-contact-gap, 64px));
+	}
+}
+
+@media (max-width: 767px) {
+	.wp-block-zenctuary-static-contact-form,
+	.zen-static-contact {
+		padding: 72px 22px;
+	}
+
+	.zen-static-contact__inner {
+		flex-direction: column;
+		align-items: stretch !important;
+	}
+
+	.zen-static-contact__form-card,
+	.zen-static-contact__content {
+		flex-basis: auto;
+		width: 100%;
+	}
+
+	.zen-static-contact__form-card {
+		padding: clamp(24px, 7vw, var(--zen-static-contact-form-pt, 46px));
+	}
+
+	.zen-static-contact__preview-form,
+	.zen-static-contact .wpcf7-form {
+		grid-template-columns: 1fr;
+	}
+
+	.zen-static-contact__heading {
+		font-size: clamp(28px, 8vw, 36px) !important;
+	}
+}
