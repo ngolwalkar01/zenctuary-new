@@ -1,0 +1,83 @@
+.wp-block-zenctuary-eversports-widget,
+.zen-eversports-widget {
+	box-sizing: border-box;
+	width: 100%;
+	padding: var(--zen-eversports-pt, 72px) var(--zen-eversports-pr, 24px) var(--zen-eversports-pb, 72px) var(--zen-eversports-pl, 24px);
+	background: var(--zen-eversports-bg, #3f3d3d);
+	color: var(--zen-eversports-color, #f1eee7);
+
+	* {
+		box-sizing: border-box;
+	}
+
+	&.alignfull {
+		width: 100vw;
+		margin-left: calc(50% - 50vw);
+		margin-right: calc(50% - 50vw);
+	}
+}
+
+.zen-eversports-widget__inner {
+	width: min(100%, var(--zen-eversports-content-width, 100%));
+	min-height: var(--zen-eversports-min-height, 720px);
+	margin: 0 auto;
+}
+
+.zen-eversports-widget__embed {
+	width: 100%;
+	min-height: inherit;
+}
+
+.zen-eversports-widget__placeholder {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	min-height: inherit;
+	padding: 48px 24px;
+	border: 2px dashed rgba(216, 179, 84, 0.65);
+	border-radius: 18px;
+	background: rgba(0, 0, 0, 0.16);
+	text-align: center;
+}
+
+.zen-eversports-widget__placeholder-title {
+	margin: 0 0 12px;
+	color: #d8b354;
+	font-family: var(--wp--preset--font-family--montserrat, inherit);
+	font-size: clamp(28px, 4vw, 44px);
+	font-weight: 800;
+	line-height: 1.1;
+	text-transform: uppercase;
+}
+
+.zen-eversports-widget__placeholder p {
+	max-width: 620px;
+	margin: 0 0 18px;
+	font-family: var(--wp--preset--font-family--dm-sans, inherit);
+	font-size: 18px;
+	line-height: 1.45;
+}
+
+.zen-eversports-widget__placeholder code {
+	display: inline-flex;
+	max-width: 100%;
+	padding: 8px 12px;
+	border-radius: 999px;
+	background: rgba(241, 238, 231, 0.1);
+	color: inherit;
+	font-size: 13px;
+	white-space: normal;
+	word-break: break-word;
+}
+
+@media (max-width: 767px) {
+	.wp-block-zenctuary-eversports-widget,
+	.zen-eversports-widget {
+		padding: clamp(40px, 10vw, var(--zen-eversports-pt, 72px)) 16px;
+	}
+
+	.zen-eversports-widget__inner {
+		min-height: min(var(--zen-eversports-min-height, 720px), 620px);
+	}
+}

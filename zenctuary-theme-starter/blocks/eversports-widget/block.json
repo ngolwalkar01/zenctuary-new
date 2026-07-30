@@ -1,0 +1,33 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "zenctuary/eversports-widget",
+	"version": "1.0.0",
+	"title": "Eversports Widget",
+	"category": "widgets",
+	"icon": "calendar-alt",
+	"description": "Embeds the Eversports booking widget with configurable spacing and safe one-time loader output.",
+	"keywords": [ "zenctuary", "schedule", "booking", "eversports", "widget" ],
+	"attributes": {
+		"widgetId": { "type": "string", "default": "2a24d07f-ce43-4ce7-a99f-07e5f02844ad" },
+		"loaderUrl": { "type": "string", "default": "https://widget-static.eversports.io/loader.js" },
+		"sectionBackgroundColor": { "type": "string", "default": "#3f3d3d" },
+		"sectionTextColor": { "type": "string", "default": "#f1eee7" },
+		"sectionPaddingTop": { "type": "string", "default": "72px" },
+		"sectionPaddingRight": { "type": "string", "default": "24px" },
+		"sectionPaddingBottom": { "type": "string", "default": "72px" },
+		"sectionPaddingLeft": { "type": "string", "default": "24px" },
+		"contentMaxWidth": { "type": "string", "default": "100%" },
+		"widgetMinHeight": { "type": "string", "default": "720px" },
+		"showPlaceholderDetails": { "type": "boolean", "default": true }
+	},
+	"supports": {
+		"html": false,
+		"anchor": true,
+		"align": [ "wide", "full" ]
+	},
+	"textdomain": "zenctuary",
+	"editorScript": "file:./index.js",
+	"style": "file:./style-index.css",
+	"render": "file:./render.php"
+}
