@@ -17,22 +17,18 @@
 
 .zen-static-faqs__stage {
 	position: relative;
-	display: grid;
+	display: block;
 	width: min(100%, var(--zen-static-faqs-content-width, 100%));
-	min-height: var(--zen-static-faqs-base-min-height, 760px);
+	min-height: 0;
 	margin: 0 auto;
 }
 
-.zen-static-faqs__base,
-.zen-static-faqs__panel-layer {
-	grid-area: 1 / 1;
-}
-
 .zen-static-faqs__base {
+	position: absolute;
+	inset: 0;
 	display: grid;
 	grid-template-columns: var(--zen-static-faqs-left-width, 50%) minmax(0, 1fr);
-	min-height: var(--zen-static-faqs-base-min-height, 760px);
-	align-self: stretch;
+	min-height: 0;
 }
 
 .zen-static-faqs__base-left {
@@ -70,6 +66,8 @@
 .zen-static-faqs__panel-layer {
 	position: relative;
 	z-index: 2;
+	display: flex;
+	min-height: 0;
 	pointer-events: none;
 }
 
@@ -208,8 +206,12 @@
 		grid-template-columns: 1fr;
 	}
 
+	.zen-static-faqs__base-left {
+		display: none;
+	}
+
 	.zen-static-faqs__base-right {
-		min-height: 420px;
+		min-height: 0;
 	}
 
 	.zen-static-faqs__panel {
@@ -224,12 +226,9 @@
 	}
 
 	.zen-static-faqs__stage,
-	.zen-static-faqs__base {
-		min-height: 0;
-	}
-
+	.zen-static-faqs__base,
 	.zen-static-faqs__base-right {
-		min-height: 360px;
+		min-height: 0;
 	}
 
 	.zen-static-faqs__panel {
