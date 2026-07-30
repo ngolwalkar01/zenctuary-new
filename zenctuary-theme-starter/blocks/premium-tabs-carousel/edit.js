@@ -18,7 +18,7 @@ import {
 	ToggleControl,
 	__experimentalUnitControl as UnitControl,
 } from '@wordpress/components';
-import { useMemo, useState } from '@wordpress/element';
+import { useMemo, useRef, useState } from '@wordpress/element';
 
 const PRESET_COLORS = [
 	{ name: 'Sand', color: '#f4efe7' },
@@ -174,6 +174,7 @@ function navigationIcon( iconSet = 'line-arrow', direction = 'next' ) {
 export default function Edit( { attributes, setAttributes } ) {
 	const [ selectedCardIndex, setSelectedCardIndex ] = useState( 0 );
 	const [ selectedTabId, setSelectedTabId ] = useState( '' );
+	const editorTrackRef = useRef( null );
 	const tabs = useMemo( () => normalizeTabs( attributes.tabs ), [ attributes.tabs ] );
 	const cards = useMemo( () => normalizeCards( attributes.cards, tabs ), [ attributes.cards, tabs ] );
 	const activeTabId = selectedTabId || tabs[ 0 ]?.id || 'default';
@@ -278,6 +279,19 @@ export default function Edit( { attributes, setAttributes } ) {
 		}
 
 		updateTabs( tabs.filter( ( tab, currentIndex ) => currentIndex !== index ) );
+	}
+
+	function scrollEditor( direction ) {
+		const track = editorTrackRef.current;
+		if ( ! track ) {
+			return;
+		}
+
+		const firstSlide = track.querySelector( '.premium-tabs-carousel__slide' );
+		const computedStyle = window.getComputedStyle( track );
+		const gap = Number.parseFloat( computedStyle.columnGap || computedStyle.gap || '24' ) || 24;
+		const distance = firstSlide ? firstSlide.getBoundingClientRect().width + gap : track.clientWidth * 0.85;
+		track.scrollBy( { left: direction * distance, behavior: 'smooth' } );
 	}
 
 	const blockProps = useBlockProps( {
@@ -579,13 +593,13 @@ export default function Edit( { attributes, setAttributes } ) {
 						) }
 
 						<div className="premium-tabs-carousel__nav">
-							<button type="button" className="premium-tabs-carousel__arrow">{ navigationIcon( attributes.navIconSet, 'prev' ) }</button>
-							<button type="button" className="premium-tabs-carousel__arrow">{ navigationIcon( attributes.navIconSet, 'next' ) }</button>
+							<button type="button" className="premium-tabs-carousel__arrow premium-tabs-carousel__arrow--prev" onClick={ () => scrollEditor( -1 ) }>{ navigationIcon( attributes.navIconSet, 'prev' ) }</button>
+							<button type="button" className="premium-tabs-carousel__arrow premium-tabs-carousel__arrow--next" onClick={ () => scrollEditor( 1 ) }>{ navigationIcon( attributes.navIconSet, 'next' ) }</button>
 						</div>
 					</div>
 
 					<div className="premium-tabs-carousel__stage">
-						<div className="premium-tabs-carousel__editor-track">
+						<div className="premium-tabs-carousel__editor-track" ref={ editorTrackRef }>
 							{ visibleCards.map( ( { card, index } ) => (
 								<div key={ index } className="premium-tabs-carousel__slide">
 									<article className="premium-tabs-carousel__card" style={ {
