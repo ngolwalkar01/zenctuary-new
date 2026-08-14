@@ -180,7 +180,7 @@
 .zen-auth-form {
     display: flex;
     flex-direction: column;
-    gap: 16px;
+    gap: 12px;
 }
 
 .zen-form-group {
