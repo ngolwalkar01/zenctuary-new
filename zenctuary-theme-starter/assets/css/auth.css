@@ -129,6 +129,18 @@
     max-width: 800px;
 }
 
+.zen-modal-container[data-view="login"] {
+    height: auto;
+    max-height: 90vh;
+    overflow: hidden;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+}
+
+.zen-modal-container[data-view="login"]::-webkit-scrollbar {
+    display: none;
+}
+
 .zen-modal-container[data-view="login"] .zen-modal-content {
     max-width: 400px;
 }
