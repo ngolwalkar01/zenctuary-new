@@ -323,7 +323,7 @@
     background-color: #d8b354;
     border-color: #d8b354;
     color: #3f3d3d;
-    padding: 15px;
+    padding: 10px;
 }
 
 .zen-btn-auth--primary:hover {
@@ -337,7 +337,7 @@
     margin-top: 15px;
     background-color: #3f3d3d;
     color: #d8b354;
-    padding: 15px;
+    padding: 10px;
 }
 
 .zen-btn-auth--secondary:hover {
