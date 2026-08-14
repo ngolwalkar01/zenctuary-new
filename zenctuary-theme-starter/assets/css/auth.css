@@ -155,7 +155,7 @@
 /* Heading Section */
 .zen-auth-header {
     text-align: center;
-    margin-bottom: 30px;
+    margin-bottom: 20px;
 }
 
 .zen-auth-header h2 {
@@ -180,7 +180,7 @@
 .zen-auth-form {
     display: flex;
     flex-direction: column;
-    gap: 12px;
+    gap: 8px;
 }
 
 .zen-form-group {
