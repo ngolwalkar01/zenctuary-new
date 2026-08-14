@@ -155,16 +155,16 @@
 /* Heading Section */
 .zen-auth-header {
     text-align: center;
-    margin-bottom: 40px;
+    margin-bottom: 30px;
 }
 
 .zen-auth-header h2 {
     color: var(--wp--preset--color--primary-gold);
-    font-size: 48px;
+    font-size: 32px;
     font-weight: 800;
     letter-spacing: 1px;
     text-transform: uppercase;
-    margin: 0 0 10px 0 !important;
+    margin: 0 0 0 0 !important;
     font-family: var(--wp--preset--font-family--montserrat);
 }
 
@@ -213,6 +213,10 @@
     font-size: 16px;
     font-weight: 600;
     transition: border-color 0.3s ease, background-color 0.3s ease;
+}
+
+#zen-login-form .zen-input {
+    padding: 12px 50px 12px 20px;
 }
 
 .zen-input::placeholder {
@@ -621,6 +625,7 @@ body.zen-modal-open {
         gap: 24px;
     }
 }
+
 /* Mobile signup modal: keep the submit action reachable inside the viewport. */
 @media (max-width: 600px) {
     .zen-modal-overlay:has(.zen-modal-container[data-view="signup"]) {
