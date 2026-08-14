@@ -256,7 +256,18 @@
     color: var(--wp--preset--color--primary-beige);
 }
 
-/* Forgot Password Link */
+/* Forgot Password Link & Label Row */
+.zen-label-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 12px;
+}
+
+.zen-label-row label {
+    margin-bottom: 0 !important;
+}
+
 .zen-form-helper {
     display: flex;
     justify-content: flex-end;
