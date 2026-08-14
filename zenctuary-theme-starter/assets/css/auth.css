@@ -346,6 +346,10 @@
 }
 
 /* Divider with Horizontal Lines */
+#zen-view-login .zen-divider {
+    display: none !important;
+}
+
 .zen-divider {
     display: flex;
     align-items: center;
