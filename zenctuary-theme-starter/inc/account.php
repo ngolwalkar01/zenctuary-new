@@ -96,6 +96,16 @@ function zenctuary_register_account_nav_settings(): void {
 			'default'           => array(),
 		)
 	);
+
+	register_setting(
+		'zenctuary_account_nav',
+		'zenctuary_account_nav_labels',
+		array(
+			'type'              => 'array',
+			'sanitize_callback' => 'zenctuary_sanitize_account_nav_labels',
+			'default'           => array(),
+		)
+	);
 }
 
 function zenctuary_get_account_nav_icon_items(): array {
@@ -161,6 +171,42 @@ function zenctuary_sanitize_account_nav_visibility( $value ): array {
 	return $clean;
 }
 
+function zenctuary_sanitize_account_nav_labels( $value ): array {
+	$value = is_array( $value ) ? $value : array();
+	$keys  = array_unique( array_merge( array_keys( zenctuary_get_account_nav_icon_items() ), array_keys( $value ) ) );
+	$clean = array();
+
+	foreach ( $keys as $key ) {
+		$key = sanitize_key( (string) $key );
+
+		if ( '' === $key ) {
+			continue;
+		}
+
+		$label = isset( $value[ $key ] ) ? sanitize_text_field( wp_unslash( (string) $value[ $key ] ) ) : '';
+
+		if ( '' !== trim( $label ) ) {
+			$clean[ $key ] = trim( $label );
+		}
+	}
+
+	return $clean;
+}
+
+function zenctuary_get_account_nav_label_override( string $endpoint ): string {
+	$labels = get_option( 'zenctuary_account_nav_labels', array() );
+
+	if ( isset( $labels[ $endpoint ] ) && '' !== trim( (string) $labels[ $endpoint ] ) ) {
+		return trim( (string) $labels[ $endpoint ] );
+	}
+
+	if ( false !== strpos( $endpoint, 'wallet' ) && isset( $labels['wallet'] ) && '' !== trim( (string) $labels['wallet'] ) ) {
+		return trim( (string) $labels['wallet'] );
+	}
+
+	return '';
+}
+
 function zenctuary_is_account_nav_endpoint_visible( string $endpoint ): bool {
 	$visibility = get_option( 'zenctuary_account_nav_visibility', array() );
 
@@ -177,10 +223,11 @@ function zenctuary_is_account_nav_endpoint_visible( string $endpoint ): bool {
 
 function zenctuary_render_account_nav_admin_page(): void {
 	$icons = get_option( 'zenctuary_account_nav_icons', array() );
+	$label_overrides = get_option( 'zenctuary_account_nav_labels', array() );
 	$items = zenctuary_get_account_nav_icon_items();
 	?>
 	<div class="wrap zen-account-admin">
-		<h1><?php esc_html_e( 'Account Navigation Icons', 'zenctuary' ); ?></h1>
+		<h1><?php esc_html_e( 'Account Navigation', 'zenctuary' ); ?></h1>
 		<form method="post" action="options.php">
 			<?php settings_fields( 'zenctuary_account_nav' ); ?>
 			<table class="form-table" role="presentation">
@@ -193,6 +240,19 @@ function zenctuary_render_account_nav_admin_page(): void {
 					<tr>
 						<th scope="row"><?php echo esc_html( $label ); ?></th>
 						<td>
+							<?php if ( 'chevron' !== $key ) : ?>
+							<label class="zen-account-admin__label-field" for="zenctuary-account-nav-label-<?php echo esc_attr( $key ); ?>">
+								<span><?php esc_html_e( 'Custom label', 'zenctuary' ); ?></span>
+								<input
+									type="text"
+									id="zenctuary-account-nav-label-<?php echo esc_attr( $key ); ?>"
+									name="zenctuary_account_nav_labels[<?php echo esc_attr( $key ); ?>]"
+									value="<?php echo esc_attr( isset( $label_overrides[ $key ] ) ? $label_overrides[ $key ] : '' ); ?>"
+									placeholder="<?php echo esc_attr( $label ); ?>"
+								>
+								<small><?php esc_html_e( 'Leave blank to use the default navigation text.', 'zenctuary' ); ?></small>
+							</label>
+							<?php endif; ?>
 							<?php if ( 'chevron' !== $key ) : ?>
 							<label class="zen-account-admin__toggle">
 								<input type="hidden" name="zenctuary_account_nav_visibility[<?php echo esc_attr( $key ); ?>]" value="0">
@@ -242,7 +302,7 @@ function zenctuary_customize_account_menu_items( array $items ): array {
 		'edit-account'    => __( 'Personal information', 'zenctuary' ),
 		'payment-methods' => __( 'Payment methods', 'zenctuary' ),
 		'orders'          => __( 'Orders', 'zenctuary' ),
-		'bookings'        => __( 'Bookings', 'zenctuary' ),
+		'bookings'        => __( 'My Bookings', 'zenctuary' ),
 		'customer-logout' => __( 'Log-Out', 'zenctuary' ),
 	);
 
@@ -253,6 +313,14 @@ function zenctuary_customize_account_menu_items( array $items ): array {
 	foreach ( $labels as $key => $label ) {
 		if ( isset( $items[ $key ] ) ) {
 			$items[ $key ] = $label;
+		}
+	}
+
+	foreach ( array_keys( $items ) as $key ) {
+		$override = zenctuary_get_account_nav_label_override( (string) $key );
+
+		if ( '' !== $override ) {
+			$items[ $key ] = $override;
 		}
 	}
 

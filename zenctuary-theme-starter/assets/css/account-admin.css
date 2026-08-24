@@ -29,6 +29,30 @@
 	object-fit: contain;
 	width: 100%;
 }
+
+.zen-account-admin__label-field {
+	display: block;
+	margin: 0 0 12px;
+	max-width: 420px;
+}
+
+.zen-account-admin__label-field span {
+	display: block;
+	font-weight: 600;
+	margin: 0 0 6px;
+}
+
+.zen-account-admin__label-field input {
+	max-width: 100%;
+	width: 320px;
+}
+
+.zen-account-admin__label-field small {
+	color: #646970;
+	display: block;
+	margin-top: 6px;
+}
+
 .zen-account-admin__toggle {
 	align-items: center;
 	display: inline-flex;
