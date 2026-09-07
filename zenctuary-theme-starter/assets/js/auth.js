@@ -100,6 +100,7 @@ window.zenctuaryAuth = (function() {
         if (isInitialized) return;
 
         populateCountryStateFields();
+        populatePolicyLinks();
 
         // --- GLOBAL CLICK DELEGATION ---
         document.addEventListener('click', function(e) {
@@ -266,22 +267,8 @@ window.zenctuaryAuth = (function() {
 
         if (!countrySelect || !stateSelect) return;
 
-        const countries = zenctuaryAuthData.countries || {};
         const states = zenctuaryAuthData.states || {};
-
-        countrySelect.innerHTML = '<option value="" disabled selected>Country</option>';
-
-        Object.entries(countries).forEach(([code, name]) => {
-            const option = document.createElement('option');
-            option.value = code;
-            option.textContent = name;
-            countrySelect.appendChild(option);
-        });
-
-        const defaultCountry = zenctuaryAuthData.default_country || '';
-        if (defaultCountry && countries[defaultCountry]) {
-            countrySelect.value = defaultCountry;
-        }
+        countrySelect.value = 'DE';
 
         function updateStates() {
             const country = countrySelect.value;
@@ -321,8 +308,21 @@ window.zenctuaryAuth = (function() {
             stateSelect.disabled = false;
         }
 
-        countrySelect.addEventListener('change', updateStates);
         updateStates();
+    }
+
+    function populatePolicyLinks() {
+        const urls = zenctuaryAuthData.policy_urls || {};
+        document.querySelectorAll('[data-zen-policy]').forEach((label) => {
+            const url = urls[label.dataset.zenPolicy];
+            if (!url) return;
+            const link = document.createElement('a');
+            link.href = url;
+            link.textContent = label.textContent;
+            link.target = '_blank';
+            link.rel = 'noopener noreferrer';
+            label.replaceChildren(link);
+        });
     }
 
     function resolvePostAuthRedirect(defaultUrl) {

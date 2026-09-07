@@ -748,3 +748,14 @@ body.zen-modal-open {
         padding: 13px;
     }
 }
+/* Signup policy links match the highlighted consent text. */
+.zen-checkbox-label [data-zen-policy],
+.zen-checkbox-label [data-zen-policy] a {
+    color: var(--wp--preset--color--primary-gold);
+    font-weight: 700;
+}
+
+.zen-checkbox-label [data-zen-policy] a:hover,
+.zen-checkbox-label [data-zen-policy] a:focus-visible {
+    text-decoration: underline;
+}

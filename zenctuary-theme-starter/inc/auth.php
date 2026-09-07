@@ -64,8 +64,7 @@ function zenctuary_get_posted_text_field( string $key ): string {
  * @return array|WP_Error
  */
 function zenctuary_validate_signup_billing_fields() {
-    $billing_country   = zenctuary_get_posted_text_field( 'billing_country' );
-    $billing_country   = $billing_country ? $billing_country : zenctuary_get_posted_text_field( 'country' );
+    $billing_country   = 'DE'; // Signup addresses default to Germany.
     $billing_state     = zenctuary_get_posted_text_field( 'billing_state' );
     $billing_address_1 = zenctuary_get_posted_text_field( 'billing_address_1' );
     $billing_address_1 = $billing_address_1 ? $billing_address_1 : zenctuary_get_posted_text_field( 'address' );
@@ -184,7 +183,7 @@ function zenctuary_ajax_register() {
     $email    = isset( $_POST['email'] ) ? sanitize_email( $_POST['email'] ) : '';
     $password = isset( $_POST['password'] ) ? $_POST['password'] : '';
     $confirm_password = isset( $_POST['confirm_password'] ) ? $_POST['confirm_password'] : '';
-    $terms    = isset( $_POST['terms'] ) ? true : false;
+    $terms    = '1' === zenctuary_get_posted_text_field( 'terms' );
     
     // --- VALIDATIONS ---
     if ( empty( $email ) ) {
@@ -200,7 +199,7 @@ function zenctuary_ajax_register() {
     }
 
     if ( ! $terms ) {
-        wp_send_json_error( array( 'message' => __( 'You must accept the terms and conditions.', 'zenctuary' ) ) );
+        wp_send_json_error( array( 'message' => __( 'You must accept the General Terms & Conditions and Data Protection Policy.', 'zenctuary' ) ) );
     }
 
     $billing_fields = zenctuary_validate_signup_billing_fields();
@@ -257,7 +256,6 @@ function zenctuary_ajax_register() {
         update_user_meta( $user_id, 'billing_phone', $full_phone );
 
         // Profile Details
-        update_user_meta( $user_id, 'gender', isset( $_POST['gender'] ) ? sanitize_text_field( $_POST['gender'] ) : '' );
         update_user_meta( $user_id, 'billing_country', $billing_fields['billing_country'] );
         update_user_meta( $user_id, 'billing_state', $billing_fields['billing_state'] );
         update_user_meta( $user_id, 'billing_address_1', $billing_fields['billing_address_1'] );
@@ -265,8 +263,9 @@ function zenctuary_ajax_register() {
         update_user_meta( $user_id, 'billing_postcode', $billing_fields['billing_postcode'] );
 
         // Notifications
-        update_user_meta( $user_id, 'zen_email_notifications', isset( $_POST['email_notifications'] ) ? 'yes' : 'no' );
-        update_user_meta( $user_id, 'zen_sms_notifications', isset( $_POST['sms_notifications'] ) ? 'yes' : 'no' );
+        $activity_notifications = '1' === zenctuary_get_posted_text_field( 'activity_notifications' ) ? 'yes' : 'no';
+        update_user_meta( $user_id, 'zen_email_notifications', $activity_notifications );
+        update_user_meta( $user_id, 'zen_sms_notifications', $activity_notifications );
 
         // Log the user in
         wp_set_auth_cookie( $user_id );

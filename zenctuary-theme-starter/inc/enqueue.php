@@ -88,12 +88,11 @@ function zenctuary_enqueue_assets(): void {
 	$current_user = wp_get_current_user();
 	$countries    = array();
 	$states       = array();
-	$default_country = '';
+	$default_country = 'DE';
 
 	if ( function_exists( 'WC' ) && WC()->countries ) {
 		$countries       = WC()->countries->get_countries();
 		$states          = WC()->countries->get_states();
-		$default_country = WC()->countries->get_base_country();
 	}
 
 	wp_localize_script( 'zenctuary-auth', 'zenctuaryAuthData', array(
@@ -110,6 +109,10 @@ function zenctuary_enqueue_assets(): void {
 		'countries'    => $countries,
 		'states'       => $states,
 		'default_country' => $default_country,
+		'policy_urls' => array(
+			'terms' => function_exists( 'wc_get_page_permalink' ) ? esc_url_raw( wc_get_page_permalink( 'terms', '' ) ) : '',
+			'privacy' => esc_url_raw( get_privacy_policy_url() ),
+		),
 		'user_data'    => is_user_logged_in() ? array(
 			'display_name' => $current_user->display_name,
 			'user_email'   => $current_user->user_email,
