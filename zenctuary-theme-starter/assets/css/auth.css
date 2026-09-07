@@ -125,6 +125,11 @@
     transition: max-width 0.4s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
+.zen-modal-container[data-view="signup"] {
+    padding-top: 30px;
+    padding-bottom: 30px;
+}
+
 .zen-modal-container[data-view="signup"] .zen-modal-content {
     max-width: 800px;
 }
@@ -636,6 +641,10 @@ body.zen-modal-open {
 }
 
 /* View Specific Adjustments */
+#zen-view-signup .zen-btn-auth--secondary {
+    margin-top: 0;
+}
+
 #zen-view-signup .zen-auth-header {
     margin-bottom: 30px;
 }
@@ -673,7 +682,7 @@ body.zen-modal-open {
         max-height: 100dvh;
         overflow-x: hidden;
         overflow-y: auto;
-        padding: 56px 16px calc(88px + env(safe-area-inset-bottom)) !important;
+        padding: 30px 16px !important;
         width: 100vw;
         -webkit-overflow-scrolling: touch;
     }
@@ -743,7 +752,6 @@ body.zen-modal-open {
     }
 
     #zen-view-signup .zen-btn-auth--secondary {
-        margin-top: 8px;
         min-height: 48px;
         padding: 13px;
     }
