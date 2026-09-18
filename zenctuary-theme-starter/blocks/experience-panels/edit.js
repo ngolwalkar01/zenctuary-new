@@ -161,7 +161,7 @@ export default function Edit( { attributes, setAttributes, clientId } ) {
 
     const fwOptions = [{label:'300',value:'300'},{label:'400',value:'400'},{label:'500',value:'500'},{label:'600',value:'600'},{label:'700',value:'700'}];
     const ttOptions = [{label:'None',value:'none'},{label:'Uppercase',value:'uppercase'},{label:'Lowercase',value:'lowercase'}];
-    const bgTransOpts = [{label:'Fade Only',value:'fade'},{label:'Fade & Zoom',value:'fade-zoom'},{label:'None',value:'none'}];
+    const bgTransOpts = [{label:'Fade Only',value:'fade'},{label:'None',value:'none'}];
     const contentTransOpts = [{label:'Slide Up',value:'slide-up'},{label:'Slide Left',value:'slide-left'},{label:'Slide Right',value:'slide-right'},{label:'None',value:'none'}];
 
     return (
@@ -284,7 +284,7 @@ export default function Edit( { attributes, setAttributes, clientId } ) {
                             
                             <Divider />
                             <h4 style={{ margin: '0 0 12px 0' }}>Animations</h4>
-                            <SelectControl label="Background Swap Transition" value={ panel.bgTransition || 'fade' } options={ bgTransOpts } onChange={ v => updatePanelField(pIndex, 'bgTransition', v) } />
+                            <SelectControl label="Background Swap Transition" value={ panel.bgTransition === 'none' ? 'none' : 'fade' } options={ bgTransOpts } onChange={ v => updatePanelField(pIndex, 'bgTransition', v) } />
 
                             <Divider />
                             

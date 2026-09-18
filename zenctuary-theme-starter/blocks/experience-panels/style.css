@@ -69,9 +69,7 @@
     height: 100%;
     object-fit: cover;
     display: block;
-    transition:
-        transform var(--zep-dur, 0.6s) cubic-bezier(0.25, 1, 0.5, 1),
-        filter var(--zep-dur, 0.6s) ease;
+    transition: filter var(--zep-dur, 0.6s) ease;
 }
 
 /* Background Dual-Layer Logic */
@@ -91,15 +89,6 @@
 
 .zenctuary-experience-panels.has-active-hover-image .zep-panel.is-active .zep-panel__bg-cell--active {
     opacity: 1;
-}
-
-/* bgTransition: fade-zoom */
-.zep-panel[data-bg-trans="fade-zoom"] .zep-panel__bg-cell--active .zep-panel__bg-img {
-    transform: scale(1.08);
-}
-
-.zenctuary-experience-panels.has-active-hover-image .zep-panel[data-bg-trans="fade-zoom"].is-active .zep-panel__bg-cell--active .zep-panel__bg-img {
-    transform: scale(1.03);
 }
 
 .zep-panel__overlay {
