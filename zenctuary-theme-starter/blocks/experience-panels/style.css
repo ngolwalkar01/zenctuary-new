@@ -93,10 +93,6 @@
     opacity: 1;
 }
 
-.zep-panel.is-active .zep-panel__bg-img {
-    transform: scale(1.035);
-}
-
 /* bgTransition: fade-zoom */
 .zep-panel[data-bg-trans="fade-zoom"] .zep-panel__bg-cell--active .zep-panel__bg-img {
     transform: scale(1.08);
