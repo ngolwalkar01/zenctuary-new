@@ -19,6 +19,7 @@
     "defaultActiveIndex": { "type": "number", "default": 0 },
     "transitionDur": { "type": "number", "default": 0.6 },
     "enableContentAnim": { "type": "boolean", "default": true },
+    "enableActiveHoverImage": { "type": "boolean", "default": true },
 
     "sectionBgColor": { "type": "string", "default": "#f9f9f9" },
     

@@ -40,6 +40,7 @@ export default function Edit( { attributes, setAttributes, clientId } ) {
     const {
         panelData = "",
         transitionDur = 0.6,
+        enableActiveHoverImage = true,
         sectionBgColor = '#f9f9f9',
         
         titleFontSize = 48, titleFontWeight = '400', titleLineHeight = 1.1, titleLetterSpacing = 0.05, titleTextTransform = 'uppercase', titleColor = '#ffffff',
@@ -51,7 +52,7 @@ export default function Edit( { attributes, setAttributes, clientId } ) {
     } = attributes;
 
     const blockProps = useBlockProps({
-        className: 'zenctuary-experience-panels',
+        className: `zenctuary-experience-panels${enableActiveHoverImage ? ' has-active-hover-image' : ''}`,
         style: {
             '--zep-dur': `${transitionDur}s`,
             '--zep-bg': sectionBgColor,
@@ -171,6 +172,12 @@ export default function Edit( { attributes, setAttributes, clientId } ) {
                         label="Enable Content Animation" 
                         checked={ attributes.enableContentAnim } 
                         onChange={ v => setAttributes({ enableContentAnim: v }) } 
+                    />
+                    <ToggleControl
+                        label="Enable Active Hover Images"
+                        checked={ enableActiveHoverImage }
+                        onChange={ value => setAttributes({ enableActiveHoverImage: value }) }
+                        help="When disabled, panels keep showing their default image during hover animations."
                     />
                     <RangeControl label="Hover Transition Duration (s)" value={ transitionDur } min={0.2} max={1.5} step={0.1} onChange={ v => setAttributes({ transitionDur: v }) } />
                     
@@ -381,7 +388,7 @@ export default function Edit( { attributes, setAttributes, clientId } ) {
                                         <img className="zep-panel__bg-img" src={panel.defaultBackground.url} alt={panel.defaultBackground.alt || ''} /> 
                                     </div>
                                 )}
-                                { panel.activeBackground?.url && (
+                                { enableActiveHoverImage && panel.activeBackground?.url && (
                                     <div className="zep-panel__bg-cell zep-panel__bg-cell--active">
                                         <img className="zep-panel__bg-img" src={panel.activeBackground.url} alt={panel.activeBackground.alt || ''} /> 
                                     </div>

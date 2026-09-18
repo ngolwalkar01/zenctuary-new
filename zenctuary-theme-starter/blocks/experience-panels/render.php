@@ -71,6 +71,7 @@ $vars = [
 ];
 
 $inline_style = implode( '; ', $vars );
+$enable_active_hover_image = rest_sanitize_boolean( $attributes['enableActiveHoverImage'] ?? true );
 
 // Parse Future-Proof Hotspot Anchors
 $zh_format_hotspot = function( $item, $inner_html ) {
@@ -88,7 +89,8 @@ $zh_format_hotspot = function( $item, $inner_html ) {
 
 // Ensure WP layout classes apply organically
 $align_class = ! empty( $attributes['align'] ) ? 'align' . $attributes['align'] : 'alignfull';
-$wrapper_class = trim( "zenctuary-experience-panels wp-block-zenctuary-experience-panels {$align_class}" );
+$active_hover_class = $enable_active_hover_image ? ' has-active-hover-image' : '';
+$wrapper_class = trim( "zenctuary-experience-panels wp-block-zenctuary-experience-panels {$align_class}{$active_hover_class}" );
 
 ?>
 <section class="<?php echo esc_attr( $wrapper_class ); ?>" style="<?php echo esc_attr( $inline_style ); ?>">
@@ -136,7 +138,7 @@ $wrapper_class = trim( "zenctuary-experience-panels wp-block-zenctuary-experienc
                     <?php endif; ?>
                     
                     <!-- Active Background -->
-                    <?php if ( $act_bg_url ) : ?>
+                    <?php if ( $enable_active_hover_image && $act_bg_url ) : ?>
                         <div class="zep-panel__bg-cell zep-panel__bg-cell--active">
                             <img class="zep-panel__bg-img" src="<?php echo $act_bg_url; ?>" alt="<?php echo $act_bg_alt; ?>" loading="lazy" />
                         </div>

@@ -29,16 +29,16 @@
     opacity: 1 !important;
     z-index: 2 !important;
 }
-.zep-editor-default-mode .zep-panel__bg-cell--active {
+.zenctuary-experience-panels.has-active-hover-image .zep-editor-default-mode .zep-panel__bg-cell--active {
     opacity: 0.8 !important; /* Slight ghosting allows inspecting the active background beneath it */
     z-index: 1 !important;
 }
 
-.zep-editor-preview-mode .zep-panel.is-active .zep-panel__bg-cell--active {
+.zenctuary-experience-panels.has-active-hover-image .zep-editor-preview-mode .zep-panel.is-active .zep-panel__bg-cell--active {
     opacity: 1 !important;
     z-index: 2 !important;
 }
-.zep-editor-preview-mode .zep-panel.is-active .zep-panel__bg-cell--default {
+.zenctuary-experience-panels.has-active-hover-image .zep-editor-preview-mode .zep-panel.is-active .zep-panel__bg-cell--default {
     opacity: 0.5 !important; 
     z-index: 1 !important;
 }
