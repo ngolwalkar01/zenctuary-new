@@ -91,37 +91,39 @@
 		},
 		"buttonTextColor": {
 			"type": "string",
-			"default": "#ffffff"
+			"default": "#3f3d3d"
 		},
 		"buttonBackgroundColor": {
 			"type": "string",
-			"default": "#3f3d3d"
+			"default": "#d8b354"
 		},
 		"buttonBorderColor": {
 			"type": "string",
-			"default": "#3f3d3d"
+			"default": "#d8b354"
 		},
 		"buttonBorderWidth": {
 			"type": "number",
-			"default": 1
+			"default": 2
 		},
 		"buttonBorderRadius": {
 			"type": "number",
-			"default": 8
+			"default": 32
 		},
 		"buttonFontSize": {
-			"type": "number"
+			"type": "number",
+			"default": 16
 		},
 		"buttonFontWeight": {
-			"type": "string"
+			"type": "string",
+			"default": "700"
 		},
 		"buttonPadding": {
 			"type": "object",
 			"default": {
-				"top": "14px",
-				"right": "24px",
-				"bottom": "14px",
-				"left": "24px"
+				"top": "16px",
+				"right": "32px",
+				"bottom": "16px",
+				"left": "32px"
 			}
 		},
 		"showArrow": {
@@ -134,7 +136,7 @@
 		},
 		"buttonIconSize": {
 			"type": "number",
-			"default": 18
+			"default": 20
 		},
 		"images": {
 			"type": "array",

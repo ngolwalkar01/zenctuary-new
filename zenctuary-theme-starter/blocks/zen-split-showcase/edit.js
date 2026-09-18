@@ -52,7 +52,7 @@ const DEFAULT_PARAGRAPH_FONT_WEIGHT = '400';
 const DEFAULT_BUTTON_FONT_SIZE = 16;
 const DEFAULT_BUTTON_FONT_WEIGHT = '700';
 const DEFAULT_BUTTON_GAP = 14;
-const DEFAULT_BUTTON_ICON_SIZE = 18;
+const DEFAULT_BUTTON_ICON_SIZE = 20;
 
 const spacingStyle = ( value = {}, property ) => ( {
 	[ `${ property }Top` ]: value.top || '0px',
@@ -374,13 +374,14 @@ export default function Edit( { attributes, setAttributes } ) {
 	};
 
 	const sharedButtonStyle = {
-		color: buttonTextColor,
-		backgroundColor: buttonBackgroundColor,
-		borderColor: buttonBorderColor,
-		borderWidth: `${ buttonBorderWidth }px`,
-		borderRadius: `${ buttonBorderRadius }px`,
-		...( buttonFontSize ? { fontSize: `${ buttonFontSize }px` } : {} ),
-		...( buttonFontWeight ? { fontWeight: buttonFontWeight } : {} ),
+		'--zen-split-button-color': buttonTextColor,
+		'--zen-split-button-background': buttonBackgroundColor,
+		'--zen-split-button-border-color': buttonBorderColor,
+		'--zen-split-button-border-width': `${ buttonBorderWidth }px`,
+		'--zen-split-button-radius': `${ buttonBorderRadius }px`,
+		'--zen-split-button-icon-size': `${ buttonIconSize || DEFAULT_BUTTON_ICON_SIZE }px`,
+		...( buttonFontSize ? { '--zen-split-button-font-size': `${ buttonFontSize }px` } : {} ),
+		...( buttonFontWeight ? { '--zen-split-button-font-weight': buttonFontWeight } : {} ),
 		...spacingStyle( buttonPadding, 'padding' ),
 	};
 
