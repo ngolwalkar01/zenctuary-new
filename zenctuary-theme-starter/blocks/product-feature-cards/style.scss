@@ -33,6 +33,7 @@
 
 .pfc__section-heading {
 	color: var(--pfc-heading-color, #d8b354);
+	font-family: var(--pfc-heading-font-family, var(--wp--preset--font-family--montserrat));
 	font-size: var(--pfc-heading-size, 36px);
 	font-weight: var(--pfc-heading-weight, 700);
 	line-height: 1.1;
@@ -43,6 +44,7 @@
 
 .pfc__section-intro {
 	color: var(--pfc-intro-color, #f6f2ea);
+	font-family: var(--pfc-intro-font-family, var(--wp--preset--font-family--dm-sans));
 	font-size: var(--pfc-intro-size, 18px) !important;
 	line-height: var(--pfc-intro-line-height, 1.55) !important;
 	margin: 0 auto;
@@ -118,6 +120,7 @@
 
 .pfc__zencoin-label {
 	color: var(--pfc-zencoin-label-color, #d8b354);
+	font-family: var(--pfc-zencoin-label-font-family, var(--wp--preset--font-family--montserrat));
 	font-size: var(--pfc-zencoin-label-size, 18px);
 	font-weight: var(--pfc-zencoin-label-weight, 700);
 	line-height: 1;
@@ -132,6 +135,7 @@
 	border-radius: 50%;
 	color: var(--pfc-zencoin-badge-text-color, #d8b354);
 	display: inline-flex;
+	font-family: var(--pfc-zencoin-badge-font-family, var(--wp--preset--font-family--montserrat));
 	font-size: var(--pfc-zencoin-badge-font-size, 20px);
 	font-weight: var(--pfc-zencoin-badge-font-weight, 700);
 	height: var(--pfc-zencoin-badge-size, 42px);
@@ -191,6 +195,7 @@
 
 .pfc__title {
 	color: var(--pfc-title-color, #ffffff);
+	font-family: var(--pfc-title-font-family, var(--wp--preset--font-family--montserrat));
 	font-size: var(--pfc-title-size, 52px);
 	font-weight: var(--pfc-title-weight, 700);
 	letter-spacing: var(--pfc-title-letter-spacing, 0);
@@ -204,6 +209,7 @@
 	align-items: center;
 	color: var(--pfc-session-text-color, #ffffff);
 	display: flex;
+	font-family: var(--pfc-session-font-family, var(--wp--preset--font-family--dm-sans));
 	font-size: var(--pfc-session-font-size, 16px);
 	font-weight: var(--pfc-session-font-weight, 400);
 	gap: var(--pfc-session-gap, 10px);
@@ -234,6 +240,7 @@
 
 .pfc__ideal-for {
 	color: var(--pfc-ideal-for-color, #f6f2ea);
+	font-family: var(--pfc-ideal-for-font-family, var(--wp--preset--font-family--dm-sans));
 	font-size: var(--pfc-ideal-for-font-size, 16px) !important;
 	font-weight: var(--pfc-ideal-for-font-weight, 400);
 	line-height: var(--pfc-ideal-for-line-height, 1.55) !important;
@@ -262,6 +269,7 @@
 	border-radius: var(--pfc-button-radius, 999px);
 	color: var(--pfc-button-text-color, #d8b354);
 	display: inline-flex;
+	font-family: var(--pfc-button-font-family, var(--wp--preset--font-family--dm-sans));
 	font-size: var(--pfc-button-font-size, 16px);
 	font-weight: var(--pfc-button-font-weight, 700);
 	gap: 10px;
@@ -318,6 +326,7 @@
 
 .pfc__expect-label {
 	color: var(--pfc-expand-label-color, #f6f2ea);
+	font-family: var(--pfc-expand-label-font-family, var(--wp--preset--font-family--dm-sans));
 	font-size: var(--pfc-expand-label-size, 16px);
 	font-weight: var(--pfc-expand-label-weight, 700);
 }
@@ -335,6 +344,7 @@
 
 .pfc__expect-panel {
 	color: var(--pfc-expanded-color, #f6f2ea);
+	font-family: var(--pfc-expanded-font-family, var(--wp--preset--font-family--dm-sans));
 	font-size: var(--pfc-expanded-font-size, 15px);
 	line-height: var(--pfc-expanded-line-height, 1.55);
 	max-height: none;

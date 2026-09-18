@@ -37,6 +37,17 @@ const WEIGHTS = [ '400', '500', '600', '700', '800' ].map( ( value ) => ( {
 	value,
 } ) );
 
+const FONT_FAMILIES = [
+	{
+		label: __( 'Montserrat', 'zenctuary' ),
+		value: 'var(--wp--preset--font-family--montserrat)',
+	},
+	{
+		label: __( 'DM Sans', 'zenctuary' ),
+		value: 'var(--wp--preset--font-family--dm-sans)',
+	},
+];
+
 const ALIGN_OPTIONS = [
 	{ label: __( 'Left', 'zenctuary' ), value: 'left' },
 	{ label: __( 'Center', 'zenctuary' ), value: 'center' },
@@ -296,11 +307,27 @@ export default function Edit( { attributes, setAttributes } ) {
 						fallback="#d8b354"
 						onChange={ ( sectionHeadingColor ) => setAttributes( { sectionHeadingColor } ) }
 					/>
+					<SelectControl
+						label={ __( 'Heading Font Family', 'zenctuary' ) }
+						value={ attributes.sectionHeadingFontFamily }
+						options={ FONT_FAMILIES }
+						onChange={ ( sectionHeadingFontFamily ) =>
+							setAttributes( { sectionHeadingFontFamily } )
+						}
+					/>
 					<ColorControl
 						label={ __( 'Intro Color', 'zenctuary' ) }
 						value={ attributes.sectionIntroColor }
 						fallback="#f6f2ea"
 						onChange={ ( sectionIntroColor ) => setAttributes( { sectionIntroColor } ) }
+					/>
+					<SelectControl
+						label={ __( 'Intro Font Family', 'zenctuary' ) }
+						value={ attributes.sectionIntroFontFamily }
+						options={ FONT_FAMILIES }
+						onChange={ ( sectionIntroFontFamily ) =>
+							setAttributes( { sectionIntroFontFamily } )
+						}
 					/>
 					<ColorControl
 						label={ __( 'Text Color', 'zenctuary' ) }
@@ -525,6 +552,14 @@ export default function Edit( { attributes, setAttributes } ) {
 						fallback="#d8b354"
 						onChange={ ( zencoinLabelColor ) => setAttributes( { zencoinLabelColor } ) }
 					/>
+					<SelectControl
+						label={ __( 'Label Font Family', 'zenctuary' ) }
+						value={ attributes.zencoinLabelFontFamily }
+						options={ FONT_FAMILIES }
+						onChange={ ( zencoinLabelFontFamily ) =>
+							setAttributes( { zencoinLabelFontFamily } )
+						}
+					/>
 					<RangeControl
 						label={ __( 'Label Font Size', 'zenctuary' ) }
 						value={ attributes.zencoinLabelFontSize }
@@ -573,6 +608,14 @@ export default function Edit( { attributes, setAttributes } ) {
 						value={ attributes.zencoinBadgeTextColor }
 						fallback="#d8b354"
 						onChange={ ( zencoinBadgeTextColor ) => setAttributes( { zencoinBadgeTextColor } ) }
+					/>
+					<SelectControl
+						label={ __( 'Badge Font Family', 'zenctuary' ) }
+						value={ attributes.zencoinBadgeFontFamily }
+						options={ FONT_FAMILIES }
+						onChange={ ( zencoinBadgeFontFamily ) =>
+							setAttributes( { zencoinBadgeFontFamily } )
+						}
 					/>
 				</PanelBody>
 
@@ -628,6 +671,14 @@ export default function Edit( { attributes, setAttributes } ) {
 						fallback="#ffffff"
 						onChange={ ( titleColor ) => setAttributes( { titleColor } ) }
 					/>
+					<SelectControl
+						label={ __( 'Title Font Family', 'zenctuary' ) }
+						value={ attributes.titleFontFamily }
+						options={ FONT_FAMILIES }
+						onChange={ ( titleFontFamily ) =>
+							setAttributes( { titleFontFamily } )
+						}
+					/>
 					<RangeControl
 						label={ __( 'Title Font Size', 'zenctuary' ) }
 						value={ attributes.titleFontSize }
@@ -668,6 +719,14 @@ export default function Edit( { attributes, setAttributes } ) {
 						fallback="#ffffff"
 						onChange={ ( sessionTextColor ) => setAttributes( { sessionTextColor } ) }
 					/>
+					<SelectControl
+						label={ __( 'Session Font Family', 'zenctuary' ) }
+						value={ attributes.sessionFontFamily }
+						options={ FONT_FAMILIES }
+						onChange={ ( sessionFontFamily ) =>
+							setAttributes( { sessionFontFamily } )
+						}
+					/>
 					<ColorControl
 						label={ __( 'Session Icon Color', 'zenctuary' ) }
 						value={ attributes.sessionIconColor }
@@ -687,6 +746,14 @@ export default function Edit( { attributes, setAttributes } ) {
 						value={ attributes.idealForColor }
 						fallback="#f6f2ea"
 						onChange={ ( idealForColor ) => setAttributes( { idealForColor } ) }
+					/>
+					<SelectControl
+						label={ __( 'Ideal For Font Family', 'zenctuary' ) }
+						value={ attributes.idealForFontFamily }
+						options={ FONT_FAMILIES }
+						onChange={ ( idealForFontFamily ) =>
+							setAttributes( { idealForFontFamily } )
+						}
 					/>
 					<RangeControl
 						label={ __( 'Ideal For Font Size', 'zenctuary' ) }
@@ -721,6 +788,14 @@ export default function Edit( { attributes, setAttributes } ) {
 						value={ attributes.buttonTextColor }
 						fallback="#d8b354"
 						onChange={ ( buttonTextColor ) => setAttributes( { buttonTextColor } ) }
+					/>
+					<SelectControl
+						label={ __( 'Font Family', 'zenctuary' ) }
+						value={ attributes.buttonFontFamily }
+						options={ FONT_FAMILIES }
+						onChange={ ( buttonFontFamily ) =>
+							setAttributes( { buttonFontFamily } )
+						}
 					/>
 					<ColorControl
 						label={ __( 'Background', 'zenctuary' ) }
@@ -798,6 +873,14 @@ export default function Edit( { attributes, setAttributes } ) {
 						fallback="#f6f2ea"
 						onChange={ ( expandLabelColor ) => setAttributes( { expandLabelColor } ) }
 					/>
+					<SelectControl
+						label={ __( 'Label Font Family', 'zenctuary' ) }
+						value={ attributes.expandLabelFontFamily }
+						options={ FONT_FAMILIES }
+						onChange={ ( expandLabelFontFamily ) =>
+							setAttributes( { expandLabelFontFamily } )
+						}
+					/>
 					<ColorControl
 						label={ __( 'Icon Color', 'zenctuary' ) }
 						value={ attributes.expandIconColor }
@@ -809,6 +892,14 @@ export default function Edit( { attributes, setAttributes } ) {
 						value={ attributes.expandedContentColor }
 						fallback="#f6f2ea"
 						onChange={ ( expandedContentColor ) => setAttributes( { expandedContentColor } ) }
+					/>
+					<SelectControl
+						label={ __( 'Expanded Text Font Family', 'zenctuary' ) }
+						value={ attributes.expandedContentFontFamily }
+						options={ FONT_FAMILIES }
+						onChange={ ( expandedContentFontFamily ) =>
+							setAttributes( { expandedContentFontFamily } )
+						}
 					/>
 					<RangeControl
 						label={ __( 'Expanded Max Height', 'zenctuary' ) }

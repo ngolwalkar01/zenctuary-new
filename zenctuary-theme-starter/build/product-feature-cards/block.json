@@ -84,6 +84,10 @@
       "type": "string",
       "default": "#d8b354"
     },
+    "sectionHeadingFontFamily": {
+      "type": "string",
+      "default": "var(--wp--preset--font-family--montserrat)"
+    },
     "sectionHeadingFontSize": {
       "type": "number",
       "default": 36
@@ -95,6 +99,10 @@
     "sectionIntroColor": {
       "type": "string",
       "default": "#f6f2ea"
+    },
+    "sectionIntroFontFamily": {
+      "type": "string",
+      "default": "var(--wp--preset--font-family--dm-sans)"
     },
     "sectionIntroFontSize": {
       "type": "number",
@@ -264,6 +272,10 @@
       "type": "string",
       "default": "#d8b354"
     },
+    "zencoinLabelFontFamily": {
+      "type": "string",
+      "default": "var(--wp--preset--font-family--montserrat)"
+    },
     "zencoinLabelFontSize": {
       "type": "number",
       "default": 18
@@ -299,6 +311,10 @@
     "zencoinBadgeTextColor": {
       "type": "string",
       "default": "#d8b354"
+    },
+    "zencoinBadgeFontFamily": {
+      "type": "string",
+      "default": "var(--wp--preset--font-family--montserrat)"
     },
     "zencoinBadgeFontSize": {
       "type": "number",
@@ -351,6 +367,10 @@
     "titleColor": {
       "type": "string",
       "default": "#ffffff"
+    },
+    "titleFontFamily": {
+      "type": "string",
+      "default": "var(--wp--preset--font-family--montserrat)"
     },
     "titleFontSize": {
       "type": "number",
@@ -408,6 +428,10 @@
       "type": "string",
       "default": "#ffffff"
     },
+    "sessionFontFamily": {
+      "type": "string",
+      "default": "var(--wp--preset--font-family--dm-sans)"
+    },
     "sessionFontSize": {
       "type": "number",
       "default": 16
@@ -427,6 +451,10 @@
     "idealForColor": {
       "type": "string",
       "default": "#f6f2ea"
+    },
+    "idealForFontFamily": {
+      "type": "string",
+      "default": "var(--wp--preset--font-family--dm-sans)"
     },
     "idealForFontSize": {
       "type": "number",
@@ -459,6 +487,10 @@
     "buttonTextColor": {
       "type": "string",
       "default": "#d8b354"
+    },
+    "buttonFontFamily": {
+      "type": "string",
+      "default": "var(--wp--preset--font-family--dm-sans)"
     },
     "buttonBackgroundColor": {
       "type": "string",
@@ -544,6 +576,10 @@
       "type": "string",
       "default": "#f6f2ea"
     },
+    "expandLabelFontFamily": {
+      "type": "string",
+      "default": "var(--wp--preset--font-family--dm-sans)"
+    },
     "expandLabelFontSize": {
       "type": "number",
       "default": 16
@@ -579,6 +615,10 @@
     "expandedContentColor": {
       "type": "string",
       "default": "#f6f2ea"
+    },
+    "expandedContentFontFamily": {
+      "type": "string",
+      "default": "var(--wp--preset--font-family--dm-sans)"
     },
     "expandedContentFontSize": {
       "type": "number",
